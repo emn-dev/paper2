@@ -1,14 +1,10 @@
 {
-  "name": "root",
-  "description": "Monorepo for Paper2",
+  "name": "paper2",
   "license": "https://github.com/emn-dev/paper2/blob/main/LICENSE",
-  "private": true,
+  "description": "The essence of paper.js wrapped in modern tooling.",
   "version": "0.0.0",
+  "main": "dist/paper2.esm.js",
   "author": "emn-dev",
-  "packageManager": "yarn@4.9.2",
-  "workspaces": [
-    "packages/*"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/emn-dev/paper2.git"
@@ -18,12 +14,10 @@
   },
   "homepage": "https://github.com/emn-dev/paper2#readme",
   "scripts": {
-    "build-dep": "yarn workspaces foreach --all --parallel --topological run build-dep",
-    "set-ver": "node ./packages/paper2/util-scripts/set-version.mjs"
+    "postinstall": "yarn build-dep",
+    "build-dep": "IS_BUILD=true node build.mjs"
   },
   "devDependencies": {
-    "@types/node": "22.17.0",
-    "ts-node": "10.9.2",
-    "typescript": "5.9.2"
+    "esbuild": "0.25.8"
   }
 }

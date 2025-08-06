@@ -12,15 +12,6 @@ jobs:
       contents: write # Required to create a release
       id-token: write
     steps:
-      - name: Create Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create "${{ github.ref_name }}" \
-            --repo="${{ github.repository }}" \
-            --title="${{ github.repository_name }} ${{ github.ref_name }}" \
-            --generate-notes
-
       # Publish to NPM
       - uses: actions/checkout@v4
       # Setup .npmrc file to publish to npm
@@ -29,8 +20,21 @@ jobs:
           node-version: "22.x"
           registry-url: "https://registry.npmjs.org"
       # Only set package version when creating a release, otherwise the version is 0.0.0 in the main branch
-      - run: npm --no-git-tag-version version ${{ github.ref_name }}
-      - run: npm ci
-      - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: corepack enable
+      - run: yarn install
+      - run: yarn set-ver ${{ github.ref_name }}
+      # - run: npm --no-git-tag-version version ${{ github.ref_name }}
+      # - run: npm ci
+      # - run: npm publish --provenance --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # TODO: skip for now
+      # - name: Create Release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     gh release create "${{ github.ref_name }}" \
+      #       --repo="${{ github.repository }}" \
+      #       --title="${{ github.repository_name }} ${{ github.ref_name }}" \
+      #       --generate-notes

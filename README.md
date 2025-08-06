@@ -13,3 +13,7 @@ https://emn-dev.github.io/paper2
 ## npm
 
 https://www.npmjs.com/package/paper2
+
+## unpkg
+
+https://unpkg.com/paper2@1.0.10/index.js

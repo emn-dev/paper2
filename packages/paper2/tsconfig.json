@@ -1,0 +1,23 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "outDir": "./any",
+    "target": "es2022",
+    "module": "commonjs",
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "./dist/@types",
+    "strict": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["lib/*"]
+    },
+    "esModuleInterop": true,
+    "sourceMap": true
+  },
+  "ts-node": {
+    "files": true
+  }
+}
