@@ -1,0 +1,19 @@
+{
+  "name": "paper2",
+  "version": "1.0.0",
+  "description": "The essence of paper.js wrapped in modern tooling.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emn-dev/paper2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emn-dev/paper2/issues"
+  },
+  "homepage": "https://github.com/emn-dev/paper2#readme"
+}
