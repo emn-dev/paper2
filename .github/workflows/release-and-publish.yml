@@ -1,4 +1,4 @@
-name: Create release
+name: Create release and npm publish
 
 on:
   push:
@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # Required to create a release
+      id-token: write
     steps:
       - name: Create Release
         env:
@@ -19,3 +20,16 @@ jobs:
             --repo="${{ github.repository }}" \
             --title="${{ github.repository_name }} ${{ github.ref_name }}" \
             --generate-notes
+
+      # Publish to NPM
+      - name: Publish to NPM
+      - uses: actions/checkout@v4
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm ci
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
