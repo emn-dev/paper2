@@ -16,7 +16,7 @@ const sharedOpts = {
   allowOverwrite: true,
   define: {
     // GITHUB_REF: 'refs/tags/v1.0.15',
-    'process.env.PACKAGE_VERSION': `'${process.env.GITHUB_REF.replace('refs/tags/', '')}'`,
+    'process.env.PACKAGE_VERSION': `'${process.env.GITHUB_REF?.replace('refs/tags/', '')}'`,
   },
 };
 
@@ -51,7 +51,8 @@ if (process.env.IS_BUILD === 'true') {
 }
 
 try {
-  execSync('yarn tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
-} catch {
-  // unless nodejs itself messes up, errors are logged by execSync itself
+  execSync('npx tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
+} catch(err){
+  console.log('build.mjs-npx-tsc-ERROR');
+  console.log(err);
 }
