@@ -1,6 +1,6 @@
 {
   "name": "paper2",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "The essence of paper.js wrapped in modern tooling.",
   "main": "index.js",
   "scripts": {
