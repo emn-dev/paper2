@@ -4,6 +4,9 @@ import { execSync } from 'node:child_process';
 import * as esbuild from 'esbuild';
 import pkg from './package.json' with { type: 'json' };
 
+console.log('i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i');
+console.log(process.env);
+
 const buildDir = 'dist';
 const fileBaseName = 'paper2';
 

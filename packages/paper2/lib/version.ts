@@ -1,0 +1,1 @@
+export const LIB_VERSION = process.env.PACKAGE_VERSION;
