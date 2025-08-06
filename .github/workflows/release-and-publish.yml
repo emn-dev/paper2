@@ -22,7 +22,6 @@ jobs:
             --generate-notes
 
       # Publish to NPM
-      - name: Publish to NPM
       - uses: actions/checkout@v4
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
