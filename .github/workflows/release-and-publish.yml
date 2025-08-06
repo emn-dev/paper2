@@ -25,9 +25,9 @@ jobs:
       - run: yarn set-ver ${{ github.ref_name }}
       # - run: npm --no-git-tag-version version ${{ github.ref_name }}
       # - run: npm ci
-      # - run: npm publish --provenance --access public
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: cd packages/paper2/dist && npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # TODO: skip for now
       # - name: Create Release
