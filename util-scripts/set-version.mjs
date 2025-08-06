@@ -10,6 +10,7 @@ const newVersion = input.startsWith("v") ? input.substring(1, 99) : input;
 
 pkgJsonObj.version = newVersion;
 pkgJsonObj.main = pkgJsonObj.main.replace("dist", ".");
+delete pkgJsonObj.scripts.postinstall; // We do not want this running on end-users machine
 
 writeFileSync(
   "./packages/paper2/dist/package.json",
