@@ -17,4 +17,3 @@ https://www.npmjs.com/package/paper2
 ## unpkg
 
 https://unpkg.com/paper2/paper2.esm.js
-`
