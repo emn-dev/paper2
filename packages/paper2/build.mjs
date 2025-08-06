@@ -4,9 +4,6 @@ import { execSync } from 'node:child_process';
 import * as esbuild from 'esbuild';
 import pkg from './package.json' with { type: 'json' };
 
-console.log('i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i-i');
-console.log(process.env);
-
 const buildDir = 'dist';
 const fileBaseName = 'paper2';
 
@@ -18,7 +15,8 @@ const sharedOpts = {
   bundle: true,
   allowOverwrite: true,
   define: {
-    'process.env.PACKAGE_VERSION': `'${process.env.npm_package_version}'`,
+    // GITHUB_REF: 'refs/tags/v1.0.15',
+    'process.env.PACKAGE_VERSION': `'${process.env.GITHUB_REF.replace('refs/tags/', '')}'`,
   },
 };
 
