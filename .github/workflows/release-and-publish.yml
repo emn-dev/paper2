@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: "22.x"
           registry-url: "https://registry.npmjs.org"
+      # Only set package version when creating a release, otherwise the version is 0.0.0 in the main branch
       - run: npm --no-git-tag-version version ${{ github.ref_name }}
       - run: npm ci
       - run: npm publish --provenance --access public
