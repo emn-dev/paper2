@@ -1,5 +1,7 @@
 # paper2
 
+https://github.com/emn-dev/paper2
+
 ## about
 
 The essence of paper.js wrapped in modern tooling.
