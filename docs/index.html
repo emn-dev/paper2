@@ -9,10 +9,10 @@
     <h1>paper2 current version:</h1>
     <h3 id="showVersion">...</h3>
     <script type="module">
-      import { LIB_VERSION } from "https://unpkg.com/paper2/paper2.esm.js";
-      console.log("LIB_VERSION: ", LIB_VERSION);
+      import * as paper2 from "https://unpkg.com/paper2/paper2.esm.js";
+      window.paper2 = paper2; // You can now easily play with this in DevTools
       const h3Ele = document.getElementById("showVersion");
-      h3Ele.innerHTML = LIB_VERSION;
+      h3Ele.innerHTML = window.paper2.LIB_VERSION;
     </script>
   </body>
 </html>
