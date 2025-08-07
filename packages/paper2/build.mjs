@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { rmSync } from 'node:fs';
 import { execSync } from 'node:child_process';
+import 'dotenv/config';
 import * as esbuild from 'esbuild';
 import pkg from './package.json' with { type: 'json' };
 

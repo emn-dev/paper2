@@ -17,7 +17,8 @@
   "homepage": "https://github.com/emn-dev/paper2#readme",
   "scripts": {
     "postinstall": "yarn build-dep",
-    "build-dep": "IS_BUILD=true node build.mjs"
+    "build-dep": "IS_BUILD=true node build.mjs",
+    "serve": "node build.mjs"
   },
   "devDependencies": {
     "esbuild": "0.25.8"
