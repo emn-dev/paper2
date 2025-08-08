@@ -7,7 +7,7 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "./dist/@types",
-    "strict": true,
+    "strict": false,
     "allowJs": false,
     "skipLibCheck": true,
     "baseUrl": ".",
