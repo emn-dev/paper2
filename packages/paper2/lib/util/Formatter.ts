@@ -18,6 +18,7 @@ import { Base } from "../straps";
  * @private
  */
 export const Formatter = Base.extend(
+  // const FormatterBase = Base.extend(
   /** @lends Formatter# */ {
     /**
      * @param {Number} [precision=5] the amount of fractional digits
@@ -68,3 +69,5 @@ export const Formatter = Base.extend(
 );
 
 Formatter.instance = new Formatter();
+
+// export const Formatter = FormatterBase;

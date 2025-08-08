@@ -12,8 +12,11 @@
 
 import { Base } from "../straps";
 import { Formatter } from "../util/Formatter";
-import { Layer } from "../item/Layer";
-import { Item } from "../item/Item";
+// import { Formatter } from "../util/Formatter";
+// import { Layer } from "../item/Layer";
+// import { Item } from "../item/Item";
+
+// declare const Formatter: any;
 
 /**
  * @name Base
