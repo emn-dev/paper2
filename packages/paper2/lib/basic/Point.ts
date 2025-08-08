@@ -11,6 +11,7 @@
  */
 
 import { Base } from "../straps";
+import { Rectangle } from "./Rectangle";
 import { Formatter } from "../util/Formatter";
 import { Numerical } from "../util/Numerical";
 import { ItemSelection } from "../item/ItemSelection";
