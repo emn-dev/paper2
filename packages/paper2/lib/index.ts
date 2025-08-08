@@ -1,4 +1,4 @@
-// import "./core/Base";
+import "./core/Base";
 
 export * from "./version";
 export * from "./straps";

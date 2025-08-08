@@ -22,8 +22,9 @@
     <script type="module">
       import * as paper2 from "https://unpkg.com/paper2/paper2.esm.js";
       // import * as paper2 from "./paper2.esm.js";
+      window.paper2 = paper2; // You can now easily play with this in DevTools
 
-      const MyClass = paper2.Base.extend({
+      var MyClass = paper2.Base.extend({
         initialize: function MyClass() {
           this._value = 10;
           console.log("Creating MyClass instance");
@@ -40,7 +41,7 @@
         },
       });
 
-      const obj = new MyClass();
+      var obj = new MyClass();
       console.log("obj.value is: " + obj.value);
       obj.value = 20;
       console.log("obj.value is: " + obj.value);
