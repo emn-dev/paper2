@@ -44,8 +44,8 @@
         fontSize: 20,
       });
 
-      // var originals = new paper2.Group({ insert: false }); // Don't insert in DOM.
-      var originals = new paper2.Group({ insert: true });
+      var originals = new paper2.Group({ insert: false }); // Don't insert in DOM.
+      // var originals = new paper2.Group({ insert: true });
       console.log(originals);
 
       var square = new paper2.Path.Rectangle({
@@ -111,7 +111,7 @@
       }
 
       function onFrame(event) {
-        console.log("=-=--=-");
+        // console.log("=-=--=-");
 
         if (activeItem != ring) {
           // Move the ring around:
@@ -145,9 +145,19 @@
       }
 
       function onResize() {
+        console.log("asdfasfdd");
         text.position = defaultProject.view.center + [0, 200];
         square.position = defaultProject.view.center;
       }
+
+      const tool = new paper2.Tool();
+
+      tool.onMouseDown = onMouseDown;
+      tool.onMouseDrag = onMouseDrag;
+      tool.onMouseUp = onMouseUp;
+
+      defaultProject.view.onFrame = onFrame;
+      defaultProject.view.onResize = onResize;
     </script>
   </body>
 </html>

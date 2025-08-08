@@ -119,8 +119,10 @@ export * from "./event/KeyEvent";
 import { Key } from "./event/Key";
 export * from "./event/MouseEvent";
 
-// // /*#*/ include('tool/ToolEvent.js');
-// // /*#*/ include('tool/Tool.js');
+// /*#*/ include('tool/ToolEvent.js');
+// /*#*/ include('tool/Tool.js');
+export * from "./tool/ToolEvent";
+export * from "./tool/Tool";
 
 // // /*#*/ include('anim/Tween.js');
 // import "./anim/Tween";
