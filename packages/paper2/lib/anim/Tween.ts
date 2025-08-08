@@ -13,7 +13,7 @@
 import { Base } from "../straps";
 import { Emitter } from "../core/Emitter";
 
-declare const paper: any;
+// declare const paper: any;
 
 /**
  * @name Tween

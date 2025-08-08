@@ -10,6 +10,8 @@
  * All rights reserved.
  */
 
+import type { CanvasView as CanvasViewType } from "./CanvasView";
+
 // import { Stats } from "fs";
 import { Matrix } from "../basic/Matrix";
 import { Point, LinkedPoint } from "../basic/Point";
@@ -22,7 +24,10 @@ import { Change } from "../item/ChangeFlag";
 import { Item } from "../item/Item";
 import { Base } from "../straps";
 import { PaperScope } from "../core/PaperScope";
-import { CanvasView } from "./CanvasView";
+
+// import { CanvasView } from "./CanvasView";
+
+declare const CanvasView4444: typeof CanvasViewType;
 
 // https://github.com/mrdoob/stats.js
 declare const Stats: any;
@@ -1064,7 +1069,7 @@ export const View = Base.extend(
           element = document.getElementById(element);
         // Factory to provide the right View subclass for a given element.
         // Produces only CanvasView or View items (for workers) for now:
-        var ctor = window ? CanvasView : View;
+        var ctor = window ? CanvasView4444 : View;
         return new ctor(project, element);
       },
     },

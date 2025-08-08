@@ -10,15 +10,22 @@
  * All rights reserved.
  */
 
+import type { Path as PathType } from "./Path";
+import type { CurveLocation as CurveLocationType } from "./CurveLocation";
+
 import { Base } from "../straps";
 import { Point } from "../basic/Point";
 import { Rectangle } from "../basic/Rectangle";
 import { Numerical } from "../util/Numerical";
 import { CollisionDetection } from "../util/CollisionDetection";
 import { Line } from "../basic/Line";
-import { Path } from "./Path";
 import { Segment } from "./Segment";
-import { CurveLocation } from "./CurveLocation";
+
+// import { Path } from "./Path";
+// import { CurveLocation } from "./CurveLocation";
+
+declare const Path4444: typeof PathType;
+declare const CurveLocation4444: typeof CurveLocationType;
 
 /**
  * @name Curve
@@ -1004,7 +1011,7 @@ export const Curve = Base.extend(
         if (!bounds) {
           // Calculate the curve bounds by passing a segment list for the
           // curve to the static Path.get*Boudns methods.
-          bounds = this._bounds[name] = Path[name](
+          bounds = this._bounds[name] = Path4444[name](
             [this._segment1, this._segment2],
             false,
             this._path
@@ -1239,7 +1246,9 @@ export const Curve = Base.extend(
      * @return {CurveLocation} the curve location at the specified the location
      */
     getLocationAtTime: function (t) {
-      return t != null && t >= 0 && t <= 1 ? new CurveLocation(this, t) : null;
+      return t != null && t >= 0 && t <= 1
+        ? new CurveLocation4444(this, t)
+        : null;
     },
 
     /**
@@ -1346,7 +1355,7 @@ export const Curve = Base.extend(
         values = this.getValues(),
         t = Curve.getNearestTime(values, point),
         pt = Curve.getPoint(values, t);
-      return new CurveLocation(this, t, pt, null, point.getDistance(pt));
+      return new CurveLocation4444(this, t, pt, null, point.getDistance(pt));
     },
 
     /**
@@ -1932,13 +1941,13 @@ export const Curve = Base.extend(
           t2 >= (excludeEnd ? tMin : 0) &&
           t2 <= (excludeStart ? tMax : 1)
         ) {
-          var loc1 = new CurveLocation(c1, t1, null, overlap),
-            loc2 = new CurveLocation(c2, t2, null, overlap);
+          var loc1 = new CurveLocation4444(c1, t1, null, overlap),
+            loc2 = new CurveLocation4444(c2, t2, null, overlap);
           // Link the two locations to each other.
           loc1._intersection = loc2;
           loc2._intersection = loc1;
           if (!include || include(loc1)) {
-            CurveLocation.insert(locations, loc1, true);
+            CurveLocation4444.insert(locations, loc1, true);
           }
         }
       }

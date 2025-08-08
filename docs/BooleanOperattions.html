@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Path Intersections</title>
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+    <style>
+      /* Scale canvas with resize attribute to full size */
+      canvas[resize] {
+        width: 100%;
+        height: 100%;
+        background-color: lightpink;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <table style="width: 150px; background-color: lightgray; margin: 0 auto">
+        <tr>
+          <td><a href="index.html"> home </a></td>
+          <td><a href="straps.html"> straps </a></td>
+          <td><a href="BooleanOperattions.html"> BooleanOperattions </a></td>
+        </tr>
+      </table>
+    </nav>
+    <header style="text-align: center"><h1>paper2 current version</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script type="module">
+      // import * as paper2 from "https://unpkg.com/paper2/paper2.esm.js";
+      import * as paper2 from "./paper2.esm.js";
+      window.paper = paper2.paper; // You can now easily play with this in DevTools
+
+      const defaultProject = new paper2.Project("myCanvas");
+
+      console.log("----defaultProject");
+      console.log(defaultProject);
+
+      var text = new paper2.PointText({
+        position: defaultProject.view.center + [0, 200],
+        fillColor: "black",
+        justification: "center",
+        fontSize: 20,
+      });
+
+      // var originals = new paper2.Group({ insert: false }); // Don't insert in DOM.
+      var originals = new paper2.Group({ insert: true });
+      console.log(originals);
+
+      var square = new paper2.Path.Rectangle({
+        position: defaultProject.view.center,
+        size: 300,
+        parent: originals,
+        // fillColor: "white",
+        fillColor: "red",
+      });
+
+      console.log(square);
+
+      // Make a ring using subtraction of two circles:
+      var inner = new paper2.Path.Circle({
+        center: defaultProject.view.center,
+        radius: 100,
+        parent: originals,
+        fillColor: "white",
+        // fillColor: "blue",
+      });
+
+      var outer = new paper2.Path.Circle({
+        center: defaultProject.view.center,
+        radius: 140,
+        parent: originals,
+        // fillColor: "white",
+        fillColor: "blue",
+      });
+
+      var ring = outer.subtract(inner);
+
+      var operations = ["unite", "intersect", "subtract", "exclude", "divide"];
+      var colors = ["red", "green", "blue", "black"];
+      var curIndex = -1;
+      var operation, result, activeItem;
+
+      function setMode() {
+        curIndex++;
+        if (curIndex == operations.length * 2) curIndex = 0;
+        operation = operations[curIndex % operations.length];
+      }
+
+      // Set the initial mode:
+      setMode();
+
+      // Change the mode every 3 seconds:
+      setInterval(setMode, 3000);
+
+      function onMouseDown(event) {
+        var hitResult = originals.hitTest(event.point);
+        console.log("=-=-=--=.hitResult =--==-=");
+        console.log(hitResult);
+        activeItem = hitResult && hitResult.item;
+      }
+
+      function onMouseDrag(event) {
+        if (activeItem) activeItem.position = event.point;
+      }
+
+      function onMouseUp() {
+        activeItem = null;
+        square.position = defaultProject.view.center;
+      }
+
+      function onFrame(event) {
+        console.log("=-=--=-");
+
+        if (activeItem != ring) {
+          // Move the ring around:
+          var offset =
+            new paper2.Point(140, 80) *
+            [Math.sin(event.count / 60), Math.sin(event.count / 40)];
+          ring.position = defaultProject.view.center + offset;
+        }
+
+        // Remove the result of the last path operation:
+        if (result) result.remove();
+
+        // Perform the path operation on the ring:
+        if (curIndex < operations.length) {
+          result = square[operation](ring);
+          text.content = "square." + operation + "(ring)";
+        } else {
+          result = ring[operation](square);
+          text.content = "ring." + operation + "(square)";
+        }
+        result.selected = true;
+        result.fillColor = colors[curIndex % colors.length];
+        result.moveBelow(text);
+
+        // If the result is a group, color each of its children differently:
+        if (result instanceof paper2.Group) {
+          for (var i = 0; i < result.children.length; i++) {
+            result.children[i].fillColor = colors[i];
+          }
+        }
+      }
+
+      function onResize() {
+        text.position = defaultProject.view.center + [0, 200];
+        square.position = defaultProject.view.center;
+      }
+    </script>
+  </body>
+</html>

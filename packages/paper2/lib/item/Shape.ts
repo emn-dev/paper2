@@ -10,15 +10,22 @@
  * All rights reserved.
  */
 
+import type { HitResult as HitResultType } from "./HitResult";
+import type { Path as PathType } from "../path/Path";
+
+import { Base } from "../straps";
 import { Point } from "../basic/Point";
 import { Rectangle } from "../basic/Rectangle";
 import { LinkedSize, Size } from "../basic/Size";
-import { Path } from "../path/Path";
-import { Base } from "../straps";
 import { Numerical } from "../util/Numerical";
 import { Change } from "./ChangeFlag";
-import { HitResult } from "./HitResult";
 import { Item } from "./Item";
+
+// import { HitResult } from "./HitResult";
+// import { Path } from "../path/Path";
+
+declare const HitResult4444: typeof HitResultType;
+declare const Path4444: typeof PathType;
 
 /**
  * @name Shape
@@ -180,7 +187,7 @@ export const Shape = Item.extend(
      */
     toPath: function (insert) {
       // TODO: Move to Path.createTYPE creators instead of fake constructors.
-      var path = new Path[Base.capitalize(this._type)]({
+      var path = new Path4444[Base.capitalize(this._type)]({
         center: new Point(),
         size: this._size,
         radius: this._radius,
@@ -308,7 +315,7 @@ export const Shape = Item.extend(
       if (matrix) rect = matrix._transformBounds(rect);
       return strokeWidth
         ? rect.expand(
-            Path._getStrokePadding(
+            Path4444._getStrokePadding(
               strokeWidth,
               this._getStrokeMatrix(matrix, options)
             )
@@ -391,7 +398,7 @@ export const Shape = Item.extend(
             radius = this._radius,
             strokeRadius = hitStroke ? style.getStrokeWidth() / 2 : 0,
             strokePadding = options._tolerancePadding.add(
-              Path._getStrokePadding(
+              Path4444._getStrokePadding(
                 strokeRadius,
                 !style.getStrokeScaling() && strokeMatrix
               )
@@ -422,7 +429,7 @@ export const Shape = Item.extend(
         // when testing for fill. The actual fill test happens in
         // Item#_hitTestSelf(), through its call of #_contains().
         return hit
-          ? new HitResult(hitStroke ? "stroke" : "fill", this)
+          ? new HitResult4444(hitStroke ? "stroke" : "fill", this)
           : (_hitTestSelf as any).base.apply(this, arguments);
       },
     };

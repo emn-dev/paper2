@@ -12,7 +12,7 @@
 
 import { Base } from "../straps";
 
-declare const paper: any;
+// declare const paper: any;
 
 /**
  * @name HitResult

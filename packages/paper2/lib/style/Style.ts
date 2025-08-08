@@ -19,7 +19,7 @@ import { CompoundPath } from "../path/CompoundPath";
 import { TextItem } from "../text/TextItem";
 import { Color } from "./Color";
 
-declare const paper: any;
+// declare const paper: any;
 
 /**
  * @name Style

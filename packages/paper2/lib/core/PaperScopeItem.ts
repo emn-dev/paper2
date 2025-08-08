@@ -10,9 +10,10 @@
  * All rights reserved.
  */
 
+import type { Project } from "../item/Project";
+
 import { Base } from "../straps";
 import { Emitter } from "../core/Emitter";
-import { Project } from "../item/Project";
 
 /**
  * @name PaperScopeItem
