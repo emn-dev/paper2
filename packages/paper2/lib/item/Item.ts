@@ -13,9 +13,24 @@
 import { Base } from "../straps";
 import { Emitter } from "../core/Emitter";
 import { Matrix } from "../basic/Matrix";
+import { Point, LinkedPoint } from "../basic/Point";
+import { Rectangle, LinkedRectangle } from "../basic/Rectangle";
+import { Size } from "../basic/Size";
 import { Numerical } from "../util/Numerical";
+import { UID } from "../util/UID";
+import { Path } from "../path/Path";
+import { CompoundPath } from "../path/CompoundPath";
+import { Style } from "../style/Style";
+import { BlendMode } from "../canvas/BlendMode";
+import { CanvasProvider } from "../canvas/CanvasProvider";
 import { Change, ChangeFlag } from "../item/ChangeFlag";
+import { Tween } from "../anim/Tween";
 import { ItemSelection } from "./ItemSelection";
+import { Group } from "./Group";
+import { Layer } from "./Layer";
+import { HitResult } from "./HitResult";
+import { Raster } from "./Raster";
+import { Project } from "./Project";
 
 declare const paper: any;
 
@@ -170,6 +185,7 @@ export const Item = Base.extend(
         // Allow setting another project than the currently active one.
         project = (hasProps && props.project) || paper.project,
         settings = paper.settings;
+      // @ts-expect-error = Expected 1 arguments, but got 0
       this._id = internal ? null : UID.get();
       this._parent = this._index = null;
       // Inherit the applyMatrix setting from settings.applyMatrix
@@ -1030,6 +1046,7 @@ export const Item = Base.extend(
           if (!bounds) {
             this._bounds = bounds = {};
           }
+          // @ts-expect-error = Item.ts(1017, 15): 'cached' was also declared here.
           var cached = (bounds[cacheKey] = {
             rect: rect.clone(),
             nonscaling: nonscaling,
@@ -1440,7 +1457,7 @@ export const Item = Base.extend(
      * children.
      */
     _installEvents: function _installEvents(install) {
-      _installEvents.base.call(this, install);
+      (_installEvents as any).base.call(this, install);
       var children = this._children;
       for (var i = 0, l = children && children.length; i < l; i++)
         children[i]._installEvents(install);
@@ -2202,6 +2219,7 @@ export const Item = Base.extend(
           bounds = this.getInternalBounds();
         }
         res =
+          // @ts-expect-error = Expected 2 arguments, but got 1
           (checkPosition && checkPoint("position")) ||
           (checkCenter && checkPoint("center", "Center"));
         if (!res && checkBounds) {
@@ -4554,6 +4572,7 @@ export const Item = Base.extend(
         // Set ctx to the context of the temporary canvas, so we draw onto
         // it, instead of the mainCtx.
         mainCtx = ctx;
+        // @ts-expect-error = Expected 3 arguments, but got 1
         ctx = CanvasProvider.getContext(
           bounds.getSize().ceil().add(1).multiply(pixelRatio)
         );
@@ -4667,6 +4686,7 @@ export const Item = Base.extend(
           selection & /*#=*/ ItemSelection.BOUNDS ||
           (itemSelected && this._selectBounds),
         positionSelected = selection & /*#=*/ ItemSelection.POSITION;
+      // @ts-expect-error = 'boolean' is not assignable to type 'number'
       if (!this._drawSelected) itemSelected = false;
       if (
         (itemSelected || boundsSelected || positionSelected) &&

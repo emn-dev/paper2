@@ -13,6 +13,7 @@
 import { Base } from "../straps";
 import { Formatter } from "../util/Formatter";
 import { Layer } from "../item/Layer";
+import { Item } from "../item/Item";
 
 /**
  * @name Base
@@ -701,11 +702,8 @@ Base.inject(
           for (var i = 0, l = removed.length; i < l; i++)
             removed[i]._index = undefined;
           // Adjust the indices of the items above.
-          for (
-            var i = (index as number) + (amount as number), l = list.length;
-            i < l;
-            i++
-          )
+          // @ts-expect-error = Subsequent variable declarations must have the same type
+          for (var i = index + amount, l = list.length; i < l; i++)
             list[i]._index = i;
           return removed;
         }

@@ -12,6 +12,7 @@
 
 import { Base } from "../straps";
 import { ChangeFlag } from "./ChangeFlag";
+import { Item } from "./Item";
 
 /**
  * @name Group
