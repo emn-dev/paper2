@@ -266,7 +266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.11.0, acorn@npm:^8.4.1":
+"acorn@npm:^8.11.0, acorn@npm:^8.4.1, acorn@npm:~8.15.0":
   version: 8.15.0
   resolution: "acorn@npm:8.15.0"
   bin:
@@ -403,6 +403,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "paper2@workspace:packages/paper2"
   dependencies:
+    acorn: "npm:~8.15.0"
     esbuild: "npm:0.25.8"
   languageName: unknown
   linkType: soft

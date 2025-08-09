@@ -11,7 +11,6 @@
         background-color: lightgray;
       }
     </style>
-    <!-- <script src="https://unpkg.com/paper@0.12.18/dist/paper-full.js"></script> -->
   </head>
   <body>
     <nav>
@@ -24,49 +23,40 @@
         </tr>
       </table>
     </nav>
-    <header style="text-align: center"><h1>paper2 current version</h1></header>
+    <header style="text-align: center"><h1>Boolean Operations</h1></header>
     <main>
       <canvas id="myCanvas" resize></canvas>
     </main>
-    <!-- <script canvas="myCanvas" type="text/paperscript"> -->
-    <script type="module">
-      import * as paper2Module from "https://unpkg.com/paper2/paper2.esm.js";
-      // import * as paper2Module from "./paper2.esm.js";
-      window.paper = paper2Module.paper;
-      // paper.install(window);
-      paper.setup("myCanvas");
-
-      var text = new paper.PointText({
-        position: paper.view.center + [0, 200],
+    <script canvas="myCanvas" type="text/paperscript">
+      var text = new PointText({
+        position: view.center + [0, 200],
         fillColor: "black",
         justification: "center",
         fontSize: 20,
       });
 
-      var originals = new paper.Group({ insert: false }); // Don't insert in DOM.
+      var originals = new Group({ insert: false }); // Don't insert in DOM.
 
-      var square = new paper.Path.Rectangle({
-        position: paper.view.center,
+      var square = new Path.Rectangle({
+        position: view.center,
         size: 300,
         parent: originals,
-        fillColor: new paper.Color("red"),
+        fillColor: new Color("white"),
       });
 
       // Make a ring using subtraction of two circles:
-      var inner = new paper.Path.Circle({
-        center: paper.view.center,
+      var inner = new Path.Circle({
+        center: view.center,
         radius: 100,
         parent: originals,
-        // fillColor: "blue",
-        fillColor: new paper.Color("blue"),
+        fillColor: new Color("white"),
       });
 
-      var outer = new paper.Path.Circle({
-        center: paper.view.center,
+      var outer = new Path.Circle({
+        center: view.center,
         radius: 140,
         parent: originals,
-        // fillColor: "green",
-        fillColor: new paper.Color("green"),
+        fillColor: new Color("white"),
       });
 
       var ring = outer.subtract(inner);
@@ -99,20 +89,17 @@
 
       function onMouseUp() {
         activeItem = null;
-        square.position = paper.view.center;
+        square.position = view.center;
       }
 
       function onFrame(event) {
         if (activeItem != ring) {
           // Move the ring around:
           var offset =
-            new paper.Point(140, 80) *
+            new Point(140, 80) *
             [Math.sin(event.count / 60), Math.sin(event.count / 40)];
-          ring.position = paper.view.center + offset;
+          ring.position = view.center + offset;
         }
-
-        // console.log("=as-df=as-fs=daasf");
-        // console.log(result);
 
         // Remove the result of the last path operation:
         if (result) result.remove();
@@ -130,24 +117,21 @@
         result.moveBelow(text);
 
         // If the result is a group, color each of its children differently:
-        if (result instanceof paper.Group) {
+        if (result instanceof Group) {
           for (var i = 0; i < result.children.length; i++) {
             result.children[i].fillColor = colors[i];
           }
         }
-        // paper.view.draw();
       }
 
       function onResize() {
-        text.position = paper.view.center + [0, 200];
-        square.position = paper.view.center;
+        text.position = view.center + [0, 200];
+        square.position = view.center;
       }
-
-      paper.view.onFrame = onFrame;
-      paper.view.onResize = onResize;
-      paper.view.onMouseDown = onMouseDown;
-      paper.view.onMouseDrag = onMouseDrag;
-      paper.view.onMouseUp = onMouseUp;
+    </script>
+    <script type="module">
+      import * as paper2Module from "https://unpkg.com/paper2/paper2-full.esm.js";
+      // import * as paper2Module from "./paper2-full.esm.js";
     </script>
   </body>
 </html>

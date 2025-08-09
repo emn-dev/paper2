@@ -69,7 +69,7 @@ http
     const uri = parse(req.url).pathname;
     let resource = join(cwd, root, decodeURI(uri));
 
-    if (uri.endsWith("paper2.esm.js")) {
+    if (uri.endsWith(".esm.js")) {
       resource = resource.replace("/docs/", "/packages/paper2/dist/");
     }
 

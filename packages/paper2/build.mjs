@@ -1,68 +1,92 @@
 /* eslint-disable no-console */
-import { rmSync, writeFileSync, readFileSync } from 'node:fs';
-import { execSync } from 'node:child_process';
-import 'dotenv/config';
-import * as esbuild from 'esbuild';
-import pkg from './package.json' with { type: 'json' };
+import { rmSync, writeFileSync, readFileSync } from "node:fs";
+import { execSync } from "node:child_process";
+import "dotenv/config";
+import * as esbuild from "esbuild";
+// import pkg from './package.json' with { type: 'json' };
 
-const buildDir = 'dist';
-const fileBaseName = 'paper2-pre';
+const buildDir = "dist";
+const coreBaseName = "paper2-core-pre";
+const fullBaseName = "paper2-full-pre";
 
-rmSync(buildDir, { force: true, recursive: true })
+rmSync(buildDir, { force: true, recursive: true });
 
 const sharedOpts = {
-  entryPoints: ['lib/index.ts'],
+  entryPoints: ["lib/index.ts"],
   // sourcemap: true,
   sourcemap: false,
   bundle: true,
   allowOverwrite: true,
   define: {
     // GITHUB_REF: 'refs/tags/v1.0.15',
-    'process.env.PACKAGE_VERSION': `'${process.env.GITHUB_REF?.replace('refs/tags/', '')}'`,
+    "process.env.PACKAGE_VERSION": `'${process.env.GITHUB_REF?.replace(
+      "refs/tags/",
+      ""
+    )}'`,
   },
 };
 
-const external = [];
+// const external = [];
+// if(pkg.dependencies) external.push(...Object.keys(pkg.dependencies));
 
-if(pkg.dependencies) external.push(...Object.keys(pkg.dependencies));
-
-const browserOpts = {
-  ...sharedOpts,
-  outfile: `${buildDir}/${fileBaseName}.esm.js`,
-  platform: 'browser',
-  format: 'esm',
-  external: external.concat('events')
+const browserCoreOpts = {
+  ...structuredClone(sharedOpts),
+  outfile: `${buildDir}/${coreBaseName}.esm.js`,
+  platform: "browser",
+  format: "esm",
 };
+
+const browserFullOpts = {
+  ...structuredClone(sharedOpts),
+  outfile: `${buildDir}/${fullBaseName}.esm.js`,
+  platform: "browser",
+  format: "esm",
+};
+
+browserCoreOpts.define["process.env.PAPER2_FULL"] = "false";
+browserFullOpts.define["process.env.PAPER2_FULL"] = "true";
 
 // const nodeOpts = {
 //   ...sharedOpts,
 //   outfile: `${buildDir}/${fileBaseName}.cjs.js`,
 //   platform: 'node',
-//   external,
 // };
 
-if (process.env.IS_BUILD === 'true') {
-  // browserOpts.sourcemap = true;
-  // nodeOpts.sourcemap = true;
-  await esbuild.build(browserOpts);
+if (process.env.IS_BUILD === "true") {
+  await esbuild.build(browserCoreOpts);
+  await esbuild.build(browserFullOpts);
   // await esbuild.build(nodeOpts);
 
-  const rawFile = readFileSync("./dist/paper2-pre.esm.js", { encoding: "utf-8" });
+  const rawFile = readFileSync(`./dist/${coreBaseName}.esm.js`, {
+    encoding: "utf-8",
+  });
   const fixedFile = rawFile.replaceAll("4444", "");
-  writeFileSync("./dist/paper2.esm.js", fixedFile);
-  rmSync("./dist/paper2-pre.esm.js", { force: true, recursive: true })
+  writeFileSync(`./dist/${coreBaseName.replace("-pre", "")}.esm.js`, fixedFile);
+  rmSync(`./dist/${coreBaseName}.esm.js`, { force: true, recursive: true });
 
+  const rawFileFull = readFileSync(`./dist/${fullBaseName}.esm.js`, {
+    encoding: "utf-8",
+  });
+  const fixedFileFull = rawFileFull.replaceAll("4444", "");
+  writeFileSync(
+    `./dist/${fullBaseName.replace("-pre", "")}.esm.js`,
+    fixedFileFull
+  );
+  rmSync(`./dist/${fullBaseName}.esm.js`, { force: true, recursive: true });
 } else {
-  const ctxBrowser = await esbuild.context(browserOpts);
-  await ctxBrowser.watch();
+  const ctxBrowserCore = await esbuild.context(browserCoreOpts);
+  await ctxBrowserCore.watch();
+
+  const ctxBrowserFull = await esbuild.context(browserFullOpts);
+  await ctxBrowserFull.watch();
 
   // const ctxNode = await esbuild.context(nodeOpts);
   // await ctxNode.watch();
 }
 
 try {
-  execSync('npx tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
-} catch(err){
-  console.log('build.mjs-npx-tsc-ERROR');
+  execSync("npx tsc --project tsconfig.esbuild.json", { stdio: "inherit" });
+} catch (err) {
+  console.log("build.mjs-npx-tsc-ERROR");
   console.log(err);
 }

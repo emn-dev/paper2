@@ -20,6 +20,9 @@
     "build-dep": "IS_BUILD=true node build.mjs",
     "serve": "node build.mjs"
   },
+  "dependencies": {
+    "acorn": "~8.15.0"
+  },
   "devDependencies": {
     "esbuild": "0.25.8"
   }

@@ -137,7 +137,7 @@ import "./net/Http";
 import "./canvas/CanvasProvider";
 import "./canvas/BlendMode";
 
-// import "./core/PaperScript";
+import "./core/PaperScript";
 
 export const paper = new (PaperScope.inject(Base.exports, {
   Base: Base,
