@@ -22,6 +22,7 @@ jobs:
       # Only set package version when creating a release, otherwise the version is 0.0.0 in the main branch
       - run: corepack enable
       - run: yarn install
+      - run: yarn test:unit:pipeline
       - run: yarn set-ver ${{ github.ref_name }}
       # - run: npm --no-git-tag-version version ${{ github.ref_name }}
       # - run: npm ci

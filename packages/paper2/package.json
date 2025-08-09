@@ -18,12 +18,15 @@
   "scripts": {
     "postinstall": "yarn build-dep",
     "build-dep": "IS_BUILD=true node build.mjs",
-    "serve": "node build.mjs"
+    "serve": "node build.mjs",
+    "test:unit": "vitest",
+    "test:unit:pipeline": "vitest run"
   },
   "dependencies": {
     "acorn": "~8.15.0"
   },
   "devDependencies": {
-    "esbuild": "0.25.8"
+    "esbuild": "0.25.8",
+    "vitest": "^3.2.4"
   }
 }
