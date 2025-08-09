@@ -2,64 +2,51 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Path Intersections</title>
+    <title>Chain</title>
     <style>
+      /* Scale canvas with resize attribute to full size */
       canvas[resize] {
         width: 100%;
         height: 100%;
+        background-color: lightgray;
       }
     </style>
-    <!-- <script src="https://unpkg.com/paper@0.12.18/dist/paper-full.js"></script> -->
-    <!-- <script src="https://unpkg.com/acorn@8.15.0/dist/acorn.js"></script> -->
-    <script type="module" src="./paper2.esm.js"></script>
-    <script>
-      // paper.install(window);
-    </script>
-    <!-- <script type="module">
-      // import * as paper2 from "https://unpkg.com/paper2/paper2.esm.js";
-      import * as paper2 from "./paper2.esm.js";
-      window.paper = paper2.paper; // You can now easily play with this in DevTools
-    </script> -->
   </head>
   <body>
     <nav>
-      <table style="width: 150px; background-color: lightgray; margin: 0 auto">
+      <table style="width: 350px; background-color: lightgray; margin: 0 auto">
         <tr>
-          <td><a href="index.html"> home </a></td>
-          <td><a href="straps.html"> straps </a></td>
-          <td><a href="simple.html"> simple </a></td>
-          <td><a href="BooleanOperattions.html"> BooleanOperattions </a></td>
+          <td><a href="index.html">home</a>&nbsp;|&nbsp;</td>
+          <td><a href="straps.html">straps</a>&nbsp;|&nbsp;</td>
+          <td><a href="simple.html">simple</a>&nbsp;|&nbsp;</td>
+          <td><a href="booleanOps.html">Boolean Operations</a>&nbsp;|&nbsp;</td>
+          <td><a href="chain.html">Chain</a></td>
         </tr>
       </table>
     </nav>
-    <header style="text-align: center"><h1>chain</h1></header>
+    <header style="text-align: center"><h1>Chain</h1></header>
     <main>
       <canvas id="myCanvas" resize></canvas>
     </main>
-
     <script canvas="myCanvas" type="text/paperscript">
-      // type="text/paperscript"
-      // // import * as paper2 from "https://unpkg.com/paper2/paper2.esm.js";
-      // import * as paper2Module from "./paper2.esm.js";
-      // window.paper = paper2Module.paper;
-
-      // paper.setup("myCanvas");
+      // Adapted from the following Processing example:
+      // http://processing.org/learning/topics/follow3.html
 
       // The amount of points in the path:
       var points = 25;
+
       // The distance between the points:
       var length = 35;
 
       var path = new Path({
-        strokeColor: "red",
+        strokeColor: "#E4141B",
         strokeWidth: 20,
         strokeCap: "round",
       });
 
       var start = view.center / [10, 1];
-      for (var i = 0; i < points; i++) {
+      for (var i = 0; i < points; i++)
         path.add(start + new Point(i * length, 0));
-      }
 
       function onMouseMove(event) {
         path.firstSegment.point = event.point;
@@ -82,12 +69,10 @@
         path.fullySelected = false;
         path.strokeColor = "#e4141b";
       }
-
-      // const tool = new Tool();
-
-      view.onMouseMove = onMouseMove;
-      view.onMouseDown = onMouseDown;
-      view.onMouseUp = onMouseUp;
+    </script>
+    <script type="module">
+      import * as paper2Module from "https://unpkg.com/paper2/paper2-full.esm.js";
+      // import * as paper2Module from "./paper2-full.esm.js";
     </script>
   </body>
 </html>

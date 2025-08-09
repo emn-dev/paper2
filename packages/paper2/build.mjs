@@ -16,6 +16,7 @@ const sharedOpts = {
   // sourcemap: true,
   sourcemap: false,
   bundle: true,
+  // minify: true, // Cannot do this :(
   allowOverwrite: true,
   define: {
     // GITHUB_REF: 'refs/tags/v1.0.15',
