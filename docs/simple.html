@@ -34,16 +34,17 @@
 
       paper.setup("myCanvas");
 
+      const DELAY = 1_000; // 1 second
       let spinSpeed = 1;
 
       setInterval(() => {
         spinSpeed += 1;
         if (spinSpeed > 9) spinSpeed = 1;
-      }, 1_000);
+      }, DELAY);
 
       const path = new paper.Path.Rectangle({
-        point: [75, 75],
-        size: [75, 75],
+        point: [300, 100],
+        size: [150, 150],
         strokeColor: "black",
       });
 
