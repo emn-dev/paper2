@@ -19,6 +19,7 @@
     "postinstall": "yarn build-dep",
     "build-dep": "IS_BUILD=true node build.mjs",
     "serve": "node build.mjs",
+    "serve:watch": "node ./build.serve.watch.mjs",
     "test:unit": "vitest",
     "test:unit:pipeline": "vitest run"
   },
