@@ -11,27 +11,16 @@
         background-color: lightgray;
       }
     </style>
-    <!-- <link rel="stylesheet" href="../css/style.css" /> -->
-    <!-- <script type="text/javascript" src="../../dist/paper-full.js"></script> -->
-    <!-- <script
-      type="text/javascript"
-      src="https://unpkg.com/paper@0.12.18/dist/paper-full.js"
-    ></script> -->
     <!-- <script src="https://unpkg.com/paper@0.12.18/dist/paper-full.js"></script> -->
-    <script type="module">
-      // import * as paper2 from "https://unpkg.com/paper2/paper2.esm.js";
-      import * as paper2 from "./paper2.esm.js";
-      window.paper = paper2.paper; // You can now easily play with this in DevTools
-    </script>
   </head>
   <body>
     <nav>
-      <table style="width: 150px; background-color: lightgray; margin: 0 auto">
+      <table style="width: 300px; background-color: lightgray; margin: 0 auto">
         <tr>
-          <td><a href="index.html"> home </a></td>
-          <td><a href="straps.html"> straps </a></td>
-          <td><a href="simple.html"> simple </a></td>
-          <td><a href="BooleanOperattions.html"> BooleanOperattions </a></td>
+          <td><a href="index.html">home</a>&nbsp;|&nbsp;</td>
+          <td><a href="straps.html">straps</a>&nbsp;|&nbsp;</td>
+          <td><a href="simple.html">simple</a>&nbsp;|&nbsp;</td>
+          <td><a href="BooleanOperattions.html">BooleanOperattions</a></td>
         </tr>
       </table>
     </nav>
@@ -39,16 +28,14 @@
     <main>
       <canvas id="myCanvas" resize></canvas>
     </main>
-    <!-- <script> -->
-    <script canvas="myCanvas" type="text/paperscript">
+    <!-- <script canvas="myCanvas" type="text/paperscript"> -->
+    <script type="module">
+      // import * as paper2Module from "https://unpkg.com/paper2/paper2.esm.js";
+      import * as paper2Module from "./paper2.esm.js";
+      window.paper = paper2Module.paper;
       // paper.install(window);
-      //   console.log("asdfasdf");
-      //   console.log(window.paper);
-      //   const paper = new paper.Project("myCanvas");
-      // var canvas = document.getElementById("myCanvas");
-      // const aaa = paper.setup("myCanvas");
-      // const paper = new paper.Project("myCanvas");
-      // console.log(aaa);
+      paper.setup("myCanvas");
+
       var text = new paper.PointText({
         position: paper.view.center + [0, 200],
         fillColor: "black",
@@ -62,7 +49,7 @@
         position: paper.view.center,
         size: 300,
         parent: originals,
-        fillColor: "gray",
+        fillColor: new paper.Color("red"),
       });
 
       // Make a ring using subtraction of two circles:
@@ -70,14 +57,16 @@
         center: paper.view.center,
         radius: 100,
         parent: originals,
-        fillColor: "blue",
+        // fillColor: "blue",
+        fillColor: new paper.Color("blue"),
       });
 
       var outer = new paper.Path.Circle({
         center: paper.view.center,
         radius: 140,
         parent: originals,
-        fillColor: "green",
+        // fillColor: "green",
+        fillColor: new paper.Color("green"),
       });
 
       var ring = outer.subtract(inner);
@@ -152,20 +141,13 @@
       function onResize() {
         text.position = paper.view.center + [0, 200];
         square.position = paper.view.center;
-        console.log("=a-sdf=-asdf");
-        console.log(text);
       }
-
-      //   const tool = new paper.Tool();
-
-      //   tool.onMouseDown = onMouseDown;
-      //   tool.onMouseDrag = onMouseDrag;
-      //   tool.onMouseUp = onMouseUp;
 
       paper.view.onFrame = onFrame;
       paper.view.onResize = onResize;
-
-      // paper.view.draw();
+      paper.view.onMouseDown = onMouseDown;
+      paper.view.onMouseDrag = onMouseDrag;
+      paper.view.onMouseUp = onMouseUp;
     </script>
   </body>
 </html>

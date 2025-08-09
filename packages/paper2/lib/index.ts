@@ -154,6 +154,4 @@ export const paper = new (PaperScope.inject(Base.exports, {
   PlacedSymbol: SymbolItem,
 }))();
 
-export * from "./version";
 export * from "./straps";
-// export * from "./core/Base";
