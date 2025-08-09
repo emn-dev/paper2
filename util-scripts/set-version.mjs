@@ -16,7 +16,7 @@ delete pkgJsonObj.scripts.postinstall; // We do not want this running on end-use
 
 writeFileSync(
   "./packages/paper2/dist/package.json",
-  JSON.stringify(pkgJsonObj)
+  JSON.stringify(pkgJsonObj, null, "  ")
 );
 
 cpSync("./README.md", "./packages/paper2/dist/README.md");

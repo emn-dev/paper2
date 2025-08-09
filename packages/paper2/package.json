@@ -3,8 +3,8 @@
   "license": "https://github.com/emn-dev/paper2/blob/main/LICENSE",
   "description": "The essence of paper.js wrapped in modern tooling.",
   "version": "0.0.0",
-  "main": "dist/paper2.cjs.js",
-  "module": "dist/paper2.esm.js",
+  "main": "dist/paper2-core.esm.js",
+  "module": "dist/paper2-core.esm.js",
   "types": "dist/@types/index.d.ts",
   "author": "emn-dev",
   "repository": {
