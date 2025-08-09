@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Paper2 Docs</title>
+    <title>Path Intersections</title>
+    <style>
+      canvas[resize] {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
   </head>
   <body>
     <nav>
@@ -16,18 +21,31 @@
         </tr>
       </table>
     </nav>
-    <header style="text-align: center"><h1>paper2 current version</h1></header>
+    <header style="text-align: center"><h1>simple spinner</h1></header>
     <main>
-      <h2 id="showVersion" style="text-align: center">...</h2>
+      <canvas id="myCanvas" resize></canvas>
     </main>
-
     <script type="module">
       // import * as paper2Module from "https://unpkg.com/paper2/paper2.esm.js";
       import * as paper2Module from "./paper2.esm.js";
       window.paper = paper2Module.paper;
-      console.log(window.paper); // Easy access for playing with in DevTools
-      const showVersionEle = document.getElementById("showVersion");
-      showVersionEle.innerHTML = paper.version;
+
+      paper.setup("myCanvas");
+
+      let spinSpeed = 1;
+
+      setInterval(() => {
+        spinSpeed += 1;
+        if (spinSpeed > 9) spinSpeed = 1;
+      }, 1_000);
+
+      const path = new paper.Path.Rectangle({
+        point: [75, 75],
+        size: [75, 75],
+        strokeColor: "black",
+      });
+
+      paper.view.onFrame = () => path.rotate(spinSpeed);
     </script>
   </body>
 </html>

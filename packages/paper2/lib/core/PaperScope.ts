@@ -10,11 +10,25 @@
  * All rights reserved.
  */
 
-import { BlendMode } from "../canvas/BlendMode";
-import { CanvasProvider } from "../canvas/CanvasProvider";
-import { Project } from "../item/Project";
-import { View } from "../view/View";
+import type { BlendMode as BlendModeType } from "../canvas/BlendMode";
+import type { CanvasProvider as CanvasProviderType } from "../canvas/CanvasProvider";
+import type { Project as ProjectType } from "../item/Project";
+import type { View as ViewType } from "../view/View";
+
 import { Base } from "../straps";
+import { __options } from "../options";
+
+// import { BlendMode } from "../canvas/BlendMode";
+// import { CanvasProvider } from "../canvas/CanvasProvider";
+// import { Project } from "../item/Project";
+// import { View } from "../view/View";
+
+declare const BlendMode4444: typeof BlendModeType;
+declare const CanvasProvider4444: typeof CanvasProviderType;
+declare const Project4444: typeof ProjectType;
+declare const View4444: typeof ViewType;
+
+declare let paper4444;
 
 /**
  * @name PaperScope
@@ -53,8 +67,7 @@ export const PaperScope = Base.extend(
       // element is only used internally when creating scopes for PaperScript.
       // Whenever a PaperScope is created, it automatically becomes the active
       // one.
-      // @ts-expect-error = Cannot find name 'paper'
-      paper = this;
+      paper4444 = this;
       // Default configurable settings.
       this.settings = new Base({
         applyMatrix: true,
@@ -75,12 +88,12 @@ export const PaperScope = Base.extend(
         // Set up paper.support, as an object containing properties that
         // describe the support of various features.
         // @ts-expect-error = Expected 3 arguments, but got 2
-        var ctx = CanvasProvider.getContext(1, 1) || {};
+        var ctx = CanvasProvider4444.getContext(1, 1) || {};
         proto.support = {
           nativeDash: "setLineDash" in ctx || "mozDash" in ctx,
-          nativeBlendModes: BlendMode.nativeModes,
+          nativeBlendModes: BlendMode4444.nativeModes,
         };
-        CanvasProvider.release(ctx);
+        CanvasProvider4444.release(ctx);
       }
       if (!this.agent) {
         // Use self.instead of window, to cover handle web-workers too.
@@ -122,7 +135,6 @@ export const PaperScope = Base.extend(
      * @type String
      * @readonly
      */
-    // @ts-expect-error = Cannot find name '__options'.
     version: /*#=*/ __options.version,
 
     /**
@@ -213,11 +225,9 @@ export const PaperScope = Base.extend(
      * @param {Object} [options] the compilation options
      */
     execute: function (code, options) {
-      // @ts-expect-error = Cannot find name '__options'.
       /*#*/ if (__options.paperScript) {
-        // @ts-expect-error = Cannot find name 'paper'
-        var exports = paper.PaperScript.execute(code, this, options);
-        View.updateFocus();
+        var exports = paper4444.PaperScript.execute(code, this, options);
+        View4444.updateFocus();
         return exports;
         /*#*/
       }
@@ -269,17 +279,16 @@ export const PaperScope = Base.extend(
     setup: function (element) {
       // Make sure this is the active scope, so the created project and view
       // are automatically associated with it.
-      // @ts-expect-error = Cannot find name 'paper'
-      paper = this;
+      paper4444 = this;
       // Create an empty project for the scope.
-      this.project = new Project(element);
+      this.project = new Project4444(element);
       // This is needed in PaperScript.load().
       return this;
     },
 
     createCanvas: function (width, height) {
       // @ts-expect-error = Expected 3 arguments, but got 2
-      return CanvasProvider.getCanvas(width, height);
+      return CanvasProvider4444.getCanvas(width, height);
     },
 
     /**
@@ -287,8 +296,7 @@ export const PaperScope = Base.extend(
      * in its active project.
      */
     activate: function () {
-      // @ts-expect-error = Cannot find name 'paper'
-      paper = this;
+      paper4444 = this;
     },
 
     clear: function () {

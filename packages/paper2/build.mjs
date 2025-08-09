@@ -1,18 +1,19 @@
 /* eslint-disable no-console */
-import { rmSync } from 'node:fs';
+import { rmSync, writeFileSync, readFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import 'dotenv/config';
 import * as esbuild from 'esbuild';
 import pkg from './package.json' with { type: 'json' };
 
 const buildDir = 'dist';
-const fileBaseName = 'paper2';
+const fileBaseName = 'paper2-pre';
 
-rmSync(buildDir, { force:true, recursive:true })
+rmSync(buildDir, { force: true, recursive: true })
 
 const sharedOpts = {
   entryPoints: ['lib/index.ts'],
-  sourcemap: true,
+  // sourcemap: true,
+  sourcemap: false,
   bundle: true,
   allowOverwrite: true,
   define: {
@@ -33,22 +34,30 @@ const browserOpts = {
   external: external.concat('events')
 };
 
-const nodeOpts = {
-  ...sharedOpts,
-  outfile: `${buildDir}/${fileBaseName}.cjs.js`,
-  platform: 'node',
-  external,
-};
+// const nodeOpts = {
+//   ...sharedOpts,
+//   outfile: `${buildDir}/${fileBaseName}.cjs.js`,
+//   platform: 'node',
+//   external,
+// };
 
 if (process.env.IS_BUILD === 'true') {
+  // browserOpts.sourcemap = true;
+  // nodeOpts.sourcemap = true;
   await esbuild.build(browserOpts);
-  await esbuild.build(nodeOpts);
+  // await esbuild.build(nodeOpts);
+
+  const rawFile = readFileSync("./dist/paper2-pre.esm.js", { encoding: "utf-8" });
+  const fixedFile = rawFile.replaceAll("4444", "");
+  writeFileSync("./dist/paper2.esm.js", fixedFile);
+  rmSync("./dist/paper2-pre.esm.js", { force: true, recursive: true })
+
 } else {
   const ctxBrowser = await esbuild.context(browserOpts);
   await ctxBrowser.watch();
 
-  const ctxNode = await esbuild.context(nodeOpts);
-  await ctxNode.watch();
+  // const ctxNode = await esbuild.context(nodeOpts);
+  // await ctxNode.watch();
 }
 
 try {

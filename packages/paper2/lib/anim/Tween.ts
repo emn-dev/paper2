@@ -13,7 +13,7 @@
 import { Base } from "../straps";
 import { Emitter } from "../core/Emitter";
 
-declare const paper: any;
+declare let paper4444;
 
 /**
  * @name Tween
@@ -368,7 +368,7 @@ export const Tween = Base.extend(
     },
 
     _calculate: function (left, operator, right) {
-      return paper.PaperScript.calculateBinary(left, operator, right);
+      return paper4444.PaperScript.calculateBinary(left, operator, right);
     },
 
     _parseKeys: function (keys) {

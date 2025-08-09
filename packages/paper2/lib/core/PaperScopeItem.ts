@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
+import type { Project } from "../item/Project";
+
 import { Base } from "../straps";
 import { Emitter } from "../core/Emitter";
-import { Project } from "../item/Project";
+
+declare let paper4444;
 
 /**
  * @name PaperScopeItem
@@ -31,8 +34,7 @@ export const PaperScopeItem = Base.extend(
      */
     initialize: function (activate) {
       // Store reference to the currently active global paper scope:
-      // @ts-expect-error = Cannot find name 'paper'
-      this._scope = paper;
+      this._scope = paper4444;
       // Push it onto this._scope[this._list] and set _index:
       this._index = this._scope[this._list].push(this) - 1;
       // If the project has no active reference, activate this one

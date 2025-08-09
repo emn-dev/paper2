@@ -10,13 +10,18 @@
  * All rights reserved.
  */
 
+import type { Layer as LayerType } from "../item/Layer";
+import type { Item as ItemType } from "../item/Item";
+import type { Formatter as FormatterType } from "../util/Formatter";
+
 import { Base } from "../straps";
-import { Formatter } from "../util/Formatter";
 // import { Formatter } from "../util/Formatter";
 // import { Layer } from "../item/Layer";
 // import { Item } from "../item/Item";
 
-// declare const Formatter: any;
+declare const Layer4444: typeof LayerType;
+declare const Item4444: typeof ItemType;
+declare const Formatter4444: typeof FormatterType;
 
 /**
  * @name Base
@@ -46,7 +51,8 @@ Base.inject(
                     key +
                       ": " +
                       (type === "number"
-                        ? Formatter.instance.number(value)
+                        ? // ? Formatter.instance.number(value)
+                          Formatter4444.instance.number(value)
                         : type === "string"
                         ? "'" + value + "'"
                         : value)
@@ -468,7 +474,8 @@ Base.inject(
         var isRoot = !dictionary,
           res;
         if (isRoot) {
-          options.formatter = new Formatter(options.precision);
+          // options.formatter = new Formatter(options.precision);
+          options.formatter = new Formatter4444(options.precision);
           // Create a simple dictionary object that handles all the storing
           // and retrieving of dictionary definitions and references, e.g. for
           // symbols and gradients. Items that want to support this need to
@@ -633,8 +640,8 @@ Base.inject(
             // target layer).
             if (
               args.length === 1 &&
-              obj instanceof Item &&
-              (useTarget || !(obj instanceof Layer))
+              obj instanceof Item4444 &&
+              (useTarget || !(obj instanceof Layer4444))
             ) {
               var arg = args[0];
               if (Base.isPlainObject(arg)) {
@@ -644,7 +651,7 @@ Base.inject(
                 // property that was just set. Pass an exclude
                 // object to the call of `obj.set()` below (#1392).
                 if (useTarget) {
-                  args = args.concat([Item.INSERT]);
+                  args = args.concat([Item4444.INSERT]);
                 }
               }
             }

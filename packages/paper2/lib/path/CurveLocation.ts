@@ -9,11 +9,10 @@
  *
  * All rights reserved.
  */
-
+import type { Path } from "./Path";
 import { Base } from "../straps";
 import { Numerical } from "../util/Numerical";
 import { Formatter } from "../util/Formatter";
-import { Path } from "./Path";
 import { Curve } from "./Curve";
 
 /**

@@ -5,7 +5,7 @@
     "target": "es2022",
     "module": "commonjs",
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "declarationDir": "./dist/@types",
     "strict": false,
     "allowJs": false,

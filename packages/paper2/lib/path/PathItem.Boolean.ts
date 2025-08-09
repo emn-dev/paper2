@@ -10,16 +10,16 @@
  * All rights reserved.
  */
 
-import { Item } from "../item/Item";
 import { Base } from "../straps";
+import { Item } from "../item/Item";
 import { CollisionDetection } from "../util/CollisionDetection";
 import { Numerical } from "../util/Numerical";
-import { CompoundPath } from "./CompoundPath";
 import { Curve } from "./Curve";
 import { CurveLocation } from "./CurveLocation";
 import { Path } from "./Path";
 import { PathItem } from "./PathItem";
 import { Segment } from "./Segment";
+import { CompoundPath } from "./CompoundPath";
 
 /*
  * Boolean Geometric Path Operations

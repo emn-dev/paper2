@@ -10,18 +10,28 @@
  * All rights reserved.
  */
 
+import type { Path as PathType } from "./Path";
+import type { CompoundPath as CompoundPathType } from "../path/CompoundPath";
+import type { CanvasProvider as CanvasProviderType } from "../canvas/CanvasProvider";
+
 import { Base } from "../straps";
 import { Point } from "../basic/Point";
 import { Size } from "../basic/Size";
 import { Numerical } from "../util/Numerical";
-import { CompoundPath } from "../path/CompoundPath";
-import { CanvasProvider } from "../canvas/CanvasProvider";
 import { Change } from "../item/ChangeFlag";
 import { Item } from "../item/Item";
 import { CollisionDetection } from "../util/CollisionDetection";
-import { Path } from "./Path";
 import { Curve } from "./Curve";
 import { Segment } from "./Segment";
+import { __options } from "../options";
+
+// import { Path } from "./Path";
+// import { CompoundPath } from "../path/CompoundPath";
+// import { CanvasProvider } from "../canvas/CanvasProvider";
+
+declare const Path4444: typeof PathType;
+declare const CompoundPath4444: typeof CompoundPathType;
+declare const CanvasProvider4444: typeof CanvasProviderType;
 
 /**
  * @name PathItem
@@ -96,7 +106,7 @@ export const PathItem = Item.extend(
           compound =
             (data.match(/m/gi) || []).length > 1 || /z\s*\S+/i.test(data);
         }
-        var ctor = compound ? CompoundPath : Path;
+        var ctor = compound ? CompoundPath4444 : Path4444;
         return new ctor(arg);
       },
     },
@@ -271,15 +281,14 @@ export const PathItem = Item.extend(
     _contains: function (point) {
       // NOTE: point is reverse transformed by _matrix, so we don't need to
       // apply the matrix here.
-      // @ts-expect-error = Cannot find name '__options'
       /*#*/ if (__options.nativeContains || !__options.booleanOperations) {
         // To compare with native canvas approach:
         // @ts-expect-error = Expected 3 arguments, but got 2
-        var ctx = CanvasProvider.getContext(1, 1);
+        var ctx = CanvasProvider4444.getContext(1, 1);
         // Use dontFinish to tell _draw to only produce geometries for hit-test.
         this._draw(ctx, new Base({ dontFinish: true }));
         var res = ctx.isPointInPath(point.x, point.y, this.getFillRule());
-        CanvasProvider.release(ctx);
+        CanvasProvider4444.release(ctx);
         return res;
         /*#*/
       } else {
@@ -716,7 +725,7 @@ export const PathItem = Item.extend(
       var current = items.length,
         length = itemsTo.length;
       if (current < length) {
-        var ctor = isPath ? Segment : Path;
+        var ctor = isPath ? Segment : Path4444;
         for (var i = current; i < length; i++) {
           this.add(new ctor());
         }

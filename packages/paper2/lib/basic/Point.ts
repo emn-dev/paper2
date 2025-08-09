@@ -10,11 +10,15 @@
  * All rights reserved.
  */
 
+import type { Rectangle as RectangleType } from "./Rectangle";
+
 import { Base } from "../straps";
-import { Rectangle } from "./Rectangle";
 import { Formatter } from "../util/Formatter";
 import { Numerical } from "../util/Numerical";
 import { ItemSelection } from "../item/ItemSelection";
+// import { Rectangle } from "./Rectangle";
+
+declare const Rectangle4444: typeof RectangleType;
 
 /**
  * @name Point
@@ -697,7 +701,7 @@ export const Point = Base.extend(
      * @return {Boolean} {@true if the point is inside the rectangle}
      */
     isInside: function (/* rect */) {
-      return Rectangle.read(arguments).contains(this);
+      return Rectangle4444.read(arguments).contains(this);
     },
 
     /**
