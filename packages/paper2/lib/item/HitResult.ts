@@ -12,7 +12,7 @@
 
 import { Base } from "../straps";
 
-// declare const paper: any;
+declare let paper4444;
 
 /**
  * @name HitResult
@@ -115,7 +115,7 @@ export const HitResult = Base.extend(
             // CompoundPath, Shape, Raster, SymbolItem, ...
             type: null,
             // Tolerance
-            tolerance: paper.settings.hitTolerance,
+            tolerance: paper4444.settings.hitTolerance,
             // Hit the fill of items
             fill: !options,
             // Hit the curves of path items, taking into account the stroke

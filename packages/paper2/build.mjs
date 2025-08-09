@@ -6,13 +6,14 @@ import * as esbuild from 'esbuild';
 import pkg from './package.json' with { type: 'json' };
 
 const buildDir = 'dist';
-const fileBaseName = 'paper2';
+const fileBaseName = 'paper2-pre';
 
 rmSync(buildDir, { force:true, recursive:true })
 
 const sharedOpts = {
   entryPoints: ['lib/index.ts'],
-  sourcemap: true,
+  // sourcemap: true,
+  sourcemap: false,
   bundle: true,
   allowOverwrite: true,
   define: {
@@ -33,22 +34,22 @@ const browserOpts = {
   external: external.concat('events')
 };
 
-const nodeOpts = {
-  ...sharedOpts,
-  outfile: `${buildDir}/${fileBaseName}.cjs.js`,
-  platform: 'node',
-  external,
-};
+// const nodeOpts = {
+//   ...sharedOpts,
+//   outfile: `${buildDir}/${fileBaseName}.cjs.js`,
+//   platform: 'node',
+//   external,
+// };
 
 if (process.env.IS_BUILD === 'true') {
   await esbuild.build(browserOpts);
-  await esbuild.build(nodeOpts);
+  // await esbuild.build(nodeOpts);
 } else {
   const ctxBrowser = await esbuild.context(browserOpts);
   await ctxBrowser.watch();
 
-  const ctxNode = await esbuild.context(nodeOpts);
-  await ctxNode.watch();
+  // const ctxNode = await esbuild.context(nodeOpts);
+  // await ctxNode.watch();
 }
 
 try {

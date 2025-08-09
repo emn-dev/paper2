@@ -11,6 +11,7 @@
  */
 
 import { Base } from "../straps";
+import { Key } from "./Key";
 
 /**
  * @name Event

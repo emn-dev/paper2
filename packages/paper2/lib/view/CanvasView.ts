@@ -17,6 +17,8 @@ import { DomElement } from "../dom/DomElement";
 import { Base } from "../straps";
 import { View } from "./View";
 
+declare let paper4444;
+
 /**
  * @name CanvasView
  * @class
@@ -111,8 +113,7 @@ export const CanvasView = View.extend(
      * pixels.
      */
     getPixelSize: function getPixelSize(size) {
-      // @ts-expect-error = Cannot find name 'paper'
-      var agent = paper.agent,
+      var agent = paper4444.agent,
         pixels;
       // Firefox doesn't appear to convert context.font sizes to pixels,
       // while other browsers do. Fall-back to View#getPixelSize.

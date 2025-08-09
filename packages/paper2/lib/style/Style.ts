@@ -19,7 +19,7 @@ import { CompoundPath } from "../path/CompoundPath";
 import { TextItem } from "../text/TextItem";
 import { Color } from "./Color";
 
-// declare const paper: any;
+declare let paper4444;
 
 /**
  * @name Style
@@ -144,7 +144,7 @@ export const Style = Base.extend(
           this._values = {};
           this._owner = _owner;
           this._project =
-            (_owner && _owner._project) || _project || paper.project;
+            (_owner && _owner._project) || _project || paper4444.project;
           // Use different defaults based on the owner
           this._defaults =
             !_owner || _owner instanceof Group

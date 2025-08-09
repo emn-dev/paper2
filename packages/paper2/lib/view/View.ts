@@ -29,6 +29,8 @@ import { PaperScope } from "../core/PaperScope";
 
 declare const CanvasView4444: typeof CanvasViewType;
 
+declare let paper4444;
+
 // https://github.com/mrdoob/stats.js
 declare const Stats: any;
 
@@ -148,8 +150,7 @@ export const View = Base.extend(
       // see #_countItemEvent():
       this._itemEvents = { native: {}, virtual: {} };
       // Do not set _autoUpdate on Node.js by default:
-      // @ts-expect-error = cannot find paper
-      this._autoUpdate = !paper.agent.node;
+      this._autoUpdate = !paper4444.agent.node;
       this._needsUpdate = false;
     },
 
@@ -303,8 +304,7 @@ export const View = Base.extend(
 
     _handleFrame: function () {
       // Set the global paper object to the current scope
-      // @ts-expect-error = cannot find paper
-      paper = this._scope;
+      paper4444 = this._scope;
       var now = Date.now() / 1000,
         delta = this._last ? now - this._last : 0;
       this._last = now;
@@ -1561,8 +1561,7 @@ export const View = Base.extend(
         function emit(obj) {
           if (obj.responds(type)) {
             // Update global reference to this scope.
-            // @ts-expect-error = Cannot find name 'paper'
-            paper = scope;
+            paper4444 = scope;
             // Only produce the event object if we really need it.
             obj.emit(
               type,

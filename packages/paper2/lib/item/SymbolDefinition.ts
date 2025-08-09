@@ -17,6 +17,8 @@ import { ChangeFlag, Change } from "./ChangeFlag";
 import { Item } from "./Item";
 import { SymbolItem } from "./SymbolItem";
 
+declare let paper4444;
+
 /**
  * @name SymbolDefinition
  *
@@ -67,8 +69,7 @@ export const SymbolDefinition = Base.extend(
     initialize: function SymbolDefinition(item, dontCenter) {
       // @ts-expect-error = Expected 1 arguments, but got 0
       this._id = UID.get();
-      // @ts-expect-error = Cannot find name 'paper'
-      this.project = paper.project;
+      this.project = paper4444.project;
       if (item) this.setItem(item, dontCenter);
     },
 

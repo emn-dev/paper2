@@ -27,6 +27,8 @@ import { Item } from "./Item";
 declare const HitResult4444: typeof HitResultType;
 declare const Path4444: typeof PathType;
 
+declare let paper4444;
+
 /**
  * @name Shape
  *
@@ -197,8 +199,8 @@ export const Shape = Item.extend(
       // The created path will inherit #applyMatrix from this Shape, hence it
       // will always be false.
       // Respect the setting of paper.settings.applyMatrix for new paths:
-      // @ts-expect-error = cannot find paper
-      if (paper.settings.applyMatrix) path.setApplyMatrix(true);
+
+      if (paper4444.settings.applyMatrix) path.setApplyMatrix(true);
       if (insert === undefined || insert) path.insertAbove(this);
       return path;
     },

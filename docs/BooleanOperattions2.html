@@ -17,49 +17,34 @@
       type="text/javascript"
       src="https://unpkg.com/paper@0.12.18/dist/paper-full.js"
     ></script> -->
-    <!-- <script src="https://unpkg.com/paper@0.12.18/dist/paper-full.js"></script> -->
-    <script type="module">
-      // import * as paper2 from "https://unpkg.com/paper2/paper2.esm.js";
-      import * as paper2 from "./paper2.esm.js";
-      window.paper = paper2.paper; // You can now easily play with this in DevTools
-    </script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/paper@0.12.18/dist/paper-core.js"
+    ></script>
   </head>
   <body>
-    <nav>
-      <table style="width: 150px; background-color: lightgray; margin: 0 auto">
-        <tr>
-          <td><a href="index.html"> home </a></td>
-          <td><a href="straps.html"> straps </a></td>
-          <td><a href="simple.html"> simple </a></td>
-          <td><a href="BooleanOperattions.html"> BooleanOperattions </a></td>
-        </tr>
-      </table>
-    </nav>
-    <header style="text-align: center"><h1>paper2 current version</h1></header>
-    <main>
-      <canvas id="myCanvas" resize></canvas>
-    </main>
-    <!-- <script> -->
-    <script canvas="myCanvas" type="text/paperscript">
+    <canvas id="myCanvas" resize></canvas>
+    <script>
       // paper.install(window);
       //   console.log("asdfasdf");
       //   console.log(window.paper);
-      //   const paper = new paper.Project("myCanvas");
+      //   const defaultProject = new paper.Project("myCanvas");
       // var canvas = document.getElementById("myCanvas");
-      // const aaa = paper.setup("myCanvas");
-      // const paper = new paper.Project("myCanvas");
-      // console.log(aaa);
+      paper.setup("myCanvas");
+      // const defaultProject = paper;
+      // const defaultProject = new paper.Project("myCanvas");
+      //   console.log(defaultProject);
       var text = new paper.PointText({
-        position: paper.view.center + [0, 200],
+        position: defaultProject.view.center + [0, 200],
         fillColor: "black",
         justification: "center",
         fontSize: 20,
       });
 
-      var originals = new paper.Group({ insert: false }); // Don't insert in DOM.
+      var originals = new paper.Group({ insert: true }); // Don't insert in DOM.
 
       var square = new paper.Path.Rectangle({
-        position: paper.view.center,
+        position: defaultProject.view.center,
         size: 300,
         parent: originals,
         fillColor: "gray",
@@ -67,14 +52,14 @@
 
       // Make a ring using subtraction of two circles:
       var inner = new paper.Path.Circle({
-        center: paper.view.center,
+        center: defaultProject.view.center,
         radius: 100,
         parent: originals,
         fillColor: "blue",
       });
 
       var outer = new paper.Path.Circle({
-        center: paper.view.center,
+        center: defaultProject.view.center,
         radius: 140,
         parent: originals,
         fillColor: "green",
@@ -110,23 +95,23 @@
 
       function onMouseUp() {
         activeItem = null;
-        square.position = paper.view.center;
+        square.position = defaultProject.view.center;
       }
 
       function onFrame(event) {
+        console.log("=-=-=-=-=-0");
         if (activeItem != ring) {
           // Move the ring around:
           var offset =
             new paper.Point(140, 80) *
             [Math.sin(event.count / 60), Math.sin(event.count / 40)];
-          ring.position = paper.view.center + offset;
+          ring.position = defaultProject.view.center + offset;
         }
-
-        // console.log("=as-df=as-fs=daasf");
-        // console.log(result);
 
         // Remove the result of the last path operation:
         if (result) result.remove();
+
+        console.log("=-=-=-=-=-1111");
 
         // Perform the path operation on the ring:
         if (curIndex < operations.length) {
@@ -139,6 +124,7 @@
         result.selected = true;
         result.fillColor = colors[curIndex % colors.length];
         result.moveBelow(text);
+        console.log("=-=-=-=-=-");
 
         // If the result is a group, color each of its children differently:
         if (result instanceof paper.Group) {
@@ -146,14 +132,14 @@
             result.children[i].fillColor = colors[i];
           }
         }
-        // paper.view.draw();
+        // defaultProject.view.draw();
+        console.log("=-=-=-=-=-22222");
+        console.log(text);
       }
 
       function onResize() {
-        text.position = paper.view.center + [0, 200];
-        square.position = paper.view.center;
-        console.log("=a-sdf=-asdf");
-        console.log(text);
+        text.position = defaultProject.view.center + [0, 200];
+        square.position = defaultProject.view.center;
       }
 
       //   const tool = new paper.Tool();
@@ -162,10 +148,10 @@
       //   tool.onMouseDrag = onMouseDrag;
       //   tool.onMouseUp = onMouseUp;
 
-      paper.view.onFrame = onFrame;
-      paper.view.onResize = onResize;
+      defaultProject.view.onFrame = onFrame;
+      defaultProject.view.onResize = onResize;
 
-      // paper.view.draw();
+      // defaultProject.view.draw();
     </script>
   </body>
 </html>

@@ -124,18 +124,21 @@ export * from "./event/MouseEvent";
 export * from "./tool/ToolEvent";
 export * from "./tool/Tool";
 
-// // /*#*/ include('anim/Tween.js');
-// import "./anim/Tween";
+// /*#*/ include('anim/Tween.js');
+// export * from "./anim/Tween";
 
-// // /*#*/ include('net/Http.js');
+// /*#*/ include('net/Http.js');
+export * from "./net/Http";
 
-// // /*#*/ include('canvas/CanvasProvider.js');
-// // /*#*/ include('canvas/BlendMode.js');
-// // /*#*/ if (__options.load) {
-// // /*#*/     include('canvas/ProxyContext.js');
-// // /*#*/ }
+// /*#*/ include('canvas/CanvasProvider.js');
+// /*#*/ include('canvas/BlendMode.js');
+// /*#*/ if (__options.load) {
+// /*#*/     include('canvas/ProxyContext.js');
+// /*#*/ }
 export * from "./canvas/CanvasProvider";
 export * from "./canvas/BlendMode";
+
+// export * from "./core/PaperScript";
 
 export const paper = new (PaperScope.inject(Base.exports, {
   Base: Base,

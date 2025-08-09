@@ -28,7 +28,7 @@ declare const CanvasProvider4444: typeof CanvasProviderType;
 declare const Project4444: typeof ProjectType;
 declare const View4444: typeof ViewType;
 
-declare let paper: any;
+declare let paper4444;
 
 /**
  * @name PaperScope
@@ -67,7 +67,7 @@ export const PaperScope = Base.extend(
       // element is only used internally when creating scopes for PaperScript.
       // Whenever a PaperScope is created, it automatically becomes the active
       // one.
-      paper = this;
+      paper4444 = this;
       // Default configurable settings.
       this.settings = new Base({
         applyMatrix: true,
@@ -226,7 +226,7 @@ export const PaperScope = Base.extend(
      */
     execute: function (code, options) {
       /*#*/ if (__options.paperScript) {
-        var exports = paper.PaperScript.execute(code, this, options);
+        var exports = paper4444.PaperScript.execute(code, this, options);
         View4444.updateFocus();
         return exports;
         /*#*/
@@ -279,7 +279,7 @@ export const PaperScope = Base.extend(
     setup: function (element) {
       // Make sure this is the active scope, so the created project and view
       // are automatically associated with it.
-      paper = this;
+      paper4444 = this;
       // Create an empty project for the scope.
       this.project = new Project4444(element);
       // This is needed in PaperScript.load().
@@ -296,7 +296,7 @@ export const PaperScope = Base.extend(
      * in its active project.
      */
     activate: function () {
-      paper = this;
+      paper4444 = this;
     },
 
     clear: function () {

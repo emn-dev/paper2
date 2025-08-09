@@ -30,7 +30,7 @@ export const __options = {
   svg: true,
   booleanOperations: true,
   nativeContains: false,
-  paperScript: false,
+  paperScript: true,
 };
 
 // // Export for use in Gulp.js

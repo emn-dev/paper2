@@ -44,8 +44,6 @@ import { ItemSelection } from "./ItemSelection";
 // import { HitResult } from "./HitResult";
 // import { Raster } from "./Raster";
 
-// declare const paper: any;
-
 declare const Path4444: typeof PathType;
 declare const CompoundPath4444: typeof CompoundPathType;
 declare const Style4444: typeof StyleType;
@@ -56,6 +54,8 @@ declare const Group4444: typeof GroupType;
 declare const Layer4444: typeof LayerType;
 declare const HitResult4444: typeof HitResultType;
 declare const Raster4444: typeof RasterType;
+
+declare let paper4444;
 
 /**
  * @name Item
@@ -206,8 +206,8 @@ export const Item = Base.extend(
         internal = hasProps && props.internal === true,
         matrix = (this._matrix = new Matrix()),
         // Allow setting another project than the currently active one.
-        project = (hasProps && props.project) || paper.project,
-        settings = paper.settings;
+        project = (hasProps && props.project) || paper4444.project,
+        settings = paper4444.settings;
       // @ts-expect-error = Expected 1 arguments, but got 0
       this._id = internal ? null : UID.get();
       this._parent = this._index = null;
@@ -4486,7 +4486,7 @@ export const Item = Base.extend(
         if (strokeJoin) ctx.lineJoin = strokeJoin;
         if (strokeCap) ctx.lineCap = strokeCap;
         if (miterLimit) ctx.miterLimit = miterLimit;
-        if (paper.support.nativeDash) {
+        if (paper4444.support.nativeDash) {
           var dashArray = style.getDashArray(),
             dashOffset = style.getDashOffset();
           if (dashArray && dashArray.length) {

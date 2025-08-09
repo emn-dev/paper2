@@ -33,14 +33,14 @@ import { Item } from "./Item";
 // import { DomEvent } from "../dom/DomEvent";
 // import { DomElement } from "../dom/DomElement";
 
-// declare const paper: any;
-
 declare const HitResult4444: typeof HitResultType;
 declare const CanvasProvider4444: typeof CanvasProviderType;
 declare const PathItem4444: typeof PathItemType;
 declare const Color4444: typeof ColorType;
 declare const DomEvent4444: typeof DomEventType;
 declare const DomElement4444: typeof DomElementType;
+
+declare let paper4444;
 
 /**
  * @name Raster
@@ -350,8 +350,7 @@ export const Raster = Item.extend(
         var view = that.getView(),
           type = (event && event.type) || "load";
         if (view && that.responds(type)) {
-          // @ts-expect-error = Cannot find name 'paper'
-          paper = view._scope;
+          paper4444 = view._scope;
           that.emit(type, new Event(event));
         }
       }

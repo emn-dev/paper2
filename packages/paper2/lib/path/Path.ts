@@ -43,6 +43,8 @@ declare const PathFlattener4444: typeof PathFlattenerType;
 declare const PathFitter4444: typeof PathFitterType;
 declare const Shape4444: typeof ShapeType;
 
+declare let paper4444;
+
 /**
  * @name Path
  *
@@ -2447,8 +2449,7 @@ export const Path = PathItem.extend(
           dashArray = style.getDashArray(),
           // dashLength is only set if we can't draw dashes natively
           dashLength =
-            // @ts-expect-error = cannot find paper
-            !paper.support.nativeDash &&
+            !paper4444.support.nativeDash &&
             hasStroke &&
             dashArray &&
             dashArray.length;
@@ -2517,8 +2518,7 @@ export const Path = PathItem.extend(
         drawSegments(ctx, this, matrix);
         // Now stroke it and draw its handles:
         ctx.stroke();
-        // @ts-expect-error = cannot find paper
-        drawHandles(ctx, this._segments, matrix, paper.settings.handleSize);
+        drawHandles(ctx, this._segments, matrix, paper4444.settings.handleSize);
       },
     };
   })(),
