@@ -47,6 +47,7 @@ const browserFullOpts = {
 browserCoreOpts.define["process.env.PAPER2_FULL"] = "false";
 browserFullOpts.define["process.env.PAPER2_FULL"] = "true";
 
+// TODO: do we even need a specific backend/node build? Can we just use esm for all nowadays?
 // const nodeOpts = {
 //   ...sharedOpts,
 //   outfile: `${buildDir}/${fileBaseName}.cjs.js`,
