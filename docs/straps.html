@@ -24,11 +24,11 @@
     <script type="module">
       import * as paper2Module from "https://unpkg.com/paper2/paper2.esm.js";
       // import * as paper2Module from "./paper2.esm.js";
-      window.paper = paper2Module.paper;
+      const straps = paper2Module.straps;
 
       const showLogsEle = document.getElementById("showLogs");
 
-      var MyClass = paper.Base.extend({
+      var MyClass = straps.extend({
         initialize: function MyClass() {
           this._value = 10;
           console.log("Creating MyClass instance");

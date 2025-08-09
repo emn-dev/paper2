@@ -41,6 +41,7 @@ declare const DomEvent4444: typeof DomEventType;
 declare const DomElement4444: typeof DomElementType;
 
 declare let paper4444;
+declare let Event4444;
 
 /**
  * @name Raster
@@ -351,7 +352,7 @@ export const Raster = Item.extend(
           type = (event && event.type) || "load";
         if (view && that.responds(type)) {
           paper4444 = view._scope;
-          that.emit(type, new Event(event));
+          that.emit(type, new Event4444(event));
         }
       }
 

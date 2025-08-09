@@ -30,6 +30,8 @@ import { PaperScope } from "../core/PaperScope";
 declare const CanvasView4444: typeof CanvasViewType;
 
 declare let paper4444;
+declare let MouseEvent4444;
+declare let KeyEvent4444;
 
 // https://github.com/mrdoob/stats.js
 declare const Stats: any;
@@ -1278,10 +1280,9 @@ export const View = Base.extend(
           // Only produce the event object if we really need it, and then
           // reuse it if we're bubbling.
           if (!mouseEvent) {
-            mouseEvent = new MouseEvent(
+            mouseEvent = new MouseEvent4444(
               type,
               event,
-              // @ts-expect-error = Expected 1-2 arguments, but got 5
               point,
               target || obj,
               // Calculate delta if prevPoint was passed
@@ -1565,8 +1566,8 @@ export const View = Base.extend(
             // Only produce the event object if we really need it.
             obj.emit(
               type,
-              // @ts-expect-error = Cannot find KeyEvent
-              (keyEvent = keyEvent || new KeyEvent(type, event, key, character))
+              (keyEvent =
+                keyEvent || new KeyEvent4444(type, event, key, character))
             );
           }
         }
