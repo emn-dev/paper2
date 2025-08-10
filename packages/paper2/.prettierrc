@@ -1,0 +1,25 @@
+{
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "htmlWhitespaceSensitivity": "css",
+  "jsxSingleQuote": false,
+  "printWidth": 120,
+  "proseWrap": "always",
+  "quoteProps": "as-needed",
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "useTabs": false,
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": [".babelrc", ".prettierrc", ".stylelintrc"],
+      "options": { "parser": "json" }
+    },
+    {
+      "files": ["*.vue"],
+      "options": { "printWidth": 90 }
+    }
+  ]
+}

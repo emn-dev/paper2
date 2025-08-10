@@ -15,6 +15,9 @@
  * http://dev.helma.org/Wiki/JavaScript+Inheritance+Sugar/
  */
 
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
 // @ts-expect-error = 'new' expression, whose target lacks a construct signature
 export const Base = new (function () {
   var hidden = /^(statics|enumerable|beans|preserve)$/,
@@ -56,12 +59,8 @@ export const Base = new (function () {
       // a value property named 'length' that contains an number value.
       // Everything else is enumerated using forIn.
       if (obj) {
-        var desc = describe(obj, "length");
-        (desc && typeof desc.value === "number" ? forEach : forIn).call(
-          obj,
-          iter,
-          (bind = bind || obj)
-        );
+        var desc = describe(obj, 'length');
+        (desc && typeof desc.value === 'number' ? forEach : forIn).call(obj, iter, (bind = bind || obj));
       }
       return bind;
     };
@@ -84,9 +83,8 @@ export const Base = new (function () {
       val = val || ((val = describe(src, name)) && (val.get ? val : val.value));
       // Allow aliases to properties with different names, by having
       // string values starting with '#'
-      if (typeof val === "string" && val[0] === "#")
-        val = dest[val.substring(1)] || val;
-      var isFunc = typeof val === "function",
+      if (typeof val === 'string' && val[0] === '#') val = dest[val.substring(1)] || val;
+      var isFunc = typeof val === 'function',
         res = val,
         // Only lookup previous value if we preserve existing entries or
         // define a function that might need it for Function#base. If
@@ -97,12 +95,7 @@ export const Base = new (function () {
         // injecting statics from one constructor function to the next
         // for inheritance. e.g. in Mootools' Function#extend would
         // falsely be preserved up the inheritance chain through #base.
-        prev =
-          preserve || (isFunc && !val.base)
-            ? val && val.get
-              ? name in dest
-              : dest[name]
-            : null,
+        prev = preserve || (isFunc && !val.base) ? (val && val.get ? name in dest : dest[name]) : null,
         bean;
       if (!preserve || !prev) {
         // Expose the 'super' function (meaning the one this function is
@@ -113,22 +106,12 @@ export const Base = new (function () {
         // dest at the end of fields injection. This ensures base works
         // for beans too, and inherits setters for redefined getters in
         // subclasses.
-        if (
-          isFunc &&
-          beans !== false &&
-          (bean = name.match(/^([gs]et|is)(([A-Z])(.*))$/))
-        )
+        if (isFunc && beans !== false && (bean = name.match(/^([gs]et|is)(([A-Z])(.*))$/)))
           beansNames[bean[3].toLowerCase() + bean[4]] = bean[2];
         // No need to create accessor description if it already is one.
         // It is considered a description if it is a plain object with a
         // get function.
-        if (
-          !res ||
-          isFunc ||
-          !res.get ||
-          typeof res.get !== "function" ||
-          !(Base as any).isPlainObject(res)
-        ) {
+        if (!res || isFunc || !res.get || typeof res.get !== 'function' || !(Base as any).isPlainObject(res)) {
           res = { value: res, writable: true };
         }
         // Only set/change configurable and enumerable if this field is
@@ -160,10 +143,9 @@ export const Base = new (function () {
         // - If `beans: true` is specified, the parameter count of a
         //   potential getter is ignored and the bean is always created.
         var part = beansNames[name],
-          set = dest["set" + part],
-          get = dest["get" + part] || (set && dest["is" + part]);
-        if (get && (beans === true || get.length === 0))
-          field(name, { get: get, set: set });
+          set = dest['set' + part],
+          get = dest['get' + part] || (set && dest['is' + part]);
+        if (get && (beans === true || get.length === 0)) field(name, { get: get, set: set });
       }
     }
     return dest;
@@ -189,8 +171,7 @@ export const Base = new (function () {
         var statics = src.statics === true ? src : src.statics,
           beans = src.beans,
           preserve = src.preserve;
-        if (statics !== src)
-          inject(this.prototype, src, src.enumerable, beans, preserve);
+        if (statics !== src) inject(this.prototype, src, src.enumerable, beans, preserve);
         // Use the preserve setting in src.preserve for statics too, not
         // their own.
         inject(this, statics, null, beans, preserve);
@@ -198,8 +179,7 @@ export const Base = new (function () {
       // If there are more than one argument, loop through them and call
       // inject again. Do not simple inline the above code in one loop,
       // since each of the passed objects might override this.inject.
-      for (var i = 1, l = arguments.length; i < l; i++)
-        this.inject(arguments[i]);
+      for (var i = 1, l = arguments.length; i < l; i++) this.inject(arguments[i]);
       return this;
     },
 
@@ -210,11 +190,7 @@ export const Base = new (function () {
       // Look for an initialize function in all injection objects and use
       // it directly as the actual constructor. Also look for prototype,
       // in case a class wants to override it (e.g. Array inheritance).
-      for (
-        var i = 0, obj, l = arguments.length;
-        i < l && !(ctor && proto);
-        i++
-      ) {
+      for (var i = 0, obj, l = arguments.length; i < l && !(ctor && proto); i++) {
         obj = arguments[i];
         ctor = ctor || obj.initialize;
         proto = proto || obj.prototype;
@@ -229,7 +205,7 @@ export const Base = new (function () {
       proto = ctor.prototype = proto || create(this.prototype);
       // The new prototype extends the constructor on which extend is
       // called. Fix constructor.
-      define(proto, "constructor", {
+      define(proto, 'constructor', {
         value: ctor,
         writable: true,
         configurable: true,
@@ -340,9 +316,7 @@ export const Base = new (function () {
         // We also need to check for ctor.name === 'Object', in case
         // this is an object from another global scope (e.g. an iframe,
         // or another vm context in node.js).
-        return (
-          ctor && (ctor === Object || ctor === Base || ctor.name === "Object")
-        );
+        return ctor && (ctor === Object || ctor === Base || ctor.name === 'Object');
       },
 
       /**

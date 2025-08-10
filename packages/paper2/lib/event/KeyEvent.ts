@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Event } from "./Event";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Event } from './Event';
 
 /**
  * @name KeyEvent
@@ -24,7 +27,7 @@ import { Event } from "./Event";
  */
 export const KeyEvent = Event.extend(
   /** @lends KeyEvent# */ {
-    _class: "KeyEvent",
+    _class: 'KeyEvent',
 
     initialize: function KeyEvent(type, event, key, character) {
       this.type = type;
@@ -73,7 +76,7 @@ export const KeyEvent = Event.extend(
         this.character +
         "', modifiers: " +
         this.getModifiers() +
-        " }"
+        ' }'
       );
     },
   }

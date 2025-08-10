@@ -10,10 +10,13 @@
  * All rights reserved.
  */
 
-import { Point } from "~/basic/Point";
-import { Change } from "./ChangeFlag";
-import { Item } from "./Item";
-import { SymbolDefinition } from "./SymbolDefinition";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Point } from '~/basic/Point';
+import { Change } from './ChangeFlag';
+import { Item } from './Item';
+import { SymbolDefinition } from './SymbolDefinition';
 
 /**
  * @name SymbolItem
@@ -25,7 +28,7 @@ import { SymbolDefinition } from "./SymbolDefinition";
  */
 export const SymbolItem = Item.extend(
   /** @lends SymbolItem# */ {
-    _class: "SymbolItem",
+    _class: 'SymbolItem',
     _applyMatrix: false,
     _canApplyMatrix: false,
     // SymbolItem uses strokeBounds for bounds
@@ -79,12 +82,8 @@ export const SymbolItem = Item.extend(
       // and a point where it should be placed (arg1).
       // If _initialize can set properties through object literal, we're done.
       // Otherwise we need to set symbol from arg0.
-      if (
-        !this._initialize(arg0, arg1 !== undefined && Point.read(arguments, 1))
-      )
-        this.setDefinition(
-          arg0 instanceof SymbolDefinition ? arg0 : new SymbolDefinition(arg0)
-        );
+      if (!this._initialize(arg0, arg1 !== undefined && Point.read(arguments, 1)))
+        this.setDefinition(arg0 instanceof SymbolDefinition ? arg0 : new SymbolDefinition(arg0));
     },
 
     _equals: function (item) {
@@ -115,8 +114,8 @@ export const SymbolItem = Item.extend(
      * @bean
      * @deprecated use {@link #definition} instead.
      */
-    getSymbol: "#getDefinition",
-    setSymbol: "#setDefinition",
+    getSymbol: '#getDefinition',
+    setSymbol: '#setDefinition',
 
     isEmpty: function () {
       return this._definition._item.isEmpty();

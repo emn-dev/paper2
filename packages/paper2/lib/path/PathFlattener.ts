@@ -10,8 +10,11 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Curve } from "./Curve";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Curve } from './Curve';
 
 /**
  * @name PathFlattener
@@ -20,7 +23,7 @@ import { Curve } from "./Curve";
  */
 export const PathFlattener = Base.extend(
   {
-    _class: "PathFlattener",
+    _class: 'PathFlattener',
 
     /**
      * Creates a path flattener for the given path. The flattener converts
@@ -43,13 +46,7 @@ export const PathFlattener = Base.extend(
      *     coordinates without modifying the actual path.
      * @return {PathFlattener} the newly created path flattener
      */
-    initialize: function (
-      path,
-      flatness,
-      maxRecursion,
-      ignoreStraight,
-      matrix
-    ) {
+    initialize: function (path, flatness, maxRecursion, ignoreStraight, matrix) {
       // Instead of relying on path.curves, we only use segments here and
       // get the curve values from them.
       var curves = [], // The curve values as returned by getValues()
@@ -144,10 +141,7 @@ export const PathFlattener = Base.extend(
           return {
             index: part.index,
             // Interpolate
-            time:
-              prevTime +
-              ((part.time - prevTime) * (offset - prevOffset)) /
-                (part.offset - prevOffset),
+            time: prevTime + ((part.time - prevTime) * (offset - prevOffset)) / (part.offset - prevOffset),
           };
         }
       }
@@ -162,11 +156,7 @@ export const PathFlattener = Base.extend(
       var start = this._get(from),
         end = this._get(to);
       for (var i = start.index, l = end.index; i <= l; i++) {
-        var curve = Curve.getPart(
-          this.curves[i],
-          i === start.index ? start.time : 0,
-          i === end.index ? end.time : 1
-        );
+        var curve = Curve.getPart(this.curves[i], i === start.index ? start.time : 0, i === end.index ? end.time : 1);
         if (i === start.index) ctx.moveTo(curve[0], curve[1]);
         ctx.bezierCurveTo.apply(ctx, curve.slice(2));
       }
@@ -175,7 +165,7 @@ export const PathFlattener = Base.extend(
   Base.each(
     Curve._evaluateMethods,
     function (name) {
-      this[name + "At"] = function (offset) {
+      this[name + 'At'] = function (offset) {
         var param = this._get(offset);
         return Curve[name](this.curves[param.index], param.time);
       };

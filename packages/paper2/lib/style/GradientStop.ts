@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Change } from "~/item/ChangeFlag";
-import { Color } from "./Color";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Change } from '~/item/ChangeFlag';
+import { Color } from './Color';
 
 // TODO: Support midPoint? (initial tests didn't look nice)
 /**
@@ -22,7 +25,7 @@ import { Color } from "./Color";
  */
 export const GradientStop = Base.extend(
   /** @lends GradientStop# */ {
-    _class: "GradientStop",
+    _class: 'GradientStop',
 
     /**
      * Creates a GradientStop object.
@@ -36,15 +39,15 @@ export const GradientStop = Base.extend(
       // (color, offset)
       var color = arg0,
         offset = arg1;
-      if (typeof arg0 === "object" && arg1 === undefined) {
+      if (typeof arg0 === 'object' && arg1 === undefined) {
         // Make sure the first entry in the array is not a number, in which
         // case the whole array would be a color, and the assignments would
         // already have occurred correctly above.
-        if (Array.isArray(arg0) && typeof arg0[0] !== "number") {
+        if (Array.isArray(arg0) && typeof arg0[0] !== 'number') {
           // ([color, offset])
           color = arg0[0];
           offset = arg0[1];
-        } else if ("color" in arg0 || "offset" in arg0 || "rampPoint" in arg0) {
+        } else if ('color' in arg0 || 'offset' in arg0 || 'rampPoint' in arg0) {
           // (stop)
           color = arg0.color;
           offset = arg0.offset || arg0.rampPoint || 0;
@@ -65,12 +68,7 @@ export const GradientStop = Base.extend(
     _serialize: function (options, dictionary) {
       var color = this._color,
         offset = this._offset;
-      return Base.serialize(
-        offset == null ? [color] : [color, offset],
-        options,
-        true,
-        dictionary
-      );
+      return Base.serialize(offset == null ? [color] : [color, offset], options, true, dictionary);
     },
 
     /**
@@ -136,8 +134,8 @@ export const GradientStop = Base.extend(
      * @bean
      * @deprecated use {@link #offset} instead.
      */
-    getRampPoint: "#getOffset",
-    setRampPoint: "#setOffset",
+    getRampPoint: '#getOffset',
+    setRampPoint: '#setOffset',
 
     /**
      * The color of the gradient stop.
@@ -184,17 +182,14 @@ export const GradientStop = Base.extend(
     setColor: function (/* color */) {
       // Clear old color owner before setting new one:
       Color._setOwner(this._color, null);
-      this._color = Color._setOwner(Color.read(arguments, 0), this, "setColor");
+      this._color = Color._setOwner(Color.read(arguments, 0), this, 'setColor');
       this._changed();
     },
 
     equals: function (stop) {
       return (
         stop === this ||
-        (stop &&
-          this._class === stop._class &&
-          this._color.equals(stop._color) &&
-          this._offset == stop._offset) ||
+        (stop && this._class === stop._class && this._color.equals(stop._color) && this._offset == stop._offset) ||
         false
       );
     },

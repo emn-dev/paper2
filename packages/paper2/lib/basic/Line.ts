@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Numerical } from "~/util/Numerical";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Numerical } from '~/util/Numerical';
 
 /**
  * @name Line
@@ -21,7 +24,7 @@ import { Numerical } from "~/util/Numerical";
  */
 export const Line = Base.extend(
   /** @lends Line# */ {
-    _class: "Line",
+    _class: 'Line',
 
     // DOCS: document Line class and constructor
     /**
@@ -110,16 +113,7 @@ export const Line = Base.extend(
      * @return {Number}
      */
     getSide: function (point, isInfinite) {
-      return Line.getSide(
-        this._px,
-        this._py,
-        this._vx,
-        this._vy,
-        point.x,
-        point.y,
-        true,
-        isInfinite
-      );
+      return Line.getSide(this._px, this._py, this._vx, this._vy, point.x, point.y, true, isInfinite);
     },
 
     // DOCS: document Line#getDistance(point)
@@ -137,15 +131,7 @@ export const Line = Base.extend(
      * @return {Number}
      */
     getSignedDistance: function (point) {
-      return Line.getSignedDistance(
-        this._px,
-        this._py,
-        this._vx,
-        this._vy,
-        point.x,
-        point.y,
-        true
-      );
+      return Line.getSignedDistance(this._px, this._py, this._vx, this._vy, point.x, point.y, true);
     },
 
     isCollinear: function (line) {
@@ -157,18 +143,7 @@ export const Line = Base.extend(
     },
 
     statics: /** @lends Line */ {
-      intersect: function (
-        p1x,
-        p1y,
-        v1x,
-        v1y,
-        p2x,
-        p2y,
-        v2x,
-        v2y,
-        asVector,
-        isInfinite
-      ) {
+      intersect: function (p1x, p1y, v1x, v1y, p2x, p2y, v2x, v2y, asVector, isInfinite) {
         // Convert 2nd points to vectors if they are not specified as such.
         if (!asVector) {
           v1x -= p1x;
@@ -189,10 +164,7 @@ export const Line = Base.extend(
             epsilon = /*#=*/ Numerical.EPSILON,
             uMin = -epsilon,
             uMax = 1 + epsilon;
-          if (
-            isInfinite ||
-            (uMin < u1 && u1 < uMax && uMin < u2 && u2 < uMax)
-          ) {
+          if (isInfinite || (uMin < u1 && u1 < uMax && uMin < u2 && u2 < uMax)) {
             if (!isInfinite) {
               // Address the tolerance at the bounds by clipping to
               // the actual range.
@@ -237,13 +209,11 @@ export const Line = Base.extend(
             ? x - px
             : px - x
           : vy === 0
-          ? vx < 0
-            ? y - py
-            : py - y
-          : ((x - px) * vy - (y - py) * vx) /
-            (vy > vx
-              ? vy * Math.sqrt(1 + (vx * vx) / (vy * vy))
-              : vx * Math.sqrt(1 + (vy * vy) / (vx * vx)));
+            ? vx < 0
+              ? y - py
+              : py - y
+            : ((x - px) * vy - (y - py) * vx) /
+              (vy > vx ? vy * Math.sqrt(1 + (vx * vx) / (vy * vy)) : vx * Math.sqrt(1 + (vy * vy) / (vx * vx)));
       },
 
       getDistance: function (px, py, vx, vy, x, y, asVector) {

@@ -10,20 +10,23 @@
  * All rights reserved.
  */
 
-import type { CanvasView as CanvasViewType } from "./CanvasView";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import type { CanvasView as CanvasViewType } from './CanvasView';
 
 // import { Stats } from "fs";
-import { Matrix } from "~/basic/Matrix";
-import { Point, LinkedPoint } from "~/basic/Point";
-import { Rectangle } from "~/basic/Rectangle";
-import { Size, LinkedSize } from "~/basic/Size";
-import { Emitter } from "~/core/Emitter";
-import { DomElement } from "~/dom/DomElement";
-import { DomEvent } from "~/dom/DomEvent";
-import { Change } from "~/item/ChangeFlag";
-import { Item } from "~/item/Item";
-import { Base } from "~/straps";
-import { PaperScope } from "~/core/PaperScope";
+import { Matrix } from '~/basic/Matrix';
+import { Point, LinkedPoint } from '~/basic/Point';
+import { Rectangle } from '~/basic/Rectangle';
+import { Size, LinkedSize } from '~/basic/Size';
+import { Emitter } from '~/core/Emitter';
+import { DomElement } from '~/dom/DomElement';
+import { DomEvent } from '~/dom/DomEvent';
+import { Change } from '~/item/ChangeFlag';
+import { Item } from '~/item/Item';
+import { Base } from '~/straps';
+import { PaperScope } from '~/core/PaperScope';
 
 // import { CanvasView } from "./CanvasView";
 
@@ -48,7 +51,7 @@ declare const Stats: any;
 export const View = Base.extend(
   Emitter,
   /** @lends View# */ {
-    _class: "View",
+    _class: 'View',
 
     initialize: function View(project, element) {
       function getSize(name) {
@@ -63,32 +66,32 @@ export const View = Base.extend(
           ? // If the element is invisible, we cannot directly access
             // element.width / height, because they would appear 0.
             // Reading the attributes should still work.
-            new Size(getSize("width"), getSize("height"))
+            new Size(getSize('width'), getSize('height'))
           : size;
       }
 
       var size;
       if (window && element) {
         // Generate an id for this view / element if it does not have one
-        this._id = element.getAttribute("id");
+        this._id = element.getAttribute('id');
         if (this._id == null)
           // @ts-expect-error = Property '_id' does not exist on type
-          element.setAttribute("id", (this._id = "paper-view-" + View._id++));
+          element.setAttribute('id', (this._id = 'paper-view-' + View._id++));
         // Install event handlers
         DomEvent.add(element, this._viewEvents);
         // Borrowed from Hammer.js:
-        var none = "none";
+        var none = 'none';
         DomElement.setPrefixed(element.style, {
           userDrag: none,
           userSelect: none,
           touchCallout: none,
           contentZooming: none,
-          tapHighlightColor: "rgba(0,0,0,0)",
+          tapHighlightColor: 'rgba(0,0,0,0)',
         });
 
         // If the element has the resize attribute, listen to resize events
         // and update its coordinate space accordingly
-        if (PaperScope.hasAttribute(element, "resize")) {
+        if (PaperScope.hasAttribute(element, 'resize')) {
           var that = this;
           DomEvent.add(
             window,
@@ -102,18 +105,15 @@ export const View = Base.extend(
 
         size = getCanvasSize();
 
-        if (
-          PaperScope.hasAttribute(element, "stats") &&
-          typeof Stats !== "undefined"
-        ) {
+        if (PaperScope.hasAttribute(element, 'stats') && typeof Stats !== 'undefined') {
           this._stats = new Stats();
           // Align top-left to the element
           var stats = this._stats.domElement,
             style = stats.style,
             offset = DomElement.getOffset(element);
-          style.position = "absolute";
-          style.left = offset.x + "px";
-          style.top = offset.y + "px";
+          style.position = 'absolute';
+          style.left = offset.x + 'px';
+          style.top = offset.y + 'px';
           document.body.appendChild(stats);
         }
       } else {
@@ -127,8 +127,7 @@ export const View = Base.extend(
       this._scope = project._scope;
       this._element = element;
       // Sub-classes may set _pixelRatio first
-      if (!this._pixelRatio)
-        this._pixelRatio = (window && window.devicePixelRatio) || 1;
+      if (!this._pixelRatio) this._pixelRatio = (window && window.devicePixelRatio) || 1;
       // Set canvas size even if we just determined the size from it, since
       // it might have been set to a % size, in which case it would use some
       // default internal size (300x150 on WebKit) and scale up the pixels.
@@ -175,14 +174,14 @@ export const View = Base.extend(
       this._element = this._project = null;
       // Remove all onFrame handlers.
       // TODO: Shouldn't we remove all other event handlers, automatically
-      this.off("frame");
+      this.off('frame');
       this._animate = false;
       this._frameItems = {};
       return true;
     },
 
     _events: Base.each(
-      Item._itemHandlers.concat(["onResize", "onKeyDown", "onKeyUp"]),
+      Item._itemHandlers.concat(['onResize', 'onKeyDown', 'onKeyUp']),
       function (name) {
         this[name] = {};
       },
@@ -268,8 +267,8 @@ export const View = Base.extend(
             // keep requesting frame regardless though, so the animation
             // picks up again as soon as the view is visible.
             if (
-              (!DomElement.getPrefixed(document, "hidden") ||
-                PaperScope.getAttribute(element, "keepalive") === "true") &&
+              (!DomElement.getPrefixed(document, 'hidden') ||
+                PaperScope.getAttribute(element, 'keepalive') === 'true') &&
               DomElement.isInView(element)
             ) {
               that._handleFrame();
@@ -312,7 +311,7 @@ export const View = Base.extend(
       this._last = now;
       // Use new Base() to convert into a Base object, for #toString()
       this.emit(
-        "frame",
+        'frame',
         new Base({
           // Time elapsed since last frame in seconds:
           delta: delta,
@@ -333,13 +332,12 @@ export const View = Base.extend(
           time: 0,
           count: 0,
         };
-        if (++this._frameItemCount === 1)
-          this.on("frame", this._handleFrameItems);
+        if (++this._frameItemCount === 1) this.on('frame', this._handleFrameItems);
       } else {
         delete items[item._id];
         if (--this._frameItemCount === 0) {
           // If this is the last one, just stop animating straight away.
-          this.off("frame", this._handleFrameItems);
+          this.off('frame', this._handleFrameItems);
         }
       }
     },
@@ -349,7 +347,7 @@ export const View = Base.extend(
       for (var i in this._frameItems) {
         var entry = this._frameItems[i];
         entry.item.emit(
-          "frame",
+          'frame',
           new Base(event, {
             // Time since first call of frame() in seconds:
             time: (entry.time += event.delta),
@@ -415,7 +413,7 @@ export const View = Base.extend(
      */
     getViewSize: function () {
       var size = this._viewSize;
-      return new LinkedSize(size.width, size.height, this, "setViewSize");
+      return new LinkedSize(size.width, size.height, this, 'setViewSize');
     },
 
     setViewSize: function (/* size */) {
@@ -426,7 +424,7 @@ export const View = Base.extend(
       this._viewSize.set(size);
       this._changed();
       // Emit resize event on any size changes.
-      this.emit("resize", { size: size, delta: delta });
+      this.emit('resize', { size: size, delta: delta });
       if (this._autoUpdate) {
         // Update right away, don't wait for the next animation frame as
         // otherwise the view would flicker during resizes, see #1126
@@ -453,9 +451,7 @@ export const View = Base.extend(
      */
     getBounds: function () {
       if (!this._bounds)
-        this._bounds = this._matrix
-          .inverted()
-          ._transformBounds(new Rectangle(new Point(), this._viewSize));
+        this._bounds = this._matrix.inverted()._transformBounds(new Rectangle(new Point(), this._viewSize));
       return this._bounds;
     },
 
@@ -499,7 +495,7 @@ export const View = Base.extend(
         // also provides a way to determine pixel-size that does not involve
         // a Canvas. It still does not work in a web-worker though.
         var parent = element.parentNode,
-          temp = document.createElement("div");
+          temp = document.createElement('div');
         temp.style.fontSize = size;
         parent.appendChild(temp);
         pixels = parseFloat(DomElement.getStyles(temp).fontSize);
@@ -515,23 +511,19 @@ export const View = Base.extend(
     },
   },
   Base.each(
-    ["rotate", "scale", "shear", "skew"],
+    ['rotate', 'scale', 'shear', 'skew'],
     function (key) {
-      var rotate = key === "rotate";
+      var rotate = key === 'rotate';
       this[key] = function (/* value, center */) {
         var args = arguments,
           value = (rotate ? Base : Point).read(args),
           center = Point.read(args, 0, { readNull: true });
-        return this.transform(
-          new Matrix()[key](value, center || this.getCenter(true))
-        );
+        return this.transform(new Matrix()[key](value, center || this.getCenter(true)));
       };
     },
     /** @lends View# */ {
       _decompose: function () {
-        return (
-          this._decomposed || (this._decomposed = this._matrix.decompose())
-        );
+        return this._decomposed || (this._decomposed = this._matrix.decompose());
       },
 
       /**
@@ -575,9 +567,7 @@ export const View = Base.extend(
       },
 
       setZoom: function (zoom) {
-        this.transform(
-          new Matrix().scale(zoom / this.getZoom(), this.getCenter())
-        );
+        this.transform(new Matrix().scale(zoom / this.getZoom(), this.getCenter()));
       },
 
       /**
@@ -608,7 +598,7 @@ export const View = Base.extend(
        */
       getScaling: function () {
         var scaling = this._decompose().scaling;
-        return new LinkedPoint(scaling.x, scaling.y, this, "setScaling");
+        return new LinkedPoint(scaling.x, scaling.y, this, 'setScaling');
       },
 
       setScaling: function (/* scaling */) {
@@ -1067,8 +1057,7 @@ export const View = Base.extend(
       _id: 0,
 
       create: function (project, element) {
-        if (document && typeof element === "string")
-          element = document.getElementById(element);
+        if (document && typeof element === 'string') element = document.getElementById(element);
         // Factory to provide the right View subclass for a given element.
         // Produces only CanvasView or View items (for workers) for now:
         var ctor = window ? CanvasView4444 : View;
@@ -1093,7 +1082,7 @@ export const View = Base.extend(
       // Get the view from the current event target.
       var target = DomEvent.getTarget(event);
       // Some node do not have the getAttribute method, e.g. SVG nodes.
-      return target.getAttribute && View._viewsById[target.getAttribute("id")];
+      return target.getAttribute && View._viewsById[target.getAttribute('id')];
     }
 
     function updateFocus() {
@@ -1110,7 +1099,7 @@ export const View = Base.extend(
     }
 
     function handleMouseMove(view, event, point) {
-      view._handleMouseEvent("mousemove", event, point);
+      view._handleMouseEvent('mousemove', event, point);
     }
 
     // Touch handling inspired by Hammer.js
@@ -1121,27 +1110,20 @@ export const View = Base.extend(
     // @ts-expect-error = Property 'pointerEnabled' does not exist on type 'Navigator'
     if (navigator.pointerEnabled || navigator.msPointerEnabled) {
       // HTML5 / MS pointer events
-      mousedown = "pointerdown MSPointerDown";
-      mousemove = "pointermove MSPointerMove";
-      mouseup = "pointerup pointercancel MSPointerUp MSPointerCancel";
+      mousedown = 'pointerdown MSPointerDown';
+      mousemove = 'pointermove MSPointerMove';
+      mouseup = 'pointerup pointercancel MSPointerUp MSPointerCancel';
     } else {
-      mousedown = "touchstart";
-      mousemove = "touchmove";
-      mouseup = "touchend touchcancel";
+      mousedown = 'touchstart';
+      mousemove = 'touchmove';
+      mouseup = 'touchend touchcancel';
       // Do not add mouse events on mobile and tablet devices
-      if (
-        !(
-          "ontouchstart" in window &&
-          navigator.userAgent.match(
-            /mobile|tablet|ip(ad|hone|od)|android|silk/i
-          )
-        )
-      ) {
+      if (!('ontouchstart' in window && navigator.userAgent.match(/mobile|tablet|ip(ad|hone|od)|android|silk/i))) {
         // For non pointer events browsers and mixed browsers, like chrome
         // on Windows8 touch laptop.
-        mousedown += " mousedown";
-        mousemove += " mousemove";
-        mouseup += " mouseup";
+        mousedown += ' mousedown';
+        mousemove += ' mousemove';
+        mouseup += ' mouseup';
       }
     }
 
@@ -1153,7 +1135,7 @@ export const View = Base.extend(
           // event, to give items the change to receive a mouseleave, etc.
           var view = View._focused,
             target = DomEvent.getRelatedTarget(event);
-          if (view && (!target || target.nodeName === "HTML")) {
+          if (view && (!target || target.nodeName === 'HTML')) {
             // See #800 for this bizarre workaround for an issue of
             // Chrome on Windows:
             // TODO: Remove again after Dec 2016, once fixed in Chrome.
@@ -1181,7 +1163,7 @@ export const View = Base.extend(
       var view = (View._focused = getView(event));
       if (!dragging) {
         dragging = true;
-        view._handleMouseEvent("mousedown", event);
+        view._handleMouseEvent('mousedown', event);
       }
     };
 
@@ -1224,7 +1206,7 @@ export const View = Base.extend(
 
     docEvents[mouseup] = function (event) {
       var view = View._focused;
-      if (view && dragging) view._handleMouseEvent("mouseup", event);
+      if (view && dragging) view._handleMouseEvent('mouseup', event);
       mouseDown = dragging = false;
     };
 
@@ -1246,8 +1228,8 @@ export const View = Base.extend(
       // Event fallbacks for "virutal" events, e.g. if an item doesn't respond
       // to doubleclick, fall back to click:
       fallbacks = {
-        doubleclick: "click",
-        mousedrag: "mousemove",
+        doubleclick: 'click',
+        mousedrag: 'mousemove',
       },
       // Various variables required by #_handleMouseEvent()
       wasInView = false,
@@ -1262,15 +1244,7 @@ export const View = Base.extend(
       dblClick;
 
     // Returns true if event was prevented, false otherwise.
-    function emitMouseEvent(
-      obj,
-      target,
-      type,
-      event,
-      point,
-      prevPoint,
-      stopItem
-    ) {
+    function emitMouseEvent(obj, target, type, event, point, prevPoint, stopItem) {
       var stopped = false,
         mouseEvent;
 
@@ -1335,7 +1309,7 @@ export const View = Base.extend(
           emitMouseEvent(
             hitItem,
             null,
-            type === "mousedrag" ? "mousemove" : type,
+            type === 'mousedrag' ? 'mousemove' : type,
             event,
             point,
             prevPoint,
@@ -1343,14 +1317,7 @@ export const View = Base.extend(
           )) ||
         // Lastly handle the mouse events on the view, if we're still here.
         // @ts-expect-error = Expected 7 arguments, but got 6
-        emitMouseEvent(
-          view,
-          dragItem || hitItem || view,
-          type,
-          event,
-          point,
-          prevPoint
-        )
+        emitMouseEvent(view, dragItem || hitItem || view, type, event, point, prevPoint)
       );
     }
 
@@ -1393,23 +1360,19 @@ export const View = Base.extend(
           // event requires an item hit-test or not, before changing type
           // to the virtual value (e.g. mousemove -> mousedrag):
           hitItems = itemEvents.native[type],
-          nativeMove = type === "mousemove",
+          nativeMove = type === 'mousemove',
           tool = this._scope.tool,
           view = this;
 
         function responds(type) {
-          return (
-            itemEvents.virtual[type] ||
-            view.responds(type) ||
-            (tool && tool.responds(type))
-          );
+          return itemEvents.virtual[type] || view.responds(type) || (tool && tool.responds(type));
         }
 
         // If it's a native mousemove event but the mouse is down, and at
         // least one of the events responds to mousedrag, convert to it.
         // NOTE: emitMouseEvent(), as well as Tool#_handleMouseEvent() fall
         // back to mousemove if the objects don't respond to mousedrag.
-        if (nativeMove && dragging && responds("mousedrag")) type = "mousedrag";
+        if (nativeMove && dragging && responds('mousedrag')) type = 'mousedrag';
         if (!point) point = this.getEventPoint(event);
 
         // Run the hit-test on items first, but only if we're required to do
@@ -1436,11 +1399,11 @@ export const View = Base.extend(
         if (hitItems && hitItem !== overItem) {
           if (overItem) {
             // @ts-expect-error = Expected 7 arguments, but got 5
-            emitMouseEvent(overItem, null, "mouseleave", event, point);
+            emitMouseEvent(overItem, null, 'mouseleave', event, point);
           }
           if (hitItem) {
             // @ts-expect-error = Expected 7 arguments, but got 5
-            emitMouseEvent(hitItem, null, "mouseenter", event, point);
+            emitMouseEvent(hitItem, null, 'mouseenter', event, point);
           }
           overItem = hitItem;
         }
@@ -1448,13 +1411,7 @@ export const View = Base.extend(
         // @ts-expect-error = The left-hand side of an arithmetic operation must be of type
         if (wasInView ^ inView) {
           // @ts-expect-error = Expected 7 arguments, but got 5
-          emitMouseEvent(
-            this,
-            null,
-            inView ? "mouseenter" : "mouseleave",
-            event,
-            point
-          );
+          emitMouseEvent(this, null, inView ? 'mouseenter' : 'mouseleave', event, point);
           overView = inView ? this : null;
           handle = true; // To include the leaving move.
         }
@@ -1467,14 +1424,7 @@ export const View = Base.extend(
         if ((inView || mouse.drag) && !point.equals(lastPoint)) {
           // Handle mousemove even if this is not actually a mousemove
           // event but the mouse has moved since the last event.
-          emitMouseEvents(
-            this,
-            hitItem,
-            nativeMove ? type : "mousemove",
-            event,
-            point,
-            lastPoint
-          );
+          emitMouseEvents(this, hitItem, nativeMove ? type : 'mousemove', event, point, lastPoint);
           handle = true;
         }
         wasInView = inView;
@@ -1496,7 +1446,7 @@ export const View = Base.extend(
             // parents actually respond to mousedrag events.
             if (!prevented && hitItem) {
               var item = hitItem;
-              while (item && !item.responds("mousedrag")) item = item._parent;
+              while (item && !item.responds('mousedrag')) item = item._parent;
               if (item) dragItem = hitItem;
             }
             downPoint = point;
@@ -1506,14 +1456,7 @@ export const View = Base.extend(
             // not the view.
             if (!prevented && hitItem === downItem) {
               clickTime = Date.now();
-              emitMouseEvents(
-                this,
-                hitItem,
-                dblClick ? "doubleclick" : "click",
-                event,
-                point,
-                downPoint
-              );
+              emitMouseEvents(this, hitItem, dblClick ? 'doubleclick' : 'click', event, point, downPoint);
               dblClick = false;
             }
             downItem = dragItem = null;
@@ -1545,7 +1488,7 @@ export const View = Base.extend(
         if (
           event.cancelable !== false &&
           // @ts-expect-error = Property does not exist on type '{}
-          ((called && !mouse.move) || (mouse.down && responds("mouseup")))
+          ((called && !mouse.move) || (mouse.down && responds('mouseup')))
         ) {
           event.preventDefault();
         }
@@ -1564,11 +1507,7 @@ export const View = Base.extend(
             // Update global reference to this scope.
             paper4444 = scope;
             // Only produce the event object if we really need it.
-            obj.emit(
-              type,
-              (keyEvent =
-                keyEvent || new KeyEvent4444(type, event, key, character))
-            );
+            obj.emit(type, (keyEvent = keyEvent || new KeyEvent4444(type, event, key, character)));
           }
         }
 
@@ -1587,8 +1526,7 @@ export const View = Base.extend(
           native = itemEvents.native,
           virtual = itemEvents.virtual;
         for (var key in itemEventsMap) {
-          native[key] =
-            (native[key] || 0) + (itemEventsMap[key][type] || 0) * sign;
+          native[key] = (native[key] || 0) + (itemEventsMap[key][type] || 0) * sign;
         }
         // Also update the count of virtual events installed.
         virtual[type] = (virtual[type] || 0) + sign;

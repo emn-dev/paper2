@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Group } from "./Group";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Group } from './Group';
 
 /**
  * @name Layer
@@ -26,7 +29,7 @@ import { Group } from "./Group";
  */
 export const Layer = Group.extend(
   /** @lends Layer# */ {
-    _class: "Layer",
+    _class: 'Layer',
     // Turn on again for now, since examples depend on it.
     // TODO: Discus with @puckey and come to a conclusion
     // _selectChildren: false,
@@ -78,9 +81,7 @@ export const Layer = Group.extend(
     },
 
     isInserted: function isInserted() {
-      return this._parent
-        ? (isInserted as any).base.call(this)
-        : this._index != null;
+      return this._parent ? (isInserted as any).base.call(this) : this._index != null;
     },
 
     /**

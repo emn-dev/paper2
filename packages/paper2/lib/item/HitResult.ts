@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
 
 declare let paper4444;
 
@@ -23,7 +26,7 @@ declare let paper4444;
  */
 export const HitResult = Base.extend(
   /** @lends HitResult# */ {
-    _class: "HitResult",
+    _class: 'HitResult',
 
     initialize: function HitResult(type, item, values) {
       this.type = type;

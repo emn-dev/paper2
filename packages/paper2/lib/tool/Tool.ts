@@ -10,8 +10,11 @@
  * All rights reserved.
  */
 
-import { PaperScopeItem } from "~/core/PaperScopeItem";
-import { ToolEvent } from "./ToolEvent";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { PaperScopeItem } from '~/core/PaperScopeItem';
+import { ToolEvent } from './ToolEvent';
 
 declare let paper4444;
 
@@ -49,20 +52,20 @@ declare let paper4444;
  */
 export const Tool = PaperScopeItem.extend(
   /** @lends Tool# */ {
-    _class: "Tool",
-    _list: "tools",
+    _class: 'Tool',
+    _list: 'tools',
     // TODO: This should be `activeTool` instead?
-    _reference: "tool",
+    _reference: 'tool',
     _events: [
-      "onMouseDown",
-      "onMouseUp",
-      "onMouseDrag",
-      "onMouseMove",
-      "onActivate",
-      "onDeactivate",
-      "onEditOptions",
-      "onKeyDown",
-      "onKeyUp",
+      'onMouseDown',
+      'onMouseUp',
+      'onMouseDrag',
+      'onMouseMove',
+      'onActivate',
+      'onDeactivate',
+      'onEditOptions',
+      'onKeyDown',
+      'onKeyUp',
     ],
 
     // DOCS: rewrite Tool constructor explanation
@@ -102,11 +105,7 @@ export const Tool = PaperScopeItem.extend(
 
     setMinDistance: function (minDistance) {
       this._minDistance = minDistance;
-      if (
-        minDistance != null &&
-        this._maxDistance != null &&
-        minDistance > this._maxDistance
-      ) {
+      if (minDistance != null && this._maxDistance != null && minDistance > this._maxDistance) {
         this._maxDistance = minDistance;
       }
     },
@@ -124,11 +123,7 @@ export const Tool = PaperScopeItem.extend(
 
     setMaxDistance: function (maxDistance) {
       this._maxDistance = maxDistance;
-      if (
-        this._minDistance != null &&
-        maxDistance != null &&
-        maxDistance < this._minDistance
-      ) {
+      if (this._minDistance != null && maxDistance != null && maxDistance < this._minDistance) {
         this._minDistance = maxDistance;
       }
     },
@@ -308,7 +303,7 @@ export const Tool = PaperScopeItem.extend(
       paper4444 = this._scope;
       // If there is no mousedrag event installed, fall back to mousemove,
       // with which we share the actual event handling code anyhow.
-      if (mouse.drag && !this.responds(type)) type = "mousemove";
+      if (mouse.drag && !this.responds(type)) type = 'mousemove';
       var move = mouse.move || mouse.drag,
         responds = this.responds(type),
         called = false,
@@ -338,9 +333,7 @@ export const Tool = PaperScopeItem.extend(
             // Produce a new point on the way to point if point is
             // further away than maxDistance
             if (maxDistance) {
-              pt = toolPoint.add(
-                vector.normalize(Math.min(distance, maxDistance))
-              );
+              pt = toolPoint.add(vector.normalize(Math.min(distance, maxDistance)));
             }
           }
           tool._moveCount++;

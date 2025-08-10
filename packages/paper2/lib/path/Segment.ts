@@ -10,14 +10,17 @@
  * All rights reserved.
  */
 
-import type { SegmentPoint as SegmentPointType } from "./SegmentPoint";
-import type { CurveLocation as CurveLocationType } from "./CurveLocation";
-import type { Path } from "./Path";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Change } from "~/item/ChangeFlag";
-import { SegmentSelection } from "./SegmentSelection";
+import type { SegmentPoint as SegmentPointType } from './SegmentPoint';
+import type { CurveLocation as CurveLocationType } from './CurveLocation';
+import type { Path } from './Path';
+
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Change } from '~/item/ChangeFlag';
+import { SegmentSelection } from './SegmentSelection';
 
 // import { SegmentPoint } from "./SegmentPoint";
 // import { CurveLocation } from "./CurveLocation";
@@ -40,7 +43,7 @@ declare const CurveLocation4444: typeof CurveLocationType;
  */
 export const Segment = Base.extend(
   /** @lends Segment# */ {
-    _class: "Segment",
+    _class: 'Segment',
     beans: true,
     // The selection state, a combination of SegmentSelection
     _selection: 0,
@@ -138,9 +141,9 @@ export const Segment = Base.extend(
         selection;
       // TODO: Should we use Point.read() or Point.readNamed() to read these?
       if (count > 0) {
-        if (arg0 == null || typeof arg0 === "object") {
+        if (arg0 == null || typeof arg0 === 'object') {
           // Handle undefined, null and passed objects:
-          if (count === 1 && arg0 && "point" in arg0) {
+          if (count === 1 && arg0 && 'point' in arg0) {
             // NOTE: This copies from segments through accessors.
             point = arg0.point;
             handleIn = arg0.handleIn;
@@ -161,9 +164,9 @@ export const Segment = Base.extend(
           handleOut = arg4 !== undefined ? [arg4, arg5] : null;
         }
       }
-      new SegmentPoint4444(point, this, "_point");
-      new SegmentPoint4444(handleIn, this, "_handleIn");
-      new SegmentPoint4444(handleOut, this, "_handleOut");
+      new SegmentPoint4444(point, this, '_point');
+      new SegmentPoint4444(handleIn, this, '_handleIn');
+      new SegmentPoint4444(handleOut, this, '_handleOut');
       if (selection) this.setSelection(selection);
     },
 
@@ -171,10 +174,7 @@ export const Segment = Base.extend(
       // If it is has no handles, only serialize point, otherwise handles too.
       var point = this._point,
         selection = this._selection,
-        obj =
-          selection || this.hasHandles()
-            ? [point, this._handleIn, this._handleOut]
-            : point;
+        obj = selection || this.hasHandles() ? [point, this._handleIn, this._handleOut] : point;
       if (selection) obj.push(selection);
       return Base.serialize(obj, options, true, dictionary);
     },
@@ -193,21 +193,12 @@ export const Segment = Base.extend(
         // and #curveOut, next to #curve?
         if (
           (!point || point === this._point || point === this._handleIn) &&
-          (curve =
-            index > 0
-              ? curves[index - 1]
-              : path._closed
-              ? curves[curves.length - 1]
-              : null)
+          (curve = index > 0 ? curves[index - 1] : path._closed ? curves[curves.length - 1] : null)
         )
           curve._changed();
         // No wrap around needed for outgoing curve, as only closed paths
         // will have one for the last segment.
-        if (
-          (!point || point === this._point || point === this._handleOut) &&
-          (curve = curves[index])
-        )
-          curve._changed();
+        if ((!point || point === this._point || point === this._handleOut) && (curve = curves[index])) curve._changed();
       }
       path._changed(/*#=*/ Change.SEGMENTS);
     },
@@ -279,11 +270,7 @@ export const Segment = Base.extend(
     isSmooth: function () {
       var handleIn = this._handleIn,
         handleOut = this._handleOut;
-      return (
-        !handleIn.isZero() &&
-        !handleOut.isZero() &&
-        handleIn.isCollinear(handleOut)
-      );
+      return !handleIn.isZero() && !handleOut.isZero() && handleIn.isCollinear(handleOut);
     },
 
     /**
@@ -380,8 +367,7 @@ export const Segment = Base.extend(
         index = this._index;
       if (path) {
         // The last segment of an open path belongs to the last curve.
-        if (index > 0 && !path._closed && index === path._segments.length - 1)
-          index--;
+        if (index > 0 && !path._closed && index === path._segments.length - 1) index--;
         return path.getCurves()[index] || null;
       }
       return null;
@@ -413,11 +399,7 @@ export const Segment = Base.extend(
      */
     getNext: function () {
       var segments = this._path && this._path._segments;
-      return (
-        (segments &&
-          (segments[this._index + 1] || (this._path._closed && segments[0]))) ||
-        null
-      );
+      return (segments && (segments[this._index + 1] || (this._path._closed && segments[0]))) || null;
     },
 
     /**
@@ -469,7 +451,7 @@ export const Segment = Base.extend(
         p2 = (next || this)._point,
         d1 = p0.getDistance(p1),
         d2 = p1.getDistance(p2);
-      if (!type || type === "catmull-rom") {
+      if (!type || type === 'catmull-rom') {
         // Implementation of by Catmull-Rom splines with factor parameter
         // based on work by @nicholaswmin:
         // https://github.com/nicholaswmin/VectorTests
@@ -507,7 +489,7 @@ export const Segment = Base.extend(
               : new Point()
           );
         }
-      } else if (type === "geometric") {
+      } else if (type === 'geometric') {
         // Geometric smoothing approach based on:
         // http://www.antigrain.com/research/bezier_interpolation/
         // http://scaledinnovation.com/analytics/splines/aboutSplines.html
@@ -534,12 +516,7 @@ export const Segment = Base.extend(
      */
     getPrevious: function () {
       var segments = this._path && this._path._segments;
-      return (
-        (segments &&
-          (segments[this._index - 1] ||
-            (this._path._closed && segments[segments.length - 1]))) ||
-        null
-      );
+      return (segments && (segments[this._index - 1] || (this._path._closed && segments[segments.length - 1]))) || null;
     },
 
     /**
@@ -616,11 +593,10 @@ export const Segment = Base.extend(
      * @return {String} a string representation of the segment
      */
     toString: function () {
-      var parts = ["point: " + this._point];
-      if (!this._handleIn.isZero()) parts.push("handleIn: " + this._handleIn);
-      if (!this._handleOut.isZero())
-        parts.push("handleOut: " + this._handleOut);
-      return "{ " + parts.join(", ") + " }";
+      var parts = ['point: ' + this._point];
+      if (!this._handleIn.isZero()) parts.push('handleIn: ' + this._handleIn);
+      if (!this._handleOut.isZero()) parts.push('handleOut: ' + this._handleOut);
+      return '{ ' + parts.join(', ') + ' }';
     },
 
     /**
@@ -653,21 +629,9 @@ export const Segment = Base.extend(
         handleIn2 = to._handleIn,
         handleOut2 = to._handleOut,
         handleOut1 = from._handleOut;
-      this._point._set(
-        u * point1._x + v * point2._x,
-        u * point1._y + v * point2._y,
-        true
-      );
-      this._handleIn._set(
-        u * handleIn1._x + v * handleIn2._x,
-        u * handleIn1._y + v * handleIn2._y,
-        true
-      );
-      this._handleOut._set(
-        u * handleOut1._x + v * handleOut2._x,
-        u * handleOut1._y + v * handleOut2._y,
-        true
-      );
+      this._point._set(u * point1._x + v * point2._x, u * point1._y + v * point2._y, true);
+      this._handleIn._set(u * handleIn1._x + v * handleIn2._x, u * handleIn1._y + v * handleIn2._y, true);
+      this._handleOut._set(u * handleOut1._x + v * handleOut2._x, u * handleOut1._y + v * handleOut2._y, true);
       this._changed();
     },
 
@@ -683,8 +647,7 @@ export const Segment = Base.extend(
         // use the real handles, as we just want to receive a filled
         // coords array for getBounds().
         handleIn = !change || !this._handleIn.isZero() ? this._handleIn : null,
-        handleOut =
-          !change || !this._handleOut.isZero() ? this._handleOut : null,
+        handleOut = !change || !this._handleOut.isZero() ? this._handleOut : null,
         x = point._x,
         y = point._y,
         i = 2;

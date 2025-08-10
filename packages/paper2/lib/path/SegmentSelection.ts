@@ -10,6 +10,9 @@
  * All rights reserved.
  */
 
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
 // Path#_segmentSelection is the addition of all segment's states, and is
 // compared with SegmentSelection.ALL, the combination of all
 // SegmentSelection values to see if all segments are fully selected.

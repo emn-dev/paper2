@@ -10,12 +10,15 @@
  * All rights reserved.
  */
 
-import type { Rectangle as RectangleType } from "./Rectangle";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Formatter } from "~/util/Formatter";
-import { Numerical } from "~/util/Numerical";
-import { ItemSelection } from "~/item/ItemSelection";
+import type { Rectangle as RectangleType } from './Rectangle';
+
+import { Base } from '~/straps';
+import { Formatter } from '~/util/Formatter';
+import { Numerical } from '~/util/Numerical';
+import { ItemSelection } from '~/item/ItemSelection';
 // import { Rectangle } from "./Rectangle";
 
 declare const Rectangle4444: typeof RectangleType;
@@ -35,7 +38,7 @@ declare const Rectangle4444: typeof RectangleType;
  */
 export const Point = Base.extend(
   /** @lends Point# */ {
-    _class: "Point",
+    _class: 'Point',
     // Tell Base.read that the Point constructor supports reading with index
     _readIndex: true,
 
@@ -144,23 +147,23 @@ export const Point = Base.extend(
       var type = typeof arg0,
         reading = this.__read,
         read = 0;
-      if (type === "number") {
-        var hasY = typeof arg1 === "number";
+      if (type === 'number') {
+        var hasY = typeof arg1 === 'number';
         this._set(arg0, hasY ? arg1 : arg0);
         if (reading) read = hasY ? 2 : 1;
-      } else if (type === "undefined" || arg0 === null) {
+      } else if (type === 'undefined' || arg0 === null) {
         this._set(0, 0);
         if (reading) read = arg0 === null ? 1 : 0;
       } else {
-        var obj = type === "string" ? arg0.split(/[\s,]+/) || [] : arg0;
+        var obj = type === 'string' ? arg0.split(/[\s,]+/) || [] : arg0;
         read = 1;
         if (Array.isArray(obj)) {
           this._set(+obj[0], +(obj.length > 1 ? obj[1] : obj[0]));
-        } else if ("x" in obj) {
+        } else if ('x' in obj) {
           this._set(obj.x || 0, obj.y || 0);
-        } else if ("width" in obj) {
+        } else if ('width' in obj) {
           this._set(obj.width || 0, obj.height || 0);
-        } else if ("angle" in obj) {
+        } else if ('angle' in obj) {
           this._set(obj.length || 0, 0);
           this.setAngle(obj.angle || 0);
         } else {
@@ -181,7 +184,7 @@ export const Point = Base.extend(
      * @param {...*} values
      * @return {Point}
      */
-    set: "#initialize",
+    set: '#initialize',
 
     /**
      * Internal helper function to directly set the underlying properties.
@@ -231,9 +234,7 @@ export const Point = Base.extend(
         this === point ||
         (point &&
           ((this.x === point.x && this.y === point.y) ||
-            (Array.isArray(point) &&
-              this.x === point[0] &&
-              this.y === point[1]))) ||
+            (Array.isArray(point) && this.x === point[0] && this.y === point[1]))) ||
         false
       );
     },
@@ -260,7 +261,7 @@ export const Point = Base.extend(
      */
     toString: function () {
       var f = Formatter.instance;
-      return "{ x: " + f.number(this.x) + ", y: " + f.number(this.y) + " }";
+      return '{ x: ' + f.number(this.x) + ', y: ' + f.number(this.y) + ' }';
     },
 
     _serialize: function (options) {
@@ -321,8 +322,8 @@ export const Point = Base.extend(
       this.setAngleInRadians.call(this, (angle * Math.PI) / 180);
     },
 
-    getAngleInDegrees: "#getAngle",
-    setAngleInDegrees: "#setAngle",
+    getAngleInDegrees: '#getAngle',
+    setAngleInDegrees: '#setAngle',
 
     /**
      * Returns the smaller angle between two vectors in radians. The angle is
@@ -482,10 +483,7 @@ export const Point = Base.extend(
       var point = center ? this.subtract(center) : this,
         sin = Math.sin(angle),
         cos = Math.cos(angle);
-      point = new Point(
-        point.x * cos - point.y * sin,
-        point.x * sin + point.y * cos
-      );
+      point = new Point(point.x * cos - point.y * sin, point.x * sin + point.y * cos);
       return center ? point.add(center) : point;
     },
 
@@ -731,7 +729,7 @@ export const Point = Base.extend(
     },
 
     // TODO: Remove version with typo after a while (deprecated June 2015)
-    isColinear: "#isCollinear",
+    isColinear: '#isCollinear',
 
     /**
      * Checks if the vector represented by this point is orthogonal
@@ -781,10 +779,7 @@ export const Point = Base.extend(
       // 2: [-1,  1]
       // 3: [-1, -1]
       // 4: [ 1, -1]
-      return (
-        this.x * (q > 1 && q < 4 ? -1 : 1) >= 0 &&
-        this.y * (q > 2 ? -1 : 1) >= 0
-      );
+      return this.x * (q > 1 && q < 4 ? -1 : 1) >= 0 && this.y * (q > 2 ? -1 : 1) >= 0;
     },
 
     /**
@@ -941,10 +936,7 @@ export const Point = Base.extend(
         var args = arguments,
           point1 = Point.read(args),
           point2 = Point.read(args);
-        return new Point(
-          Math.min(point1.x, point2.x),
-          Math.min(point1.y, point2.y)
-        );
+        return new Point(Math.min(point1.x, point2.x), Math.min(point1.y, point2.y));
       },
 
       /**
@@ -973,10 +965,7 @@ export const Point = Base.extend(
         var args = arguments,
           point1 = Point.read(args),
           point2 = Point.read(args);
-        return new Point(
-          Math.max(point1.x, point2.x),
-          Math.max(point1.y, point2.y)
-        );
+        return new Point(Math.max(point1.x, point2.x), Math.max(point1.y, point2.y));
       },
 
       /**
@@ -1004,8 +993,7 @@ export const Point = Base.extend(
         // the cross product, we can scale the epsilon accordingly.
         return (
           Math.abs(x1 * y2 - y1 * x2) <=
-          Math.sqrt((x1 * x1 + y1 * y1) * (x2 * x2 + y2 * y2)) *
-            /*#=*/ Numerical.TRIGONOMETRIC_EPSILON
+          Math.sqrt((x1 * x1 + y1 * y1) * (x2 * x2 + y2 * y2)) * /*#=*/ Numerical.TRIGONOMETRIC_EPSILON
         );
       },
 
@@ -1013,14 +1001,13 @@ export const Point = Base.extend(
         // See Point.isCollinear()
         return (
           Math.abs(x1 * x2 + y1 * y2) <=
-          Math.sqrt((x1 * x1 + y1 * y1) * (x2 * x2 + y2 * y2)) *
-            /*#=*/ Numerical.TRIGONOMETRIC_EPSILON
+          Math.sqrt((x1 * x1 + y1 * y1) * (x2 * x2 + y2 * y2)) * /*#=*/ Numerical.TRIGONOMETRIC_EPSILON
         );
       },
     },
   },
   Base.each(
-    ["round", "ceil", "floor", "abs"],
+    ['round', 'ceil', 'floor', 'abs'],
     function (key) {
       // Inject round, ceil, floor, abs:
       var op = Math[key];
@@ -1085,6 +1072,6 @@ export const LinkedPoint = Point.extend({
   },
 
   _getSelection: function () {
-    return this._setter === "setPosition" ? /*#=*/ ItemSelection.POSITION : 0;
+    return this._setter === 'setPosition' ? /*#=*/ ItemSelection.POSITION : 0;
   },
 });

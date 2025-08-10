@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { DomEvent } from "~/dom/DomEvent";
-import { View } from "~/view/View";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { DomEvent } from '~/dom/DomEvent';
+import { View } from '~/view/View';
 
 declare let paper4444;
 
@@ -24,20 +27,20 @@ declare let paper4444;
 export const Key = new (function () {
   var keyLookup = {
       // Unify different key identifier naming schemes, e.g. on Gecko, IE:
-      "\t": "tab",
-      " ": "space",
-      "\b": "backspace",
-      "\x7f": "delete",
-      Spacebar: "space",
-      Del: "delete",
-      Win: "meta",
-      Esc: "escape",
+      '\t': 'tab',
+      ' ': 'space',
+      '\b': 'backspace',
+      '\x7f': 'delete',
+      Spacebar: 'space',
+      Del: 'delete',
+      Win: 'meta',
+      Esc: 'escape',
     },
     // To find corresponding characters for special keys in keydown events:
     charLookup = {
-      tab: "\t",
-      space: " ",
-      enter: "\r",
+      tab: '\t',
+      space: ' ',
+      enter: '\r',
     },
     // Only keypress reliable gets char-codes that are actually representing
     // characters with all modifiers taken into account across all browsers.
@@ -83,12 +86,12 @@ export const Key = new (function () {
       ? // Expand keyIdentifier Unicode format.
         String.fromCharCode(parseInt(key.substr(2), 16))
       : // Use short version for arrow keys: ArrowLeft -> Left
-      /^Arrow[A-Z]/.test(key)
-      ? key.substr(5)
-      : // This is far from ideal, but what else can we do?
-      key === "Unidentified" || key === undefined
-      ? String.fromCharCode(event.keyCode)
-      : key;
+        /^Arrow[A-Z]/.test(key)
+        ? key.substr(5)
+        : // This is far from ideal, but what else can we do?
+          key === 'Unidentified' || key === undefined
+          ? String.fromCharCode(event.keyCode)
+          : key;
     return (
       keyLookup[key] ||
       // Hyphenate camel-cased special keys, lower-case normal ones:
@@ -97,7 +100,7 @@ export const Key = new (function () {
   }
 
   function handleKey(down, key, character, event) {
-    var type = down ? "keydown" : "keyup",
+    var type = down ? 'keydown' : 'keyup',
       view = View._focused,
       name;
     keyMap[key] = down;
@@ -115,7 +118,7 @@ export const Key = new (function () {
     if (key.length > 1 && (name = Base.camelize(key)) in modifiers) {
       modifiers[name] = down;
       var agent = paper4444 && paper4444.agent;
-      if (name === "meta" && agent && agent.mac) {
+      if (name === 'meta' && agent && agent.mac) {
         // Fix a strange behavior on Mac where no keyup events are
         // received for any keys pressed while the meta key is down.
         // Keep track of the normal keys being pressed and trigger keyup
@@ -135,7 +138,7 @@ export const Key = new (function () {
       metaFixMap[key] = character;
     }
     if (view) {
-      view._handleKeyEvent(down ? "keydown" : "keyup", event, key, character);
+      view._handleKeyEvent(down ? 'keydown' : 'keyup', event, key, character);
     }
   }
 
@@ -149,18 +152,9 @@ export const Key = new (function () {
       // so we need to handle this in a way that works across all OSes.
       if (
         key.length > 1 ||
-        (agent &&
-          agent.chrome &&
-          (event.altKey ||
-            (agent.mac && event.metaKey) ||
-            (!agent.mac && event.ctrlKey)))
+        (agent && agent.chrome && (event.altKey || (agent.mac && event.metaKey) || (!agent.mac && event.ctrlKey)))
       ) {
-        handleKey(
-          true,
-          key,
-          charLookup[key] || (key.length > 1 ? "" : key),
-          event
-        );
+        handleKey(true, key, charLookup[key] || (key.length > 1 ? '' : key), event);
       } else {
         // If it wasn't handled yet, store the downKey so keypress can
         // compare and handle buggy edge cases, known to happen in
@@ -175,8 +169,7 @@ export const Key = new (function () {
           code = event.charCode,
           // Try event.charCode if its above 32 and fall back onto the
           // key value if it's a single character, empty otherwise.
-          character =
-            code >= 32 ? String.fromCharCode(code) : key.length > 1 ? "" : key;
+          character = code >= 32 ? String.fromCharCode(code) : key.length > 1 ? '' : key;
         if (key !== downKey) {
           // This shouldn't happen, but it does in Chrome on Ubuntu.
           // In these cases, character is actually the key we want!

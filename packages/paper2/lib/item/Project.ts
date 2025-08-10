@@ -10,19 +10,22 @@
  * All rights reserved.
  */
 
-import type { Item as ItemType } from "./Item";
-import type { ItemSelection as ItemSelectionType } from "./ItemSelection";
-import type { Layer as LayerType } from "./Layer";
-import type { View as ViewType } from "~/view/View";
-import type { SymbolItem as SymbolItemType } from "./SymbolItem";
-import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
-import type { Style as StyleType } from "~/style/Style";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Matrix } from "~/basic/Matrix";
-import { Point } from "~/basic/Point";
-import { PaperScopeItem } from "~/core/PaperScopeItem";
-import { ChangeFlag, Change } from "./ChangeFlag";
+import type { Item as ItemType } from './Item';
+import type { ItemSelection as ItemSelectionType } from './ItemSelection';
+import type { Layer as LayerType } from './Layer';
+import type { View as ViewType } from '~/view/View';
+import type { SymbolItem as SymbolItemType } from './SymbolItem';
+import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
+import type { Style as StyleType } from '~/style/Style';
+
+import { Base } from '~/straps';
+import { Matrix } from '~/basic/Matrix';
+import { Point } from '~/basic/Point';
+import { PaperScopeItem } from '~/core/PaperScopeItem';
+import { ChangeFlag, Change } from './ChangeFlag';
 // import { Item } from "./Item";
 // import { ItemSelection } from "./ItemSelection";
 // import { Layer } from "./Layer";
@@ -61,9 +64,9 @@ declare const Style4444: typeof StyleType;
  */
 export const Project = PaperScopeItem.extend(
   /** @lends Project# */ {
-    _class: "Project",
-    _list: "projects",
-    _reference: "project",
+    _class: 'Project',
+    _list: 'projects',
+    _reference: 'project',
     _compactSerialize: true, // Never include the class name for Project
 
     // TODO: Add arguments to define pages
@@ -269,9 +272,7 @@ export const Project = PaperScopeItem.extend(
      * @type Layer
      */
     getActiveLayer: function () {
-      return (
-        this._activeLayer || new Layer4444({ project: this, insert: true })
-      );
+      return this._activeLayer || new Layer4444({ project: this, insert: true });
     },
 
     /**
@@ -303,7 +304,7 @@ export const Project = PaperScopeItem.extend(
      * @bean
      * @deprecated use {@link #symbolDefinitions} instead.
      */
-    getSymbols: "getSymbolDefinitions",
+    getSymbols: 'getSymbolDefinitions',
 
     /**
      * The selected items contained within the project.
@@ -349,8 +350,7 @@ export const Project = PaperScopeItem.extend(
      */
     selectAll: function () {
       var children = this._children;
-      for (var i = 0, l = children.length; i < l; i++)
-        children[i].setFullySelected(true);
+      for (var i = 0, l = children.length; i < l; i++) children[i].setFullySelected(true);
     },
 
     /**
@@ -412,10 +412,7 @@ export const Project = PaperScopeItem.extend(
         this.insertLayer(index, item) ||
         // Anything else than layers needs to be added to a layer first.
         // If none exists yet, create one now, then add the item to it.
-        (
-          this._activeLayer ||
-          this._insertItem(undefined, new Layer4444(Item4444.NO_INSERT), true)
-        ) // _created = true
+        (this._activeLayer || this._insertItem(undefined, new Layer4444(Item4444.NO_INSERT), true)) // _created = true
           .insertChild(index, item);
       // If a layer was newly created, also activate it.
       if (_created && item.activate) item.activate();
@@ -872,7 +869,7 @@ export const Project = PaperScopeItem.extend(
       var sets = this._removeSets;
       if (sets) {
         // Always clear the drag set on mouseup
-        if (type === "mouseup") sets.mousedrag = null;
+        if (type === 'mouseup') sets.mousedrag = null;
         var set = sets[type];
         if (set) {
           for (var id in set) {

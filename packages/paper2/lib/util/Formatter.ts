@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
 
 /**
  * @name Formatter
@@ -39,31 +42,23 @@ export const Formatter = Base.extend(
       // unnecessarily consuming space.
       // If precision is >= 16, don't do anything at all, since that appears
       // to be the limit of the precision (it actually varies).
-      return this.precision < 16
-        ? Math.round(val * this.multiplier) / this.multiplier
-        : val;
+      return this.precision < 16 ? Math.round(val * this.multiplier) / this.multiplier : val;
     },
 
     pair: function (val1, val2, separator) {
-      return this.number(val1) + (separator || ",") + this.number(val2);
+      return this.number(val1) + (separator || ',') + this.number(val2);
     },
 
     point: function (val, separator) {
-      return this.number(val.x) + (separator || ",") + this.number(val.y);
+      return this.number(val.x) + (separator || ',') + this.number(val.y);
     },
 
     size: function (val, separator) {
-      return (
-        this.number(val.width) + (separator || ",") + this.number(val.height)
-      );
+      return this.number(val.width) + (separator || ',') + this.number(val.height);
     },
 
     rectangle: function (val, separator) {
-      return (
-        this.point(val, separator) +
-        (separator || ",") +
-        this.size(val, separator)
-      );
+      return this.point(val, separator) + (separator || ',') + this.size(val, separator);
     },
   }
 );

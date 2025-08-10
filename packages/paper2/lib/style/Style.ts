@@ -10,14 +10,17 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Change } from "~/item/ChangeFlag";
-import { Group } from "~/item/Group";
-import { Item } from "~/item/Item";
-import { CompoundPath } from "~/path/CompoundPath";
-import { TextItem } from "~/text/TextItem";
-import { Color } from "./Color";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Change } from '~/item/ChangeFlag';
+import { Group } from '~/item/Group';
+import { Item } from '~/item/Item';
+import { CompoundPath } from '~/path/CompoundPath';
+import { TextItem } from '~/text/TextItem';
+import { Color } from './Color';
 
 declare let paper4444;
 
@@ -85,11 +88,11 @@ export const Style = Base.extend(
     var itemDefaults = {
         // Paths
         fillColor: null,
-        fillRule: "nonzero",
+        fillRule: 'nonzero',
         strokeColor: null,
         strokeWidth: 1,
-        strokeCap: "butt",
-        strokeJoin: "miter",
+        strokeCap: 'butt',
+        strokeJoin: 'miter',
         strokeScaling: true,
         miterLimit: 10,
         dashOffset: 0,
@@ -105,12 +108,12 @@ export const Style = Base.extend(
       // needs to be able to pass down text styles as well):
       groupDefaults = Base.set({}, itemDefaults, {
         // Characters
-        fontFamily: "sans-serif",
-        fontWeight: "normal",
+        fontFamily: 'sans-serif',
+        fontWeight: 'normal',
         fontSize: 12,
         leading: null,
         // Paragraphs
-        justification: "left",
+        justification: 'left',
       }),
       // Defaults for TextItem (override default fillColor to black):
       textDefaults = Base.set({}, groupDefaults, {
@@ -136,22 +139,21 @@ export const Style = Base.extend(
         beans: true,
       },
       fields = /** @lends Style# */ {
-        _class: "Style",
+        _class: 'Style',
         beans: true,
 
         initialize: function Style(style, _owner, _project) {
           // We keep values in a separate object that we can iterate over.
           this._values = {};
           this._owner = _owner;
-          this._project =
-            (_owner && _owner._project) || _project || paper4444.project;
+          this._project = (_owner && _owner._project) || _project || paper4444.project;
           // Use different defaults based on the owner
           this._defaults =
             !_owner || _owner instanceof Group
               ? groupDefaults
               : _owner instanceof TextItem
-              ? textDefaults
-              : itemDefaults;
+                ? textDefaults
+                : itemDefaults;
           if (style) this.set(style);
         },
       };
@@ -160,11 +162,11 @@ export const Style = Base.extend(
     // properties
     Base.each(groupDefaults, function (value, key) {
       var isColor = /Color$/.test(key),
-        isPoint = key === "shadowOffset",
+        isPoint = key === 'shadowOffset',
         part = Base.capitalize(key),
         flag = flags[key],
-        set = "set" + part,
-        get = "get" + part;
+        set = 'set' + part,
+        get = 'get' + part;
 
       // Define getters and setters to be injected into this class.
       // This is how style values are handled:
@@ -178,20 +180,15 @@ export const Style = Base.extend(
       fields[set] = function (value) {
         var owner = this._owner,
           children = owner && owner._children,
-          applyToChildren =
-            children && children.length > 0 && !(owner instanceof CompoundPath);
+          applyToChildren = children && children.length > 0 && !(owner instanceof CompoundPath);
         // Only unify styles on children of Groups, excluding CompoundPaths.
         if (applyToChildren) {
-          for (var i = 0, l = children.length; i < l; i++)
-            children[i]._style[set](value);
+          for (var i = 0, l = children.length; i < l; i++) children[i]._style[set](value);
         }
         // Always store selectedColor in item _values to make sure that
         // group selected bounds and position color is coherent whether it
         // has children or not when the value is set.
-        if (
-          (key === "selectedColor" || !applyToChildren) &&
-          key in this._defaults
-        ) {
+        if ((key === 'selectedColor' || !applyToChildren) && key in this._defaults) {
           var old = this._values[key];
           if (old !== value) {
             if (isColor) {
@@ -226,8 +223,7 @@ export const Style = Base.extend(
       fields[get] = function (_dontMerge) {
         var owner = this._owner,
           children = owner && owner._children,
-          applyToChildren =
-            children && children.length > 0 && !(owner instanceof CompoundPath),
+          applyToChildren = children && children.length > 0 && !(owner instanceof CompoundPath),
           value;
         // If the owner has children, walk through all of them and see if
         // they all have the same style.
@@ -289,14 +285,14 @@ export const Style = Base.extend(
     // TODO: Remove once deprecated long enough, after December 2016.
     Base.each(
       {
-        Font: "FontFamily",
-        WindingRule: "FillRule",
+        Font: 'FontFamily',
+        WindingRule: 'FillRule',
       },
       function (value, key) {
-        var get = "get" + key,
-          set = "set" + key;
-        fields[get] = item[get] = "#get" + value;
-        fields[set] = item[set] = "#set" + value;
+        var get = 'get' + key,
+          set = 'set' + key;
+        fields[get] = item[get] = '#get' + value;
+        fields[set] = item[set] = '#set' + value;
       }
     );
 
@@ -332,10 +328,7 @@ export const Style = Base.extend(
         for (var key in values1) {
           var value1 = values1[key],
             value2 = values2[key];
-          if (
-            !(secondary && key in values2) &&
-            !Base.equals(value1, value2 === undefined ? defaults2[key] : value2)
-          )
+          if (!(secondary && key in values2) && !Base.equals(value1, value2 === undefined ? defaults2[key] : value2))
             return false;
         }
         return true;
@@ -379,11 +372,7 @@ export const Style = Base.extend(
       var color = this.getShadowColor();
       // In order to draw a shadow, we need either a shadow blur or an
       // offset, or both.
-      return (
-        !!color &&
-        color.alpha > 0 &&
-        (this.getShadowBlur() > 0 || !this.getShadowOffset().isZero())
-      );
+      return !!color && color.alpha > 0 && (this.getShadowBlur() > 0 || !this.getShadowOffset().isZero());
     },
 
     /**
@@ -407,11 +396,7 @@ export const Style = Base.extend(
       // something deeper down in the optimizer:
       // `if (size === 0) size = 0;`
       return (
-        this.getFontWeight() +
-        " " +
-        fontSize +
-        (/[a-z]/i.test(fontSize + "") ? " " : "px ") +
-        this.getFontFamily()
+        this.getFontWeight() + ' ' + fontSize + (/[a-z]/i.test(fontSize + '') ? ' ' : 'px ') + this.getFontFamily()
       );
     },
 
@@ -420,15 +405,14 @@ export const Style = Base.extend(
      * @private
      * @deprecated use {@link #fontFamily} instead.
      */
-    getFont: "#getFontFamily",
-    setFont: "#setFontFamily",
+    getFont: '#getFontFamily',
+    setFont: '#setFontFamily',
 
     getLeading: function getLeading() {
       // Override leading to return fontSize * 1.2 by default.
       var leading = (getLeading as any).base.call(this),
         fontSize = this.getFontSize();
-      if (/pt|em|%|px/.test(fontSize))
-        fontSize = this.getView().getPixelSize(fontSize);
+      if (/pt|em|%|px/.test(fontSize)) fontSize = this.getView().getPixelSize(fontSize);
       return leading != null ? leading : fontSize * 1.2;
     },
 

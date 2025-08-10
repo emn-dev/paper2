@@ -10,28 +10,31 @@
  * All rights reserved.
  */
 
-import type { Path as PathType } from "~/path/Path";
-import type { CompoundPath as CompoundPathType } from "~/path/CompoundPath";
-import type { Style as StyleType } from "~/style/Style";
-import type { BlendMode as BlendModeType } from "~/canvas/BlendMode";
-import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
-import type { Tween as TweenType } from "~/anim/Tween";
-import type { Group as GroupType } from "./Group";
-import type { Layer as LayerType } from "./Layer";
-import type { HitResult as HitResultType } from "./HitResult";
-import type { Raster as RasterType } from "./Raster";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Project } from "./Project";
-import { Emitter } from "~/core/Emitter";
-import { Matrix } from "~/basic/Matrix";
-import { Point, LinkedPoint } from "~/basic/Point";
-import { Rectangle, LinkedRectangle } from "~/basic/Rectangle";
-import { Size } from "~/basic/Size";
-import { Numerical } from "~/util/Numerical";
-import { UID } from "~/util/UID";
-import { Change, ChangeFlag } from "~/item/ChangeFlag";
-import { ItemSelection } from "./ItemSelection";
+import type { Path as PathType } from '~/path/Path';
+import type { CompoundPath as CompoundPathType } from '~/path/CompoundPath';
+import type { Style as StyleType } from '~/style/Style';
+import type { BlendMode as BlendModeType } from '~/canvas/BlendMode';
+import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
+import type { Tween as TweenType } from '~/anim/Tween';
+import type { Group as GroupType } from './Group';
+import type { Layer as LayerType } from './Layer';
+import type { HitResult as HitResultType } from './HitResult';
+import type { Raster as RasterType } from './Raster';
+
+import { Base } from '~/straps';
+import { Project } from './Project';
+import { Emitter } from '~/core/Emitter';
+import { Matrix } from '~/basic/Matrix';
+import { Point, LinkedPoint } from '~/basic/Point';
+import { Rectangle, LinkedRectangle } from '~/basic/Rectangle';
+import { Size } from '~/basic/Size';
+import { Numerical } from '~/util/Numerical';
+import { UID } from '~/util/UID';
+import { Change, ChangeFlag } from '~/item/ChangeFlag';
+import { ItemSelection } from './ItemSelection';
 
 // import { Path } from "~/path/Path";
 // import { CompoundPath } from "~/path/CompoundPath";
@@ -79,11 +82,7 @@ export const Item = Base.extend(
        */
       extend: function extend(src) {
         if (src._serializeFields)
-          src._serializeFields = Base.set(
-            {},
-            this.prototype._serializeFields,
-            src._serializeFields
-          );
+          src._serializeFields = Base.set({}, this.prototype._serializeFields, src._serializeFields);
         return (extend as any).base.apply(this, arguments);
       },
 
@@ -97,7 +96,7 @@ export const Item = Base.extend(
       NO_INSERT: { insert: false },
     },
 
-    _class: "Item",
+    _class: 'Item',
     _name: null,
     // All items apply their matrix by default.
     // Exceptions are Raster, SymbolItem, Clip and Shape.
@@ -106,7 +105,7 @@ export const Item = Base.extend(
     _canScaleStroke: false,
     _pivot: null,
     _visible: true,
-    _blendMode: "normal",
+    _blendMode: 'normal',
     _opacity: 1,
     _locked: false,
     _guide: false,
@@ -125,7 +124,7 @@ export const Item = Base.extend(
       matrix: new Matrix(),
       pivot: null,
       visible: true,
-      blendMode: "normal",
+      blendMode: 'normal',
       opacity: 1,
       locked: false,
       guide: false,
@@ -134,20 +133,20 @@ export const Item = Base.extend(
       data: {},
     },
     // Prioritize `applyMatrix` over `matrix`:
-    _prioritize: ["applyMatrix"],
+    _prioritize: ['applyMatrix'],
   },
   // @ts-expect-error = 'new' expression, whose target lacks a construct signature
   new (function () {
     // Injection scope for various item event handlers
     var handlers = [
-      "onMouseDown",
-      "onMouseUp",
-      "onMouseDrag",
-      "onClick",
-      "onDoubleClick",
-      "onMouseMove",
-      "onMouseEnter",
-      "onMouseLeave",
+      'onMouseDown',
+      'onMouseUp',
+      'onMouseDrag',
+      'onClick',
+      'onDoubleClick',
+      'onMouseMove',
+      'onMouseEnter',
+      'onMouseLeave',
     ];
     return Base.each(
       handlers,
@@ -227,11 +226,7 @@ export const Item = Base.extend(
       ) {
         this._setProject(project);
       } else {
-        ((hasProps && props.parent) || project)._insertItem(
-          undefined,
-          this,
-          true
-        ); // _created = true
+        ((hasProps && props.parent) || project)._insertItem(undefined, this, true); // _created = true
       }
       // Filter out Item.*INSERT before _set(), for performance reasons.
       if (hasProps && props !== Item.NO_INSERT && props !== Item.INSERT) {
@@ -257,17 +252,12 @@ export const Item = Base.extend(
           var value = that[key];
           // Style#leading is a special case, as its default value is
           // dependent on the fontSize. Handle this here separately.
-          if (
-            !Base.equals(
-              value,
-              key === "leading" ? fields.fontSize * 1.2 : fields[key]
-            )
-          ) {
+          if (!Base.equals(value, key === 'leading' ? fields.fontSize * 1.2 : fields[key])) {
             props[key] = Base.serialize(
               value,
               options,
               // Do not use compact mode for data
-              key !== "data",
+              key !== 'data',
               dictionary
             );
           }
@@ -303,10 +293,7 @@ export const Item = Base.extend(
       if (flags & /*#=*/ ChangeFlag.MATRIX) {
         this._globalMatrix = undefined;
       }
-      if (
-        cacheParent &&
-        flags & /*#=*/ (ChangeFlag.GEOMETRY | ChangeFlag.STROKE)
-      ) {
+      if (cacheParent && flags & /*#=*/ (ChangeFlag.GEOMETRY | ChangeFlag.STROKE)) {
         // Clear cached bounds of all items that this item contributes to.
         // We call this on the parent, since the information is cached on
         // the parent, see getBounds().
@@ -405,8 +392,7 @@ export const Item = Base.extend(
       if (this._name) this._removeNamed();
       // See if the name is a simple number, which we cannot support due to
       // the named lookup on the children array.
-      if (name === +name + "")
-        throw new Error("Names consisting only of numbers are not supported.");
+      if (name === +name + '') throw new Error('Names consisting only of numbers are not supported.');
       var owner = this._getOwner();
       if (name && owner) {
         var children = owner._children,
@@ -486,22 +472,22 @@ export const Item = Base.extend(
     },
   },
   Base.each(
-    ["locked", "visible", "blendMode", "opacity", "guide"],
+    ['locked', 'visible', 'blendMode', 'opacity', 'guide'],
     // Produce getter/setters for properties. We need setters because we want to
     // call _changed() if a property was modified.
     function (name) {
       var part = Base.capitalize(name),
-        key = "_" + name,
+        key = '_' + name,
         flags = {
           // #locked does not change appearance, all others do:
           locked: /*#=*/ ChangeFlag.ATTRIBUTE,
           // #visible changes appearance
           visible: /*#=*/ Change.ATTRIBUTE | Change.GEOMETRY,
         };
-      this["get" + part] = function () {
+      this['get' + part] = function () {
         return this[key];
       };
-      this["set" + part] = function (value) {
+      this['set' + part] = function (value) {
         if (value != this[key]) {
           this[key] = value;
           this._changed(flags[name] || /*#=*/ Change.ATTRIBUTE);
@@ -702,8 +688,7 @@ export const Item = Base.extend(
     isSelected: function () {
       if (this._selectChildren) {
         var children = this._children;
-        for (var i = 0, l = children.length; i < l; i++)
-          if (children[i].isSelected()) return true;
+        for (var i = 0, l = children.length; i < l; i++) if (children[i].isSelected()) return true;
       }
       return !!(this._selection & /*#=*/ ItemSelection.ITEM);
     },
@@ -711,8 +696,7 @@ export const Item = Base.extend(
     setSelected: function (selected) {
       if (this._selectChildren) {
         var children = this._children;
-        for (var i = 0, l = children.length; i < l; i++)
-          children[i].setSelected(selected);
+        for (var i = 0, l = children.length; i < l; i++) children[i].setSelected(selected);
       }
       this._changeSelection(/*#=*/ ItemSelection.ITEM, selected);
     },
@@ -721,8 +705,7 @@ export const Item = Base.extend(
       var children = this._children,
         selected = !!(this._selection & /*#=*/ ItemSelection.ITEM);
       if (children && selected) {
-        for (var i = 0, l = children.length; i < l; i++)
-          if (!children[i].isFullySelected()) return false;
+        for (var i = 0, l = children.length; i < l; i++) if (!children[i].isFullySelected()) return false;
         return true;
       }
       // If there are no children, this is the same as #selected
@@ -732,8 +715,7 @@ export const Item = Base.extend(
     setFullySelected: function (selected) {
       var children = this._children;
       if (children) {
-        for (var i = 0, l = children.length; i < l; i++)
-          children[i].setFullySelected(selected);
+        for (var i = 0, l = children.length; i < l; i++) children[i].setFullySelected(selected);
       }
       this._changeSelection(/*#=*/ ItemSelection.ITEM, selected);
     },
@@ -860,9 +842,8 @@ export const Item = Base.extend(
       // use them to calculate the difference in #setPosition, as when it is
       // modified, it would hold new values already and only then cause the
       // calling of #setPosition.
-      var position =
-        this._position || (this._position = this._getPositionFromBounds());
-      return new ctor(position.x, position.y, this, "setPosition");
+      var position = this._position || (this._position = this._getPositionFromBounds());
+      return new ctor(position.x, position.y, this, 'setPosition');
     },
 
     setPosition: function (/* point */) {
@@ -883,9 +864,7 @@ export const Item = Base.extend(
     _getPositionFromBounds: function (bounds) {
       // If an pivot point is provided, use it to determine position
       // based on the matrix. Otherwise use the center of the bounds.
-      return this._pivot
-        ? this._matrix._transformPoint(this._pivot)
-        : (bounds || this.getBounds()).getCenter(true);
+      return this._pivot ? this._matrix._transformPoint(this._pivot) : (bounds || this.getBounds()).getCenter(true);
     },
 
     /**
@@ -901,7 +880,7 @@ export const Item = Base.extend(
      */
     getPivot: function () {
       var pivot = this._pivot;
-      return pivot ? new LinkedPoint(pivot.x, pivot.y, this, "setPivot") : null;
+      return pivot ? new LinkedPoint(pivot.x, pivot.y, this, 'setPivot') : null;
     },
 
     setPivot: function (/* point */) {
@@ -930,11 +909,7 @@ export const Item = Base.extend(
 
       getBounds: function (matrix, options) {
         var hasMatrix = options || matrix instanceof Matrix,
-          opts = Base.set(
-            {},
-            hasMatrix ? options : matrix,
-            this._boundsOptions
-          );
+          opts = Base.set({}, hasMatrix ? options : matrix, this._boundsOptions);
         // We can only cache the bounds if the path uses stroke-scaling, or if
         // no stroke is involved in the calculation of the bounds.
         // When strokeScaling is false, the bounds are affected by the zoom
@@ -953,14 +928,7 @@ export const Item = Base.extend(
         // the setBounds() setter to update the Item whenever the bounds are
         // changed:
         return !arguments.length
-          ? new LinkedRectangle(
-              rect.x,
-              rect.y,
-              rect.width,
-              rect.height,
-              this,
-              "setBounds"
-            )
+          ? new LinkedRectangle(rect.x, rect.y, rect.width, rect.height, this, 'setBounds')
           : rect;
       },
 
@@ -979,10 +947,7 @@ export const Item = Base.extend(
           // Restore to the last revertible matrix stored in _backup, and get
           // the bounds again. That way, we can prevent collapsing to 0-size.
           if (!_matrix.isInvertible()) {
-            _matrix.set(
-              _matrix._backup ||
-                new Matrix().translate(_matrix.getTranslation())
-            );
+            _matrix.set(_matrix._backup || new Matrix().translate(_matrix.getTranslation()));
             bounds = this.getBounds();
           }
           matrix.scale(
@@ -1019,11 +984,7 @@ export const Item = Base.extend(
       },
 
       _getBoundsCacheKey: function (options, internal) {
-        return [
-          options.stroke ? 1 : 0,
-          options.handle ? 1 : 0,
-          internal ? 1 : 0,
-        ].join("");
+        return [options.stroke ? 1 : 0, options.handle ? 1 : 0, internal ? 1 : 0].join('');
       },
 
       /**
@@ -1041,10 +1002,7 @@ export const Item = Base.extend(
           cacheItem = options.cacheItem,
           _matrix = internal ? null : this._matrix._orNullIfIdentity(),
           // Create a key for caching, reflecting all bounds options.
-          cacheKey =
-            cacheItem &&
-            (!matrix || matrix.equals(_matrix)) &&
-            this._getBoundsCacheKey(options, internal),
+          cacheKey = cacheItem && (!matrix || matrix.equals(_matrix)) && this._getBoundsCacheKey(options, internal),
           bounds = this._bounds;
         // NOTE: This needs to happen before returning cached values, since even
         // then, _boundsCache needs to be kept up-to-date.
@@ -1061,8 +1019,7 @@ export const Item = Base.extend(
           // Rectangle, and one that returns a bounds object with nonscaling.
           rect = res.rect || res,
           style = this._style,
-          nonscaling =
-            res.nonscaling || (style.hasStroke() && !style.getStrokeScaling());
+          nonscaling = res.nonscaling || (style.hasStroke() && !style.getStrokeScaling());
         // If we can cache the result, update the _bounds cache structure
         // before returning
         if (cacheKey) {
@@ -1093,8 +1050,8 @@ export const Item = Base.extend(
         var parent = this.getStrokeScaling()
             ? null
             : options && options.internal
-            ? this
-            : this._parent || (this._symbol && this._symbol._item),
+              ? this
+              : this._parent || (this._symbol && this._symbol._item),
           mx = parent ? parent.getViewMatrix().invert() : matrix;
         return mx && mx._shiftless();
       },
@@ -1173,11 +1130,7 @@ export const Item = Base.extend(
               // Pass true for noInternal, since even when getting
               // internal bounds for this item, we need to apply the
               // matrices to its children.
-              var bounds = item._getCachedBounds(
-                  matrix && matrix.appended(item._matrix),
-                  options,
-                  true
-                ),
+              var bounds = item._getCachedBounds(matrix && matrix.appended(item._matrix), options, true),
                 rect = bounds.rect;
               x1 = Math.min(rect.x, x1);
               y1 = Math.min(rect.y, y1);
@@ -1187,9 +1140,7 @@ export const Item = Base.extend(
             }
           }
           return {
-            rect: isFinite(x1)
-              ? new Rectangle(x1, y1, x2 - x1, y2 - y1)
-              : new Rectangle(),
+            rect: isFinite(x1) ? new Rectangle(x1, y1, x2 - x1, y2 - y1) : new Rectangle(),
             nonscaling: nonscaling,
           };
         },
@@ -1245,9 +1196,7 @@ export const Item = Base.extend(
     _decompose: function () {
       // Only decompose if the item isn't directly baking transformations into
       // its content.
-      return this._applyMatrix
-        ? null
-        : this._decomposed || (this._decomposed = this._matrix.decompose());
+      return this._applyMatrix ? null : this._decomposed || (this._decomposed = this._matrix.decompose());
     },
 
     /**
@@ -1294,7 +1243,7 @@ export const Item = Base.extend(
       var decomposed = this._decompose(),
         s = decomposed && decomposed.scaling;
       // Return [1, 1] if matrix wasn't decomposed, e.g. with #applyMatrix.
-      return new LinkedPoint(s ? s.x : 1, s ? s.y : 1, this, "setScaling");
+      return new LinkedPoint(s ? s.x : 1, s ? s.y : 1, this, 'setScaling');
     },
 
     setScaling: function (/* scaling */) {
@@ -1426,16 +1375,15 @@ export const Item = Base.extend(
     setApplyMatrix: function (apply) {
       // Tell #transform() to apply the internal matrix if _applyMatrix
       // can be set to true.
-      if ((this._applyMatrix = this._canApplyMatrix && !!apply))
-        this.transform(null, true);
+      if ((this._applyMatrix = this._canApplyMatrix && !!apply)) this.transform(null, true);
     },
 
     /**
      * @bean
      * @deprecated use {@link #applyMatrix} instead.
      */
-    getTransformContent: "#getApplyMatrix",
-    setTransformContent: "#setApplyMatrix",
+    getTransformContent: '#getApplyMatrix',
+    setTransformContent: '#setApplyMatrix',
   },
   /** @lends Item# */ {
     /**
@@ -1457,8 +1405,7 @@ export const Item = Base.extend(
         if (this._project) this._installEvents(false);
         this._project = project;
         var children = this._children;
-        for (var i = 0, l = children && children.length; i < l; i++)
-          children[i]._setProject(project);
+        for (var i = 0, l = children && children.length; i < l; i++) children[i]._setProject(project);
         // We need to call _installEvents(true) again, but merge it with
         // handling of installEvents argument below.
         installEvents = true;
@@ -1482,8 +1429,7 @@ export const Item = Base.extend(
     _installEvents: function _installEvents(install) {
       (_installEvents as any).base.call(this, install);
       var children = this._children;
-      for (var i = 0, l = children && children.length; i < l; i++)
-        children[i]._installEvents(install);
+      for (var i = 0, l = children && children.length; i < l; i++) children[i]._installEvents(install);
     },
 
     /**
@@ -1558,7 +1504,7 @@ export const Item = Base.extend(
      * Private helper to return the owner, either the parent, or the project
      * for top-level layers. See Layer#_getOwner()
      */
-    _getOwner: "#getParent",
+    _getOwner: '#getParent',
 
     /**
      * The children items contained within this item. Items that define a
@@ -1644,9 +1590,7 @@ export const Item = Base.extend(
      * @bean
      */
     getLastChild: function () {
-      return (
-        (this._children && this._children[this._children.length - 1]) || null
-      );
+      return (this._children && this._children[this._children.length - 1]) || null;
     },
 
     /**
@@ -1777,7 +1721,7 @@ export const Item = Base.extend(
         var children = parent._children,
           orig = name,
           i = 1;
-        while (children[name]) name = orig + " " + i++;
+        while (children[name]) name = orig + ' ' + i++;
         if (name !== orig) copy.setName(name);
       }
       return copy;
@@ -1812,14 +1756,7 @@ export const Item = Base.extend(
       // Only copy over these fields if they are actually defined in 'source',
       // meaning the default value has been overwritten (default is on
       // prototype).
-      var keys = [
-        "_locked",
-        "_visible",
-        "_blendMode",
-        "_opacity",
-        "_clipMask",
-        "_guide",
-      ];
+      var keys = ['_locked', '_visible', '_blendMode', '_opacity', '_clipMask', '_guide'];
       for (var i = 0, l = keys.length; i < l; i++) {
         var key = keys[i];
         if (source.hasOwnProperty(key)) this[key] = source[key];
@@ -1967,10 +1904,7 @@ export const Item = Base.extend(
     contains: function (/* point */) {
       // See CompoundPath#_contains() for the reason for !!
       var matrix = this._matrix;
-      return (
-        matrix.isInvertible() &&
-        !!this._contains(matrix._inverseTransform(Point.read(arguments)))
-      );
+      return matrix.isInvertible() && !!this._contains(matrix._inverseTransform(Point.read(arguments)));
     },
 
     _contains: function (point) {
@@ -2019,14 +1953,7 @@ export const Item = Base.extend(
       if (!(item instanceof Item)) return false;
       // Tell getIntersections() to return as soon as some intersections are
       // found, because all we care for here is there are some or none:
-      return (
-        this._asPathItem().getIntersections(
-          item._asPathItem(),
-          null,
-          _matrix,
-          true
-        ).length > 0
-      );
+      return this._asPathItem().getIntersections(item._asPathItem(), null, _matrix, true).length > 0;
     },
   },
   // @ts-expect-error = 'new' expression, whose target lacks a construct signature
@@ -2054,8 +1981,7 @@ export const Item = Base.extend(
         // Loop backwards, so items that get drawn last are tested first.
         for (var i = children.length - 1; i >= 0; i--) {
           var child = children[i];
-          var res =
-            child !== _exclude && child._hitTest(point, options, viewMatrix);
+          var res = child !== _exclude && child._hitTest(point, options, viewMatrix);
           // Only return the found result if we're not asked to collect
           // all matches through hitTestAll()
           if (res && !options.all) return res;
@@ -2150,12 +2076,7 @@ export const Item = Base.extend(
      */
 
     _hitTest: function (point, options, parentViewMatrix) {
-      if (
-        this._locked ||
-        !this._visible ||
-        (this._guide && !options.guides) ||
-        this.isEmpty()
-      ) {
+      if (this._locked || !this._visible || (this._guide && !options.guides) || this.isEmpty()) {
         return null;
       }
 
@@ -2216,7 +2137,7 @@ export const Item = Base.extend(
       }
 
       function checkPoint(type, part) {
-        var pt = part ? bounds["get" + part]() : that.getPosition();
+        var pt = part ? bounds['get' + part]() : that.getPosition();
         // Since there are transformations, we cannot simply use a numerical
         // tolerance value. Instead, we divide by a padding size, see above.
         if (point.subtract(pt).divide(tolerancePadding).length <= 1) {
@@ -2231,11 +2152,7 @@ export const Item = Base.extend(
         checkCenter = options.center,
         checkBounds = options.bounds;
       // Ignore top level layers by checking for _parent:
-      if (
-        checkSelf &&
-        this._parent &&
-        (checkPosition || checkCenter || checkBounds)
-      ) {
+      if (checkSelf && this._parent && (checkPosition || checkCenter || checkBounds)) {
         if (checkCenter || checkBounds) {
           // Get the internal, untransformed bounds, as we check against
           // transformed points.
@@ -2243,22 +2160,21 @@ export const Item = Base.extend(
         }
         res =
           // @ts-expect-error = Expected 2 arguments, but got 1
-          (checkPosition && checkPoint("position")) ||
-          (checkCenter && checkPoint("center", "Center"));
+          (checkPosition && checkPoint('position')) || (checkCenter && checkPoint('center', 'Center'));
         if (!res && checkBounds) {
           // TODO: Move these into a static property on Rectangle?
           var points = [
-            "TopLeft",
-            "TopRight",
-            "BottomLeft",
-            "BottomRight",
-            "LeftCenter",
-            "TopCenter",
-            "RightCenter",
-            "BottomCenter",
+            'TopLeft',
+            'TopRight',
+            'BottomLeft',
+            'BottomRight',
+            'LeftCenter',
+            'TopCenter',
+            'RightCenter',
+            'BottomCenter',
           ];
           for (var i = 0; i < 8 && !res; i++) {
-            res = checkPoint("bounds", points[i]);
+            res = checkPoint('bounds', points[i]);
           }
         }
         res = filter(res);
@@ -2277,9 +2193,7 @@ export const Item = Base.extend(
                 viewMatrix,
                 // If the item has a non-scaling stroke, we need to
                 // apply the inverted viewMatrix to stroke dimensions.
-                this.getStrokeScaling()
-                  ? null
-                  : viewMatrix._shiftless().invert()
+                this.getStrokeScaling() ? null : viewMatrix._shiftless().invert()
               )
             )) ||
           null;
@@ -2293,8 +2207,7 @@ export const Item = Base.extend(
 
     _hitTestSelf: function (point, options) {
       // The default implementation honly handles 'fill' through #_contains()
-      if (options.fill && this.hasFill() && this._contains(point))
-        return new HitResult4444("fill", this);
+      if (options.fill && this.hasFill() && this._contains(point)) return new HitResult4444('fill', this);
     },
 
     /**
@@ -2350,34 +2263,33 @@ export const Item = Base.extend(
         return true;
       }
       var type = typeof name;
-      if (type === "object") {
+      if (type === 'object') {
         // `name` is the match object, not a string
         for (var key in name) {
-          if (name.hasOwnProperty(key) && !this.matches(key, name[key]))
-            return false;
+          if (name.hasOwnProperty(key) && !this.matches(key, name[key])) return false;
         }
         return true;
-      } else if (type === "function") {
+      } else if (type === 'function') {
         return name(this);
-      } else if (name === "match") {
+      } else if (name === 'match') {
         return compare(this);
       } else {
         var value = /^(empty|editable)$/.test(name)
           ? // Handle boolean test functions separately, by calling them
             // to get the value.
-            this["is" + Base.capitalize(name)]()
+            this['is' + Base.capitalize(name)]()
           : // Support legacy Item#type property to match hyphenated
-          // class-names.
-          // TODO: Remove after December 2016.
-          name === "type"
-          ? Base.hyphenate(this._class)
-          : this[name];
-        if (name === "class") {
-          if (typeof compare === "function") return this instanceof compare;
+            // class-names.
+            // TODO: Remove after December 2016.
+            name === 'type'
+            ? Base.hyphenate(this._class)
+            : this[name];
+        if (name === 'class') {
+          if (typeof compare === 'function') return this instanceof compare;
           // Compare further with the _class property value instead.
           value = this._class;
         }
-        if (typeof compare === "function") {
+        if (typeof compare === 'function') {
           return !!compare(value);
         } else if (compare) {
           if (compare.test) {
@@ -2455,7 +2367,7 @@ export const Item = Base.extend(
           // Set up a couple of "side-car" values for the recursive calls
           // of _getItems below, mainly related to the handling of
           // inside / overlapping:
-          var obj = typeof options === "object" && options,
+          var obj = typeof options === 'object' && options,
             overlapping = obj && obj.overlapping,
             inside = obj && obj.inside,
             // If overlapping is set, we also perform the inside check:
@@ -2504,9 +2416,7 @@ export const Item = Base.extend(
                 // contained, we are always overlapping, and don't
                 // need to perform further checks, otherwise perform
                 // a proper #intersects() check:
-                (param.overlapping &&
-                  (bounds.contains(rect) ||
-                    param.path.intersects(child, childMatrix)))
+                (param.overlapping && (bounds.contains(rect) || param.path.intersects(child, childMatrix)))
               )
             )
               add = false;
@@ -2739,7 +2649,7 @@ export const Item = Base.extend(
 
     // Internal alias, so both Project and Item can be used in #copyTo(), and
     // through _getOwner() in the various Item#insert*() methods.
-    _insertItem: "#insertChild",
+    _insertItem: '#insertChild',
 
     /**
      * Private helper method used by {@link #insertAbove(item)} and
@@ -2810,7 +2720,7 @@ export const Item = Base.extend(
      * @param {Item} item the item to be appended as a child
      * @deprecated use {@link #addChild(item)} instead.
      */
-    appendTop: "#addChild",
+    appendTop: '#addChild',
 
     /**
      * Inserts the specified item as a child of this item by appending it to
@@ -2832,7 +2742,7 @@ export const Item = Base.extend(
      * @return {Boolean} {@true if it was moved}
      * @deprecated use {@link #insertAbove(item)} instead.
      */
-    moveAbove: "#insertAbove",
+    moveAbove: '#insertAbove',
 
     /**
      * Moves the item below the specified item.
@@ -2842,7 +2752,7 @@ export const Item = Base.extend(
      * @return {Boolean} {@true if it was moved}
      * @deprecated use {@link #insertBelow(item)} instead.
      */
-    moveBelow: "#insertBelow",
+    moveBelow: '#insertBelow',
 
     /**
      * Adds it to the specified owner, which can be either a {@link Item} or a
@@ -2938,16 +2848,13 @@ export const Item = Base.extend(
         // e.g. in #removeChildren():
         if (index != null) {
           // Only required for layers but not enough to merit an override.
-          if (project._activeLayer === this)
-            project._activeLayer =
-              this.getNextSibling() || this.getPreviousSibling();
+          if (project._activeLayer === this) project._activeLayer = this.getNextSibling() || this.getPreviousSibling();
           Base.splice(owner._children, null, index, 1);
         }
         this._installEvents(false);
         // Notify self of the insertion change. We only need this
         // notification if we're tracking changes for now.
-        if (notifySelf && project._changes)
-          this._changed(/*#=*/ Change.INSERTION);
+        if (notifySelf && project._changes) this._changed(/*#=*/ Change.INSERTION);
         // Notify owner of changed children (this can be the project too).
         if (notifyParent) owner._changed(/*#=*/ Change.CHILDREN, this);
         this._parent = null;
@@ -3015,7 +2922,7 @@ export const Item = Base.extend(
     },
 
     // DOCS Item#clear()
-    clear: "#removeChildren",
+    clear: '#removeChildren',
 
     /**
      * Reverses the order of the item's children
@@ -3024,8 +2931,7 @@ export const Item = Base.extend(
       if (this._children) {
         this._children.reverse();
         // Adjust indices
-        for (var i = 0, l = this._children.length; i < l; i++)
-          this._children[i]._index = i;
+        for (var i = 0, l = this._children.length; i < l; i++) this._children[i]._index = i;
         this._changed(/*#=*/ Change.CHILDREN);
       }
     },
@@ -3245,11 +3151,7 @@ export const Item = Base.extend(
       while (parent) {
         // Find group parents. Check for parent._parent, since don't want
         // top level layers, because they also inherit from Group
-        if (
-          parent._parent &&
-          /^(Group|Layer|CompoundPath)$/.test(parent._class) &&
-          item.isDescendant(parent)
-        )
+        if (parent._parent && /^(Group|Layer|CompoundPath)$/.test(parent._class) && item.isDescendant(parent))
           return true;
         // Keep walking up otherwise
         parent = parent._parent;
@@ -3512,16 +3414,14 @@ export const Item = Base.extend(
      */
   },
   Base.each(
-    ["rotate", "scale", "shear", "skew"],
+    ['rotate', 'scale', 'shear', 'skew'],
     function (key) {
-      var rotate = key === "rotate";
+      var rotate = key === 'rotate';
       this[key] = function (/* value, center */) {
         var args = arguments,
           value = (rotate ? Base : Point).read(args),
           center = Point.read(args, 0, { readNull: true });
-        return this.transform(
-          new Matrix()[key](value, center || this.getPosition(true))
-        );
+        return this.transform(new Matrix()[key](value, center || this.getPosition(true)));
       };
     },
     /** @lends Item# */ {
@@ -3721,8 +3621,7 @@ export const Item = Base.extend(
         if (transformMatrix) {
           // Keep a backup of the last valid state before the matrix becomes
           // non-invertible. This is then used again in setBounds to restore.
-          if (!matrix.isInvertible() && _matrix.isInvertible())
-            _matrix._backup = _matrix.getValues();
+          if (!matrix.isInvertible() && _matrix.isInvertible()) _matrix._backup = _matrix.getValues();
           // Pass `true` for _dontNotify, as we're handling this after.
           _matrix.prepend(matrix, true);
           // When a new matrix was applied, we also need to transform gradient
@@ -3744,14 +3643,7 @@ export const Item = Base.extend(
         // Application is not possible on Raster, PointText, SymbolItem, since
         // the matrix is where the actual transformation state is stored.
 
-        if (
-          applyMatrix &&
-          (applyMatrix = this._transformContent(
-            _matrix,
-            _applyRecursively,
-            _setApplyMatrix
-          ))
-        ) {
+        if (applyMatrix && (applyMatrix = this._transformContent(_matrix, _applyRecursively, _setApplyMatrix))) {
           // Pivot is provided in the parent's coordinate system, so transform
           // it along too.
           var pivot = this._pivot;
@@ -3794,8 +3686,7 @@ export const Item = Base.extend(
           this._bounds = bounds;
           // If we have cached bounds, try to determine _position as its
           // center. Use _boundsOptions do get the cached default bounds.
-          var cached =
-            bounds[this._getBoundsCacheKey(this._boundsOptions || {})];
+          var cached = bounds[this._getBoundsCacheKey(this._boundsOptions || {})];
           if (cached) {
             // use this method to handle pivot case (see #1503)
             this._position = this._getPositionFromBounds(cached.rect);
@@ -3828,9 +3719,7 @@ export const Item = Base.extend(
        * @return {Point} the transformed point as a new instance
        */
       globalToLocal: function (/* point */) {
-        return this.getGlobalMatrix(true)._inverseTransform(
-          Point.read(arguments)
-        );
+        return this.getGlobalMatrix(true)._inverseTransform(Point.read(arguments));
       },
 
       /**
@@ -3841,9 +3730,7 @@ export const Item = Base.extend(
        * @return {Point} the transformed point as a new instance
        */
       localToGlobal: function (/* point */) {
-        return this.getGlobalMatrix(true)._transformPoint(
-          Point.read(arguments)
-        );
+        return this.getGlobalMatrix(true)._transformPoint(Point.read(arguments));
       },
 
       /**
@@ -3944,10 +3831,7 @@ export const Item = Base.extend(
           scale = (fill ? itemRatio > rectRatio : itemRatio < rectRatio)
             ? rectangle.width / bounds.width
             : rectangle.height / bounds.height,
-          newBounds = new Rectangle(
-            new Point(),
-            new Size(bounds.width * scale, bounds.height * scale)
-          );
+          newBounds = new Rectangle(new Point(), new Size(bounds.width * scale, bounds.height * scale));
         newBounds.setCenter(rectangle.getCenter());
         this.setBounds(newBounds);
       },
@@ -4490,7 +4374,7 @@ export const Item = Base.extend(
           var dashArray = style.getDashArray(),
             dashOffset = style.getDashOffset();
           if (dashArray && dashArray.length) {
-            if ("setLineDash" in ctx) {
+            if ('setLineDash' in ctx) {
               ctx.setLineDash(dashArray);
               ctx.lineDashOffset = dashOffset;
             } else {
@@ -4506,9 +4390,7 @@ export const Item = Base.extend(
         // we need to calculate our own here, and then use it to transform
         // the shadow-blur and offset accordingly.
         var pixelRatio = param.pixelRatio || 1,
-          mx = viewMatrix
-            ._shiftless()
-            .prepend(new Matrix().scale(pixelRatio, pixelRatio)),
+          mx = viewMatrix._shiftless().prepend(new Matrix().scale(pixelRatio, pixelRatio)),
           // Transform the blur value as a vector and use its new length:
           blur = mx.transform(new Point(style.getShadowBlur(), 0)),
           offset = mx.transform(this.getShadowOffset());
@@ -4541,9 +4423,7 @@ export const Item = Base.extend(
       // could have multiple views with different zooms), we may have to
       // prepend the view's matrix.
       // NOTE: viewMatrix is only provided if it isn't the identity matrix.
-      viewMatrix = viewMatrix
-        ? viewMatrix.appended(globalMatrix)
-        : globalMatrix;
+      viewMatrix = viewMatrix ? viewMatrix.appended(globalMatrix) : globalMatrix;
 
       // Only keep track of transformation if told so. See Project#draw()
       matrices.push(globalMatrix);
@@ -4561,7 +4441,7 @@ export const Item = Base.extend(
       // opacity by themselves (they also don't call _setStyles)
       var blendMode = this._blendMode,
         opacity = Numerical.clamp(this._opacity, 0, 1),
-        normalBlend = blendMode === "normal",
+        normalBlend = blendMode === 'normal',
         nativeBlend = BlendMode4444.nativeModes[blendMode],
         // Determine if we can draw directly, or if we need to draw into a
         // separate canvas and then composite onto the main canvas.
@@ -4570,8 +4450,7 @@ export const Item = Base.extend(
           param.dontStart || // e.g. CompoundPath
           param.clip ||
           // If native blending is possible, see if the item allows it
-          ((nativeBlend || (normalBlend && opacity < 1)) &&
-            this._canComposite()),
+          ((nativeBlend || (normalBlend && opacity < 1)) && this._canComposite()),
         pixelRatio = param.pixelRatio || 1,
         mainCtx,
         itemOffset,
@@ -4596,9 +4475,7 @@ export const Item = Base.extend(
         // it, instead of the mainCtx.
         mainCtx = ctx;
         // @ts-expect-error = Expected 3 arguments, but got 1
-        ctx = CanvasProvider4444.getContext(
-          bounds.getSize().ceil().add(1).multiply(pixelRatio)
-        );
+        ctx = CanvasProvider4444.getContext(bounds.getSize().ceil().add(1).multiply(pixelRatio));
         if (pixelRatio !== 1) ctx.scale(pixelRatio, pixelRatio);
       }
       ctx.save();
@@ -4677,55 +4554,34 @@ export const Item = Base.extend(
       var parent = this._parent;
       // For compound-paths, use the _updateVersion of the parent, because the
       // shape gets drawn at once at might get cached (e.g. Path2D soon).
-      if (parent instanceof CompoundPath4444)
-        return parent._isUpdated(updateVersion);
+      if (parent instanceof CompoundPath4444) return parent._isUpdated(updateVersion);
       // In case a parent is visible but isn't drawn (e.g. opacity == 0), the
       // _updateVersion of all its children will not be updated, but the
       // children should still be considered updated, and selections should be
       // drawn for them. Excluded are only items with _visible == false:
       var updated = this._updateVersion === updateVersion;
-      if (
-        !updated &&
-        parent &&
-        parent._visible &&
-        parent._isUpdated(updateVersion)
-      ) {
+      if (!updated && parent && parent._visible && parent._isUpdated(updateVersion)) {
         this._updateVersion = updateVersion;
         updated = true;
       }
       return updated;
     },
 
-    _drawSelection: function (
-      ctx,
-      matrix,
-      size,
-      selectionItems,
-      updateVersion
-    ) {
+    _drawSelection: function (ctx, matrix, size, selectionItems, updateVersion) {
       var selection = this._selection,
         itemSelected = selection & /*#=*/ ItemSelection.ITEM,
-        boundsSelected =
-          selection & /*#=*/ ItemSelection.BOUNDS ||
-          (itemSelected && this._selectBounds),
+        boundsSelected = selection & /*#=*/ ItemSelection.BOUNDS || (itemSelected && this._selectBounds),
         positionSelected = selection & /*#=*/ ItemSelection.POSITION;
       // @ts-expect-error = 'boolean' is not assignable to type 'number'
       if (!this._drawSelected) itemSelected = false;
-      if (
-        (itemSelected || boundsSelected || positionSelected) &&
-        this._isUpdated(updateVersion)
-      ) {
+      if ((itemSelected || boundsSelected || positionSelected) && this._isUpdated(updateVersion)) {
         // Allow definition of selected color on a per item and per
         // layer level, with a fallback to #009dec
         var layer,
-          color =
-            this.getSelectedColor(true) ||
-            ((layer = this.getLayer()) && layer.getSelectedColor(true)),
+          color = this.getSelectedColor(true) || ((layer = this.getLayer()) && layer.getSelectedColor(true)),
           mx = matrix.appended(this.getGlobalMatrix(true)),
           half = size / 2;
-        ctx.strokeStyle = ctx.fillStyle = color
-          ? color.toCanvasStyle(ctx)
-          : "#009dec";
+        ctx.strokeStyle = ctx.fillStyle = color ? color.toCanvasStyle(ctx) : '#009dec';
         if (itemSelected) this._drawSelected(ctx, mx, selectionItems);
         if (positionSelected) {
           // Convert position from the parent's coordinates system to the
@@ -4761,7 +4617,7 @@ export const Item = Base.extend(
           // bounds corners, and draw the corners.
           ctx.beginPath();
           for (var i = 0; i < 8; i++) {
-            ctx[!i ? "moveTo" : "lineTo"](coords[i], coords[++i]);
+            ctx[!i ? 'moveTo' : 'lineTo'](coords[i], coords[++i]);
           }
           ctx.closePath();
           ctx.stroke();
@@ -4777,9 +4633,9 @@ export const Item = Base.extend(
     },
   },
   Base.each(
-    ["down", "drag", "up", "move"],
+    ['down', 'drag', 'up', 'move'],
     function (key) {
-      this["removeOn" + Base.capitalize(key)] = function () {
+      this['removeOn' + Base.capitalize(key)] = function () {
         var hash = {};
         hash[key] = true;
         return this.removeOn(hash);
@@ -4918,7 +4774,7 @@ export const Item = Base.extend(
       removeOn: function (obj) {
         for (var name in obj) {
           if (obj[name]) {
-            var key = "mouse" + name,
+            var key = 'mouse' + name,
               project = this._project,
               sets = (project._removeSets = project._removeSets || {});
             sets[key] = sets[key] || {};
@@ -5047,18 +4903,16 @@ export const Item = Base.extend(
       }
       var easing = options && options.easing,
         start = options && options.start,
-        duration =
-          options != null &&
-          (typeof options === "number" ? options : options.duration),
+        duration = options != null && (typeof options === 'number' ? options : options.duration),
         tween = new Tween4444(this, from, to, duration, easing, start);
       function onFrame(event) {
         tween._handleFrame(event.time * 1000);
         if (!tween.running) {
-          this.off("frame", onFrame);
+          this.off('frame', onFrame);
         }
       }
       if (duration) {
-        this.on("frame", onFrame);
+        this.on('frame', onFrame);
       }
       return tween;
     },

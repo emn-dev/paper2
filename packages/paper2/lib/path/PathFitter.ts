@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Numerical } from "~/util/Numerical";
-import { Segment } from "./Segment";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Numerical } from '~/util/Numerical';
+import { Segment } from './Segment';
 
 // An Algorithm for Automatically Fitting Digitized Curves
 // by Philip J. Schneider
@@ -82,12 +85,7 @@ export const PathFitter = Base.extend({
       var pt1 = points[first],
         pt2 = points[last],
         dist = pt1.getDistance(pt2) / 3;
-      this.addCurve(segments, [
-        pt1,
-        pt1.add(tan1.normalize(dist)),
-        pt2.add(tan2.normalize(dist)),
-        pt2,
-      ]);
+      this.addCurve(segments, [pt1, pt1.add(tan1.normalize(dist)), pt2.add(tan2.normalize(dist)), pt2]);
       return;
     }
     // Parameterize points, and attempt to fit curve
@@ -146,9 +144,7 @@ export const PathFitter = Base.extend({
         b3 = u * u * u,
         a1 = tan1.normalize(b1),
         a2 = tan2.normalize(b2),
-        tmp = points[first + i]
-          .subtract(pt1.multiply(b0 + b1))
-          .subtract(pt2.multiply(b2 + b3));
+        tmp = points[first + i].subtract(pt1.multiply(b0 + b1)).subtract(pt2.multiply(b2 + b3));
       C[0][0] += a1.dot(a1);
       C[0][1] += a1.dot(a2);
       // C[1][0] += a1.dot(a2);
@@ -173,8 +169,7 @@ export const PathFitter = Base.extend({
       // Matrix is under-determined, try assuming alpha1 == alpha2
       var c0 = C[0][0] + C[0][1],
         c1 = C[1][0] + C[1][1];
-      alpha1 = alpha2 =
-        abs(c0) > epsilon ? X[0] / c0 : abs(c1) > epsilon ? X[1] / c1 : 0;
+      alpha1 = alpha2 = abs(c0) > epsilon ? X[0] / c0 : abs(c1) > epsilon ? X[1] / c1 : 0;
     }
 
     // If alpha negative, use the Wu/Barsky heuristic (see text)
@@ -205,12 +200,7 @@ export const PathFitter = Base.extend({
 
     // First and last control points of the Bezier curve are
     // positioned exactly at the first and last data points
-    return [
-      pt1,
-      pt1.add(handle1 || tan1.normalize(alpha1)),
-      pt2.add(handle2 || tan2.normalize(alpha2)),
-      pt2,
-    ];
+    return [pt1, pt1.add(handle1 || tan1.normalize(alpha1)), pt2.add(handle2 || tan2.normalize(alpha2)), pt2];
   },
 
   // Given set of points and their parameterization, try to find
@@ -268,8 +258,7 @@ export const PathFitter = Base.extend({
   chordLengthParameterize: function (first, last) {
     var u = [0];
     for (var i = first + 1; i <= last; i++) {
-      u[i - first] =
-        u[i - first - 1] + this.points[i].getDistance(this.points[i - 1]);
+      u[i - first] = u[i - first - 1] + this.points[i].getDistance(this.points[i - 1]);
     }
     // @ts-expect-error = Subsequent variable declarations must have the same type
     for (var i = 1, m = last - first; i <= m; i++) {

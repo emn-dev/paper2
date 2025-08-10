@@ -10,11 +10,14 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Point, LinkedPoint } from "./Point";
-import { Formatter } from "~/util/Formatter";
-import { ItemSelection } from "~/item/ItemSelection";
-import { Size, LinkedSize } from "~/basic/Size";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Point, LinkedPoint } from './Point';
+import { Formatter } from '~/util/Formatter';
+import { ItemSelection } from '~/item/ItemSelection';
+import { Size, LinkedSize } from '~/basic/Size';
 
 /**
  * @name Rectangle
@@ -25,7 +28,7 @@ import { Size, LinkedSize } from "~/basic/Size";
  */
 export const Rectangle = Base.extend(
   /** @lends Rectangle# */ {
-    _class: "Rectangle",
+    _class: 'Rectangle',
     // Tell Base.read that the Rectangle constructor supports reading with index
     _readIndex: true,
     // Enforce creation of beans, as bean getters have hidden parameters.
@@ -86,11 +89,11 @@ export const Rectangle = Base.extend(
       var args = arguments,
         type = typeof arg0,
         read;
-      if (type === "number") {
+      if (type === 'number') {
         // new Rectangle(x, y, width, height)
         this._set(arg0, arg1, arg2, arg3);
         read = 4;
-      } else if (type === "undefined" || arg0 === null) {
+      } else if (type === 'undefined' || arg0 === null) {
         // new Rectangle(), new Rectangle(null)
         this._set(0, 0, 0, 0);
         read = arg0 === null ? 1 : 0;
@@ -102,12 +105,7 @@ export const Rectangle = Base.extend(
         } else if (arg0.x !== undefined || arg0.width !== undefined) {
           // Another rectangle or a simple object literal
           // describing one. Use duck typing, and 0 as defaults.
-          this._set(
-            arg0.x || 0,
-            arg0.y || 0,
-            arg0.width || 0,
-            arg0.height || 0
-          );
+          this._set(arg0.x || 0, arg0.y || 0, arg0.width || 0, arg0.height || 0);
           read = 1;
         } else if (arg0.from === undefined && arg0.to === undefined) {
           // Use `Base.readSupported()` to read and consume whatever
@@ -125,16 +123,16 @@ export const Rectangle = Base.extend(
         // We're supporting both reading from a normal arguments list and
         // covering the Rectangle({ from: , to: }) constructor, through
         // Point.readNamed().
-        var frm = Point.readNamed(args, "from"),
+        var frm = Point.readNamed(args, 'from'),
           next = Base.peek(args),
           x = frm.x,
           y = frm.y,
           width,
           height;
-        if ((next && next.x !== undefined) || Base.hasNamed(args, "to")) {
+        if ((next && next.x !== undefined) || Base.hasNamed(args, 'to')) {
           // new Rectangle(from, to)
           // Read above why we can use readNamed() to cover both cases.
-          var to = Point.readNamed(args, "to");
+          var to = Point.readNamed(args, 'to');
           width = to.x - x;
           height = to.y - y;
           // Check if horizontal or vertical order needs to be reversed.
@@ -173,7 +171,7 @@ export const Rectangle = Base.extend(
      * @param {...*} values
      * @return {Rectangle}
      */
-    set: "#initialize",
+    set: '#initialize',
 
     // See Point#_set() for an explanation of #_set():
     _set: function (x, y, width, height) {
@@ -231,11 +229,7 @@ export const Rectangle = Base.extend(
       var rt = Base.isPlainValue(rect) ? Rectangle.read(arguments) : rect;
       return (
         rt === this ||
-        (rt &&
-          this.x === rt.x &&
-          this.y === rt.y &&
-          this.width === rt.width &&
-          this.height === rt.height) ||
+        (rt && this.x === rt.x && this.y === rt.y && this.width === rt.width && this.height === rt.height) ||
         false
       );
     },
@@ -246,27 +240,22 @@ export const Rectangle = Base.extend(
     toString: function () {
       var f = Formatter.instance;
       return (
-        "{ x: " +
+        '{ x: ' +
         f.number(this.x) +
-        ", y: " +
+        ', y: ' +
         f.number(this.y) +
-        ", width: " +
+        ', width: ' +
         f.number(this.width) +
-        ", height: " +
+        ', height: ' +
         f.number(this.height) +
-        " }"
+        ' }'
       );
     },
 
     _serialize: function (options) {
       var f = options.formatter;
       // See Point#_serialize()
-      return [
-        f.number(this.x),
-        f.number(this.y),
-        f.number(this.width),
-        f.number(this.height),
-      ];
+      return [f.number(this.x), f.number(this.y), f.number(this.width), f.number(this.height)];
     },
 
     /**
@@ -277,7 +266,7 @@ export const Rectangle = Base.extend(
      */
     getPoint: function (_dontLink) {
       var ctor = _dontLink ? Point : LinkedPoint;
-      return new ctor(this.x, this.y, this, "setPoint");
+      return new ctor(this.x, this.y, this, 'setPoint');
     },
 
     setPoint: function (/* point */) {
@@ -294,7 +283,7 @@ export const Rectangle = Base.extend(
      */
     getSize: function (_dontLink) {
       var ctor = _dontLink ? Size : LinkedSize;
-      return new ctor(this.width, this.height, this, "setSize");
+      return new ctor(this.width, this.height, this, 'setSize');
     },
 
     // properties to keep track of fix-width / height: They are on by default,
@@ -473,7 +462,7 @@ export const Rectangle = Base.extend(
      */
     getCenter: function (_dontLink) {
       var ctor = _dontLink ? Point : LinkedPoint;
-      return new ctor(this.getCenterX(), this.getCenterY(), this, "setCenter");
+      return new ctor(this.getCenterX(), this.getCenterY(), this, 'setCenter');
     },
 
     setCenter: function (/* point */) {
@@ -638,8 +627,7 @@ export const Rectangle = Base.extend(
       // Detect rectangles either by checking for 'width' on the passed object
       // or by looking at the amount of elements in the arguments list,
       // or the passed array:
-      return (arg && arg.width !== undefined) ||
-        (Array.isArray(arg) ? arg : arguments).length === 4
+      return (arg && arg.width !== undefined) || (Array.isArray(arg) ? arg : arguments).length === 4
         ? this._containsRectangle(Rectangle.read(arguments))
         : this._containsPoint(Point.read(arguments));
     },
@@ -647,22 +635,14 @@ export const Rectangle = Base.extend(
     _containsPoint: function (point) {
       var x = point.x,
         y = point.y;
-      return (
-        x >= this.x &&
-        y >= this.y &&
-        x <= this.x + this.width &&
-        y <= this.y + this.height
-      );
+      return x >= this.x && y >= this.y && x <= this.x + this.width && y <= this.y + this.height;
     },
 
     _containsRectangle: function (rect) {
       var x = rect.x,
         y = rect.y;
       return (
-        x >= this.x &&
-        y >= this.y &&
-        x + rect.width <= this.x + this.width &&
-        y + rect.height <= this.y + this.height
+        x >= this.x && y >= this.y && x + rect.width <= this.x + this.width && y + rect.height <= this.y + this.height
       );
     },
 
@@ -842,12 +822,7 @@ export const Rectangle = Base.extend(
       var amount = Size.read(arguments),
         hor = amount.width,
         ver = amount.height;
-      return new Rectangle(
-        this.x - hor / 2,
-        this.y - ver / 2,
-        this.width + hor,
-        this.height + ver
-      );
+      return new Rectangle(this.x - hor / 2, this.y - ver / 2, this.width + hor, this.height + ver);
     },
 
     /**
@@ -870,38 +845,35 @@ export const Rectangle = Base.extend(
      * @return {Rectangle} the scaled rectangle
      */
     scale: function (hor, ver) {
-      return this.expand(
-        this.width * hor - this.width,
-        this.height * (ver === undefined ? hor : ver) - this.height
-      );
+      return this.expand(this.width * hor - this.width, this.height * (ver === undefined ? hor : ver) - this.height);
     },
   },
   Base.each(
     [
-      ["Top", "Left"],
-      ["Top", "Right"],
-      ["Bottom", "Left"],
-      ["Bottom", "Right"],
-      ["Left", "Center"],
-      ["Top", "Center"],
-      ["Right", "Center"],
-      ["Bottom", "Center"],
+      ['Top', 'Left'],
+      ['Top', 'Right'],
+      ['Bottom', 'Left'],
+      ['Bottom', 'Right'],
+      ['Left', 'Center'],
+      ['Top', 'Center'],
+      ['Right', 'Center'],
+      ['Bottom', 'Center'],
     ],
     function (parts, index) {
-      var part = parts.join(""),
+      var part = parts.join(''),
         // find out if the first of the pair is an x or y property,
         // by checking the first character for [R]ight or [L]eft;
         xFirst = /^[RL]/.test(part);
       // Rename Center to CenterX or CenterY:
-      if (index >= 4) parts[1] += xFirst ? "Y" : "X";
+      if (index >= 4) parts[1] += xFirst ? 'Y' : 'X';
       var x = parts[xFirst ? 0 : 1],
         y = parts[xFirst ? 1 : 0],
-        getX = "get" + x,
-        getY = "get" + y,
-        setX = "set" + x,
-        setY = "set" + y,
-        get = "get" + part,
-        set = "set" + part;
+        getX = 'get' + x,
+        getY = 'get' + y,
+        setX = 'set' + x,
+        setY = 'set' + y,
+        get = 'get' + part,
+        set = 'set' + part;
       this[get] = function (_dontLink) {
         var ctor = _dontLink ? Point : LinkedPoint;
         return new ctor(this[getX](), this[getY](), this, set);
@@ -953,15 +925,15 @@ export const LinkedRectangle = Rectangle.extend(
     var proto = Rectangle.prototype;
 
     return Base.each(
-      ["x", "y", "width", "height"],
+      ['x', 'y', 'width', 'height'],
       function (key) {
         var part = Base.capitalize(key),
-          internal = "_" + key;
-        this["get" + part] = function () {
+          internal = '_' + key;
+        this['get' + part] = function () {
           return this[internal];
         };
 
-        this["set" + part] = function (value) {
+        this['set' + part] = function (value) {
           this[internal] = value;
           // Check if this setter is called from another one which sets
           // _dontNotify, as it will notify itself
@@ -970,26 +942,26 @@ export const LinkedRectangle = Rectangle.extend(
       },
       Base.each(
         [
-          "Point",
-          "Size",
-          "Center",
-          "Left",
-          "Top",
-          "Right",
-          "Bottom",
-          "CenterX",
-          "CenterY",
-          "TopLeft",
-          "TopRight",
-          "BottomLeft",
-          "BottomRight",
-          "LeftCenter",
-          "TopCenter",
-          "RightCenter",
-          "BottomCenter",
+          'Point',
+          'Size',
+          'Center',
+          'Left',
+          'Top',
+          'Right',
+          'Bottom',
+          'CenterX',
+          'CenterY',
+          'TopLeft',
+          'TopRight',
+          'BottomLeft',
+          'BottomRight',
+          'LeftCenter',
+          'TopCenter',
+          'RightCenter',
+          'BottomCenter',
         ],
         function (key) {
-          var name = "set" + key;
+          var name = 'set' + key;
           this[name] = function (/* value */) {
             // Make sure the above setters of x, y, width, height do not
             // each notify the owner, as we're going to take care of this

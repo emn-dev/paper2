@@ -15,11 +15,14 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 
-import { Base } from "~/straps";
-import { Formatter } from "~/util/Formatter";
-import { Change } from "~/item/ChangeFlag";
-import { Point } from "~/basic/Point";
-import { Rectangle } from "~/basic/Rectangle";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Formatter } from '~/util/Formatter';
+import { Change } from '~/item/ChangeFlag';
+import { Point } from '~/basic/Point';
+import { Rectangle } from '~/basic/Rectangle';
 
 /**
  * @name Matrix
@@ -46,7 +49,7 @@ import { Rectangle } from "~/basic/Rectangle";
  */
 export const Matrix = Base.extend(
   /** @lends Matrix# */ {
-    _class: "Matrix",
+    _class: 'Matrix',
 
     /**
      * Creates a 2D affine transformation matrix that describes the identity
@@ -108,7 +111,7 @@ export const Matrix = Base.extend(
         ok = false;
       }
       if (!ok) {
-        throw new Error("Unsupported matrix parameters");
+        throw new Error('Unsupported matrix parameters');
       }
       return this;
     },
@@ -122,7 +125,7 @@ export const Matrix = Base.extend(
      * @param {...*} values
      * @return {Point}
      */
-    set: "#initialize",
+    set: '#initialize',
 
     // See Point#_set() for an explanation of #_set():
     _set: function (a, b, c, d, tx, ty, _dontNotify) {
@@ -184,11 +187,11 @@ export const Matrix = Base.extend(
     toString: function () {
       var f = Formatter.instance;
       return (
-        "[[" +
-        [f.number(this._a), f.number(this._c), f.number(this._tx)].join(", ") +
-        "], [" +
-        [f.number(this._b), f.number(this._d), f.number(this._ty)].join(", ") +
-        "]]"
+        '[[' +
+        [f.number(this._a), f.number(this._c), f.number(this._tx)].join(', ') +
+        '], [' +
+        [f.number(this._b), f.number(this._d), f.number(this._ty)].join(', ') +
+        ']]'
       );
     },
 
@@ -387,10 +390,7 @@ export const Matrix = Base.extend(
         skew = Point.read(args),
         center = Point.read(args, 0, { readNull: true }),
         toRadians = Math.PI / 180,
-        shear = new Point(
-          Math.tan(skew.x * toRadians),
-          Math.tan(skew.y * toRadians)
-        );
+        shear = new Point(Math.tan(skew.x * toRadians), Math.tan(skew.y * toRadians));
       return this.shear(shear, center);
     },
 
@@ -522,15 +522,15 @@ export const Matrix = Base.extend(
     /**
      * @deprecated use {@link #append(matrix)} instead.
      */
-    concatenate: "#append",
+    concatenate: '#append',
     /**
      * @deprecated use {@link #prepend(matrix)} instead.
      */
-    preConcatenate: "#prepend",
+    preConcatenate: '#prepend',
     /**
      * @deprecated use {@link #appended(matrix)} instead.
      */
-    chain: "#appended",
+    chain: '#appended',
 
     /**
      * A private helper function to create a clone of this matrix, without the
@@ -551,14 +551,7 @@ export const Matrix = Base.extend(
      * @return {Boolean} whether this matrix is the identity matrix
      */
     isIdentity: function () {
-      return (
-        this._a === 1 &&
-        this._b === 0 &&
-        this._c === 0 &&
-        this._d === 1 &&
-        this._tx === 0 &&
-        this._ty === 0
-      );
+      return this._a === 1 && this._b === 0 && this._c === 0 && this._d === 1 && this._tx === 0 && this._ty === 0;
     },
 
     /**
@@ -618,11 +611,7 @@ export const Matrix = Base.extend(
       var x = point.x,
         y = point.y;
       if (!dest) dest = new Point();
-      return dest._set(
-        x * this._a + y * this._c + this._tx,
-        x * this._b + y * this._d + this._ty,
-        _dontNotify
-      );
+      return dest._set(x * this._a + y * this._c + this._tx, x * this._b + y * this._d + this._ty, _dontNotify);
     },
 
     _transformCoordinates: function (src, dst, count) {
@@ -663,13 +652,7 @@ export const Matrix = Base.extend(
         }
       }
       if (!dest) dest = new Rectangle();
-      return dest._set(
-        min[0],
-        min[1],
-        max[0] - min[0],
-        max[1] - min[1],
-        _dontNotify
-      );
+      return dest._set(min[0], min[1], max[0] - min[0], max[1] - min[1], _dontNotify);
     },
 
     /**
@@ -695,11 +678,7 @@ export const Matrix = Base.extend(
         var x = point.x - this._tx,
           y = point.y - this._ty;
         if (!dest) dest = new Point();
-        res = dest._set(
-          (x * d - y * c) / det,
-          (y * a - x * b) / det,
-          _dontNotify
-        );
+        res = dest._set((x * d - y * c) / det, (y * a - x * b) / det, _dontNotify);
       }
       return res;
     },
@@ -854,15 +833,15 @@ export const Matrix = Base.extend(
     },
   },
   Base.each(
-    ["a", "b", "c", "d", "tx", "ty"],
+    ['a', 'b', 'c', 'd', 'tx', 'ty'],
     function (key) {
       // Create getters and setters for all internal attributes.
       var part = Base.capitalize(key),
-        prop = "_" + key;
-      this["get" + part] = function () {
+        prop = '_' + key;
+      this['get' + part] = function () {
         return this[prop];
       };
-      this["set" + part] = function (value) {
+      this['set' + part] = function (value) {
         this[prop] = value;
         this._changed();
       };

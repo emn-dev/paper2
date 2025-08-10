@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { Point } from "~/basic/Point";
-import { Numerical } from "~/util/Numerical";
-import { SegmentSelection } from "./SegmentSelection";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Point } from '~/basic/Point';
+import { Numerical } from '~/util/Numerical';
+import { SegmentSelection } from './SegmentSelection';
 
 /**
  * @name SegmentPoint
@@ -96,9 +99,9 @@ export const SegmentPoint = Point.extend({
     return this === owner._point
       ? /*#=*/ SegmentSelection.POINT
       : this === owner._handleIn
-      ? /*#=*/ SegmentSelection.HANDLE_IN
-      : this === owner._handleOut
-      ? /*#=*/ SegmentSelection.HANDLE_OUT
-      : 0;
+        ? /*#=*/ SegmentSelection.HANDLE_IN
+        : this === owner._handleOut
+          ? /*#=*/ SegmentSelection.HANDLE_OUT
+          : 0;
   },
 });

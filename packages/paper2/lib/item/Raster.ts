@@ -10,21 +10,24 @@
  * All rights reserved.
  */
 
-import type { HitResult as HitResultType } from "./HitResult";
-import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
-import type { PathItem as PathItemType } from "~/path/PathItem";
-import type { Color as ColorType } from "~/style/Color";
-import type { DomEvent as DomEventType } from "~/dom/DomEvent";
-import type { DomElement as DomElementType } from "~/dom/DomElement";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Matrix } from "~/basic/Matrix";
-import { Point } from "~/basic/Point";
-import { Rectangle } from "~/basic/Rectangle";
-import { Numerical } from "~/util/Numerical";
-import { Change } from "~/item/ChangeFlag";
-import { LinkedSize, Size } from "~/basic/Size";
-import { Item } from "./Item";
+import type { HitResult as HitResultType } from './HitResult';
+import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
+import type { PathItem as PathItemType } from '~/path/PathItem';
+import type { Color as ColorType } from '~/style/Color';
+import type { DomEvent as DomEventType } from '~/dom/DomEvent';
+import type { DomElement as DomElementType } from '~/dom/DomElement';
+
+import { Base } from '~/straps';
+import { Matrix } from '~/basic/Matrix';
+import { Point } from '~/basic/Point';
+import { Rectangle } from '~/basic/Rectangle';
+import { Numerical } from '~/util/Numerical';
+import { Change } from '~/item/ChangeFlag';
+import { LinkedSize, Size } from '~/basic/Size';
+import { Item } from './Item';
 
 // import { HitResult } from "./HitResult";
 // import { CanvasProvider } from "~/canvas/CanvasProvider";
@@ -52,7 +55,7 @@ declare let Event4444;
  */
 export const Raster = Item.extend(
   /** @lends Raster# */ {
-    _class: "Raster",
+    _class: 'Raster',
     _applyMatrix: false,
     _canApplyMatrix: false,
     // Raster doesn't make the distinction between the different bounds,
@@ -63,8 +66,8 @@ export const Raster = Item.extend(
       source: null,
     },
     // Prioritize `crossOrigin` over `source`:
-    _prioritize: ["crossOrigin"],
-    _smoothing: "low",
+    _prioritize: ['crossOrigin'],
+    _smoothing: 'low',
     // Enforce creation of beans, as bean getters have hidden parameters.
     // See  #getContext(_change) below.
     beans: true,
@@ -156,20 +159,10 @@ export const Raster = Item.extend(
       //   optional position (Point).
       // If _initialize can set properties through object literal, we're done.
       // Otherwise we need to check the type of object:
-      if (
-        !this._initialize(
-          source,
-          position !== undefined && Point.read(arguments)
-        )
-      ) {
+      if (!this._initialize(source, position !== undefined && Point.read(arguments))) {
         var image,
           type = typeof source,
-          object =
-            type === "string"
-              ? document.getElementById(source)
-              : type === "object"
-              ? source
-              : null;
+          object = type === 'string' ? document.getElementById(source) : type === 'object' ? source : null;
         if (object && object !== Item.NO_INSERT) {
           if (object.getContext || object.naturalHeight != null) {
             image = object;
@@ -209,7 +202,7 @@ export const Raster = Item.extend(
         // one and draw this raster's canvas on it.
         // @ts-expect-error = Expected 3 arguments, but got 1
         var copyCanvas = CanvasProvider4444.getCanvas(source._size);
-        copyCanvas.getContext("2d").drawImage(canvas, 0, 0);
+        copyCanvas.getContext('2d').drawImage(canvas, 0, 0);
         this._setImage(copyCanvas);
       }
       // TODO: Shouldn't this be copied with attributes instead of content?
@@ -224,12 +217,7 @@ export const Raster = Item.extend(
      */
     getSize: function () {
       var size = this._size;
-      return new LinkedSize(
-        size ? size.width : 0,
-        size ? size.height : 0,
-        this,
-        "setSize"
-      );
+      return new LinkedSize(size ? size.width : 0, size ? size.height : 0, this, 'setSize');
     },
 
     setSize: function (_size, _clear) {
@@ -245,13 +233,7 @@ export const Raster = Item.extend(
           this._setImage(CanvasProvider4444.getCanvas(size));
           if (element) {
             // Draw element back onto the new, resized canvas.
-            this.getContext(true).drawImage(
-              element,
-              0,
-              0,
-              size.width,
-              size.height
-            );
+            this.getContext(true).drawImage(element, 0, 0, size.width, size.height);
           }
         } else {
           // 0-width / height dimensions do not require the creation of
@@ -328,7 +310,7 @@ export const Raster = Item.extend(
      * @bean
      * @deprecated use {@link #resolution} instead.
      */
-    getPpi: "#getResolution",
+    getPpi: '#getResolution',
 
     /**
      * The HTMLImageElement or Canvas element of the raster, if one is
@@ -349,7 +331,7 @@ export const Raster = Item.extend(
 
       function emit(event) {
         var view = that.getView(),
-          type = (event && event.type) || "load";
+          type = (event && event.type) || 'load';
         if (view && that.responds(type)) {
           paper4444 = view._scope;
           that.emit(type, new Event4444(event));
@@ -430,7 +412,7 @@ export const Raster = Item.extend(
     },
 
     // #setCanvas() is a simple alias to #setImage()
-    setCanvas: "#setImage",
+    setCanvas: '#setImage',
 
     /**
      * The Canvas 2D drawing context of the raster.
@@ -439,7 +421,7 @@ export const Raster = Item.extend(
      * @type CanvasRenderingContext2D
      */
     getContext: function (_change) {
-      if (!this._context) this._context = this.getCanvas().getContext("2d");
+      if (!this._context) this._context = this.getCanvas().getContext('2d');
       // Support a hidden parameter that indicates if the context will be used
       // to change the Raster object. We can notify such changes ahead since
       // they are only used afterwards for redrawing.
@@ -517,7 +499,7 @@ export const Raster = Item.extend(
      */
     getCrossOrigin: function () {
       var image = this._image;
-      return (image && image.crossOrigin) || this._crossOrigin || "";
+      return (image && image.crossOrigin) || this._crossOrigin || '';
     },
 
     setCrossOrigin: function (crossOrigin) {
@@ -556,8 +538,7 @@ export const Raster = Item.extend(
     },
 
     setSmoothing: function (smoothing) {
-      this._smoothing =
-        typeof smoothing === "string" ? smoothing : smoothing ? "low" : "off";
+      this._smoothing = typeof smoothing === 'string' ? smoothing : smoothing ? 'low' : 'off';
       this._changed(/*#=*/ Change.ATTRIBUTE);
     },
 
@@ -587,17 +568,7 @@ export const Raster = Item.extend(
       var rect = Rectangle.read(arguments),
         // @ts-expect-error = Expected 3 arguments, but got 1
         ctx = CanvasProvider4444.getContext(rect.getSize());
-      ctx.drawImage(
-        this.getCanvas(),
-        rect.x,
-        rect.y,
-        rect.width,
-        rect.height,
-        0,
-        0,
-        rect.width,
-        rect.height
-      );
+      ctx.drawImage(this.getCanvas(), rect.x, rect.y, rect.width, rect.height, 0, 0, rect.width, rect.height);
       return ctx.canvas;
     },
 
@@ -665,10 +636,10 @@ export const Raster = Item.extend(
         // TODO: How about rounding of bounds.size?
         path = object;
         bounds = object.getBounds();
-      } else if (typeof object === "object") {
-        if ("width" in object) {
+      } else if (typeof object === 'object') {
+        if ('width' in object) {
           bounds = new Rectangle(object);
-        } else if ("x" in object) {
+        } else if ('x' in object) {
           // Create a rectangle of 1px size around the specified point.
           bounds = new Rectangle(object.x - 0.5, object.y - 0.5, 1, 1);
         }
@@ -685,18 +656,14 @@ export const Raster = Item.extend(
       var ctx = Raster._sampleContext;
       if (!ctx) {
         // @ts-expect-error = Expected 3 arguments, but got 1
-        ctx = Raster._sampleContext = CanvasProvider4444.getContext(
-          new Size(sampleSize)
-        );
+        ctx = Raster._sampleContext = CanvasProvider4444.getContext(new Size(sampleSize));
       } else {
         // Clear the sample canvas:
         ctx.clearRect(0, 0, sampleSize + 1, sampleSize + 1);
       }
       ctx.save();
       // Scale the context so that the bounds ends up at the given sample size
-      var matrix = new Matrix()
-        .scale(width / bounds.width, height / bounds.height)
-        .translate(-bounds.x, -bounds.y);
+      var matrix = new Matrix().scale(width / bounds.width, height / bounds.height).translate(-bounds.x, -bounds.y);
       matrix.applyToContext(ctx);
       // If a path was passed, draw it as a clipping mask:
       // See Project#draw() for an explanation of new Base()
@@ -709,12 +676,7 @@ export const Raster = Item.extend(
       ctx.restore();
       // Get pixel data from the context and calculate the average color value
       // from it, taking alpha into account.
-      var pixels = ctx.getImageData(
-          0.5,
-          0.5,
-          Math.ceil(width),
-          Math.ceil(height)
-        ).data,
+      var pixels = ctx.getImageData(0.5, 0.5, Math.ceil(width), Math.ceil(height)).data,
         channels = [0, 0, 0],
         total = 0;
       for (var i = 0, l = pixels.length; i < l; i += 4) {
@@ -752,11 +714,7 @@ export const Raster = Item.extend(
       var point = Point.read(arguments);
       var data = this.getContext().getImageData(point.x, point.y, 1, 1).data;
       // Alpha is separate now:
-      return new Color4444(
-        "rgb",
-        [data[0] / 255, data[1] / 255, data[2] / 255],
-        data[3] / 255
-      );
+      return new Color4444('rgb', [data[0] / 255, data[1] / 255, data[2] / 255], data[3] / 255);
     },
 
     /**
@@ -781,7 +739,7 @@ export const Raster = Item.extend(
       var args = arguments,
         point = Point.read(args),
         color = Color4444.read(args),
-        components = color._convert("rgb"),
+        components = color._convert('rgb'),
         alpha = color._alpha,
         ctx = this.getContext(true),
         imageData = ctx.createImageData(1, 1),
@@ -820,12 +778,7 @@ export const Raster = Item.extend(
     getImageData: function (/* rect */) {
       var rect = Rectangle.read(arguments);
       if (rect.isEmpty()) rect = new Rectangle(this._size);
-      return this.getContext().getImageData(
-        rect.x,
-        rect.y,
-        rect.width,
-        rect.height
-      );
+      return this.getContext().getImageData(rect.x, rect.y, rect.width, rect.height);
     },
 
     // DOCS: document Raster#putImageData
@@ -894,7 +847,7 @@ export const Raster = Item.extend(
     _hitTestSelf: function (point) {
       if (this._contains(point)) {
         var that = this;
-        return new HitResult4444("pixel", that, {
+        return new HitResult4444('pixel', that, {
           offset: point.add(that._size.divide(2)).round(),
           // Inject as Straps.js accessor, so #toString renders well too
           color: {
@@ -920,10 +873,10 @@ export const Raster = Item.extend(
         // `Raster#smoothing` controlls both the `imageSmoothingQuality`
         // and `imageSmoothingEnabled` canvas context properties:
         var smoothing = this._smoothing,
-          disabled = smoothing === "off";
+          disabled = smoothing === 'off';
         DomElement4444.setPrefixed(
           ctx,
-          disabled ? "imageSmoothingEnabled" : "imageSmoothingQuality",
+          disabled ? 'imageSmoothingEnabled' : 'imageSmoothingQuality',
           disabled ? false : smoothing
         );
 

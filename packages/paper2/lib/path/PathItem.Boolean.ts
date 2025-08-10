@@ -10,16 +10,19 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Item } from "~/item/Item";
-import { CollisionDetection } from "~/util/CollisionDetection";
-import { Numerical } from "~/util/Numerical";
-import { Curve } from "./Curve";
-import { CurveLocation } from "./CurveLocation";
-import { Path } from "./Path";
-import { PathItem } from "./PathItem";
-import { Segment } from "./Segment";
-import { CompoundPath } from "./CompoundPath";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Item } from '~/item/Item';
+import { CollisionDetection } from '~/util/CollisionDetection';
+import { Numerical } from '~/util/Numerical';
+import { Curve } from './Curve';
+import { CurveLocation } from './CurveLocation';
+import { Path } from './Path';
+import { PathItem } from './PathItem';
+import { Segment } from './Segment';
+import { CompoundPath } from './CompoundPath';
 
 /*
  * Boolean Geometric Path Operations
@@ -50,12 +53,12 @@ PathItem.inject(
       // contribution contributes to the final result or not. They are applied
       // to for each segment after the paths are split at crossings.
       operators = {
-        unite: { "1": true, "2": true },
-        intersect: { "2": true },
-        subtract: { "1": true },
+        unite: { '1': true, '2': true },
+        intersect: { '2': true },
+        subtract: { '1': true },
         // exclude only needs -1 to support reorientPaths() when there are
         // no crossings. The actual boolean code uses unsigned winding.
-        exclude: { "1": true, "-1": true },
+        exclude: { '1': true, '-1': true },
       };
 
     function getPaths(path) {
@@ -69,10 +72,7 @@ PathItem.inject(
      * make sure all paths have correct winding direction.
      */
     function preparePath(path, resolve) {
-      var res = path
-        .clone(false)
-        .reduce({ simplify: true })
-        .transform(null, true, true);
+      var res = path.clone(false).reduce({ simplify: true }).transform(null, true, true);
       if (resolve) {
         // For correct results, close open paths with straight lines:
         var paths = getPaths(res);
@@ -86,9 +86,7 @@ PathItem.inject(
             path.getLastSegment().setHandleOut(0, 0);
           }
         }
-        res = res
-          .resolveCrossings()
-          .reorient(res.getFillRule() === "nonzero", true);
+        res = res.resolveCrossings().reorient(res.getFillRule() === 'nonzero', true);
       }
       return res;
     }
@@ -101,11 +99,7 @@ PathItem.inject(
       if (!(options && options.insert == false)) {
         // Insert the resulting path above whichever of the two paths appear
         // further up in the stack.
-        result.insertAbove(
-          path2 && path1.isSibling(path2) && path1.getIndex() < path2.getIndex()
-            ? path2
-            : path1
-        );
+        result.insertAbove(path2 && path1.isSibling(path2) && path1.getIndex() < path2.getIndex() ? path2 : path1);
       }
       // Copy over the input path attributes, excluding matrix and we're done.
       result.copyAttributes(path1, true);
@@ -126,11 +120,7 @@ PathItem.inject(
     function traceBoolean(path1, path2, operation, options) {
       // Only support subtract and intersect operations when computing stroke
       // based boolean operations (options.split = true).
-      if (
-        options &&
-        (options.trace == false || options.stroke) &&
-        /^(subtract|intersect)$/.test(operation)
-      )
+      if (options && (options.trace == false || options.stroke) && /^(subtract|intersect)$/.test(operation))
         return splitBoolean(path1, path2, operation);
       // We do not modify the operands themselves, but create copies instead,
       // fas produced by the calls to preparePath().
@@ -145,20 +135,12 @@ PathItem.inject(
       operator[operation] = true;
       // Give both paths the same orientation except for subtraction
       // and exclusion, where we need them at opposite orientation.
-      if (
-        _path2 &&
-        (operator.subtract || operator.exclude) ^
-          (_path2.isClockwise() ^ _path1.isClockwise())
-      )
+      if (_path2 && (operator.subtract || operator.exclude) ^ (_path2.isClockwise() ^ _path1.isClockwise()))
         _path2.reverse();
       // Split curves at crossings on both paths. Note that for self-
       // intersection, path2 is null and getIntersections() handles it.
       // @ts-expect-error = Expected 3 arguments, but got 1.
-      var crossings = divideLocations(
-          CurveLocation.expand(
-            _path1.getIntersections(_path2, filterIntersection)
-          )
-        ),
+      var crossings = divideLocations(CurveLocation.expand(_path1.getIntersections(_path2, filterIntersection))),
         paths1 = getPaths(_path1),
         paths2 = _path2 && getPaths(_path2),
         segments = [],
@@ -193,12 +175,7 @@ PathItem.inject(
         for (var i = 0, l = curves.length; i < l; i++) {
           curvesValues[i] = curves[i].getValues();
         }
-        var curveCollisions = CollisionDetection.findCurveBoundsCollisions(
-          curvesValues,
-          curvesValues,
-          0,
-          true
-        );
+        var curveCollisions = CollisionDetection.findCurveBoundsCollisions(curvesValues, curvesValues, 0, true);
         var curveCollisionsMap = {};
         for (var i = 0; i < curves.length; i++) {
           var curve = curves[i],
@@ -216,25 +193,13 @@ PathItem.inject(
         // in all crossings:
         // @ts-expect-error
         for (var i = 0, l = crossings.length; i < l; i++) {
-          propagateWinding(
-            crossings[i]._segment,
-            _path1,
-            _path2,
-            curveCollisionsMap,
-            operator
-          );
+          propagateWinding(crossings[i]._segment, _path1, _path2, curveCollisionsMap, operator);
         }
         for (var i = 0, l = segments.length; i < l; i++) {
           var segment = segments[i],
             inter = segment._intersection;
           if (!segment._winding) {
-            propagateWinding(
-              segment,
-              _path1,
-              _path2,
-              curveCollisionsMap,
-              operator
-            );
+            propagateWinding(segment, _path1, _path2, curveCollisionsMap, operator);
           }
           // See if all encountered segments in a path are overlaps.
           if (!(inter && inter._overlap)) segment._path._overlapsOnly = false;
@@ -262,8 +227,8 @@ PathItem.inject(
         // @ts-expect-error
         _path2 = preparePath(path2),
         crossings = _path1.getIntersections(_path2, filterIntersection),
-        subtract = operation === "subtract",
-        divide = operation === "divide",
+        subtract = operation === 'subtract',
+        divide = operation === 'divide',
         added = {},
         paths = [];
 
@@ -372,11 +337,7 @@ PathItem.inject(
           // already.
           first = sorted[0];
         // create lookup containing potentially overlapping path bounds
-        var collisions = CollisionDetection.findItemBoundsCollisions(
-          sorted,
-          null,
-          Numerical.GEOMETRIC_EPSILON
-        );
+        var collisions = CollisionDetection.findItemBoundsCollisions(sorted, null, Numerical.GEOMETRIC_EPSILON);
         if (clockwise == null) clockwise = first.isClockwise();
         // Now determine the winding for each path, from large to small.
         for (var i = 0; i < length; i++) {
@@ -419,9 +380,7 @@ PathItem.inject(
             // If the containing path is not excluded, we're done
             // searching for the orientation defining path.
             var container = entry1.container;
-            path1.setClockwise(
-              container ? !container.isClockwise() : clockwise
-            );
+            path1.setClockwise(container ? !container.isClockwise() : clockwise);
           }
         }
       }
@@ -459,7 +418,7 @@ PathItem.inject(
       // Create a lookup table that allows us to quickly determine if a given
       // curve was resulting from an original curve without handles.
       function getId(curve) {
-        return curve._path._id + "." + curve._segment1._index;
+        return curve._path._id + '.' + curve._segment1._index;
       }
 
       for (var i = (clearLater && clearLater.length) - 1; i >= 0; i--) {
@@ -484,8 +443,7 @@ PathItem.inject(
         if (curve) {
           if (curve !== prevCurve) {
             // This is a new curve, update clearHandles setting.
-            clearHandles =
-              !curve.hasHandles() || (clearLookup && clearLookup[getId(curve)]);
+            clearHandles = !curve.hasHandles() || (clearLookup && clearLookup[getId(curve)]);
             // Keep track of locations for later curve-time
             // renormalization within the curve.
             renormalizeLocs = [];
@@ -581,9 +539,7 @@ PathItem.inject(
       // the form `{ hor: [], ver: [] }` (see `curveCollisionsMap`), with each
       // key / value pair holding only those curves that can be crossed by a
       // horizontal / vertical line through the point to be checked.
-      var curvesList = Array.isArray(curves)
-        ? curves
-        : curves[dir ? "hor" : "ver"];
+      var curvesList = Array.isArray(curves) ? curves : curves[dir ? 'hor' : 'ver'];
       // Determine the index of the abscissa and ordinate values in the curve
       // values arrays, based on the direction:
       var ia = dir ? 1 : 0, // the abscissa index
@@ -639,17 +595,16 @@ PathItem.inject(
             po === o0
               ? 0
               : po === o3
-              ? 1
-              : // If the abscissa is outside the curve, we can use any
-              // value except 0 (requires special handling). Use 1, as it
-              // does not require additional calculations for the point.
-              paL > max(a0, a1, a2, a3) || paR < min(a0, a1, a2, a3)
-              ? 1
-              : Curve.solveCubic(v, io, po, roots, 0, 1) > 0
-              ? roots[0]
-              : 1,
-          a =
-            t === 0 ? a0 : t === 1 ? a3 : Curve.getPoint(v, t)[dir ? "y" : "x"],
+                ? 1
+                : // If the abscissa is outside the curve, we can use any
+                  // value except 0 (requires special handling). Use 1, as it
+                  // does not require additional calculations for the point.
+                  paL > max(a0, a1, a2, a3) || paR < min(a0, a1, a2, a3)
+                  ? 1
+                  : Curve.solveCubic(v, io, po, roots, 0, 1) > 0
+                    ? roots[0]
+                    : 1,
+          a = t === 0 ? a0 : t === 1 ? a3 : Curve.getPoint(v, t)[dir ? 'y' : 'x'],
           winding = o0 > o3 ? 1 : -1,
           windingPrev = vPrev[io] > vPrev[io + 6] ? 1 : -1,
           a3Prev = vPrev[ia + 6];
@@ -701,7 +656,7 @@ PathItem.inject(
           !dontFlip &&
           a > paL &&
           a < paR &&
-          Curve.getTangent(v, t)[dir ? "x" : "y"] === 0 &&
+          Curve.getTangent(v, t)[dir ? 'x' : 'y'] === 0 &&
           getWinding(point, curves, !dir, closed, true)
         );
       }
@@ -721,10 +676,7 @@ PathItem.inject(
             a3 = v[ia + 6],
             // Get monotone curves. If the curve is outside the point's
             // abscissa, it can be treated as a monotone curve:
-            monoCurves =
-              paL > max(a0, a1, a2, a3) || paR < min(a0, a1, a2, a3)
-                ? [v]
-                : Curve.getMonoCurves(v, dir),
+            monoCurves = paL > max(a0, a1, a2, a3) || paR < min(a0, a1, a2, a3) ? [v] : Curve.getMonoCurves(v, dir),
             res;
           for (var i = 0, l = monoCurves.length; i < l; i++) {
             // Calling addWinding() my lead to direction flipping, in
@@ -750,12 +702,7 @@ PathItem.inject(
           // - `true`: Connect with a curve that takes the segment handles
           //   into account, just like how closed paths behave.
           if (!path._closed) {
-            vClose = Curve.getValues(
-              path.getLastCurve().getSegment2(),
-              curve.getSegment1(),
-              null,
-              !closed
-            );
+            vClose = Curve.getValues(path.getLastCurve().getSegment2(), curve.getSegment1(), null, !closed);
             // This closing curve is a potential candidate for the last
             // non-horizontal curve.
             if (vClose[io] !== vClose[io + 6]) {
@@ -796,8 +743,7 @@ PathItem.inject(
             // for clockwise and [-1,+1] for counter-clockwise paths.
             // If the ray is cast in y direction (dir == true), the
             // windings always have opposite sign.
-            pathWindingL = pathWindingR =
-              path.isClockwise(closed) ^ dir ? 1 : -1;
+            pathWindingL = pathWindingR = path.isClockwise(closed) ^ dir ? 1 : -1;
           }
           windingL += pathWindingL;
           windingR += pathWindingR;
@@ -824,13 +770,7 @@ PathItem.inject(
       };
     }
 
-    function propagateWinding(
-      segment,
-      path1,
-      path2,
-      curveCollisionsMap,
-      operator
-    ) {
+    function propagateWinding(segment, path1, path2, curveCollisionsMap, operator) {
       // Here we try to determine the most likely winding number contribution
       // for the curve-chain starting with this segment. Once we have enough
       // confidence in the winding contribution, we can propagate it until the
@@ -886,10 +826,7 @@ PathItem.inject(
               var otherPath = operand === path1 ? path2 : path1,
                 pathWinding = otherPath._getWinding(pt, dir, true);
               // Check if curve should be omitted.
-              if (
-                (operand === path1 && pathWinding.winding) ||
-                (operand === path2 && !pathWinding.winding)
-              ) {
+              if ((operand === path1 && pathWinding.winding) || (operand === path2 && !pathWinding.winding)) {
                 // Check if quality is not good enough...
                 if (pathWinding.quality < 1) {
                   // ...and if so, skip this point...
@@ -903,12 +840,7 @@ PathItem.inject(
             wind =
               wind ||
               // @ts-expect-error
-              getWinding(
-                pt,
-                curveCollisionsMap[path._id][curve.getIndex()],
-                dir,
-                true
-              );
+              getWinding(pt, curveCollisionsMap[path._id][curve.getIndex()], dir, true);
             if (wind.quality > winding.quality) winding = wind;
             break;
           }
@@ -1040,18 +972,18 @@ PathItem.inject(
             ? 1
             : -1
           : // NOTE: inter1 & 2 are objects, convert to boolean first
-          // as otherwise toString() is called on them.
-          // @ts-expect-error
-          !inter1 ^ !inter2
-          ? inter1
-            ? 1
-            : -1
-          : // All other segments, also when comparing two overlaps
-          // or two intersections, are sorted by their order.
-          // Sort by path id to group segments on the same path.
-          path1 !== path2
-          ? path1._id - path2._id
-          : seg1._index - seg2._index;
+            // as otherwise toString() is called on them.
+            // @ts-expect-error
+            !inter1 ^ !inter2
+            ? inter1
+              ? 1
+              : -1
+            : // All other segments, also when comparing two overlaps
+              // or two intersections, are sorted by their order.
+              // Sort by path id to group segments on the same path.
+              path1 !== path2
+              ? path1._id - path2._id
+              : seg1._index - seg2._index;
       });
 
       for (var i = 0, l = segments.length; i < l; i++) {
@@ -1212,7 +1144,7 @@ PathItem.inject(
        * @return {PathItem} the resulting path item
        */
       unite: function (path, options) {
-        return traceBoolean(this, path, "unite", options);
+        return traceBoolean(this, path, 'unite', options);
       },
 
       /**
@@ -1233,7 +1165,7 @@ PathItem.inject(
        * @return {PathItem} the resulting path item
        */
       intersect: function (path, options) {
-        return traceBoolean(this, path, "intersect", options);
+        return traceBoolean(this, path, 'intersect', options);
       },
 
       /**
@@ -1254,7 +1186,7 @@ PathItem.inject(
        * @return {PathItem} the resulting path item
        */
       subtract: function (path, options) {
-        return traceBoolean(this, path, "subtract", options);
+        return traceBoolean(this, path, 'subtract', options);
       },
 
       /**
@@ -1270,7 +1202,7 @@ PathItem.inject(
        * @return {PathItem} the resulting path item
        */
       exclude: function (path, options) {
-        return traceBoolean(this, path, "exclude", options);
+        return traceBoolean(this, path, 'exclude', options);
       },
 
       /**
@@ -1293,14 +1225,8 @@ PathItem.inject(
        */
       divide: function (path, options) {
         return options && (options.trace == false || options.stroke)
-          ? splitBoolean(this, path, "divide")
-          : createResult(
-              [this.subtract(path, options), this.intersect(path, options)],
-              true,
-              this,
-              path,
-              options
-            );
+          ? splitBoolean(this, path, 'divide')
+          : createResult([this.subtract(path, options), this.intersect(path, options)], true, this, path, options);
       },
 
       /*
@@ -1327,10 +1253,7 @@ PathItem.inject(
         var hasOverlaps = false,
           hasCrossings = false,
           intersections = this.getIntersections(null, function (inter) {
-            return (
-              (inter.hasOverlap() && (hasOverlaps = true)) ||
-              (inter.isCrossing() && (hasCrossings = true))
-            );
+            return (inter.hasOverlap() && (hasOverlaps = true)) || (inter.isCrossing() && (hasCrossings = true));
           }),
           // We only need to keep track of curves that need clearing
           // outside of divideLocations() if two calls are necessary.
@@ -1386,8 +1309,7 @@ PathItem.inject(
                   other = inter._intersection,
                   curve2 = other._curve,
                   seg2 = other._segment;
-                if (curve1 && curve2 && curve1._path && curve2._path)
-                  return true;
+                if (curve1 && curve2 && curve1._path && curve2._path) return true;
                 // Remove all intersections that were involved in the
                 // handling of overlaps, to not confuse tracePaths().
                 if (seg1) seg1._intersection = null;
@@ -1499,18 +1421,15 @@ PathItem.inject(
                   mo3 = mv[7];
                 // Only handle curves that are not horizontal and
                 // that can cross the point's ordinate.
-                if (
-                  mo0 !== mo3 &&
-                  ((y >= mo0 && y <= mo3) || (y >= mo3 && y <= mo0))
-                ) {
+                if (mo0 !== mo3 && ((y >= mo0 && y <= mo3) || (y >= mo3 && y <= mo0))) {
                   var x =
                     y === mo0
                       ? mv[0]
                       : y === mo3
-                      ? mv[6]
-                      : Curve.solveCubic(mv, 1, y, roots, 0, 1) === 1
-                      ? Curve.getPoint(mv, roots[0]).x
-                      : (mv[0] + mv[6]) / 2;
+                        ? mv[6]
+                        : Curve.solveCubic(mv, 1, y, roots, 0, 1) === 1
+                          ? Curve.getPoint(mv, roots[0]).x
+                          : (mv[0] + mv[6]) / 2;
                   intercepts.push(x);
                 }
               }

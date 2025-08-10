@@ -10,6 +10,9 @@
  * All rights reserved.
  */
 
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
 /**
  * @name CollisionDetection
  * @namespace
@@ -89,20 +92,8 @@ export const CollisionDetection = /** @lends CollisionDetection */ {
     var bounds1 = getBounds(curves1),
       bounds2 = !curves2 || curves2 === curves1 ? bounds1 : getBounds(curves2);
     if (bothAxis) {
-      var hor = this.findBoundsCollisions(
-          bounds1,
-          bounds2,
-          tolerance || 0,
-          false,
-          true
-        ),
-        ver = this.findBoundsCollisions(
-          bounds1,
-          bounds2,
-          tolerance || 0,
-          true,
-          true
-        ),
+      var hor = this.findBoundsCollisions(bounds1, bounds2, tolerance || 0, false, true),
+        ver = this.findBoundsCollisions(bounds1, bounds2, tolerance || 0, true, true),
         list = [];
       for (var i = 0, l = hor.length; i < l; i++) {
         list[i] = { hor: hor[i], ver: ver[i] };
@@ -146,13 +137,7 @@ export const CollisionDetection = /** @lends CollisionDetection */ {
    * @returns {Array} Array containing for the bounds at the same index in
    *     boundsA an array of the indexes of colliding bounds in boundsB
    */
-  findBoundsCollisions: function (
-    boundsA,
-    boundsB,
-    tolerance,
-    sweepVertical,
-    onlySweepAxisCollisions
-  ) {
+  findBoundsCollisions: function (boundsA, boundsB, tolerance, sweepVertical, onlySweepAxisCollisions) {
     var self = !boundsB || boundsA === boundsB,
       allBounds = self ? boundsA : boundsA.concat(boundsB),
       lengthA = boundsA.length,
@@ -205,9 +190,7 @@ export const CollisionDetection = /** @lends CollisionDetection */ {
         curCollisions = isCurrentA ? [] : null;
       if (activeIndicesByPri1.length) {
         // remove (prune) indices that are no longer active.
-        var pruneCount =
-          binarySearch(activeIndicesByPri1, pri1, curBounds[pri0] - tolerance) +
-          1;
+        var pruneCount = binarySearch(activeIndicesByPri1, pri1, curBounds[pri0] - tolerance) + 1;
         activeIndicesByPri1.splice(0, pruneCount);
         // Add collisions for current index.
         if (self && onlySweepAxisCollisions) {

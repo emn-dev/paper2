@@ -9,11 +9,15 @@
  *
  * All rights reserved.
  */
-import type { Path } from "./Path";
-import { Base } from "~/straps";
-import { Numerical } from "~/util/Numerical";
-import { Formatter } from "~/util/Formatter";
-import { Curve } from "./Curve";
+
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import type { Path } from './Path';
+import { Base } from '~/straps';
+import { Numerical } from '~/util/Numerical';
+import { Formatter } from '~/util/Formatter';
+import { Curve } from './Curve';
 
 /**
  * @name CurveLocation
@@ -33,7 +37,7 @@ import { Curve } from "./Curve";
  */
 export const CurveLocation = Base.extend(
   /** @lends CurveLocation# */ {
-    _class: "CurveLocation",
+    _class: 'CurveLocation',
 
     // DOCS: CurveLocation class description: add these back when the mentioned
     // functioned have been added: {@link Path#split(location)}
@@ -44,13 +48,7 @@ export const CurveLocation = Base.extend(
      * @param {Number} time
      * @param {Point} [point]
      */
-    initialize: function CurveLocation(
-      curve,
-      time,
-      point,
-      _overlap,
-      _distance
-    ) {
+    initialize: function CurveLocation(curve, time, point, _overlap, _distance) {
       // Merge intersections very close to the end of a curve with the
       // beginning of the next curve.
       if (time >= /*#=*/ 1 - Numerical.CURVETIME_EPSILON) {
@@ -121,10 +119,7 @@ export const CurveLocation = Base.extend(
           segment = curve._segment2;
         } else if (time != null) {
           // Determine the closest segment by comparing curve lengths
-          segment =
-            curve.getPartLength(0, time) < curve.getPartLength(time, 1)
-              ? curve._segment1
-              : curve._segment2;
+          segment = curve.getPartLength(0, time) < curve.getPartLength(time, 1) ? curve._segment1 : curve._segment2;
         }
         this._segment = segment;
       }
@@ -201,9 +196,7 @@ export const CurveLocation = Base.extend(
     getTime: function () {
       var curve = this.getCurve(),
         time = this._time;
-      return curve && time == null
-        ? (this._time = curve.getTimeOf(this._point))
-        : time;
+      return curve && time == null ? (this._time = curve.getTimeOf(this._point)) : time;
     },
 
     /**
@@ -211,7 +204,7 @@ export const CurveLocation = Base.extend(
      * @bean
      * @deprecated use {@link #time} instead.
      */
-    getParameter: "#getTime",
+    getParameter: '#getTime',
 
     /**
      * The point which is defined by the {@link #curve} and
@@ -259,8 +252,7 @@ export const CurveLocation = Base.extend(
       if (offset == null) {
         var curve = this.getCurve(),
           time = this.getTime();
-        this._curveOffset = offset =
-          time != null && curve && curve.getPartLength(0, time);
+        this._curveOffset = offset = time != null && curve && curve.getPartLength(0, time);
       }
       return offset;
     },
@@ -378,14 +370,13 @@ export const CurveLocation = Base.extend(
       var parts = [],
         point = this.getPoint(),
         f = Formatter.instance;
-      if (point) parts.push("point: " + point);
+      if (point) parts.push('point: ' + point);
       var index = this.getIndex();
-      if (index != null) parts.push("index: " + index);
+      if (index != null) parts.push('index: ' + index);
       var time = this.getTime();
-      if (time != null) parts.push("time: " + f.number(time));
-      if (this._distance != null)
-        parts.push("distance: " + f.number(this._distance));
-      return "{ " + parts.join(", ") + " }";
+      if (time != null) parts.push('time: ' + f.number(time));
+      if (this._distance != null) parts.push('distance: ' + f.number(this._distance));
+      return '{ ' + parts.join(', ') + ' }';
     },
 
     /**
@@ -404,11 +395,7 @@ export const CurveLocation = Base.extend(
         // don't intersect.
         var curve1 = this.getCurve(),
           curve2 = inter.getCurve();
-        return !(
-          curve1.isStraight() &&
-          curve2.isStraight() &&
-          curve1.getLine().intersect(curve2.getLine())
-        );
+        return !(curve1.isStraight() && curve2.isStraight() && curve1.getLine().intersect(curve2.getLine()));
       }
       return false;
     },
@@ -468,11 +455,7 @@ export const CurveLocation = Base.extend(
         var v = curve.getValues(),
           roots = Curve.classify(v).roots || Curve.getPeaks(v),
           count = roots.length,
-          offset = Curve.getLength(
-            v,
-            end && count ? roots[count - 1] : 0,
-            !end && count ? roots[0] : 1
-          );
+          offset = Curve.getLength(v, end && count ? roots[count - 1] : 0, !end && count ? roots[0] : 1);
         // When no root was found, the full length was calculated. Use a
         // fraction of it. By trial & error, 64 was determined to work well.
         offsets.push(count ? offset : offset / 32);
@@ -497,13 +480,9 @@ export const CurveLocation = Base.extend(
         // Determined the shared unambiguous offset by the taking the
         // shortest offsets on all involved curves that are unambiguous.
         offset = Math.min.apply(Math, offsets),
-        v2 = t1Inside
-          ? c2.getTangentAtTime(t1)
-          : c2.getPointAt(offset).subtract(pt),
+        v2 = t1Inside ? c2.getTangentAtTime(t1) : c2.getPointAt(offset).subtract(pt),
         v1 = t1Inside ? v2.negate() : c1.getPointAt(-offset).subtract(pt),
-        v4 = t2Inside
-          ? c4.getTangentAtTime(t2)
-          : c4.getPointAt(offset).subtract(pt),
+        v4 = t2Inside ? c4.getTangentAtTime(t2) : c4.getPointAt(offset).subtract(pt),
         v3 = t2Inside ? v4.negate() : c3.getPointAt(-offset).subtract(pt),
         a1 = v1.getAngle(),
         a2 = v2.getAngle(),
@@ -544,7 +523,7 @@ export const CurveLocation = Base.extend(
       // NOTE: (For easier searching): This loop produces:
       // getPointAt, getTangentAt, getNormalAt, getWeightedTangentAt,
       // getWeightedNormalAt, getCurvatureAt
-      var get = name + "At";
+      var get = name + 'At';
       this[name] = function () {
         var curve = this.getCurve(),
           time = this.getTime();
@@ -577,12 +556,7 @@ export const CurveLocation = Base.extend(
           // Wrap the index around, to match the other ends:
           var loc2 = locations[((i % length) + length) % length];
           // Once we're outside the spot, we can stop searching.
-          if (
-            !loc
-              .getPoint()
-              .isClose(loc2.getPoint(), /*#=*/ Numerical.GEOMETRIC_EPSILON)
-          )
-            break;
+          if (!loc.getPoint().isClose(loc2.getPoint(), /*#=*/ Numerical.GEOMETRIC_EPSILON)) break;
           if (loc.equals(loc2)) return loc2;
         }
         return null;
@@ -594,10 +568,7 @@ export const CurveLocation = Base.extend(
           found;
         // See if the two locations are actually the same, and merge if
         // they are. If they aren't check the other neighbors with search()
-        if (
-          merge &&
-          (found = loc.equals(loc2) ? loc2 : search(m, -1) || search(m, 1))
-        ) {
+        if (merge && (found = loc.equals(loc2) ? loc2 : search(m, -1) || search(m, 1))) {
           // We're done, don't insert, merge with the found location
           // instead, and carry over overlap:
           if (loc._overlap) {
@@ -615,9 +586,7 @@ export const CurveLocation = Base.extend(
                 path1._id - path2._id
               : // Sort by both index and time on the same path. The two values
                 // added together provides a convenient sorting index.
-                loc.getIndex() +
-                loc.getTime() -
-                (loc2.getIndex() + loc2.getTime());
+                loc.getIndex() + loc.getTime() - (loc2.getIndex() + loc2.getTime());
         if (diff < 0) {
           r = m - 1;
         } else {

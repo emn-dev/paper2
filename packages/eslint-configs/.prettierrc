@@ -1,0 +1,20 @@
+{
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "htmlWhitespaceSensitivity": "css",
+  "printWidth": 120,
+  "proseWrap": "always",
+  "quoteProps": "as-needed",
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "useTabs": false,
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": [".babelrc", ".prettierrc", ".stylelintrc"],
+      "options": { "parser": "json" }
+    }
+  ]
+}

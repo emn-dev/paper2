@@ -10,8 +10,11 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Emitter } from "~/core/Emitter";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Emitter } from '~/core/Emitter';
 
 declare let paper4444;
 
@@ -32,7 +35,7 @@ declare let paper4444;
 export const Tween = Base.extend(
   Emitter,
   /** @lends Tween# */ {
-    _class: "Tween",
+    _class: 'Tween',
 
     statics: {
       easings: new Base({
@@ -68,9 +71,7 @@ export const Tween = Base.extend(
 
         // acceleration until halfway, then deceleration
         easeInOutCubic: function (t) {
-          return t < 0.5
-            ? 4 * t * t * t
-            : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+          return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
         },
 
         // accelerating from zero velocity
@@ -100,9 +101,7 @@ export const Tween = Base.extend(
 
         // acceleration until halfway, then deceleration
         easeInOutQuint: function (t) {
-          return t < 0.5
-            ? 16 * t * t * t * t * t
-            : 1 + 16 * --t * t * t * t * t;
+          return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
         },
       }),
     },
@@ -122,8 +121,8 @@ export const Tween = Base.extend(
     initialize: function Tween(object, from, to, duration, easing, start) {
       this.object = object;
       var type = typeof easing;
-      var isFunction = type === "function";
-      this.type = isFunction ? type : type === "string" ? easing : "linear";
+      var isFunction = type === 'function';
+      this.type = isFunction ? type : type === 'string' ? easing : 'linear';
       // @ts-expect-error = 'easings' does not exist on type
       this.easing = isFunction ? easing : Tween.easings[this.type];
       this.duration = duration;
@@ -229,9 +228,7 @@ export const Tween = Base.extend(
         var factor = this.easing(progress),
           keys = this._keys,
           getValue = function (value) {
-            return typeof value === "function"
-              ? value(factor, progress)
-              : value;
+            return typeof value === 'function' ? value(factor, progress) : value;
           };
         for (var i = 0, l = keys && keys.length; i < l; i++) {
           var key = keys[i],
@@ -248,9 +245,9 @@ export const Tween = Base.extend(
 
         // TODO: Set `progress` and `factor` on Tween object also, so they
         // can be used witout events.
-        if (this.responds("update")) {
+        if (this.responds('update')) {
           this.emit(
-            "update",
+            'update',
             new Base({
               progress: progress,
               factor: factor,
@@ -354,12 +351,10 @@ export const Tween = Base.extend(
             operator.match(/^[+\-\*\/]=/)
             ? this._calculate(current, operator[0], value[1])
             : value;
-        } else if (typeof value === "string") {
+        } else if (typeof value === 'string') {
           var match = value.match(/^[+\-*/]=(.*)/);
           if (match) {
-            var parsed = JSON.parse(
-              match[1].replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": ')
-            );
+            var parsed = JSON.parse(match[1].replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": '));
             return this._calculate(current, value[0], parsed);
           }
         }
@@ -377,10 +372,10 @@ export const Tween = Base.extend(
         var key = keys[i],
           path = key
             // Convert from JS property access notation to JSON pointer:
-            .replace(/\.([^.]*)/g, "/$1")
+            .replace(/\.([^.]*)/g, '/$1')
             // Expand array property access notation ([])
-            .replace(/\[['"]?([^'"\]]*)['"]?\]/g, "/$1");
-        parsed[key] = path.split("/");
+            .replace(/\[['"]?([^'"\]]*)['"]?\]/g, '/$1');
+        parsed[key] = path.split('/');
       }
       return parsed;
     },

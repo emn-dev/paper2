@@ -1,18 +1,18 @@
 /* eslint-disable no-console */
-import { rmSync, writeFileSync, readFileSync } from "node:fs";
-import { execSync } from "node:child_process";
-import "dotenv/config";
-import * as esbuild from "esbuild";
+import { rmSync, writeFileSync, readFileSync } from 'node:fs';
+import { execSync } from 'node:child_process';
+import 'dotenv/config';
+import * as esbuild from 'esbuild';
 // import pkg from './package.json' with { type: 'json' };
 
-const buildDir = "dist";
-const coreBaseName = "paper2-core-pre";
-const fullBaseName = "paper2-full-pre";
+const buildDir = 'dist';
+const coreBaseName = 'paper2-core-pre';
+const fullBaseName = 'paper2-full-pre';
 
 rmSync(buildDir, { force: true, recursive: true });
 
 const sharedOpts = {
-  entryPoints: ["lib/index.ts"],
+  entryPoints: ['lib/index.ts'],
   // sourcemap: true,
   sourcemap: false,
   bundle: true,
@@ -20,10 +20,7 @@ const sharedOpts = {
   allowOverwrite: true,
   define: {
     // GITHUB_REF: 'refs/tags/v1.0.15',
-    "process.env.PACKAGE_VERSION": `'${process.env.GITHUB_REF?.replace(
-      "refs/tags/",
-      ""
-    )}'`,
+    'process.env.PACKAGE_VERSION': `'${process.env.GITHUB_REF?.replace('refs/tags/', '')}'`,
   },
 };
 
@@ -33,19 +30,19 @@ const sharedOpts = {
 const browserCoreOpts = {
   ...structuredClone(sharedOpts),
   outfile: `${buildDir}/${coreBaseName}.esm.js`,
-  platform: "browser",
-  format: "esm",
+  platform: 'browser',
+  format: 'esm',
 };
 
 const browserFullOpts = {
   ...structuredClone(sharedOpts),
   outfile: `${buildDir}/${fullBaseName}.esm.js`,
-  platform: "browser",
-  format: "esm",
+  platform: 'browser',
+  format: 'esm',
 };
 
-browserCoreOpts.define["process.env.PAPER2_FULL"] = "false";
-browserFullOpts.define["process.env.PAPER2_FULL"] = "true";
+browserCoreOpts.define['process.env.PAPER2_FULL'] = 'false';
+browserFullOpts.define['process.env.PAPER2_FULL'] = 'true';
 
 // TODO: do we even need a specific backend/node build? Can we just use esm for all nowadays?
 // const nodeOpts = {
@@ -54,26 +51,25 @@ browserFullOpts.define["process.env.PAPER2_FULL"] = "true";
 //   platform: 'node',
 // };
 
-if (process.env.IS_BUILD === "true") {
+if (process.env.IS_BUILD === 'true') {
+  // browserCoreOpts.treeShaking = true;
+  // browserFullOpts.treeShaking = true;
   await esbuild.build(browserCoreOpts);
   await esbuild.build(browserFullOpts);
   // await esbuild.build(nodeOpts);
 
   const rawFile = readFileSync(`./dist/${coreBaseName}.esm.js`, {
-    encoding: "utf-8",
+    encoding: 'utf-8',
   });
-  const fixedFile = rawFile.replaceAll("4444", "");
-  writeFileSync(`./dist/${coreBaseName.replace("-pre", "")}.esm.js`, fixedFile);
+  const fixedFile = rawFile.replaceAll('4444', '');
+  writeFileSync(`./dist/${coreBaseName.replace('-pre', '')}.esm.js`, fixedFile);
   rmSync(`./dist/${coreBaseName}.esm.js`, { force: true, recursive: true });
 
   const rawFileFull = readFileSync(`./dist/${fullBaseName}.esm.js`, {
-    encoding: "utf-8",
+    encoding: 'utf-8',
   });
-  const fixedFileFull = rawFileFull.replaceAll("4444", "");
-  writeFileSync(
-    `./dist/${fullBaseName.replace("-pre", "")}.esm.js`,
-    fixedFileFull
-  );
+  const fixedFileFull = rawFileFull.replaceAll('4444', '');
+  writeFileSync(`./dist/${fullBaseName.replace('-pre', '')}.esm.js`, fixedFileFull);
   rmSync(`./dist/${fullBaseName}.esm.js`, { force: true, recursive: true });
 } else {
   const ctxBrowserCore = await esbuild.context(browserCoreOpts);
@@ -87,8 +83,8 @@ if (process.env.IS_BUILD === "true") {
 }
 
 try {
-  execSync("npx tsc --project tsconfig.esbuild.json", { stdio: "inherit" });
+  execSync('npx tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
 } catch (err) {
-  console.log("build.mjs-npx-tsc-ERROR");
+  console.log('build.mjs-npx-tsc-ERROR');
   console.log(err);
 }

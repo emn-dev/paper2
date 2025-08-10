@@ -10,12 +10,15 @@
  * All rights reserved.
  */
 
-import { Point } from "~/basic/Point";
-import { Base } from "~/straps";
-import { UID } from "~/util/UID";
-import { ChangeFlag, Change } from "./ChangeFlag";
-import { Item } from "./Item";
-import { SymbolItem } from "./SymbolItem";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Point } from '~/basic/Point';
+import { Base } from '~/straps';
+import { UID } from '~/util/UID';
+import { ChangeFlag, Change } from './ChangeFlag';
+import { Item } from './Item';
+import { SymbolItem } from './SymbolItem';
 
 declare let paper4444;
 
@@ -30,7 +33,7 @@ declare let paper4444;
  */
 export const SymbolDefinition = Base.extend(
   /** @lends SymbolDefinition# */ {
-    _class: "SymbolDefinition",
+    _class: 'SymbolDefinition',
 
     /**
      * Creates a Symbol definition.
@@ -75,12 +78,7 @@ export const SymbolDefinition = Base.extend(
 
     _serialize: function (options, dictionary) {
       return dictionary.add(this, function () {
-        return Base.serialize(
-          [this._class, this._item],
-          options,
-          false,
-          dictionary
-        );
+        return Base.serialize([this._class, this._item], options, false, dictionary);
       });
     },
 
@@ -134,8 +132,8 @@ export const SymbolDefinition = Base.extend(
      * @bean
      * @deprecated use {@link #item} instead.
      */
-    getDefinition: "#getItem",
-    setDefinition: "#setItem",
+    getDefinition: '#getItem',
+    setDefinition: '#setItem',
 
     /**
      * Places in instance of the symbol in the project.
@@ -163,9 +161,7 @@ export const SymbolDefinition = Base.extend(
      * @return {Boolean} {@true if they are equal}
      */
     equals: function (symbol) {
-      return (
-        symbol === this || (symbol && this._item.equals(symbol._item)) || false
-      );
+      return symbol === this || (symbol && this._item.equals(symbol._item)) || false;
     },
   }
 );

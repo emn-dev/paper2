@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
 
 // TODO: Run through the canvas array to find a canvas with the requested
 // width / height, so we don't need to resize it?
@@ -21,21 +24,19 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
     if (!window) return null;
     var canvas,
       clear = true;
-    if (typeof width === "object") {
+    if (typeof width === 'object') {
       height = width.height;
       width = width.width;
     }
     if (this.canvases.length) {
       canvas = this.canvases.pop();
     } else {
-      canvas = document.createElement("canvas");
+      canvas = document.createElement('canvas');
       clear = false; // It's already cleared through createElement().
     }
-    var ctx = canvas.getContext("2d", options || {});
+    var ctx = canvas.getContext('2d', options || {});
     if (!ctx) {
-      throw new Error(
-        "Canvas " + canvas + " is unable to provide a 2D context."
-      );
+      throw new Error('Canvas ' + canvas + ' is unable to provide a 2D context.');
     }
     // If they are not the same size, we don't need to clear them
     // using clearRect and visa versa.
@@ -53,7 +54,7 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
 
   getContext: function (width, height, options) {
     var canvas = this.getCanvas(width, height, options);
-    return canvas ? canvas.getContext("2d", options || {}) : null;
+    return canvas ? canvas.getContext('2d', options || {}) : null;
   },
 
   // release can receive either a canvas or a context.
@@ -61,7 +62,7 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
     var canvas = obj && obj.canvas ? obj.canvas : obj;
     if (canvas && canvas.getContext) {
       // We restore contexts on release(), see getCanvas()
-      canvas.getContext("2d").restore();
+      canvas.getContext('2d').restore();
       this.canvases.push(canvas);
     }
   },

@@ -21,13 +21,19 @@
     "serve": "node build.mjs",
     "serve:watch": "node ./build.serve.watch.mjs",
     "test:unit": "vitest",
-    "test:unit:pipeline": "vitest run"
+    "test:unit:pipeline": "vitest run",
+    "test:lint": "eslint && yarn prettier:check",
+    "test:lint:pipeline": "eslint --quiet && yarn prettier:check",
+    "prettier:check": "prettier --check '**/*'"
   },
   "dependencies": {
-    "acorn": "~8.15.0"
+    "acorn": "8.15.0"
   },
   "devDependencies": {
-    "esbuild": "0.25.8",
+    "@paper2/eslint-configs": "workspace:^",
+    "esbuild": "^0.25.8",
+    "eslint": "^9.33.0",
+    "prettier": "^3.6.2",
     "vitest": "^3.2.4"
   }
 }

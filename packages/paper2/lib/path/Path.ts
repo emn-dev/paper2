@@ -10,28 +10,31 @@
  * All rights reserved.
  */
 
-import type { CompoundPath as CompoundPathType } from "./CompoundPath";
-import type { PathFlattener as PathFlattenerType } from "./PathFlattener";
-import type { PathFitter as PathFitterType } from "./PathFitter";
-import type { Shape as ShapeType } from "~/item/Shape";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Matrix } from "~/basic/Matrix";
-import { Point } from "~/basic/Point";
-import { Rectangle } from "~/basic/Rectangle";
-import { Size } from "~/basic/Size";
-import { Numerical } from "~/util/Numerical";
-import { Change, ChangeFlag } from "~/item/ChangeFlag";
-import { ItemSelection } from "~/item/ItemSelection";
-import { HitResult } from "~/item/HitResult";
-import { Line } from "~/basic/Line";
-import { Item } from "~/item/Item";
-import { Formatter } from "~/util/Formatter";
-import { Curve } from "./Curve";
-import { CurveLocation } from "./CurveLocation";
-import { PathItem } from "./PathItem";
-import { Segment } from "./Segment";
-import { SegmentSelection } from "./SegmentSelection";
+import type { CompoundPath as CompoundPathType } from './CompoundPath';
+import type { PathFlattener as PathFlattenerType } from './PathFlattener';
+import type { PathFitter as PathFitterType } from './PathFitter';
+import type { Shape as ShapeType } from '~/item/Shape';
+
+import { Base } from '~/straps';
+import { Matrix } from '~/basic/Matrix';
+import { Point } from '~/basic/Point';
+import { Rectangle } from '~/basic/Rectangle';
+import { Size } from '~/basic/Size';
+import { Numerical } from '~/util/Numerical';
+import { Change, ChangeFlag } from '~/item/ChangeFlag';
+import { ItemSelection } from '~/item/ItemSelection';
+import { HitResult } from '~/item/HitResult';
+import { Line } from '~/basic/Line';
+import { Item } from '~/item/Item';
+import { Formatter } from '~/util/Formatter';
+import { Curve } from './Curve';
+import { CurveLocation } from './CurveLocation';
+import { PathItem } from './PathItem';
+import { Segment } from './Segment';
+import { SegmentSelection } from './SegmentSelection';
 
 // import { CompoundPath } from "./CompoundPath";
 // import { PathFlattener } from "./PathFlattener";
@@ -55,7 +58,7 @@ declare let paper4444;
 // DOCS: Explain that path matrix is always applied with each transformation.
 export const Path = PathItem.extend(
   /** @lends Path# */ {
-    _class: "Path",
+    _class: 'Path',
     _serializeFields: {
       segments: [],
       closed: false,
@@ -136,16 +139,14 @@ export const Path = PathItem.extend(
       // _set(arg).
       var args = arguments,
         segments = Array.isArray(arg)
-          ? typeof arg[0] === "object"
+          ? typeof arg[0] === 'object'
             ? arg
             : args
           : // See if it behaves like a segment or a point, but filter out
-          // rectangles, as accepted by some Path.Constructor constructors.
-          arg &&
-            arg.size === undefined &&
-            (arg.x !== undefined || arg.point !== undefined)
-          ? args
-          : null;
+            // rectangles, as accepted by some Path.Constructor constructors.
+            arg && arg.size === undefined && (arg.x !== undefined || arg.point !== undefined)
+            ? args
+            : null;
       // Always call setSegments() to initialize a few related variables.
       if (segments && segments.length > 0) {
         // This sets _curves and _segmentSelection too!
@@ -153,7 +154,7 @@ export const Path = PathItem.extend(
       } else {
         this._curves = undefined; // For hidden class optimization
         this._segmentSelection = 0;
-        if (!segments && typeof arg === "string") {
+        if (!segments && typeof arg === 'string') {
           this.setPathData(arg);
           // Erase for _initialize() call below.
           arg = null;
@@ -164,10 +165,7 @@ export const Path = PathItem.extend(
     },
 
     _equals: function (item) {
-      return (
-        this._closed === item._closed &&
-        Base.equals(this._segments, item._segments)
-      );
+      return this._closed === item._closed && Base.equals(this._segments, item._segments);
     },
 
     copyContent: function (source) {
@@ -184,8 +182,7 @@ export const Path = PathItem.extend(
         } else if (this._curves) {
           // Only notify all curves if we're not told that only segments
           // have changed and took already care of notifications.
-          for (var i = 0, l = this._curves.length; i < l; i++)
-            this._curves[i]._changed();
+          for (var i = 0, l = this._curves.length; i < l; i++) this._curves[i]._changed();
         }
       } else if (flags & /*#=*/ ChangeFlag.STROKE) {
         // TODO: We could preserve the purely geometric bounds that are not
@@ -222,7 +219,7 @@ export const Path = PathItem.extend(
         // state. This is part of the shorter segment array notation that
         // can also be nested to create compound-paths out of one array.
         var last = segments[length - 1];
-        if (typeof last === "boolean") {
+        if (typeof last === 'boolean') {
           this.setClosed(last);
           length--;
         }
@@ -326,12 +323,7 @@ export const Path = PathItem.extend(
         if (this._curves) {
           var length = (this._curves.length = this._countCurves());
           // If we were closing this path, we need to add a new curve now
-          if (closed)
-            this._curves[length - 1] = new Curve(
-              this,
-              this._segments[length - 1],
-              this._segments[0]
-            );
+          if (closed) this._curves[length - 1] = new Curve(this, this._segments[length - 1], this._segments[0]);
         }
         // Use SEGMENTS notification instead of GEOMETRY since curves are
         // up-to-date and don't need notification.
@@ -366,37 +358,26 @@ export const Path = PathItem.extend(
         curX = coords[0];
         curY = coords[1];
         if (first) {
-          parts.push("M" + f.pair(curX, curY));
+          parts.push('M' + f.pair(curX, curY));
           first = false;
         } else {
           inX = coords[2];
           inY = coords[3];
-          if (
-            inX === curX &&
-            inY === curY &&
-            outX === prevX &&
-            outY === prevY
-          ) {
+          if (inX === curX && inY === curY && outX === prevX && outY === prevY) {
             // l = relative lineto:
             if (!skipLine) {
               var dx = curX - prevX,
                 dy = curY - prevY;
-              parts.push(
-                dx === 0
-                  ? "v" + f.number(dy)
-                  : dy === 0
-                  ? "h" + f.number(dx)
-                  : "l" + f.pair(dx, dy)
-              );
+              parts.push(dx === 0 ? 'v' + f.number(dy) : dy === 0 ? 'h' + f.number(dx) : 'l' + f.pair(dx, dy));
             }
           } else {
             // c = relative curveto:
             parts.push(
-              "c" +
+              'c' +
                 f.pair(outX - prevX, outY - prevY) +
-                " " +
+                ' ' +
                 f.pair(inX - prevX, inY - prevY) +
-                " " +
+                ' ' +
                 f.pair(curX - prevX, curY - prevY)
             );
           }
@@ -407,16 +388,16 @@ export const Path = PathItem.extend(
         outY = coords[5];
       }
 
-      if (!length) return "";
+      if (!length) return '';
 
       // @ts-expect-error = Expected 2 arguments, but got 1
       for (var i = 0; i < length; i++) addSegment(segments[i]);
       // Close path by drawing first segment again
       if (this._closed && length > 0) {
         addSegment(segments[0], true);
-        parts.push("z");
+        parts.push('z');
       }
-      return parts.join("");
+      return parts.join('');
     },
 
     // TODO: Consider adding getSubPath(a, b), returning a part of the current
@@ -430,8 +411,7 @@ export const Path = PathItem.extend(
     _transformContent: function (matrix) {
       var segments = this._segments,
         coords = new Array(6);
-      for (var i = 0, l = segments.length; i < l; i++)
-        segments[i]._transformCoordinates(matrix, coords, true);
+      for (var i = 0, l = segments.length; i < l; i++) segments[i]._transformCoordinates(matrix, coords, true);
       return true;
     },
 
@@ -459,8 +439,7 @@ export const Path = PathItem.extend(
         segment._index = index + i;
         // If parts of this segment are selected, adjust the internal
         // _segmentSelection now
-        if (segment._selection)
-          this._updateSelection(segment, 0, segment._selection);
+        if (segment._selection) this._updateSelection(segment, 0, segment._selection);
       }
       if (append) {
         // Append them all at the end.
@@ -469,12 +448,7 @@ export const Path = PathItem.extend(
         // Insert somewhere else
         segments.splice.apply(segments, [index, 0].concat(segs));
         // Adjust the indices of the segments above.
-        for (
-          var i = (index as number) + (amount as number), l = segments.length;
-          i < l;
-          i++
-        )
-          segments[i]._index = i;
+        for (var i = (index as number) + (amount as number), l = segments.length; i < l; i++) segments[i]._index = i;
       }
       // Keep the curves list in sync all the time in case it was requested
       // already.
@@ -492,8 +466,7 @@ export const Path = PathItem.extend(
         }
         // Insert new curves, but do not initialize their segments yet,
         // since #_adjustCurves() handles all that for us.
-        for (var i = insert as number; i < end; i++)
-          curves.splice(i, 0, new Curve(this, null, null));
+        for (var i = insert as number; i < end; i++) curves.splice(i, 0, new Curve(this, null, null));
         // Adjust segments for the curves before and after the removed ones
         this._adjustCurves(start, end);
       }
@@ -519,10 +492,7 @@ export const Path = PathItem.extend(
       }
       // If it's the first segment, correct the last segment of closed
       // paths too:
-      if (
-        (curve =
-          curves[this._closed && !start ? segments.length - 1 : start - 1])
-      ) {
+      if ((curve = curves[this._closed && !start ? segments.length - 1 : start - 1])) {
         curve._segment2 = segments[start] || segments[0];
         curve._changed();
       }
@@ -614,7 +584,7 @@ export const Path = PathItem.extend(
      */
     add: function (segment1 /*, segment2, ... */) {
       var args = arguments;
-      return args.length > 1 && typeof segment1 !== "number"
+      return args.length > 1 && typeof segment1 !== 'number'
         ? // addSegments
           this._add(Segment.readList(args))
         : // addSegment
@@ -659,7 +629,7 @@ export const Path = PathItem.extend(
      */
     insert: function (index, segment1 /*, segment2, ... */) {
       var args = arguments;
-      return args.length > 2 && typeof segment1 !== "number"
+      return args.length > 2 && typeof segment1 !== 'number'
         ? // insertSegments
           this._add(Segment.readList(args, 1), index)
         : // insertSegment
@@ -807,24 +777,19 @@ export const Path = PathItem.extend(
       // Update selection state accordingly
       for (var i = 0; i < amount; i++) {
         var segment = removed[i];
-        if (segment._selection)
-          this._updateSelection(segment, segment._selection, 0);
+        if (segment._selection) this._updateSelection(segment, segment._selection, 0);
         // Clear the indices and path references of the removed segments
         segment._index = segment._path = null;
       }
       // Adjust the indices of the segments above.
-      for (var i = start as number, l = segments.length; i < l; i++)
-        segments[i]._index = i;
+      for (var i = start as number, l = segments.length; i < l; i++) segments[i]._index = i;
       // Keep curves in sync
       if (curves) {
         // If we're removing the last segment, remove the last curve (the
         // one to the left of the segment, not to the right, as normally).
         // Also take into account closed paths, which have one curve more
         // than segments.
-        var index =
-            start > 0 && end === count + (this._closed ? 1 : 0)
-              ? start - 1
-              : start,
+        var index = start > 0 && end === count + (this._closed ? 1 : 0) ? start - 1 : start,
           curves = curves.splice(index, amount);
         // Unlink the removed curves from the path.
         for (var i = curves.length - 1; i >= 0; i--) curves[i]._path = null;
@@ -842,7 +807,7 @@ export const Path = PathItem.extend(
     },
 
     // DOCS Path#clear()
-    clear: "#removeSegments",
+    clear: '#removeSegments',
 
     /**
      * Checks if any of the curves in the path have curve handles set.
@@ -865,8 +830,7 @@ export const Path = PathItem.extend(
      */
     clearHandles: function () {
       var segments = this._segments;
-      for (var i = 0, l = segments.length; i < l; i++)
-        segments[i].clearHandles();
+      for (var i = 0, l = segments.length; i < l; i++) segments[i].clearHandles();
     },
 
     /**
@@ -879,8 +843,7 @@ export const Path = PathItem.extend(
       if (this._length == null) {
         var curves = this.getCurves(),
           length = 0;
-        for (var i = 0, l = curves.length; i < l; i++)
-          length += curves[i].getLength();
+        for (var i = 0, l = curves.length; i < l; i++) length += curves[i].getLength();
         this._length = length;
       }
       return this._length;
@@ -994,11 +957,7 @@ export const Path = PathItem.extend(
      */
     isFullySelected: function () {
       var length = this._segments.length;
-      return (
-        this.isSelected() &&
-        length > 0 &&
-        this._segmentSelection === length * /*#=*/ SegmentSelection.ALL
-      );
+      return this.isSelected() && length > 0 && this._segmentSelection === length * /*#=*/ SegmentSelection.ALL;
     },
 
     setFullySelected: function (selected) {
@@ -1044,9 +1003,7 @@ export const Path = PathItem.extend(
     divideAt: function (location) {
       var loc = this.getLocationAt(location),
         curve;
-      return loc && (curve = loc.getCurve().divideAt(loc.getCurveOffset()))
-        ? curve._segment1
-        : null;
+      return loc && (curve = loc.getCurve().divideAt(loc.getCurveOffset())) ? curve._segment1 : null;
     },
 
     /**
@@ -1158,11 +1115,7 @@ export const Path = PathItem.extend(
      */
     split: function (index, time) {
       var curve,
-        location =
-          time === undefined
-            ? index
-            : (curve = this.getCurves()[index]) &&
-              curve.getLocationAtTime(time);
+        location = time === undefined ? index : (curve = this.getCurves()[index]) && curve.getLocationAtTime(time);
       return location != null ? this.splitAt(location) : null;
     },
 
@@ -1248,16 +1201,14 @@ export const Path = PathItem.extend(
         if (!last2)
           // an empty path?
           return this;
-        if (last1 && last1._point.isClose(last2._point, epsilon))
-          path.reverse();
+        if (last1 && last1._point.isClose(last2._point, epsilon)) path.reverse();
         var first2 = path.getFirstSegment();
         if (last1 && last1._point.isClose(first2._point, epsilon)) {
           last1.setHandleOut(first2._handleOut);
           this._add(segments.slice(1));
         } else {
           var first1 = this.getFirstSegment();
-          if (first1 && first1._point.isClose(first2._point, epsilon))
-            path.reverse();
+          if (first1 && first1._point.isClose(first2._point, epsilon)) path.reverse();
           last2 = path.getLastSegment();
           if (first1 && first1._point.isClose(last2._point, epsilon)) {
             first1.setHandleIn(last2._handleIn);
@@ -1302,11 +1253,7 @@ export const Path = PathItem.extend(
         // any collinear neighboring curves regardless of their orientation.
         // This serves as a reliable way to remove linear overlaps but only
         // as long as the lines are truly overlapping.
-        if (
-          !curve.hasHandles() &&
-          (!curve.hasLength(tolerance) ||
-            (simplify && curve.isCollinear(curve.getNext())))
-        )
+        if (!curve.hasHandles() && (!curve.hasLength(tolerance) || (simplify && curve.isCollinear(curve.getNext()))))
           curve.remove();
       }
       return this;
@@ -1357,7 +1304,7 @@ export const Path = PathItem.extend(
     smooth: function (options) {
       var that = this,
         opts = options || {},
-        type = opts.type || "asymmetric",
+        type = opts.type || 'asymmetric',
         segments = this._segments,
         length = segments.length,
         closed = this._closed;
@@ -1373,32 +1320,17 @@ export const Path = PathItem.extend(
           // Make sure the segment / curve is not from a wrong path.
           var path = value.path;
           if (path && path !== that)
-            throw new Error(
-              value._class +
-                " " +
-                index +
-                " of " +
-                path +
-                " is not part of " +
-                that
-            );
+            throw new Error(value._class + ' ' + index + ' of ' + path + ' is not part of ' + that);
           // Add offset of 1 to curves to reach their end segment.
           if (_default && value instanceof Curve) index++;
         } else {
-          index = typeof value === "number" ? value : _default;
+          index = typeof value === 'number' ? value : _default;
         }
         // Handle negative values based on whether a path is open or not:
         // Ranges on closed paths are allowed to wrapped around the
         // beginning/end (e.g. start near the end, end near the beginning),
         // while ranges on open paths stay within the path's open range.
-        return Math.min(
-          index < 0 && closed
-            ? index % length
-            : index < 0
-            ? index + length
-            : index,
-          length - 1
-        );
+        return Math.min(index < 0 && closed ? index % length : index < 0 ? index + length : index, length - 1);
       }
 
       var loop = closed && opts.from === undefined && opts.to === undefined,
@@ -1425,7 +1357,7 @@ export const Path = PathItem.extend(
         // We use different parameters for the two supported smooth methods
         // that use this algorithm: continuous and asymmetric. asymmetric
         // was the only approach available in v0.9.25 & below.
-        var asymmetric = type === "asymmetric",
+        var asymmetric = type === 'asymmetric',
           min = Math.min,
           amount = to - from + 1,
           n = amount - 1,
@@ -1503,11 +1435,7 @@ export const Path = PathItem.extend(
         py[n] = (3 * knots[n]._y - py[n_1]) / 2;
 
         // Now update the segments
-        for (
-          var i = paddingLeft, max = n - paddingRight, j = from;
-          i <= max;
-          i++, j++
-        ) {
+        for (var i = paddingLeft, max = n - paddingRight, j = from; i <= max; i++, j++) {
           var segment = segments[j < 0 ? j + length : j],
             pt = segment._point,
             hx = px[i] - pt._x,
@@ -1518,11 +1446,7 @@ export const Path = PathItem.extend(
       } else {
         // All other smoothing methods are handled directly on the segments:
         for (var i = from; i <= to; i++) {
-          segments[i < 0 ? i + length : i].smooth(
-            opts,
-            !loop && i === from,
-            !loop && i === to
-          );
+          segments[i < 0 ? i + length : i].smooth(opts, !loop && i === from, !loop && i === to);
         }
       }
     },
@@ -1559,9 +1483,7 @@ export const Path = PathItem.extend(
           seg2._handleIn.isZero() &&
           seg3._handleOut.isZero() &&
           seg4._handleIn.isZero() &&
-          seg2._point
-            .subtract(seg1._point)
-            .isCollinear(seg4._point.subtract(seg3._point))
+          seg2._point.subtract(seg1._point).isCollinear(seg4._point.subtract(seg3._point))
         );
       }
 
@@ -1574,9 +1496,7 @@ export const Path = PathItem.extend(
           seg2._handleIn.isZero() &&
           seg2._handleOut.isZero() &&
           seg3._handleIn.isZero() &&
-          seg2._point
-            .subtract(seg1._point)
-            .isOrthogonal(seg3._point.subtract(seg2._point))
+          seg2._point.subtract(seg1._point).isOrthogonal(seg3._point.subtract(seg2._point))
         );
       }
 
@@ -1593,18 +1513,11 @@ export const Path = PathItem.extend(
             pt2 = seg2._point,
             // Find the corner point by intersecting the lines described
             // by both handles:
-            corner = new Line(pt1, handle1, true).intersect(
-              new Line(pt2, handle2, true),
-              true
-            );
+            corner = new Line(pt1, handle1, true).intersect(new Line(pt2, handle2, true), true);
           return (
             corner &&
-            Numerical.isZero(
-              handle1.getLength() / corner.subtract(pt1).getLength() - kappa
-            ) &&
-            Numerical.isZero(
-              handle2.getLength() / corner.subtract(pt2).getLength() - kappa
-            )
+            Numerical.isZero(handle1.getLength() / corner.subtract(pt1).getLength() - kappa) &&
+            Numerical.isZero(handle2.getLength() / corner.subtract(pt2).getLength() - kappa)
           );
         }
         return false;
@@ -1617,13 +1530,7 @@ export const Path = PathItem.extend(
       // See if actually have any curves in the path. Differentiate
       // between straight objects (line, polyline, rect, and polygon) and
       // objects with curves(circle, ellipse, roundedRectangle).
-      if (
-        !this.hasHandles() &&
-        segments.length === 4 &&
-        isCollinear(0, 2) &&
-        isCollinear(1, 3) &&
-        isOrthogonal(1)
-      ) {
+      if (!this.hasHandles() && segments.length === 4 && isCollinear(0, 2) && isCollinear(1, 3) && isOrthogonal(1)) {
         type = Shape4444.Rectangle;
         size = new Size(getDistance(0, 3), getDistance(0, 1));
         topCenter = segments[1]._point.add(segments[2]._point).divide(2);
@@ -1641,17 +1548,9 @@ export const Path = PathItem.extend(
         size = new Size(getDistance(1, 6), getDistance(0, 3));
         // Subtract side lengths from total width and divide by 2 to get the
         // corner radius size.
-        radius = size
-          .subtract(new Size(getDistance(0, 7), getDistance(1, 2)))
-          .divide(2);
+        radius = size.subtract(new Size(getDistance(0, 7), getDistance(1, 2))).divide(2);
         topCenter = segments[3]._point.add(segments[4]._point).divide(2);
-      } else if (
-        segments.length === 4 &&
-        isArc(0) &&
-        isArc(1) &&
-        isArc(2) &&
-        isArc(3)
-      ) {
+      } else if (segments.length === 4 && isArc(0) && isArc(1) && isArc(2) && isArc(3)) {
         // If the distance between (point0 and point2) and (point1
         // and point3) are equal, then it is a circle
         if (Numerical.isZero(getDistance(0, 2) - getDistance(1, 3))) {
@@ -1683,13 +1582,12 @@ export const Path = PathItem.extend(
       return null;
     },
 
-    toPath: "#clone",
+    toPath: '#clone',
 
     // NOTE: Documentation is in PathItem#compare()
     compare: function compare(path) {
       // If a compound-path is involved, redirect to PathItem#compare()
-      if (!path || path instanceof CompoundPath4444)
-        return (compare as any).base.call(this, path);
+      if (!path || path instanceof CompoundPath4444) return (compare as any).base.call(this, path);
       var curves1 = this.getCurves(),
         curves2 = path.getCurves(),
         length1 = curves1.length,
@@ -1791,11 +1689,11 @@ export const Path = PathItem.extend(
         strokeRadius = hitStroke
           ? style.getStrokeWidth() / 2
           : // Set radius to 0 when we're hit-testing fills with
-          // tolerance, to handle tolerance through stroke hit-test
-          // functionality. Also use 0 when hit-testing curves.
-          (hitFill && options.tolerance > 0) || hitCurves
-          ? 0
-          : null;
+            // tolerance, to handle tolerance through stroke hit-test
+            // functionality. Also use 0 when hit-testing curves.
+            (hitFill && options.tolerance > 0) || hitCurves
+            ? 0
+            : null;
       if (strokeRadius !== null) {
         if (strokeRadius > 0) {
           join = style.getStrokeJoin();
@@ -1803,11 +1701,9 @@ export const Path = PathItem.extend(
           miterLimit = style.getMiterLimit();
           // Add the stroke radius to tolerance padding, taking
           // #strokeScaling into account through _getStrokeMatrix().
-          strokePadding = strokePadding.add(
-            Path._getStrokePadding(strokeRadius, strokeMatrix)
-          );
+          strokePadding = strokePadding.add(Path._getStrokePadding(strokeRadius, strokeMatrix));
         } else {
-          join = cap = "round";
+          join = cap = 'round';
         }
         // Using tolerance padding for fill tests will also work if there is
         // no stroke, in which case radius = 0 and we will test for stroke
@@ -1835,12 +1731,11 @@ export const Path = PathItem.extend(
         // Note, when checking for ends, we don't also check for handles,
         // since this will happen afterwards in a separate loop, see below.
         return (
-          ((ends || options.segments) &&
-            checkSegmentPoint(seg, seg._point, "segment")) ||
+          ((ends || options.segments) && checkSegmentPoint(seg, seg._point, 'segment')) ||
           (!ends &&
             options.handles &&
-            (checkSegmentPoint(seg, seg._handleIn, "handle-in") ||
-              checkSegmentPoint(seg, seg._handleOut, "handle-out")))
+            (checkSegmentPoint(seg, seg._handleIn, 'handle-in') ||
+              checkSegmentPoint(seg, seg._handleOut, 'handle-out')))
         );
       }
 
@@ -1853,9 +1748,8 @@ export const Path = PathItem.extend(
       function checkSegmentStroke(segment) {
         // Handle joins / caps that are not round specifically, by
         // hit-testing their polygon areas.
-        var isJoin =
-          closed || (segment._index > 0 && segment._index < numSegments - 1);
-        if ((isJoin ? join : cap) === "round") {
+        var isJoin = closed || (segment._index > 0 && segment._index < numSegments - 1);
+        if ((isJoin ? join : cap) === 'round') {
           // Round join / cap is easy to handle.
           return isCloseEnough(segment._point, strokePadding);
         } else {
@@ -1866,27 +1760,10 @@ export const Path = PathItem.extend(
             // Only add bevels to segments that aren't smooth.
             if (!segment.isSmooth()) {
               // _addBevelJoin() handles both 'bevel' and 'miter'.
-              Path._addBevelJoin(
-                segment,
-                join,
-                strokeRadius,
-                miterLimit,
-                null,
-                strokeMatrix,
-                addToArea,
-                true
-              );
+              Path._addBevelJoin(segment, join, strokeRadius, miterLimit, null, strokeMatrix, addToArea, true);
             }
-          } else if (cap === "square") {
-            Path._addSquareCap(
-              segment,
-              cap,
-              strokeRadius,
-              null,
-              strokeMatrix,
-              addToArea,
-              true
-            );
+          } else if (cap === 'square') {
+            Path._addSquareCap(segment, cap, strokeRadius, null, strokeMatrix, addToArea, true);
           }
           // See if the above produced an area to check for
           if (!area.isEmpty()) {
@@ -1896,8 +1773,7 @@ export const Path = PathItem.extend(
             var loc;
             return (
               area.contains(point) ||
-              ((loc = area.getNearestLocation(point)) &&
-                isCloseEnough(loc.getPoint(), tolerancePadding))
+              ((loc = area.getNearestLocation(point)) && isCloseEnough(loc.getPoint(), tolerancePadding))
             );
           }
         }
@@ -1906,11 +1782,7 @@ export const Path = PathItem.extend(
       // If we're asked to query for segments, ends or handles, do all that
       // before stroke or fill.
       if (options.ends && !options.segments && !closed) {
-        if (
-          (res =
-            checkSegmentPoints(segments[0], true) ||
-            checkSegmentPoints(segments[numSegments - 1], true))
-        )
+        if ((res = checkSegmentPoints(segments[0], true) || checkSegmentPoints(segments[numSegments - 1], true)))
           return res;
       } else if (options.segments || options.handles) {
         for (var i = 0; i < numSegments; i++)
@@ -1936,13 +1808,10 @@ export const Path = PathItem.extend(
         }
         // If we have miter joins, we may not be done yet, since they can be
         // longer than the radius. Check for each segment within reach now.
-        if (!loc && join === "miter" && numSegments > 1) {
+        if (!loc && join === 'miter' && numSegments > 1) {
           for (var i = 0; i < numSegments; i++) {
             var segment = segments[i];
-            if (
-              point.getDistance(segment._point) <= miterLimit * strokeRadius &&
-              checkSegmentStroke(segment)
-            ) {
+            if (point.getDistance(segment._point) <= miterLimit * strokeRadius && checkSegmentStroke(segment)) {
               loc = segment.getLocation();
               break;
             }
@@ -1952,17 +1821,16 @@ export const Path = PathItem.extend(
       // Don't process loc yet, as we also need to query for stroke after fill
       // in some cases. Simply skip fill query if we already have a matching
       // stroke. If we have a loc and no stroke then it's a result for fill.
-      return (!loc && hitFill && this._contains(point)) ||
-        (loc && !hitStroke && !hitCurves)
-        ? new HitResult("fill", this)
+      return (!loc && hitFill && this._contains(point)) || (loc && !hitStroke && !hitCurves)
+        ? new HitResult('fill', this)
         : loc
-        ? new HitResult(hitStroke ? "stroke" : "curve", this, {
-            location: loc,
-            // It's fine performance wise to call getPoint()
-            // again since it was already called before.
-            point: loc.getPoint(),
-          })
-        : null;
+          ? new HitResult(hitStroke ? 'stroke' : 'curve', this, {
+              location: loc,
+              // It's fine performance wise to call getPoint()
+              // again since it was already called before.
+              point: loc.getPoint(),
+            })
+          : null;
     },
 
     // TODO: intersects(item)
@@ -1974,7 +1842,7 @@ export const Path = PathItem.extend(
       // NOTE: (For easier searching): This loop produces:
       // getPointAt, getTangentAt, getNormalAt, getWeightedTangentAt,
       // getWeightedNormalAt, getCurvatureAt
-      this[name + "At"] = function (offset) {
+      this[name + 'At'] = function (offset) {
         var loc = this.getLocationAt(offset);
         return loc && loc[name]();
       };
@@ -2024,7 +1892,7 @@ export const Path = PathItem.extend(
        * @return {CurveLocation} the curve location at the specified offset
        */
       getLocationAt: function (offset) {
-        if (typeof offset === "number") {
+        if (typeof offset === 'number') {
           var curves = this.getCurves(),
             length = 0;
           for (var i = 0, l = curves.length; i < l; i++) {
@@ -2364,7 +2232,7 @@ export const Path = PathItem.extend(
         // smaller on all sides, but only draw it if size is big enough.
         if (miniSize > 0 && !(selection & /*#=*/ SegmentSelection.POINT)) {
           var fillStyle = ctx.fillStyle;
-          ctx.fillStyle = "#ffffff";
+          ctx.fillStyle = '#ffffff';
           ctx.fillRect(pX - miniHalf, pY - miniHalf, miniSize, miniSize);
           ctx.fillStyle = fillStyle;
         }
@@ -2411,12 +2279,7 @@ export const Path = PathItem.extend(
             inX = curX + handle._x;
             inY = curY + handle._y;
           }
-          if (
-            inX === curX &&
-            inY === curY &&
-            outX === prevX &&
-            outY === prevY
-          ) {
+          if (inX === curX && inY === curY && outX === prevX && outY === prevY) {
             ctx.lineTo(curX, curY);
           } else {
             ctx.bezierCurveTo(outX, outY, inX, inY, curX, curY);
@@ -2448,11 +2311,7 @@ export const Path = PathItem.extend(
           hasStroke = style.hasStroke(),
           dashArray = style.getDashArray(),
           // dashLength is only set if we can't draw dashes natively
-          dashLength =
-            !paper4444.support.nativeDash &&
-            hasStroke &&
-            dashArray &&
-            dashArray.length;
+          dashLength = !paper4444.support.nativeDash && hasStroke && dashArray && dashArray.length;
 
         if (!dontStart) ctx.beginPath();
 
@@ -2478,20 +2337,14 @@ export const Path = PathItem.extend(
             // If shadowColor is defined, clear it after fill, so it
             // won't be applied to both fill and stroke. If the path is
             // only stroked, we don't have to clear it.
-            ctx.shadowColor = "rgba(0,0,0,0)";
+            ctx.shadowColor = 'rgba(0,0,0,0)';
           }
           if (hasStroke) {
             if (dashLength) {
               // We cannot use the path created by drawSegments above
               // Use PathFlattener to draw dashed paths:
               if (!dontStart) ctx.beginPath();
-              var flattener = new PathFlattener4444(
-                  this,
-                  0.25,
-                  32,
-                  false,
-                  strokeMatrix
-                ),
+              var flattener = new PathFlattener4444(this, 0.25, 32, false, strokeMatrix),
                 length = flattener.length,
                 from = -style.getDashOffset(),
                 to,
@@ -2503,8 +2356,7 @@ export const Path = PathItem.extend(
               }
               while (from < length) {
                 to = from + getOffset(i++);
-                if (from > 0 || to > 0)
-                  flattener.drawPart(ctx, Math.max(from, 0), Math.max(to, 0));
+                if (from > 0 || to > 0) flattener.drawPart(ctx, Math.max(from, 0), Math.max(to, 0));
                 from = to + getOffset(i++);
               }
             }
@@ -2531,7 +2383,7 @@ export const Path = PathItem.extend(
      */
     function getCurrentSegment(that) {
       var segments = that._segments;
-      if (!segments.length) throw new Error("Use a moveTo() command first");
+      if (!segments.length) throw new Error('Use a moveTo() command first');
       return segments[segments.length - 1];
     }
 
@@ -2551,7 +2403,7 @@ export const Path = PathItem.extend(
       },
 
       moveBy: function (/* point */) {
-        throw new Error("moveBy() is unsupported on Path items.");
+        throw new Error('moveBy() is unsupported on Path items.');
       },
 
       lineTo: function (/* point */) {
@@ -2602,10 +2454,7 @@ export const Path = PathItem.extend(
             .subtract(current.multiply(t1 * t1))
             .subtract(to.multiply(t * t))
             .divide(2 * t * t1);
-        if (handle.isNaN())
-          throw new Error(
-            "Cannot put a curve through points with parameter = " + t
-          );
+        if (handle.isNaN()) throw new Error('Cannot put a curve through points with parameter = ' + t);
         this.quadraticCurveTo(handle, to);
       },
 
@@ -2629,12 +2478,10 @@ export const Path = PathItem.extend(
           matrix;
         // We're handling three different approaches to drawing arcs in one
         // large function:
-        if (typeof clockwise === "boolean") {
+        if (typeof clockwise === 'boolean') {
           // #1: arcTo(to, clockwise)
           var middle = from.add(to).divide(2),
-            through = middle.add(
-              middle.subtract(from).rotate(clockwise ? -90 : 90)
-            );
+            through = middle.add(middle.subtract(from).rotate(clockwise ? -90 : 90));
         } else if (Base.remain(args) <= 2) {
           // #2: arcTo(through, to)
           through = to;
@@ -2648,8 +2495,7 @@ export const Path = PathItem.extend(
           // If rx = 0 or ry = 0 then this arc is treated as a
           // straight line joining the endpoints.
           // NOTE: radius.isZero() would require both values to be 0.
-          if (isZero(radius.width) || isZero(radius.height))
-            return this.lineTo(to);
+          if (isZero(radius.width) || isZero(radius.height)) return this.lineTo(to);
           // See for an explanation of the following calculations:
           // https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes
           var rotation = Base.read(args),
@@ -2674,11 +2520,9 @@ export const Path = PathItem.extend(
             rxSq = rx * rx;
             rySq = ry * ry;
           }
-          factor =
-            (rxSq * rySq - rxSq * ySq - rySq * xSq) / (rxSq * ySq + rySq * xSq);
+          factor = (rxSq * rySq - rxSq * ySq - rySq * xSq) / (rxSq * ySq + rySq * xSq);
           if (abs(factor) < /*#=*/ Numerical.EPSILON) factor = 0;
-          if (factor < 0)
-            throw new Error("Cannot create an arc with the given arguments");
+          if (factor < 0) throw new Error('Cannot create an arc with the given arguments');
           center = new Point((rx * y) / ry, (-ry * x) / rx)
             // "...where the + sign is chosen if fA != fS,
             // and the - sign is chosen if fA = fS."
@@ -2687,10 +2531,7 @@ export const Path = PathItem.extend(
             .add(middle);
           // Now create a matrix that maps the unit circle to the ellipse,
           // for easier construction below.
-          matrix = new Matrix()
-            .translate(center)
-            .rotate(rotation)
-            .scale(rx, ry);
+          matrix = new Matrix().translate(center).rotate(rotation).scale(rx, ry);
           // Transform from and to to the unit circle coordinate space
           // and calculate start vector and extend from there.
           vector = matrix._inverseTransform(from);
@@ -2705,16 +2546,8 @@ export const Path = PathItem.extend(
           // Construct the two perpendicular middle lines to
           // (from, through) and (through, to), and intersect them to get
           // the center.
-          var l1 = new Line(
-              from.add(through).divide(2),
-              through.subtract(from).rotate(90),
-              true
-            ),
-            l2 = new Line(
-              through.add(to).divide(2),
-              to.subtract(through).rotate(90),
-              true
-            ),
+          var l1 = new Line(from.add(through).divide(2), through.subtract(from).rotate(90), true),
+            l2 = new Line(through.add(to).divide(2), to.subtract(through).rotate(90), true),
             line = new Line(from, to),
             throughSide = line.getSide(through);
           center = l1.intersect(l2, true);
@@ -2725,7 +2558,7 @@ export const Path = PathItem.extend(
           // Otherwise we bail out:
           if (!center) {
             if (!throughSide) return this.lineTo(to);
-            throw new Error("Cannot create an arc with the given arguments");
+            throw new Error('Cannot create an arc with the given arguments');
           }
           vector = from.subtract(center);
           extent = vector.getDirectedAngle(to.subtract(center));
@@ -2806,11 +2639,7 @@ export const Path = PathItem.extend(
           handle2 = Point.read(args),
           to = Point.read(args),
           current = getCurrentSegment(this)._point;
-        this.cubicCurveTo(
-          current.add(handle1),
-          current.add(handle2),
-          current.add(to)
-        );
+        this.cubicCurveTo(current.add(handle1), current.add(handle2), current.add(to));
       },
 
       quadraticCurveBy: function (/* handle, to */) {
@@ -2829,7 +2658,7 @@ export const Path = PathItem.extend(
           // Peek at next value to see if it's clockwise, with true as
           // default value.
           clockwise = Base.pick(Base.peek(args), true);
-        if (typeof clockwise === "boolean") {
+        if (typeof clockwise === 'boolean') {
           this.arcTo(point, clockwise);
         } else {
           this.arcTo(point, current.add(Point.read(args)));
@@ -2852,11 +2681,7 @@ export const Path = PathItem.extend(
     // additional ones after.
 
     _getBounds: function (matrix, options) {
-      var method = options.handle
-        ? "getHandleBounds"
-        : options.stroke
-        ? "getStrokeBounds"
-        : "getBounds";
+      var method = options.handle ? 'getHandleBounds' : options.stroke ? 'getStrokeBounds' : 'getBounds';
       return Path[method](this._segments, this._closed, this, matrix, options);
     },
 
@@ -2867,14 +2692,7 @@ export const Path = PathItem.extend(
        *
        * @private
        */
-      getBounds: function (
-        segments,
-        closed,
-        path,
-        matrix,
-        options,
-        strokePadding
-      ) {
+      getBounds: function (segments, closed, path, matrix, options, strokePadding) {
         var first = segments[0];
         // If there are no segments, return "empty" rectangle, just like groups,
         // since #bounds is assumed to never return null.
@@ -2907,8 +2725,7 @@ export const Path = PathItem.extend(
           coords = tmp;
         }
 
-        for (var i = 1, l = segments.length; i < l; i++)
-          processSegment(segments[i]);
+        for (var i = 1, l = segments.length; i < l; i++) processSegment(segments[i]);
         if (closed) processSegment(first);
         return new Rectangle(min[0], min[1], max[0] - min[0], max[1] - min[1]);
       },
@@ -2923,18 +2740,10 @@ export const Path = PathItem.extend(
           stroke = style.hasStroke(),
           strokeWidth = style.getStrokeWidth(),
           strokeMatrix = stroke && path._getStrokeMatrix(matrix, options),
-          strokePadding =
-            stroke && Path._getStrokePadding(strokeWidth, strokeMatrix),
+          strokePadding = stroke && Path._getStrokePadding(strokeWidth, strokeMatrix),
           // Start with normal path bounds with added stroke padding. Then we
           // only need to look at each segment and handle join / cap / miter.
-          bounds = Path.getBounds(
-            segments,
-            closed,
-            path,
-            matrix,
-            options,
-            strokePadding
-          );
+          bounds = Path.getBounds(segments, closed, path, matrix, options, strokePadding);
         if (!stroke) return bounds;
         var strokeRadius = strokeWidth / 2,
           join = style.getStrokeJoin(),
@@ -2951,43 +2760,26 @@ export const Path = PathItem.extend(
         }
 
         function addRound(segment) {
-          bounds = bounds.unite(
-            joinBounds.setCenter(segment._point.transform(matrix))
-          );
+          bounds = bounds.unite(joinBounds.setCenter(segment._point.transform(matrix)));
         }
 
         function addJoin(segment, join) {
           // When both handles are set in a segment and they are collinear,
           // the join setting is ignored and round is always used.
-          if (join === "round" || segment.isSmooth()) {
+          if (join === 'round' || segment.isSmooth()) {
             addRound(segment);
           } else {
             // _addBevelJoin() handles both 'bevel' and 'miter' joins.
-            Path._addBevelJoin(
-              segment,
-              join,
-              strokeRadius,
-              miterLimit,
-              matrix,
-              strokeMatrix,
-              addPoint
-            );
+            Path._addBevelJoin(segment, join, strokeRadius, miterLimit, matrix, strokeMatrix, addPoint);
           }
         }
 
         function addCap(segment, cap) {
-          if (cap === "round") {
+          if (cap === 'round') {
             addRound(segment);
           } else {
             // _addSquareCap() handles both 'square' and 'butt' caps.
-            Path._addSquareCap(
-              segment,
-              cap,
-              strokeRadius,
-              matrix,
-              strokeMatrix,
-              addPoint
-            );
+            Path._addSquareCap(segment, cap, strokeRadius, matrix, strokeMatrix, addPoint);
           }
         }
 
@@ -3051,30 +2843,15 @@ export const Path = PathItem.extend(
         ];
       },
 
-      _addBevelJoin: function (
-        segment,
-        join,
-        radius,
-        miterLimit,
-        matrix,
-        strokeMatrix,
-        addPoint,
-        isArea
-      ) {
+      _addBevelJoin: function (segment, join, radius, miterLimit, matrix, strokeMatrix, addPoint, isArea) {
         // Handles both 'bevel' and 'miter' joins, as they share a lot of code,
         // using different matrices to transform segment points and stroke
         // vectors to support Style#strokeScaling.
         var curve2 = segment.getCurve(),
           curve1 = curve2.getPrevious(),
           point = curve2.getPoint1().transform(matrix),
-          normal1 = curve1
-            .getNormalAtTime(1)
-            .multiply(radius)
-            .transform(strokeMatrix),
-          normal2 = curve2
-            .getNormalAtTime(0)
-            .multiply(radius)
-            .transform(strokeMatrix),
+          normal1 = curve1.getNormalAtTime(1).multiply(radius).transform(strokeMatrix),
+          normal2 = curve2.getNormalAtTime(0).multiply(radius).transform(strokeMatrix),
           angle = normal1.getDirectedAngle(normal2);
         if (angle < 0 || angle >= 180) {
           normal1 = normal1.negate();
@@ -3082,18 +2859,10 @@ export const Path = PathItem.extend(
         }
         if (isArea) addPoint(point);
         addPoint(point.add(normal1));
-        if (join === "miter") {
+        if (join === 'miter') {
           // Intersect the two lines
-          var corner = new Line(
-            point.add(normal1),
-            new Point(-normal1.y, normal1.x),
-            true
-          ).intersect(
-            new Line(
-              point.add(normal2),
-              new Point(-normal2.y, normal2.x),
-              true
-            ),
+          var corner = new Line(point.add(normal1), new Point(-normal1.y, normal1.x), true).intersect(
+            new Line(point.add(normal2), new Point(-normal2.y, normal2.x), true),
             true
           );
           // See if we actually get a bevel point and if its distance is below
@@ -3106,15 +2875,7 @@ export const Path = PathItem.extend(
         addPoint(point.add(normal2));
       },
 
-      _addSquareCap: function (
-        segment,
-        cap,
-        radius,
-        matrix,
-        strokeMatrix,
-        addPoint,
-        isArea
-      ) {
+      _addSquareCap: function (segment, cap, radius, matrix, strokeMatrix, addPoint, isArea) {
         // Handles both 'square' and 'butt' caps, as they share a lot of code.
         // Calculate the corner points of butt and square caps, using different
         // matrices to transform segment points and stroke vectors to support
@@ -3130,7 +2891,7 @@ export const Path = PathItem.extend(
             .transform(strokeMatrix);
         // For square caps, we need to step away from point in the direction of
         // the tangent, which is the rotated normal.
-        if (cap === "square") {
+        if (cap === 'square') {
           if (isArea) {
             addPoint(point.subtract(normal));
             addPoint(point.add(normal));
@@ -3155,10 +2916,8 @@ export const Path = PathItem.extend(
           var strokeMatrix = path._getStrokeMatrix(matrix, options),
             strokeRadius = style.getStrokeWidth() / 2,
             joinRadius = strokeRadius;
-          if (style.getStrokeJoin() === "miter")
-            joinRadius = strokeRadius * style.getMiterLimit();
-          if (style.getStrokeCap() === "square")
-            joinRadius = Math.max(joinRadius, strokeRadius * Math.SQRT2);
+          if (style.getStrokeJoin() === 'miter') joinRadius = strokeRadius * style.getMiterLimit();
+          if (style.getStrokeCap() === 'square') joinRadius = Math.max(joinRadius, strokeRadius * Math.SQRT2);
           strokePadding = Path._getStrokePadding(strokeRadius, strokeMatrix);
           joinPadding = Path._getStrokePadding(joinRadius, strokeMatrix);
         }

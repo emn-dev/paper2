@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Formatter } from "~/util/Formatter";
-import { Numerical } from "~/util/Numerical";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Formatter } from '~/util/Formatter';
+import { Numerical } from '~/util/Numerical';
 
 /**
  * @name Size
@@ -31,7 +34,7 @@ import { Numerical } from "~/util/Numerical";
  */
 export const Size = Base.extend(
   /** @lends Size# */ {
-    _class: "Size",
+    _class: 'Size',
     // Tell Base.read that the Point constructor supports reading with index
     _readIndex: true,
 
@@ -101,21 +104,21 @@ export const Size = Base.extend(
       var type = typeof arg0,
         reading = this.__read,
         read = 0;
-      if (type === "number") {
-        var hasHeight = typeof arg1 === "number";
+      if (type === 'number') {
+        var hasHeight = typeof arg1 === 'number';
         this._set(arg0, hasHeight ? arg1 : arg0);
         if (reading) read = hasHeight ? 2 : 1;
-      } else if (type === "undefined" || arg0 === null) {
+      } else if (type === 'undefined' || arg0 === null) {
         this._set(0, 0);
         if (reading) read = arg0 === null ? 1 : 0;
       } else {
-        var obj = type === "string" ? arg0.split(/[\s,]+/) || [] : arg0;
+        var obj = type === 'string' ? arg0.split(/[\s,]+/) || [] : arg0;
         read = 1;
         if (Array.isArray(obj)) {
           this._set(+obj[0], +(obj.length > 1 ? obj[1] : obj[0]));
-        } else if ("width" in obj) {
+        } else if ('width' in obj) {
           this._set(obj.width || 0, obj.height || 0);
-        } else if ("x" in obj) {
+        } else if ('x' in obj) {
           this._set(obj.x || 0, obj.y || 0);
         } else {
           this._set(0, 0);
@@ -135,7 +138,7 @@ export const Size = Base.extend(
      * @param {...*} values
      * @return {Size}
      */
-    set: "#initialize",
+    set: '#initialize',
 
     // See Point#_set() for an explanation of #_set():
     _set: function (width, height) {
@@ -176,9 +179,7 @@ export const Size = Base.extend(
         size === this ||
         (size &&
           ((this.width === size.width && this.height === size.height) ||
-            (Array.isArray(size) &&
-              this.width === size[0] &&
-              this.height === size[1]))) ||
+            (Array.isArray(size) && this.width === size[0] && this.height === size[1]))) ||
         false
       );
     },
@@ -196,13 +197,7 @@ export const Size = Base.extend(
      */
     toString: function () {
       var f = Formatter.instance;
-      return (
-        "{ width: " +
-        f.number(this.width) +
-        ", height: " +
-        f.number(this.height) +
-        " }"
-      );
+      return '{ width: ' + f.number(this.width) + ', height: ' + f.number(this.height) + ' }';
     },
 
     _serialize: function (options) {
@@ -500,10 +495,7 @@ export const Size = Base.extend(
        * [size1, size2, size3].reduce(Size.min) // {width: 60, height: 5}
        */
       min: function (size1, size2) {
-        return new Size(
-          Math.min(size1.width, size2.width),
-          Math.min(size1.height, size2.height)
-        );
+        return new Size(Math.min(size1.width, size2.width), Math.min(size1.height, size2.height));
       },
 
       /**
@@ -529,10 +521,7 @@ export const Size = Base.extend(
        * [size1, size2, size3].reduce(Size.max) // {width: 250, height: 100}
        */
       max: function (size1, size2) {
-        return new Size(
-          Math.max(size1.width, size2.width),
-          Math.max(size1.height, size2.height)
-        );
+        return new Size(Math.max(size1.width, size2.width), Math.max(size1.height, size2.height));
       },
 
       /**
@@ -553,7 +542,7 @@ export const Size = Base.extend(
     },
   },
   Base.each(
-    ["round", "ceil", "floor", "abs"],
+    ['round', 'ceil', 'floor', 'abs'],
     function (key) {
       // Inject round, ceil, floor, abs:
       var op = Math[key];

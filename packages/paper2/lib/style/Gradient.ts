@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { UID } from "~/util/UID";
-import { GradientStop } from "./GradientStop";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { UID } from '~/util/UID';
+import { GradientStop } from './GradientStop';
 
 /**
  * @name Gradient
@@ -67,7 +70,7 @@ import { GradientStop } from "./GradientStop";
  */
 export const Gradient = Base.extend(
   /** @lends Gradient# */ {
-    _class: "Gradient",
+    _class: 'Gradient',
 
     // DOCS: Document #initialize()
     initialize: function Gradient(stops, radial) {
@@ -82,24 +85,17 @@ export const Gradient = Base.extend(
       // As these values might already have been set in the _set() call above,
       // only initialize them if that hasn't happened yet.
       if (this._stops == null) {
-        this.setStops(stops || ["white", "black"]);
+        this.setStops(stops || ['white', 'black']);
       }
       if (this._radial == null) {
         // Support old string type argument and new radial boolean.
-        this.setRadial(
-          (typeof radial === "string" && radial === "radial") || radial || false
-        );
+        this.setRadial((typeof radial === 'string' && radial === 'radial') || radial || false);
       }
     },
 
     _serialize: function (options, dictionary) {
       return dictionary.add(this, function () {
-        return Base.serialize(
-          [this._stops, this._radial],
-          options,
-          true,
-          dictionary
-        );
+        return Base.serialize([this._stops, this._radial], options, true, dictionary);
       });
     },
 
@@ -157,15 +153,12 @@ export const Gradient = Base.extend(
 
     setStops: function (stops) {
       if (stops.length < 2) {
-        throw new Error(
-          "Gradient stop list needs to contain at least two stops."
-        );
+        throw new Error('Gradient stop list needs to contain at least two stops.');
       }
       // If this gradient already contains stops, first remove their owner.
       var _stops = this._stops;
       if (_stops) {
-        for (var i = 0, l = _stops.length; i < l; i++)
-          _stops[i]._owner = undefined;
+        for (var i = 0, l = _stops.length; i < l; i++) _stops[i]._owner = undefined;
       }
       _stops = this._stops = GradientStop.readList(stops, 0, { clone: true });
       // Now assign this gradient as the new gradients' owner.

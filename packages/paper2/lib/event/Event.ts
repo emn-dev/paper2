@@ -10,8 +10,11 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Key } from "./Key";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Key } from './Key';
 
 /**
  * @name Event
@@ -22,7 +25,7 @@ import { Key } from "./Key";
 /* global Event: true */
 export const Event = Base.extend(
   /** @lends Event# */ {
-    _class: "Event",
+    _class: 'Event',
 
     initialize: function Event(event) {
       this.event = event;

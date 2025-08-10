@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { ChangeFlag } from "./ChangeFlag";
-import { Item } from "./Item";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { ChangeFlag } from './ChangeFlag';
+import { Item } from './Item';
 
 /**
  * @name Group
@@ -25,7 +28,7 @@ import { Item } from "./Item";
  */
 export const Group = Item.extend(
   /** @lends Group# */ {
-    _class: "Group",
+    _class: 'Group',
     _selectBounds: false,
     _selectChildren: true,
     _serializeFields: {
@@ -99,8 +102,7 @@ export const Group = Item.extend(
       // Allow Group to have children and named children
       this._children = [];
       this._namedChildren = {};
-      if (!this._initialize(arg))
-        this.addChildren(Array.isArray(arg) ? arg : arguments);
+      if (!this._initialize(arg)) this.addChildren(Array.isArray(arg) ? arg : arguments);
     },
 
     _changed: function _changed(flags) {
@@ -175,10 +177,7 @@ export const Group = Item.extend(
     _getBounds: function _getBounds(matrix, options) {
       var clipItem = this._getClipItem();
       return clipItem
-        ? clipItem._getCachedBounds(
-            clipItem._matrix.prepended(matrix),
-            Base.set({}, options, { stroke: false })
-          )
+        ? clipItem._getCachedBounds(clipItem._matrix.prepended(matrix), Base.set({}, options, { stroke: false }))
         : (_getBounds as any).base.call(this, matrix, options);
     },
 

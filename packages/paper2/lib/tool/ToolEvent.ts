@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Event } from "~/event/Event";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Event } from '~/event/Event';
 
 /**
  * @name ToolEvent
@@ -25,7 +28,7 @@ import { Event } from "~/event/Event";
  */
 export const ToolEvent = Event.extend(
   /** @lends ToolEvent# */ {
-    _class: "ToolEvent",
+    _class: 'ToolEvent',
     // Have ToolEvent#item fall back to returning null, not undefined.
     _item: null,
 
@@ -143,9 +146,7 @@ export const ToolEvent = Event.extend(
       // Instead, keep calculating the delta each time, so the result can be
       // directly modified by the script without changing the internal values.
       // We could cache this and use clone, but this is almost as fast...
-      return !this._delta && this.tool._lastPoint
-        ? this.tool._point.subtract(this.tool._lastPoint)
-        : this._delta;
+      return !this._delta && this.tool._lastPoint ? this.tool._point.subtract(this.tool._lastPoint) : this._delta;
     },
 
     setDelta: function (delta) {
@@ -161,14 +162,11 @@ export const ToolEvent = Event.extend(
     getCount: function () {
       // Return downCount for both mouse down and up, since
       // the count is the same.
-      return this.tool[
-        /^mouse(down|up)$/.test(this.type) ? "_downCount" : "_moveCount"
-      ];
+      return this.tool[/^mouse(down|up)$/.test(this.type) ? '_downCount' : '_moveCount'];
     },
 
     setCount: function (count) {
-      this.tool[/^mouse(down|up)$/.test(this.type) ? "downCount" : "count"] =
-        count;
+      this.tool[/^mouse(down|up)$/.test(this.type) ? 'downCount' : 'count'] = count;
     },
 
     /**
@@ -207,15 +205,15 @@ export const ToolEvent = Event.extend(
      */
     toString: function () {
       return (
-        "{ type: " +
+        '{ type: ' +
         this.type +
-        ", point: " +
+        ', point: ' +
         this.getPoint() +
-        ", count: " +
+        ', count: ' +
         this.getCount() +
-        ", modifiers: " +
+        ', modifiers: ' +
         this.getModifiers() +
-        " }"
+        ' }'
       );
     },
   }

@@ -10,10 +10,13 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Change } from "~/item/ChangeFlag";
-import { Item } from "~/item/Item";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Change } from '~/item/ChangeFlag';
+import { Item } from '~/item/Item';
 
 /**
  * @name TextItem
@@ -28,7 +31,7 @@ import { Item } from "~/item/Item";
  */
 export const TextItem = Item.extend(
   /** @lends TextItem# */ {
-    _class: "TextItem",
+    _class: 'TextItem',
     _applyMatrix: false,
     _canApplyMatrix: false,
     _serializeFields: {
@@ -39,18 +42,14 @@ export const TextItem = Item.extend(
     _boundsOptions: { stroke: false, handle: false },
 
     initialize: function TextItem(arg) {
-      this._content = "";
+      this._content = '';
       this._lines = [];
       // Support two forms of item initialization: Passing one object literal
       // describing all the different properties to be set, or a point where
       // it should be placed (arg).
       // See if a point is passed, and if so, pass it on to _initialize().
       // If not, it might be a properties object literal.
-      var hasProps =
-        arg &&
-        Base.isPlainObject(arg) &&
-        arg.x === undefined &&
-        arg.y === undefined;
+      var hasProps = arg && Base.isPlainObject(arg) && arg.x === undefined && arg.y === undefined;
       this._initialize(hasProps && arg, !hasProps && Point.read(arguments));
     },
 
@@ -98,7 +97,7 @@ export const TextItem = Item.extend(
     },
 
     setContent: function (content) {
-      this._content = "" + content;
+      this._content = '' + content;
       this._lines = this._content.split(/\r\n|\n|\r/gm);
       this._changed(/*#=*/ Change.CONTENT);
     },
@@ -169,15 +168,15 @@ export const TextItem = Item.extend(
      * @private
      * @deprecated use {@link #style} instead.
      */
-    getCharacterStyle: "#getStyle",
-    setCharacterStyle: "#setStyle",
+    getCharacterStyle: '#getStyle',
+    setCharacterStyle: '#setStyle',
 
     /**
      * @bean
      * @private
      * @deprecated use {@link #style} instead.
      */
-    getParagraphStyle: "#getStyle",
-    setParagraphStyle: "#setStyle",
+    getParagraphStyle: '#getStyle',
+    setParagraphStyle: '#setStyle',
   }
 );

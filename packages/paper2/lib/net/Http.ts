@@ -10,17 +10,16 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
 
 export const Http = {
   request: function (options) {
     // Code borrowed from Coffee Script and extended:
     var xhr = new self.XMLHttpRequest();
-    xhr.open(
-      (options.method || "get").toUpperCase(),
-      options.url,
-      Base.pick(options.async, true)
-    );
+    xhr.open((options.method || 'get').toUpperCase(), options.url, Base.pick(options.async, true));
     if (options.mimeType) xhr.overrideMimeType(options.mimeType);
     xhr.onload = function () {
       var status = xhr.status;
@@ -35,8 +34,7 @@ export const Http = {
     };
     xhr.onerror = function () {
       var status = xhr.status,
-        message =
-          'Could not load "' + options.url + '" (Status: ' + status + ")";
+        message = 'Could not load "' + options.url + '" (Status: ' + status + ')';
       if (options.onError) {
         options.onError(message, status);
       } else {

@@ -10,10 +10,13 @@
  * All rights reserved.
  */
 
-import type { Project } from "~/item/Project";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Emitter } from "~/core/Emitter";
+import type { Project } from '~/item/Project';
+
+import { Base } from '~/straps';
+import { Emitter } from '~/core/Emitter';
 
 declare let paper4444;
 
@@ -44,9 +47,9 @@ export const PaperScopeItem = Base.extend(
     activate: function () {
       if (!this._scope) return false;
       var prev = this._scope[this._reference];
-      if (prev && prev !== this) prev.emit("deactivate");
+      if (prev && prev !== this) prev.emit('deactivate');
       this._scope[this._reference] = this;
-      this.emit("activate", prev);
+      this.emit('activate', prev);
       return true;
     },
 
@@ -58,8 +61,7 @@ export const PaperScopeItem = Base.extend(
       if (this._index == null) return false;
       Base.splice(this._scope[this._list], null, this._index, 1);
       // Clear the active tool reference if it was pointint to this.
-      if (this._scope[this._reference] == this)
-        this._scope[this._reference] = null;
+      if (this._scope[this._reference] == this) this._scope[this._reference] = null;
       this._scope = null;
       return true;
     },

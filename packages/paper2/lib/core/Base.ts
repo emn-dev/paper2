@@ -10,11 +10,14 @@
  * All rights reserved.
  */
 
-import type { Layer as LayerType } from "~/item/Layer";
-import type { Item as ItemType } from "~/item/Item";
-import type { Formatter as FormatterType } from "~/util/Formatter";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
+import type { Layer as LayerType } from '~/item/Layer';
+import type { Item as ItemType } from '~/item/Item';
+import type { Formatter as FormatterType } from '~/util/Formatter';
+
+import { Base } from '~/straps';
 // import { Formatter } from "~/util/Formatter";
 // import { Layer } from "~/item/Layer";
 // import { Item } from "~/item/Item";
@@ -38,9 +41,8 @@ Base.inject(
      */
     toString: function () {
       return this._id != null
-        ? (this._class || "Object") +
-            (this._name ? " '" + this._name + "'" : " @" + this._id)
-        : "{ " +
+        ? (this._class || 'Object') + (this._name ? " '" + this._name + "'" : ' @' + this._id)
+        : '{ ' +
             Base.each(
               this,
               function (value, key) {
@@ -49,19 +51,19 @@ Base.inject(
                   var type = typeof value;
                   this.push(
                     key +
-                      ": " +
-                      (type === "number"
+                      ': ' +
+                      (type === 'number'
                         ? // ? Formatter.instance.number(value)
                           Formatter4444.instance.number(value)
-                        : type === "string"
-                        ? "'" + value + "'"
-                        : value)
+                        : type === 'string'
+                          ? "'" + value + "'"
+                          : value)
                   );
                 }
               },
               []
-            ).join(", ") +
-            " }";
+            ).join(', ') +
+            ' }';
     },
 
     /**
@@ -71,7 +73,7 @@ Base.inject(
      * @bean
      */
     getClassName: function () {
-      return this._class || "";
+      return this._class || '';
     },
 
     /**
@@ -150,12 +152,7 @@ Base.inject(
         if (obj1 && obj1.equals) return obj1.equals(obj2);
         if (obj2 && obj2.equals) return obj2.equals(obj1);
         // Deep compare objects or arrays
-        if (
-          obj1 &&
-          obj2 &&
-          typeof obj1 === "object" &&
-          typeof obj2 === "object"
-        ) {
+        if (obj1 && obj2 && typeof obj1 === 'object' && typeof obj2 === 'object') {
           // Compare arrays
           if (Array.isArray(obj1) && Array.isArray(obj2)) {
             var length = obj1.length;
@@ -173,10 +170,7 @@ Base.inject(
             while (length--) {
               // Deep compare each member
               var key = keys[length];
-              if (
-                !(obj2.hasOwnProperty(key) && Base.equals(obj1[key], obj2[key]))
-              )
-                return false;
+              if (!(obj2.hasOwnProperty(key) && Base.equals(obj1[key], obj2[key]))) return false;
             }
           }
           return true;
@@ -218,10 +212,7 @@ Base.inject(
         // When read() is called on a sub-class of which the object is already
         // an instance, or when there is only one value in the list and it's
         // null or undefined, return the obj.
-        if (
-          obj instanceof this ||
-          (options && options.readNull && obj == null && amount <= 1)
-        ) {
+        if (obj instanceof this || (options && options.readNull && obj == null && amount <= 1)) {
           if (readIndex) list.__index = begin + 1;
           return obj && options && options.clone ? obj.clone() : obj;
         }
@@ -232,9 +223,7 @@ Base.inject(
         obj =
           obj.initialize.apply(
             obj,
-            begin > 0 || begin + amount < length
-              ? Base.slice(list, begin, begin + amount)
-              : list
+            begin > 0 || begin + amount < length ? Base.slice(list, begin, begin + amount) : list
           ) || obj;
         if (readIndex) {
           list.__index = begin + obj.__read;
@@ -289,11 +278,7 @@ Base.inject(
           begin = start || 0,
           end = amount ? begin + amount : list.length;
         for (var i = begin; i < end; i++) {
-          res.push(
-            Array.isArray((entry = list[i]))
-              ? this.read(entry, 0, options)
-              : this.read(list, i, options, 1)
-          );
+          res.push(Array.isArray((entry = list[i])) ? this.read(entry, 0, options) : this.read(list, i, options, 1));
         }
         return res;
       },
@@ -420,10 +405,7 @@ Base.inject(
         var processed;
 
         function handleKey(key) {
-          if (
-            !(exclude && key in exclude) &&
-            !(processed && key in processed)
-          ) {
+          if (!(exclude && key in exclude) && !(processed && key in processed)) {
             // Due to the _filtered inheritance trick, undefined is used
             // to mask already consumed named arguments.
             var value = source[key];
@@ -457,11 +439,7 @@ Base.inject(
        * argument reading methods.
        */
       isPlainValue: function (obj, asString) {
-        return (
-          Base.isPlainObject(obj) ||
-          Array.isArray(obj) ||
-          (asString && typeof obj === "string")
-        );
+        return Base.isPlainObject(obj) || Array.isArray(obj) || (asString && typeof obj === 'string');
       },
 
       /**
@@ -492,7 +470,7 @@ Base.inject(
               // See if we have reference entry with the given id already.
               // If not, call create on the item to allow it to create the
               // definition, then store the reference to it and return it.
-              var id = "#" + item._id,
+              var id = '#' + item._id,
                 ref = this.references[id];
               if (!ref) {
                 this.length++;
@@ -516,18 +494,12 @@ Base.inject(
           var name = obj._class;
           // Enforce class names on root level, except if the class explicitly
           // asks to be serialized in compact form (Project).
-          if (
-            name &&
-            !obj._compactSerialize &&
-            (isRoot || !compact) &&
-            res[0] !== name
-          ) {
+          if (name && !obj._compactSerialize && (isRoot || !compact) && res[0] !== name) {
             res.unshift(name);
           }
         } else if (Array.isArray(obj)) {
           res = [];
-          for (var i = 0, l = obj.length; i < l; i++)
-            res[i] = Base.serialize(obj[i], options, compact, dictionary);
+          for (var i = 0, l = obj.length; i < l; i++) res[i] = Base.serialize(obj[i], options, compact, dictionary);
         } else if (Base.isPlainObject(obj)) {
           res = {};
           var keys = Object.keys(obj);
@@ -535,14 +507,12 @@ Base.inject(
             var key = keys[i];
             res[key] = Base.serialize(obj[key], options, compact, dictionary);
           }
-        } else if (typeof obj === "number") {
+        } else if (typeof obj === 'number') {
           res = options.formatter.number(obj, options.precision);
         } else {
           res = obj;
         }
-        return isRoot && dictionary.length > 0
-          ? [["dictionary", dictionary.definitions], res]
-          : res;
+        return isRoot && dictionary.length > 0 ? [['dictionary', dictionary.definitions], res] : res;
       },
 
       /**
@@ -556,8 +526,7 @@ Base.inject(
       deserialize: function (json, create, _data, _setDictionary, _isRoot) {
         var res = json,
           isFirst = !_data,
-          hasDictionary =
-            isFirst && json && json.length && json[0][0] === "dictionary";
+          hasDictionary = isFirst && json && json.length && json[0][0] === 'dictionary';
         // A _data side-car to deserialize that can hold any kind of 'global'
         // data across a deserialization. It's currently only used to hold
         // dictionary definitions.
@@ -569,7 +538,7 @@ Base.inject(
           var type = json[0],
             // Handle stored dictionary specially, since we need to keep a
             // lookup table to retrieve referenced items from.
-            isDictionary = type === "dictionary";
+            isDictionary = type === 'dictionary';
           // First see if this is perhaps a dictionary reference, and if so
           // return its definition instead.
           if (json.length == 1 && /^#/.test(type)) {
@@ -581,15 +550,7 @@ Base.inject(
           // Pass true for _isRoot in children if we have a dictionary,
           // in which case we need to shift the root level one down.
           for (var i = type ? 1 : 0, l = json.length; i < l; i++) {
-            res.push(
-              Base.deserialize(
-                json[i],
-                create,
-                _data,
-                isDictionary,
-                hasDictionary
-              )
-            );
+            res.push(Base.deserialize(json[i], create, _data, isDictionary, hasDictionary));
           }
           if (type) {
             // Create serialized type and pass collected arguments to
@@ -610,8 +571,7 @@ Base.inject(
           // deserialization, because serialized symbols may contain
           // references to serialized gradients
           if (_setDictionary) _data.dictionary = res;
-          for (var key in json)
-            res[key] = Base.deserialize(json[key], create, _data);
+          for (var key in json) res[key] = Base.deserialize(json[key], create, _data);
         }
         // Filter out deserialized dictionary:
         return hasDictionary ? res[1] : res;
@@ -619,14 +579,12 @@ Base.inject(
 
       exportJSON: function (obj, options) {
         var json = Base.serialize(obj, options);
-        return options && options.asString == false
-          ? json
-          : JSON.stringify(json);
+        return options && options.asString == false ? json : JSON.stringify(json);
       },
 
       importJSON: function (json, target) {
         return Base.deserialize(
-          typeof json === "string" ? JSON.parse(json) : json,
+          typeof json === 'string' ? JSON.parse(json) : json,
           // Provide our own create function to handle target and
           // insertion.
           function (ctor, args, isRoot) {
@@ -638,11 +596,7 @@ Base.inject(
             // these to be created on the fly in the active project into
             // which we're importing (except for if it's a preexisting
             // target layer).
-            if (
-              args.length === 1 &&
-              obj instanceof Item4444 &&
-              (useTarget || !(obj instanceof Layer4444))
-            ) {
+            if (args.length === 1 && obj instanceof Item4444 && (useTarget || !(obj instanceof Layer4444))) {
               var arg = args[0];
               if (Base.isPlainObject(arg)) {
                 arg.insert = false;
@@ -709,12 +663,10 @@ Base.inject(
           if (items) Base.push(args, items);
           var removed = list.splice.apply(list, args);
           // Erase the indices of the removed items
-          for (var i = 0, l = removed.length; i < l; i++)
-            removed[i]._index = undefined;
+          for (var i = 0, l = removed.length; i < l; i++) removed[i]._index = undefined;
           // Adjust the indices of the items above.
           // @ts-expect-error = Subsequent variable declarations must have the same type
-          for (var i = index + amount, l = list.length; i < l; i++)
-            list[i]._index = i;
+          for (var i = index + amount, l = list.length; i < l; i++) list[i]._index = i;
           return removed;
         }
       },
@@ -741,7 +693,7 @@ Base.inject(
        * Converts camelized strings to hyphenated ones: CapsLock -> caps-lock
        */
       hyphenate: function (str) {
-        return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+        return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
       },
     },
   }

@@ -10,16 +10,19 @@
  * All rights reserved.
  */
 
-import type { Path as PathType } from "./Path";
-import type { CurveLocation as CurveLocationType } from "./CurveLocation";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Rectangle } from "~/basic/Rectangle";
-import { Numerical } from "~/util/Numerical";
-import { CollisionDetection } from "~/util/CollisionDetection";
-import { Line } from "~/basic/Line";
-import { Segment } from "./Segment";
+import type { Path as PathType } from './Path';
+import type { CurveLocation as CurveLocationType } from './CurveLocation';
+
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Rectangle } from '~/basic/Rectangle';
+import { Numerical } from '~/util/Numerical';
+import { CollisionDetection } from '~/util/CollisionDetection';
+import { Line } from '~/basic/Line';
+import { Segment } from './Segment';
 
 // import { Path } from "./Path";
 // import { CurveLocation } from "./CurveLocation";
@@ -43,7 +46,7 @@ declare const CurveLocation4444: typeof CurveLocationType;
  */
 export const Curve = Base.extend(
   /** @lends Curve# */ {
-    _class: "Curve",
+    _class: 'Curve',
     // Enforce creation of beans, as some bean getters have hidden parameters.
     // See #getValues() below.
     beans: true,
@@ -101,10 +104,10 @@ export const Curve = Base.extend(
       } else if (count === 1) {
         // new Segment(segment);
         // NOTE: This copies from existing segments through bean getters
-        if ("segment1" in arg0) {
+        if ('segment1' in arg0) {
           seg1 = new Segment(arg0.segment1);
           seg2 = new Segment(arg0.segment2);
-        } else if ("point1" in arg0) {
+        } else if ('point1' in arg0) {
           // As printed by #toString()
           point1 = arg0.point1;
           handle1 = arg0.handle1;
@@ -146,12 +149,7 @@ export const Curve = Base.extend(
       // If it has no handles, only serialize points, otherwise handles too.
       return Base.serialize(
         this.hasHandles()
-          ? [
-              this.getPoint1(),
-              this.getHandle1(),
-              this.getHandle2(),
-              this.getPoint2(),
-            ]
+          ? [this.getPoint1(), this.getHandle1(), this.getHandle2(), this.getPoint2()]
           : [this.getPoint1(), this.getPoint2()],
         options,
         true,
@@ -177,13 +175,11 @@ export const Curve = Base.extend(
      * @return {String} a string representation of the curve
      */
     toString: function () {
-      var parts = ["point1: " + this._segment1._point];
-      if (!this._segment1._handleOut.isZero())
-        parts.push("handle1: " + this._segment1._handleOut);
-      if (!this._segment2._handleIn.isZero())
-        parts.push("handle2: " + this._segment2._handleIn);
-      parts.push("point2: " + this._segment2._point);
-      return "{ " + parts.join(", ") + " }";
+      var parts = ['point1: ' + this._segment1._point];
+      if (!this._segment1._handleOut.isZero()) parts.push('handle1: ' + this._segment1._handleOut);
+      if (!this._segment2._handleIn.isZero()) parts.push('handle2: ' + this._segment2._handleIn);
+      parts.push('point2: ' + this._segment2._point);
+      return '{ ' + parts.join(', ') + ' }';
     },
 
     /**
@@ -324,12 +320,7 @@ export const Curve = Base.extend(
      */
     getNext: function () {
       var curves = this._path && this._path._curves;
-      return (
-        (curves &&
-          (curves[this._segment1._index + 1] ||
-            (this._path._closed && curves[0]))) ||
-        null
-      );
+      return (curves && (curves[this._segment1._index + 1] || (this._path._closed && curves[0]))) || null;
     },
 
     /**
@@ -342,10 +333,7 @@ export const Curve = Base.extend(
     getPrevious: function () {
       var curves = this._path && this._path._curves;
       return (
-        (curves &&
-          (curves[this._segment1._index - 1] ||
-            (this._path._closed && curves[curves.length - 1]))) ||
-        null
+        (curves && (curves[this._segment1._index - 1] || (this._path._closed && curves[curves.length - 1]))) || null
       );
     },
 
@@ -365,9 +353,7 @@ export const Curve = Base.extend(
      */
     isLast: function () {
       var path = this._path;
-      return (
-        (path && this._segment1._index === path._curves.length - 1) || false
-      );
+      return (path && this._segment1._index === path._curves.length - 1) || false;
     },
 
     /**
@@ -420,8 +406,7 @@ export const Curve = Base.extend(
       // Convert to array of absolute points
       var coords = this.getValues(),
         points = [];
-      for (var i = 0; i < 8; i += 2)
-        points.push(new Point(coords[i], coords[i + 1]));
+      for (var i = 0; i < 8; i += 2) points.push(new Point(coords[i], coords[i + 1]));
       return points;
     },
   },
@@ -433,8 +418,7 @@ export const Curve = Base.extend(
      * @type Number
      */
     getLength: function () {
-      if (this._length == null)
-        this._length = Curve.getLength(this.getValues(), 0, 1);
+      if (this._length == null) this._length = Curve.getLength(this.getValues(), 0, 1);
       return this._length;
     },
 
@@ -495,11 +479,7 @@ export const Curve = Base.extend(
     divideAt: function (location) {
       // Accept offsets and CurveLocation objects, as well as objects that act
       // like them.
-      return this.divideAtTime(
-        location && location.curve === this
-          ? location.time
-          : this.getTimeAt(location)
-      );
+      return this.divideAtTime(location && location.curve === this ? location.time : this.getTimeAt(location));
     },
 
     /**
@@ -595,9 +575,7 @@ export const Curve = Base.extend(
      * {@link #divideAtTime(time)} instead.
      */
     divide: function (offset, isTime) {
-      return this.divideAtTime(
-        offset === undefined ? 0.5 : isTime ? offset : this.getTimeAt(offset)
-      );
+      return this.divideAtTime(offset === undefined ? 0.5 : isTime ? offset : this.getTimeAt(offset));
     },
 
     // TODO: Remove in 1.0.0? (deprecated January 2016):
@@ -606,9 +584,7 @@ export const Curve = Base.extend(
      * {@link #splitAtTime(time)} instead.
      */
     split: function (offset, isTime) {
-      return this.splitAtTime(
-        offset === undefined ? 0.5 : isTime ? offset : this.getTimeAt(offset)
-      );
+      return this.splitAtTime(offset === undefined ? 0.5 : isTime ? offset : this.getTimeAt(offset));
     },
 
     /**
@@ -701,10 +677,7 @@ export const Curve = Base.extend(
           o1 = v[io + 2],
           o2 = v[io + 4],
           o3 = v[io + 6];
-        if (
-          (o0 >= o1 === o1 >= o2 && o1 >= o2 === o2 >= o3) ||
-          Curve.isStraight(v)
-        ) {
+        if ((o0 >= o1 === o1 >= o2 && o1 >= o2 === o2 >= o3) || Curve.isStraight(v)) {
           // Straight curves and curves with all involved points ordered
           // in coordinate direction are guaranteed to be monotone.
           curves.push(v);
@@ -743,12 +716,7 @@ export const Curve = Base.extend(
           v3 = v[coord + 6],
           res = 0;
         // If val is outside the curve values, no solution is possible.
-        if (
-          !(
-            (v0 < val && v3 < val && v1 < val && v2 < val) ||
-            (v0 > val && v3 > val && v1 > val && v2 > val)
-          )
-        ) {
+        if (!((v0 < val && v3 < val && v1 < val && v2 < val) || (v0 > val && v3 > val && v1 > val && v2 > val))) {
           var c = 3 * (v1 - v0),
             b = 3 * (v2 - v1) - c,
             a = v3 - v0 - c - b;
@@ -764,11 +732,7 @@ export const Curve = Base.extend(
           p3 = new Point(v[6], v[7]),
           epsilon = /*#=*/ Numerical.EPSILON,
           geomEpsilon = /*#=*/ Numerical.GEOMETRIC_EPSILON,
-          t = point.isClose(p0, epsilon)
-            ? 0
-            : point.isClose(p3, epsilon)
-            ? 1
-            : null;
+          t = point.isClose(p0, epsilon) ? 0 : point.isClose(p3, epsilon) ? 1 : null;
         if (t === null) {
           // Solve the cubic for both x- and y-coordinates and consider all
           // solutions, testing with the larger / looser geometric epsilon.
@@ -784,11 +748,7 @@ export const Curve = Base.extend(
         }
         // Since we're comparing with geometric epsilon for any other t along
         // the curve, do so as well now for the beginning and end of the curve.
-        return point.isClose(p0, geomEpsilon)
-          ? 0
-          : point.isClose(p3, geomEpsilon)
-          ? 1
-          : null;
+        return point.isClose(p0, geomEpsilon) ? 0 : point.isClose(p3, geomEpsilon) ? 1 : null;
       },
 
       getNearestTime: function (v, point) {
@@ -808,8 +768,8 @@ export const Curve = Base.extend(
           return u < /*#=*/ Numerical.EPSILON
             ? 0
             : u > /*#=*/ 1 - Numerical.EPSILON
-            ? 1
-            : Curve.getTimeOf(v, new Point(x0 + u * vx, y0 + u * vy));
+              ? 1
+              : Curve.getTimeOf(v, new Point(x0 + u * vx, y0 + u * vy));
         }
 
         var count = 100,
@@ -877,10 +837,7 @@ export const Curve = Base.extend(
           uy = 3 * y1 - 2 * y0 - y3,
           vx = 3 * x2 - 2 * x3 - x0,
           vy = 3 * y2 - 2 * y3 - y0;
-        return (
-          Math.max(ux * ux, vx * vx) + Math.max(uy * uy, vy * vy) <=
-          16 * flatness * flatness
-        );
+        return Math.max(ux * ux, vx * vx) + Math.max(uy * uy, vy * vy) <= 16 * flatness * flatness;
       },
 
       getArea: function (v) {
@@ -909,18 +866,7 @@ export const Curve = Base.extend(
         var min = v.slice(0, 2), // Start with values of point1
           max = min.slice(), // clone
           roots = [0, 0];
-        for (var i = 0; i < 2; i++)
-          Curve._addBounds(
-            v[i],
-            v[i + 2],
-            v[i + 4],
-            v[i + 6],
-            i,
-            0,
-            min,
-            max,
-            roots
-          );
+        for (var i = 0; i < 2; i++) Curve._addBounds(v[i], v[i + 2], v[i + 4], v[i + 6], i, 0, min, max, roots);
         return new Rectangle(min[0], min[1], max[0] - min[0], max[1] - min[1]);
       },
 
@@ -984,13 +930,7 @@ export const Curve = Base.extend(
               // Test for good roots and only add to bounds if good.
               if (tMin <= t && t <= tMax)
                 // Calculate bezier polynomial at t.
-                add(
-                  u * u * u * v0 +
-                    3 * u * u * t * v1 +
-                    3 * u * t * t * v2 +
-                    t * t * t * v3,
-                  padding
-                );
+                add(u * u * u * v0 + 3 * u * u * t * v1 + 3 * u * t * t * v2 + t * t * t * v3, padding);
             }
           }
         }
@@ -998,7 +938,7 @@ export const Curve = Base.extend(
     },
   },
   Base.each(
-    ["getBounds", "getStrokeBounds", "getHandleBounds"],
+    ['getBounds', 'getStrokeBounds', 'getHandleBounds'],
     // NOTE: Although Curve.getBounds() exists, we are using Path.getBounds() to
     // determine the bounds of Curve objects with defined segment1 and segment2
     // values Curve.getBounds() can be used directly on curve arrays, without
@@ -1011,11 +951,7 @@ export const Curve = Base.extend(
         if (!bounds) {
           // Calculate the curve bounds by passing a segment list for the
           // curve to the static Path.get*Boudns methods.
-          bounds = this._bounds[name] = Path4444[name](
-            [this._segment1, this._segment2],
-            false,
-            this._path
-          );
+          bounds = this._bounds[name] = Path4444[name]([this._segment1, this._segment2], false, this._path);
         }
         return bounds.clone();
       };
@@ -1070,10 +1006,7 @@ export const Curve = Base.extend(
             // to use the same epsilon as in Curve#getTimeOf(), see #1066.
             var l = new Line(p1, p2),
               epsilon = /*#=*/ Numerical.GEOMETRIC_EPSILON;
-            if (
-              l.getDistance(p1.add(h1)) < epsilon &&
-              l.getDistance(p2.add(h2)) < epsilon
-            ) {
+            if (l.getDistance(p1.add(h1)) < epsilon && l.getDistance(p2.add(h2)) < epsilon) {
               // Project handles onto line to see if they are in range:
               var div = v.dot(v),
                 s1 = v.dot(h1) / div,
@@ -1096,13 +1029,7 @@ export const Curve = Base.extend(
       this[name] = function (epsilon) {
         var seg1 = this._segment1,
           seg2 = this._segment2;
-        return test(
-          seg1._point,
-          seg1._handleOut,
-          seg2._handleIn,
-          seg2._point,
-          epsilon
-        );
+        return test(seg1._point, seg1._handleOut, seg2._handleIn, seg2._point, epsilon);
       };
 
       // Produce the static version that handles a curve values array.
@@ -1135,10 +1062,7 @@ export const Curve = Base.extend(
        * @see Path#hasHandles()
        */
       hasHandles: function () {
-        return (
-          !this._segment1._handleOut.isZero() ||
-          !this._segment2._handleIn.isZero()
-        );
+        return !this._segment1._handleOut.isZero() || !this._segment2._handleIn.isZero();
       },
 
       /**
@@ -1149,10 +1073,7 @@ export const Curve = Base.extend(
        * @return {Boolean} {@true if the curve is longer than the given epsilon}
        */
       hasLength: function (epsilon) {
-        return (
-          (!this.getPoint1().equals(this.getPoint2()) || this.hasHandles()) &&
-          this.getLength() > (epsilon || 0)
-        );
+        return (!this.getPoint1().equals(this.getPoint2()) || this.hasHandles()) && this.getLength() > (epsilon || 0);
       },
 
       /**
@@ -1184,12 +1105,7 @@ export const Curve = Base.extend(
        * @return {Boolean} {@true if the two lines are collinear}
        */
       isCollinear: function (curve) {
-        return (
-          curve &&
-          this.isStraight() &&
-          curve.isStraight() &&
-          this.getLine().isCollinear(curve.getLine())
-        );
+        return curve && this.isStraight() && curve.isStraight() && this.getLine().isCollinear(curve.getLine());
       },
 
       /**
@@ -1198,11 +1114,7 @@ export const Curve = Base.extend(
        * @return {Boolean} {@true if the line is horizontal}
        */
       isHorizontal: function () {
-        return (
-          this.isStraight() &&
-          Math.abs(this.getTangentAtTime(0.5).y) <
-            /*#=*/ Numerical.TRIGONOMETRIC_EPSILON
-        );
+        return this.isStraight() && Math.abs(this.getTangentAtTime(0.5).y) < /*#=*/ Numerical.TRIGONOMETRIC_EPSILON;
       },
 
       /**
@@ -1211,11 +1123,7 @@ export const Curve = Base.extend(
        * @return {Boolean} {@true if the line is vertical}
        */
       isVertical: function () {
-        return (
-          this.isStraight() &&
-          Math.abs(this.getTangentAtTime(0.5).x) <
-            /*#=*/ Numerical.TRIGONOMETRIC_EPSILON
-        );
+        return this.isStraight() && Math.abs(this.getTangentAtTime(0.5).x) < /*#=*/ Numerical.TRIGONOMETRIC_EPSILON;
       },
     }
   ),
@@ -1246,9 +1154,7 @@ export const Curve = Base.extend(
      * @return {CurveLocation} the curve location at the specified the location
      */
     getLocationAtTime: function (t) {
-      return t != null && t >= 0 && t <= 1
-        ? new CurveLocation4444(this, t)
-        : null;
+      return t != null && t >= 0 && t <= 1 ? new CurveLocation4444(this, t) : null;
     },
 
     /**
@@ -1272,7 +1178,7 @@ export const Curve = Base.extend(
     /**
      * @deprecated use use {@link #getTimeOf(point)} instead.
      */
-    getParameterAt: "#getTimeAt",
+    getParameterAt: '#getTimeAt',
 
     /**
      * Calculates the curve-time parameters where the curve is tangential to
@@ -1284,9 +1190,7 @@ export const Curve = Base.extend(
      */
     getTimesWithTangent: function (/* tangent */) {
       var tangent = Point.read(arguments);
-      return tangent.isZero()
-        ? []
-        : Curve.getTimesWithTangent(this.getValues(), tangent);
+      return tangent.isZero() ? [] : Curve.getTimesWithTangent(this.getValues(), tangent);
     },
 
     /**
@@ -1340,7 +1244,7 @@ export const Curve = Base.extend(
     /**
      * @deprecated use use {@link #getTimeOf(point)} instead.
      */
-    getParameterOf: "#getTimeOf",
+    getParameterOf: '#getTimeOf',
 
     /**
      * Returns the nearest location on the curve to the specified point.
@@ -1500,14 +1404,7 @@ export const Curve = Base.extend(
   // @ts-expect-error = 'new' expression, whose target lacks a construct signature
   new (function () {
     // Injection scope for various curve evaluation methods
-    var methods = [
-      "getPoint",
-      "getTangent",
-      "getNormal",
-      "getWeightedTangent",
-      "getWeightedNormal",
-      "getCurvature",
-    ];
+    var methods = ['getPoint', 'getTangent', 'getNormal', 'getWeightedTangent', 'getWeightedNormal', 'getCurvature'];
     return Base.each(
       methods,
       function (name) {
@@ -1517,15 +1414,12 @@ export const Curve = Base.extend(
         // getTangentAtTime, getNormalAtTime, getWeightedTangentAtTime,
         // getWeightedNormalAtTime, getCurvatureAtTime
         // TODO: Remove _isTime handling in 1.0.0? (deprecated Jan 2016):
-        this[name + "At"] = function (location, _isTime) {
+        this[name + 'At'] = function (location, _isTime) {
           var values = this.getValues();
-          return Curve[name](
-            values,
-            _isTime ? location : Curve.getTimeAt(values, location)
-          );
+          return Curve[name](values, _isTime ? location : Curve.getTimeAt(values, location));
         };
 
-        this[name + "AtTime"] = function (time) {
+        this[name + 'AtTime'] = function (time) {
           return Curve[name](this.getValues(), time);
         };
       },
@@ -1704,7 +1598,7 @@ export const Curve = Base.extend(
             l = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3),
             s = l !== 0 ? 1 / l : 0,
             isZero = Numerical.isZero,
-            serpentine = "serpentine"; // short-cut
+            serpentine = 'serpentine'; // short-cut
           d1 *= s;
           d2 *= s;
           d3 *= s;
@@ -1715,11 +1609,8 @@ export const Curve = Base.extend(
               t2Ok = hasRoots && t2 > 0 && t2 < 1;
             // Degrade to arch for serpentine, cusp or loop if no solutions
             // within 0..1 are found. loop requires 2 solutions to be valid.
-            if (
-              hasRoots &&
-              (!(t1Ok || t2Ok) || (type === "loop" && !(t1Ok && t2Ok)))
-            ) {
-              type = "arch";
+            if (hasRoots && (!(t1Ok || t2Ok) || (type === 'loop' && !(t1Ok && t2Ok)))) {
+              type = 'arch';
               t1Ok = t2Ok = false;
             }
             return {
@@ -1738,19 +1629,19 @@ export const Curve = Base.extend(
           if (isZero(d1)) {
             return isZero(d2)
               ? // @ts-expect-error = Expected 3 arguments, but got 1
-                type(isZero(d3) ? "line" : "quadratic") // 5. / 4.
+                type(isZero(d3) ? 'line' : 'quadratic') // 5. / 4.
               : // @ts-expect-error = Expected 3 arguments, but got 2
                 type(serpentine, d3 / (3 * d2)); // 3b.
           }
           var d = 3 * d2 * d2 - 4 * d1 * d3;
           if (isZero(d)) {
             // @ts-expect-error = Expected 3 arguments, but got 2
-            return type("cusp", d2 / (2 * d1)); // 3a.
+            return type('cusp', d2 / (2 * d1)); // 3a.
           }
           var f1 = d > 0 ? Math.sqrt(d / 3) : Math.sqrt(-d),
             f2 = 2 * d1;
           return type(
-            d > 0 ? serpentine : "loop", // 1. / 2.
+            d > 0 ? serpentine : 'loop', // 1. / 2.
             (d2 + f1) / f2,
             (d2 - f1) / f2
           );
@@ -1775,12 +1666,7 @@ export const Curve = Base.extend(
               dy = c[7] - c[1]; // y3 - y0
             return Math.sqrt(dx * dx + dy * dy);
           }
-          return Numerical.integrate(
-            ds || getLengthIntegrand(v),
-            a,
-            b,
-            getIterations(a, b)
-          );
+          return Numerical.integrate(ds || getLengthIntegrand(v), a, b, getIterations(a, b));
         },
 
         getTimeAt: function (v, offset, start) {
@@ -1816,26 +1702,13 @@ export const Curve = Base.extend(
           // modifying start and calculating total length each time.
           function f(t) {
             // When start > t, the integration returns a negative value.
-            length += Numerical.integrate(
-              ds,
-              start,
-              t,
-              getIterations(start, t)
-            );
+            length += Numerical.integrate(ds, start, t, getIterations(start, t));
             start = t;
             return length - offset;
           }
           // Start with out initial guess for x.
           // NOTE: guess is a negative value when looking backwards.
-          return Numerical.findRoot(
-            f,
-            ds,
-            start + guess,
-            a,
-            b,
-            32,
-            /*#=*/ Numerical.EPSILON
-          );
+          return Numerical.findRoot(f, ds, start + guess, a, b, 32, /*#=*/ Numerical.EPSILON);
         },
 
         getPoint: function (v, t) {
@@ -1931,16 +1804,8 @@ export const Curve = Base.extend(
       //   which connects back to the beginning, but only if it's not part of
       //   a found overlap. The normal intersection will already be found at
       //   the beginning, and would be added twice otherwise.
-      if (
-        t1 !== null &&
-        t1 >= (excludeStart ? tMin : 0) &&
-        t1 <= (excludeEnd ? tMax : 1)
-      ) {
-        if (
-          t2 !== null &&
-          t2 >= (excludeEnd ? tMin : 0) &&
-          t2 <= (excludeStart ? tMax : 1)
-        ) {
+      if (t1 !== null && t1 >= (excludeStart ? tMin : 0) && t1 <= (excludeEnd ? tMax : 1)) {
+        if (t2 !== null && t2 >= (excludeEnd ? tMin : 0) && t2 <= (excludeStart ? tMax : 1)) {
           var loc1 = new CurveLocation4444(c1, t1, null, overlap),
             loc2 = new CurveLocation4444(c2, t2, null, overlap);
           // Link the two locations to each other.
@@ -1953,21 +1818,7 @@ export const Curve = Base.extend(
       }
     }
 
-    function addCurveIntersections(
-      v1,
-      v2,
-      c1,
-      c2,
-      locations,
-      include,
-      flip,
-      recursion,
-      calls,
-      tMin,
-      tMax,
-      uMin,
-      uMax
-    ) {
+    function addCurveIntersections(v1, v2, c1, c2, locations, include, flip, recursion, calls, tMin, tMax, uMin, uMax) {
       // Avoid deeper recursion, by counting the total amount of recursions,
       // as well as the total amount of calls, to avoid massive call-trees as
       // suggested by @iconexperience in #904#issuecomment-225283430.
@@ -2004,21 +1855,11 @@ export const Curve = Base.extend(
         tMaxClip;
       // Stop iteration if all points and control points are collinear.
       if (
-        (d1 === 0 &&
-          d2 === 0 &&
-          dp0 === 0 &&
-          dp1 === 0 &&
-          dp2 === 0 &&
-          dp3 === 0) ||
+        (d1 === 0 && d2 === 0 && dp0 === 0 && dp1 === 0 && dp2 === 0 && dp3 === 0) ||
         // Clip convex-hull with dMin and dMax, taking into account that
         // there will be no intersections if one of the results is null.
         (tMinClip = clipConvexHull(top, bottom, dMin, dMax)) == null ||
-        (tMaxClip = clipConvexHull(
-          top.reverse(),
-          bottom.reverse(),
-          dMin,
-          dMax
-        )) == null
+        (tMaxClip = clipConvexHull(top.reverse(), bottom.reverse(), dMin, dMax)) == null
       )
         return calls;
       // tMin and tMax are within the range (0, 1). Project it back to the
@@ -2030,14 +1871,7 @@ export const Curve = Base.extend(
         var t = (tMinNew + tMaxNew) / 2,
           u = (uMin + uMax) / 2;
         // @ts-expect-error = Expected 7 arguments, but got 6.
-        addLocation(
-          locations,
-          include,
-          flip ? c2 : c1,
-          flip ? u : t,
-          flip ? c1 : c2,
-          flip ? t : u
-        );
+        addLocation(locations, include, flip ? c2 : c1, flip ? u : t, flip ? c1 : c2, flip ? t : u);
       } else {
         // Apply the result of the clipping to curve 1:
         v1 = Curve.getPart(v1, tMinClip, tMaxClip);
@@ -2202,10 +2036,10 @@ export const Curve = Base.extend(
           distRatio >= 2
             ? [p0, p1, p3]
             : // p1 is inside, the hull is a triangle.
-            distRatio <= 0.5
-            ? [p0, p2, p3]
-            : // Hull is a quadrilateral, we need all lines in correct order.
-              [p0, p1, p2, p3],
+              distRatio <= 0.5
+              ? [p0, p2, p3]
+              : // Hull is a quadrilateral, we need all lines in correct order.
+                [p0, p1, p2, p3],
           // Line [p0, p3] is part of the hull.
           [p0, p3],
         ];
@@ -2239,9 +2073,7 @@ export const Curve = Base.extend(
         var qx = part[i][0],
           qy = part[i][1];
         if (top ? qy >= threshold : qy <= threshold) {
-          return qy === threshold
-            ? qx
-            : px + ((threshold - py) * (qx - px)) / (qy - py);
+          return qy === threshold ? qx : px + ((threshold - py) * (qx - px)) / (qy - py);
         }
         px = qx;
         py = qy;
@@ -2283,15 +2115,7 @@ export const Curve = Base.extend(
       return roots;
     }
 
-    function addCurveLineIntersections(
-      v1,
-      v2,
-      c1,
-      c2,
-      locations,
-      include,
-      flip
-    ) {
+    function addCurveLineIntersections(v1, v2, c1, c2, locations, include, flip) {
       // addCurveLineIntersections() is called so that v1 is always the curve
       // and v2 the line. flip indicates whether the curves need to be flipped
       // in the call to addLocation().
@@ -2312,39 +2136,16 @@ export const Curve = Base.extend(
           // Only use the time values if there was no recursion, and let
           // addLocation() figure out the actual time values otherwise.
           // @ts-expect-error = Expected 7 arguments, but got 6
-          addLocation(
-            locations,
-            include,
-            flip ? c2 : c1,
-            flip ? t2 : t1,
-            flip ? c1 : c2,
-            flip ? t1 : t2
-          );
+          addLocation(locations, include, flip ? c2 : c1, flip ? t2 : t1, flip ? c1 : c2, flip ? t1 : t2);
         }
       }
     }
 
     function addLineIntersection(v1, v2, c1, c2, locations, include) {
-      var pt = Line.intersect(
-        v1[0],
-        v1[1],
-        v1[6],
-        v1[7],
-        v2[0],
-        v2[1],
-        v2[6],
-        v2[7]
-      );
+      var pt = Line.intersect(v1[0], v1[1], v1[6], v1[7], v2[0], v2[1], v2[6], v2[7]);
       if (pt) {
         // @ts-expect-error = Expected 7 arguments, but got 6
-        addLocation(
-          locations,
-          include,
-          c1,
-          Curve.getTimeOf(v1, pt),
-          c2,
-          Curve.getTimeOf(v2, pt)
-        );
+        addLocation(locations, include, c1, Curve.getTimeOf(v1, pt), c2, Curve.getTimeOf(v2, pt));
       }
     }
 
@@ -2355,29 +2156,17 @@ export const Curve = Base.extend(
         max = Math.max;
 
       if (
-        max(v1[0], v1[2], v1[4], v1[6]) + epsilon >
-          min(v2[0], v2[2], v2[4], v2[6]) &&
-        min(v1[0], v1[2], v1[4], v1[6]) - epsilon <
-          max(v2[0], v2[2], v2[4], v2[6]) &&
-        max(v1[1], v1[3], v1[5], v1[7]) + epsilon >
-          min(v2[1], v2[3], v2[5], v2[7]) &&
-        min(v1[1], v1[3], v1[5], v1[7]) - epsilon <
-          max(v2[1], v2[3], v2[5], v2[7])
+        max(v1[0], v1[2], v1[4], v1[6]) + epsilon > min(v2[0], v2[2], v2[4], v2[6]) &&
+        min(v1[0], v1[2], v1[4], v1[6]) - epsilon < max(v2[0], v2[2], v2[4], v2[6]) &&
+        max(v1[1], v1[3], v1[5], v1[7]) + epsilon > min(v2[1], v2[3], v2[5], v2[7]) &&
+        min(v1[1], v1[3], v1[5], v1[7]) - epsilon < max(v2[1], v2[3], v2[5], v2[7])
       ) {
         // Now detect and handle overlaps:
         var overlaps = getOverlaps(v1, v2);
         if (overlaps) {
           for (var i = 0; i < 2; i++) {
             var overlap = overlaps[i];
-            addLocation(
-              locations,
-              include,
-              c1,
-              overlap[0],
-              c2,
-              overlap[1],
-              true
-            );
+            addLocation(locations, include, c1, overlap[0], c2, overlap[1], true);
           }
         } else {
           var straight1 = Curve.isStraight(v1),
@@ -2387,11 +2176,7 @@ export const Curve = Base.extend(
             before = locations.length;
           // Determine the correct intersection method based on whether
           // one or curves are straight lines:
-          (straight
-            ? addLineIntersection
-            : straight1 || straight2
-            ? addCurveLineIntersections
-            : addCurveIntersections)(
+          (straight ? addLineIntersection : straight1 || straight2 ? addCurveLineIntersections : addCurveIntersections)(
             flip ? v2 : v1,
             flip ? v1 : v2,
             flip ? c2 : c1,
@@ -2434,7 +2219,7 @@ export const Curve = Base.extend(
 
     function getSelfIntersection(v1, c1, locations, include) {
       var info = Curve.classify(v1);
-      if (info.type === "loop") {
+      if (info.type === 'loop') {
         var roots = info.roots;
         // @ts-expect-error = Expected 7 arguments, but got 6
         addLocation(locations, include, c1, roots[0], c1, roots[1]);
@@ -2442,14 +2227,7 @@ export const Curve = Base.extend(
       return locations;
     }
 
-    function getIntersections(
-      curves1,
-      curves2,
-      include,
-      matrix1,
-      matrix2,
-      _returnFirst
-    ) {
+    function getIntersections(curves1, curves2, include, matrix1, matrix2, _returnFirst) {
       var epsilon = /*#=*/ Numerical.GEOMETRIC_EPSILON,
         self = !curves2;
       if (self) curves2 = curves1;
@@ -2468,11 +2246,7 @@ export const Curve = Base.extend(
         }
       }
       // @ts-expect-error = Expected 4 arguments, but got 3
-      var boundsCollisions = CollisionDetection.findCurveBoundsCollisions(
-        values1,
-        values2,
-        epsilon
-      );
+      var boundsCollisions = CollisionDetection.findCurveBoundsCollisions(values1, values2, epsilon);
       for (var index1 = 0; index1 < length1; index1++) {
         var curve1 = curves1[index1],
           v1 = values1[index1];
@@ -2569,19 +2343,12 @@ export const Curve = Base.extend(
         var i1 = i & 1, // 0, 1, 0, 1
           i2 = i1 ^ 1, // 1, 0, 1, 0
           t1 = i >> 1, // 0, 0, 1, 1
-          t2 = Curve.getTimeOf(
-            v[i1],
-            new Point(v[i2][t1 ? 6 : 0], v[i2][t1 ? 7 : 1])
-          );
+          t2 = Curve.getTimeOf(v[i1], new Point(v[i2][t1 ? 6 : 0], v[i2][t1 ? 7 : 1]));
         if (t2 != null) {
           // If point is on curve
           var pair = i1 ? [t1, t2] : [t2, t1];
           // Filter out tiny overlaps.
-          if (
-            !pairs.length ||
-            (abs(pair[0] - pairs[0][0]) > timeEpsilon &&
-              abs(pair[1] - pairs[0][1]) > timeEpsilon)
-          ) {
+          if (!pairs.length || (abs(pair[0] - pairs[0][0]) > timeEpsilon && abs(pair[1] - pairs[0][1]) > timeEpsilon)) {
             pairs.push(pair);
           }
         }

@@ -10,13 +10,16 @@
  * All rights reserved.
  */
 
-import type { BlendMode as BlendModeType } from "~/canvas/BlendMode";
-import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
-import type { Project as ProjectType } from "~/item/Project";
-import type { View as ViewType } from "~/view/View";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { __options } from "~/options";
+import type { BlendMode as BlendModeType } from '~/canvas/BlendMode';
+import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
+import type { Project as ProjectType } from '~/item/Project';
+import type { View as ViewType } from '~/view/View';
+
+import { Base } from '~/straps';
+import { __options } from '~/options';
 
 // import { BlendMode } from "~/canvas/BlendMode";
 // import { CanvasProvider } from "~/canvas/CanvasProvider";
@@ -54,7 +57,7 @@ declare let paper4444;
  */
 export const PaperScope = Base.extend(
   /** @lends PaperScope# */ {
-    _class: "PaperScope",
+    _class: 'PaperScope',
 
     /**
      * Creates a PaperScope object.
@@ -90,7 +93,7 @@ export const PaperScope = Base.extend(
         // @ts-expect-error = Expected 3 arguments, but got 2
         var ctx = CanvasProvider4444.getContext(1, 1) || {};
         proto.support = {
-          nativeDash: "setLineDash" in ctx || "mozDash" in ctx,
+          nativeDash: 'setLineDash' in ctx || 'mozDash' in ctx,
           nativeBlendModes: BlendMode4444.nativeModes,
         };
         CanvasProvider4444.release(ctx);
@@ -100,7 +103,7 @@ export const PaperScope = Base.extend(
         var user = self.navigator.userAgent.toLowerCase(),
           // Detect basic platforms, only mac internally required for now.
           os = (/(darwin|win|mac|linux|freebsd|sunos)/.exec(user) || [])[0],
-          platform = os === "darwin" ? "mac" : os,
+          platform = os === 'darwin' ? 'mac' : os,
           agent: any = (proto.agent = proto.browser = { platform: platform });
         if (platform) agent[platform] = true;
         // Use replace() to get all matches, and deal with Chrome/Webkit
@@ -115,10 +118,10 @@ export const PaperScope = Base.extend(
           function (match, n, v1, v2, rv) {
             // Do not set additional browsers once chrome is detected.
             if (!agent.chrome) {
-              var v = n === "opera" ? v2 : /^(node|trident)$/.test(n) ? rv : v1;
+              var v = n === 'opera' ? v2 : /^(node|trident)$/.test(n) ? rv : v1;
               agent.version = v;
               agent.versionNumber = parseFloat(v);
-              n = { trident: "msie", jsdom: "node" }[n] || n;
+              n = { trident: 'msie', jsdom: 'node' }[n] || n;
               agent.name = n;
               agent[n] = true;
             }
@@ -251,7 +254,7 @@ export const PaperScope = Base.extend(
       // Define project, view and tool as getters that redirect to these
       // values on the PaperScope, so they are kept up to date
       var that = this;
-      Base.each(["project", "view", "tool"], function (key) {
+      Base.each(['project', 'view', 'tool'], function (key) {
         Base.define(scope, key, {
           configurable: true,
           get: function () {
@@ -263,8 +266,7 @@ export const PaperScope = Base.extend(
       // Do not use Base.each, since we also want to enumerate over
       // fields on PaperScope.prototype, e.g. all classes
       // Exclude all 'hidden' fields
-      for (var key in this)
-        if (!/^_/.test(key) && this[key]) scope[key] = this[key];
+      for (var key in this) if (!/^_/.test(key) && this[key]) scope[key] = this[key];
     },
 
     /**
@@ -318,9 +320,9 @@ export const PaperScope = Base.extend(
       // Produces helpers to e.g. check for both 'canvas' and
       // 'data-paper-canvas' attributes:
       function handleAttribute(name) {
-        name += "Attribute";
+        name += 'Attribute';
         return function (el, attr) {
-          return el[name](attr) || el[name]("data-paper-" + attr);
+          return el[name](attr) || el[name]('data-paper-' + attr);
         };
       }
 
@@ -338,8 +340,8 @@ export const PaperScope = Base.extend(
           return this._scopes[id] || null;
         },
 
-        getAttribute: handleAttribute("get"),
-        hasAttribute: handleAttribute("has"),
+        getAttribute: handleAttribute('get'),
+        hasAttribute: handleAttribute('has'),
       };
     })(),
   }

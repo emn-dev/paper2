@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
 
 /**
  * @name Emitter
@@ -20,7 +23,7 @@ import { Base } from "~/straps";
 export const Emitter = {
   on: function (type, func) {
     // If an object literal is passed, attach all callbacks defined in it
-    if (typeof type !== "string") {
+    if (typeof type !== 'string') {
       Base.each(
         type,
         function (value, key) {
@@ -38,8 +41,7 @@ export const Emitter = {
         handlers.push(func);
         // See if this is the first handler that we're attaching,
         // and call install if defined.
-        if (entry && entry.install && handlers.length === 1)
-          entry.install.call(this, type);
+        if (entry && entry.install && handlers.length === 1) entry.install.call(this, type);
       }
     }
     return this;
@@ -47,7 +49,7 @@ export const Emitter = {
 
   off: function (type, func) {
     // If an object literal is passed, detach all callbacks defined in it
-    if (typeof type !== "string") {
+    if (typeof type !== 'string') {
       Base.each(
         type,
         function (value, key) {
@@ -64,10 +66,7 @@ export const Emitter = {
     if (handlers) {
       // See if this is the last handler that we're detaching (or if we
       // are detaching all handlers), and call uninstall if defined.
-      if (
-        !func ||
-        ((index = handlers.indexOf(func)) !== -1 && handlers.length === 1)
-      ) {
+      if (!func || ((index = handlers.indexOf(func)) !== -1 && handlers.length === 1)) {
         if (entry && entry.uninstall) entry.uninstall.call(this, type);
         // Delete handlers entry again, so responds() returns false.
         delete this._callbacks[type];
@@ -116,14 +115,14 @@ export const Emitter = {
   },
 
   // Keep deprecated methods around from previous Callback interface.
-  attach: "#on",
-  detach: "#off",
-  fire: "#emit",
+  attach: '#on',
+  detach: '#off',
+  fire: '#emit',
 
   _installEvents: function (install) {
     var types = this._eventTypes,
       handlers = this._callbacks,
-      key = install ? "install" : "uninstall";
+      key = install ? 'install' : 'uninstall';
     if (types) {
       for (var type in handlers) {
         if (handlers[type].length > 0) {
@@ -149,7 +148,7 @@ export const Emitter = {
         // entries represented by these on*-names in _events.
         var types = {};
         Base.each(events, function (entry, key) {
-          var isString = typeof entry === "string",
+          var isString = typeof entry === 'string',
             name = isString ? entry : key,
             part = Base.capitalize(name),
             type = name.substring(2).toLowerCase();
@@ -157,11 +156,11 @@ export const Emitter = {
           types[type] = isString ? {} : entry;
           // Create getters and setters for the property
           // with the on*-name name:
-          name = "_" + name;
-          src["get" + part] = function () {
+          name = '_' + name;
+          src['get' + part] = function () {
             return this[name];
           };
-          src["set" + part] = function (func) {
+          src['set' + part] = function (func) {
             // Detach the previous event, if there was one.
             var prev = this[name];
             if (prev) this.off(type, prev);

@@ -10,9 +10,12 @@
  * All rights reserved.
  */
 
-import { LinkedPoint, Point } from "~/basic/Point";
-import { Rectangle } from "~/basic/Rectangle";
-import { TextItem } from "./TextItem";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { LinkedPoint, Point } from '~/basic/Point';
+import { Rectangle } from '~/basic/Rectangle';
+import { TextItem } from './TextItem';
 
 /**
  * @name PointText
@@ -25,7 +28,7 @@ import { TextItem } from "./TextItem";
  */
 export const PointText = TextItem.extend(
   /** @lends PointText# */ {
-    _class: "PointText",
+    _class: 'PointText',
 
     /**
      * Creates a point text item
@@ -73,7 +76,7 @@ export const PointText = TextItem.extend(
       // Se Item#getPosition for an explanation why we create new LinkedPoint
       // objects each time.
       var point = this._matrix.getTranslation();
-      return new LinkedPoint(point.x, point.y, this, "setPoint");
+      return new LinkedPoint(point.x, point.y, this, 'setPoint');
     },
 
     setPoint: function (/* point */) {
@@ -98,7 +101,7 @@ export const PointText = TextItem.extend(
         var line = lines[i];
         if (hasFill) {
           ctx.fillText(line, 0, 0);
-          ctx.shadowColor = "rgba(0,0,0,0)";
+          ctx.shadowColor = 'rgba(0,0,0,0)';
         }
         if (hasStroke) ctx.strokeText(line, 0, 0);
         ctx.translate(0, leading);
@@ -114,16 +117,10 @@ export const PointText = TextItem.extend(
         width = this.getView().getTextWidth(style.getFontStyle(), lines),
         x = 0;
       // Adjust for different justifications.
-      if (justification !== "left")
-        x -= width / (justification === "center" ? 2 : 1);
+      if (justification !== 'left') x -= width / (justification === 'center' ? 2 : 1);
       // Until we don't have baseline measuring, assume 1 / 4 leading as a
       // rough guess:
-      var rect = new Rectangle(
-        x,
-        numLines ? -0.75 * leading : 0,
-        width,
-        numLines * leading
-      );
+      var rect = new Rectangle(x, numLines ? -0.75 * leading : 0, width, numLines * leading);
       return matrix ? matrix._transformBounds(rect, rect) : rect;
     },
   }

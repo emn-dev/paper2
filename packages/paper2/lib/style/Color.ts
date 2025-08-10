@@ -10,12 +10,15 @@
  * All rights reserved.
  */
 
-import { CanvasProvider } from "~/canvas/CanvasProvider";
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Change } from "~/item/ChangeFlag";
-import { Formatter } from "~/util/Formatter";
-import { Gradient } from "./Gradient";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { CanvasProvider } from '~/canvas/CanvasProvider';
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Change } from '~/item/ChangeFlag';
+import { Formatter } from '~/util/Formatter';
+import { Gradient } from './Gradient';
 
 /**
  * @name Color
@@ -52,11 +55,11 @@ export const Color = Base.extend(
   new (function () {
     // Link color types to component indices and types:
     var types = {
-      gray: ["gray"],
-      rgb: ["red", "green", "blue"],
-      hsb: ["hue", "saturation", "brightness"],
-      hsl: ["hue", "saturation", "lightness"],
-      gradient: ["gradient", "origin", "destination", "highlight"],
+      gray: ['gray'],
+      rgb: ['red', 'green', 'blue'],
+      hsb: ['hue', 'saturation', 'brightness'],
+      hsl: ['hue', 'saturation', 'lightness'],
+      gradient: ['gradient', 'origin', 'destination', 'highlight'],
     };
 
     // Parsers of values for setters, by type and property
@@ -71,10 +74,9 @@ export const Color = Base.extend(
 
     function fromCSS(string) {
       var match =
-          string.match(
-            /^#([\da-f]{2})([\da-f]{2})([\da-f]{2})([\da-f]{2})?$/i
-          ) || string.match(/^#([\da-f])([\da-f])([\da-f])([\da-f])?$/i),
-        type = "rgb",
+          string.match(/^#([\da-f]{2})([\da-f]{2})([\da-f]{2})([\da-f]{2})?$/i) ||
+          string.match(/^#([\da-f])([\da-f])([\da-f])([\da-f])?$/i),
+        type = 'rgb',
         components;
       if (match) {
         // Hex with optional alpha channel:
@@ -82,14 +84,13 @@ export const Color = Base.extend(
         components = new Array(amount);
         for (var i = 0; i < amount; i++) {
           var value = match[i + 1];
-          components[i] =
-            parseInt(value.length == 1 ? value + value : value, 16) / 255;
+          components[i] = parseInt(value.length == 1 ? value + value : value, 16) / 255;
         }
       } else if ((match = string.match(/^(rgb|hsl)a?\((.*)\)$/))) {
         // RGB / RGBA or HSL / HSLA
         type = match[1];
         components = match[2].trim().split(/[,\s]+/g);
-        var isHSL = type === "hsl";
+        var isHSL = type === 'hsl';
         for (var i = 0, l = Math.min(components.length, 4); i < l; i++) {
           var component = components[i];
           // Use `parseFloat()` instead of `+value` to parse '\d+%' to
@@ -127,23 +128,19 @@ export const Color = Base.extend(
               colorCtx = CanvasProvider.getContext(1, 1, {
                 willReadFrequently: true,
               });
-              colorCtx.globalCompositeOperation = "copy";
+              colorCtx.globalCompositeOperation = 'copy';
             }
             // Set the current fillStyle to transparent, so that it will be
             // transparent instead of the previously set color in case the
             // new color can not be interpreted.
-            colorCtx.fillStyle = "rgba(0,0,0,0)";
+            colorCtx.fillStyle = 'rgba(0,0,0,0)';
             // Set the fillStyle of the context to the passed name and fill
             // the canvas with it, then retrieve the data for the drawn
             // pixel:
             colorCtx.fillStyle = string;
             colorCtx.fillRect(0, 0, 1, 1);
             var data = colorCtx.getImageData(0, 0, 1, 1).data;
-            color = namedColors[string] = [
-              data[0] / 255,
-              data[1] / 255,
-              data[2] / 255,
-            ];
+            color = namedColors[string] = [data[0] / 255, data[1] / 255, data[2] / 255];
           } else {
             // Web-workers can't resolve CSS color names, for now.
             // TODO: Find a way to make this work there too?
@@ -170,22 +167,19 @@ export const Color = Base.extend(
     // The components are passed as an arguments list, and returned as an array.
     // alpha is left out, because the conversion does not change it.
     var converters = {
-      "rgb-hsb": function (r, g, b) {
+      'rgb-hsb': function (r, g, b) {
         var max = Math.max(r, g, b),
           min = Math.min(r, g, b),
           delta = max - min,
           h =
             delta === 0
               ? 0
-              : (max == r
-                  ? (g - b) / delta + (g < b ? 6 : 0)
-                  : max == g
-                  ? (b - r) / delta + 2
-                  : (r - g) / delta + 4) * 60; // max == b
+              : (max == r ? (g - b) / delta + (g < b ? 6 : 0) : max == g ? (b - r) / delta + 2 : (r - g) / delta + 4) *
+                60; // max == b
         return [h, max === 0 ? 0 : delta / max, max];
       },
 
-      "hsb-rgb": function (h, s, b) {
+      'hsb-rgb': function (h, s, b) {
         // Scale h to 0..6 with modulo for negative values too
         h = (((h / 60) % 6) + 6) % 6;
         var i = Math.floor(h), // 0..5
@@ -203,28 +197,21 @@ export const Color = Base.extend(
 
       // HSL code is based on:
       // http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
-      "rgb-hsl": function (r, g, b) {
+      'rgb-hsl': function (r, g, b) {
         var max = Math.max(r, g, b),
           min = Math.min(r, g, b),
           delta = max - min,
           achromatic = delta === 0,
           h = achromatic
             ? 0
-            : (max == r
-                ? (g - b) / delta + (g < b ? 6 : 0)
-                : max == g
-                ? (b - r) / delta + 2
-                : (r - g) / delta + 4) * 60, // max == b
+            : (max == r ? (g - b) / delta + (g < b ? 6 : 0) : max == g ? (b - r) / delta + 2 : (r - g) / delta + 4) *
+              60, // max == b
           l = (max + min) / 2,
-          s = achromatic
-            ? 0
-            : l < 0.5
-            ? delta / (max + min)
-            : delta / (2 - max - min);
+          s = achromatic ? 0 : l < 0.5 ? delta / (max + min) : delta / (2 - max - min);
         return [h, s, l];
       },
 
-      "hsl-rgb": function (h, s, l) {
+      'hsl-rgb': function (h, s, l) {
         // Scale h to 0..1 with modulo for negative values too
         h = (((h / 360) % 1) + 1) % 1;
         if (s === 0) return [l, l, l];
@@ -240,40 +227,40 @@ export const Color = Base.extend(
             6 * t3 < 1
               ? t1 + (t2 - t1) * 6 * t3
               : 2 * t3 < 1
-              ? t2
-              : 3 * t3 < 2
-              ? t1 + (t2 - t1) * (2 / 3 - t3) * 6
-              : t1;
+                ? t2
+                : 3 * t3 < 2
+                  ? t1 + (t2 - t1) * (2 / 3 - t3) * 6
+                  : t1;
         }
         return c;
       },
 
-      "rgb-gray": function (r, g, b) {
+      'rgb-gray': function (r, g, b) {
         // Using the standard NTSC conversion formula that is used for
         // calculating the effective luminance of an RGB color:
         // http://www.mathworks.com/support/solutions/en/data/1-1ASCU/index.html?solution=1-1ASCU
         return [r * 0.2989 + g * 0.587 + b * 0.114];
       },
 
-      "gray-rgb": function (g) {
+      'gray-rgb': function (g) {
         return [g, g, g];
       },
 
-      "gray-hsb": function (g) {
+      'gray-hsb': function (g) {
         return [0, 0, g];
       },
 
-      "gray-hsl": function (g) {
+      'gray-hsl': function (g) {
         // TODO: Is lightness really the same as brightness for gray?
         return [0, 0, g];
       },
 
-      "gradient-rgb": function (/* gradient */) {
+      'gradient-rgb': function (/* gradient */) {
         // TODO: Implement
         return [];
       },
 
-      "rgb-gradient": function (/* r, g, b */) {
+      'rgb-gradient': function (/* r, g, b */) {
         // TODO: Implement
         return [];
       },
@@ -298,16 +285,12 @@ export const Color = Base.extend(
               hasOverlap = /^(hue|saturation)$/.test(name),
               // Produce value parser function for the given type / property
               parser = (componentParsers[type][index] =
-                type === "gradient"
-                  ? name === "gradient"
+                type === 'gradient'
+                  ? name === 'gradient'
                     ? // gradient property of gradient color:
                       function (value) {
                         var current = this._components[0];
-                        value = Gradient.read(
-                          Array.isArray(value) ? value : arguments,
-                          0,
-                          { readNull: true }
-                        );
+                        value = Gradient.read(Array.isArray(value) ? value : arguments, 0, { readNull: true });
                         if (current !== value) {
                           if (current) current._removeOwner(this);
                           if (value) value._addOwner(this);
@@ -317,7 +300,7 @@ export const Color = Base.extend(
                     : // all other (point) properties of gradient color:
                       function (/* value */) {
                         return Point.read(arguments, 0, {
-                          readNull: name === "highlight",
+                          readNull: name === 'highlight',
                           clone: true,
                         });
                       }
@@ -329,19 +312,15 @@ export const Color = Base.extend(
                       // while isNaN(undefined) is true.
                       return value == null || isNaN(value) ? 0 : +value;
                     });
-            this["get" + part] = function () {
-              return this._type === type ||
-                (hasOverlap && /^hs[bl]$/.test(this._type))
+            this['get' + part] = function () {
+              return this._type === type || (hasOverlap && /^hs[bl]$/.test(this._type))
                 ? this._components[index]
                 : this._convert(type)[index];
             };
 
-            this["set" + part] = function (value) {
+            this['set' + part] = function (value) {
               // Convert to the requrested type before setting the value
-              if (
-                this._type !== type &&
-                !(hasOverlap && /^hs[bl]$/.test(this._type))
-              ) {
+              if (this._type !== type && !(hasOverlap && /^hs[bl]$/.test(this._type))) {
                 this._components = this._convert(type);
                 this._properties = types[type];
                 this._type = type;
@@ -354,7 +333,7 @@ export const Color = Base.extend(
         );
       },
       /** @lends Color# */ {
-        _class: "Color",
+        _class: 'Color',
         // Tell Base.read that the Point constructor supports reading with index
         _readIndex: true,
 
@@ -585,7 +564,7 @@ export const Color = Base.extend(
           // First see if it's a type string argument, and if so, set it and
           // shift it out of the arguments list.
           var argType = arg != null && typeof arg;
-          if (argType === "string" && arg in types) {
+          if (argType === 'string' && arg in types) {
             type = arg;
             arg = args[1];
             if (Array.isArray(arg)) {
@@ -604,12 +583,12 @@ export const Color = Base.extend(
           if (!components) {
             // Determine if there is a values array
             values =
-              argType === "number"
+              argType === 'number'
                 ? args
                 : // Do not use Array.isArray() to also support arguments
-                argType === "object" && arg.length != null
-                ? arg
-                : null;
+                  argType === 'object' && arg.length != null
+                  ? arg
+                  : null;
             // The various branches below produces a values array if the
             // values still need parsing, and a components array if they are
             // already parsed.
@@ -618,16 +597,14 @@ export const Color = Base.extend(
                 // type = values.length >= 4
                 //      ? 'cmyk'
                 //      : values.length >= 3
-                type = values.length >= 3 ? "rgb" : "gray";
+                type = values.length >= 3 ? 'rgb' : 'gray';
               var length = types[type].length;
               alpha = values[length];
               if (reading) {
-                read +=
-                  values === arguments ? length + (alpha != null ? 1 : 0) : 1;
+                read += values === arguments ? length + (alpha != null ? 1 : 0) : 1;
               }
-              if (values.length > length)
-                values = Base.slice(values, 0, length);
-            } else if (argType === "string") {
+              if (values.length > length) values = Base.slice(values, 0, length);
+            } else if (argType === 'string') {
               var converted = fromCSS(arg);
               type = converted[0];
               components = converted[1];
@@ -635,12 +612,12 @@ export const Color = Base.extend(
                 alpha = components[3];
                 components.length--;
               }
-            } else if (argType === "object") {
+            } else if (argType === 'object') {
               if (arg.constructor === Color) {
                 type = arg._type;
                 components = arg._components.slice();
                 alpha = arg._alpha;
-                if (type === "gradient") {
+                if (type === 'gradient') {
                   // Clone all points, since they belong to the other
                   // color already.
                   for (var i = 1, l = components.length; i < l; i++) {
@@ -649,20 +626,20 @@ export const Color = Base.extend(
                   }
                 }
               } else if (arg.constructor === Gradient) {
-                type = "gradient";
+                type = 'gradient';
                 values = args;
               } else {
                 // Determine type by presence of object property names
                 type =
-                  "hue" in arg
-                    ? "lightness" in arg
-                      ? "hsl"
-                      : "hsb"
-                    : "gradient" in arg || "stops" in arg || "radial" in arg
-                    ? "gradient"
-                    : "gray" in arg
-                    ? "gray"
-                    : "rgb";
+                  'hue' in arg
+                    ? 'lightness' in arg
+                      ? 'hsl'
+                      : 'hsb'
+                    : 'gradient' in arg || 'stops' in arg || 'radial' in arg
+                      ? 'gradient'
+                      : 'gray' in arg
+                        ? 'gray'
+                        : 'rgb';
                 // Convert to array and parse in one loop, for efficiency
                 var properties = types[type],
                   parsers = componentParsers[type];
@@ -672,12 +649,7 @@ export const Color = Base.extend(
                   // Allow implicit definition of gradients through
                   // stops / radial properties. Conversion happens
                   // here on the fly:
-                  if (
-                    value == null &&
-                    !i &&
-                    type === "gradient" &&
-                    "stops" in arg
-                  ) {
+                  if (value == null && !i && type === 'gradient' && 'stops' in arg) {
                     value = {
                       stops: arg.stops,
                       radial: arg.radial,
@@ -692,7 +664,7 @@ export const Color = Base.extend(
             if (reading && type) read = 1;
           }
           // Default fallbacks: rgb, black
-          this._type = type || "rgb";
+          this._type = type || 'rgb';
           if (!components) {
             // Produce a components array now, and parse values. Even if no
             // values are defined, parsers are still called to produce
@@ -720,15 +692,13 @@ export const Color = Base.extend(
          * @param {...*} values
          * @return {Color}
          */
-        set: "#initialize",
+        set: '#initialize',
 
         _serialize: function (options, dictionary) {
           var components = this.getComponents();
           return Base.serialize(
             // We can omit the type for gray and rgb:
-            /^(gray|rgb)$/.test(this._type)
-              ? components
-              : [this._type].concat(components),
+            /^(gray|rgb)$/.test(this._type) ? components : [this._type].concat(components),
             options,
             true,
             dictionary
@@ -756,13 +726,10 @@ export const Color = Base.extend(
           var converter;
           return this._type === type
             ? this._components.slice()
-            : (converter = converters[this._type + "-" + type])
-            ? converter.apply(this, this._components)
-            : // Convert to and from rgb if no direct converter exists
-              converters["rgb-" + type].apply(
-                this,
-                converters[this._type + "-rgb"].apply(this, this._components)
-              );
+            : (converter = converters[this._type + '-' + type])
+              ? converter.apply(this, this._components)
+              : // Convert to and from rgb if no direct converter exists
+                converters['rgb-' + type].apply(this, converters[this._type + '-rgb'].apply(this, this._components));
         },
 
         /**
@@ -858,9 +825,7 @@ export const Color = Base.extend(
          * @return {Boolean} {@true if the colors are the same}
          */
         equals: function (color) {
-          var col = Base.isPlainValue(color, true)
-            ? Color.read(arguments)
-            : color;
+          var col = Base.isPlainValue(color, true) ? Color.read(arguments) : color;
           return (
             col === this ||
             (col &&
@@ -890,18 +855,14 @@ export const Color = Base.extend(
         toString: function () {
           var properties = this._properties,
             parts = [],
-            isGradient = this._type === "gradient",
+            isGradient = this._type === 'gradient',
             f = Formatter.instance;
           for (var i = 0, l = properties.length; i < l; i++) {
             var value = this._components[i];
-            if (value != null)
-              parts.push(
-                properties[i] + ": " + (isGradient ? value : f.number(value))
-              );
+            if (value != null) parts.push(properties[i] + ': ' + (isGradient ? value : f.number(value)));
           }
-          if (this._alpha != null)
-            parts.push("alpha: " + f.number(this._alpha));
-          return "{ " + parts.join(", ") + " }";
+          if (this._alpha != null) parts.push('alpha: ' + f.number(this._alpha));
+          return '{ ' + parts.join(', ') + ' }';
         },
 
         /**
@@ -913,37 +874,22 @@ export const Color = Base.extend(
          */
         toCSS: function (hex) {
           // TODO: Support HSL / HSLA CSS3 colors directly, without conversion
-          var components = this._convert("rgb"),
+          var components = this._convert('rgb'),
             alpha = hex || this._alpha == null ? 1 : this._alpha;
           function convert(val) {
             return Math.round((val < 0 ? 0 : val > 1 ? 1 : val) * 255);
           }
-          components = [
-            convert(components[0]),
-            convert(components[1]),
-            convert(components[2]),
-          ];
+          components = [convert(components[0]), convert(components[1]), convert(components[2])];
           if (alpha < 1) components.push(alpha < 0 ? 0 : alpha);
           return hex
-            ? "#" +
-                (
-                  (1 << 24) +
-                  (components[0] << 16) +
-                  (components[1] << 8) +
-                  components[2]
-                )
-                  .toString(16)
-                  .slice(1)
-            : (components.length == 4 ? "rgba(" : "rgb(") +
-                components.join(",") +
-                ")";
+            ? '#' + ((1 << 24) + (components[0] << 16) + (components[1] << 8) + components[2]).toString(16).slice(1)
+            : (components.length == 4 ? 'rgba(' : 'rgb(') + components.join(',') + ')';
         },
 
         toCanvasStyle: function (ctx, matrix) {
           if (this._canvasStyle) return this._canvasStyle;
           // Normal colors are simply represented by their CSS string.
-          if (this._type !== "gradient")
-            return (this._canvasStyle = this.toCSS());
+          if (this._type !== 'gradient') return (this._canvasStyle = this.toCSS());
           // Gradient code form here onwards
           var components = this._components,
             gradient = components[0],
@@ -965,25 +911,12 @@ export const Color = Base.extend(
             var radius = destination.getDistance(origin);
             if (highlight) {
               var vector = highlight.subtract(origin);
-              if (vector.getLength() > radius)
-                highlight = origin.add(vector.normalize(radius - 0.1));
+              if (vector.getLength() > radius) highlight = origin.add(vector.normalize(radius - 0.1));
             }
             var start = highlight || origin;
-            canvasGradient = ctx.createRadialGradient(
-              start.x,
-              start.y,
-              0,
-              origin.x,
-              origin.y,
-              radius
-            );
+            canvasGradient = ctx.createRadialGradient(start.x, start.y, 0, origin.x, origin.y, radius);
           } else {
-            canvasGradient = ctx.createLinearGradient(
-              origin.x,
-              origin.y,
-              destination.x,
-              destination.y
-            );
+            canvasGradient = ctx.createLinearGradient(origin.x, origin.y, destination.x, destination.y);
           }
           for (var i = 0, l = stops.length; i < l; i++) {
             var stop = stops[i],
@@ -992,10 +925,7 @@ export const Color = Base.extend(
             // calculation.
             // NOTE: that if _offset is 0 for the first entry, the fall-back
             // will be so too.
-            canvasGradient.addColorStop(
-              offset == null ? i / (l - 1) : offset,
-              stop._color.toCanvasStyle()
-            );
+            canvasGradient.addColorStop(offset == null ? i / (l - 1) : offset, stop._color.toCanvasStyle());
           }
           return (this._canvasStyle = canvasGradient);
         },
@@ -1006,7 +936,7 @@ export const Color = Base.extend(
          * @param {Matrix} matrix the matrix to transform the gradient color by
          */
         transform: function (matrix) {
-          if (this._type === "gradient") {
+          if (this._type === 'gradient') {
             var components = this._components;
             for (var i = 1, l = components.length; i < l; i++) {
               var point = components[i];
@@ -1302,13 +1232,8 @@ export const Color = Base.extend(
           var type = this._type,
             components1 = this._components,
             components2 = color._convert(type);
-          for (var i = 0, l = components1.length; i < l; i++)
-            components2[i] = operator(components1[i], components2[i]);
-          return new Color(
-            type,
-            components2,
-            this._alpha != null ? operator(this._alpha, color.getAlpha()) : null
-          );
+          for (var i = 0, l = components1.length; i < l; i++) components2[i] = operator(components1[i], components2[i]);
+          return new Color(type, components2, this._alpha != null ? operator(this._alpha, color.getAlpha()) : null);
         };
       },
       /** @lends Color# */ {

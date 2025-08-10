@@ -10,6 +10,9 @@
  * All rights reserved.
  */
 
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
 export const ChangeFlag = {
   // Anything affecting the appearance of an item, including GEOMETRY,
   // STROKE, STYLE and ATTRIBUTE (except for the invisible ones: locked, name)

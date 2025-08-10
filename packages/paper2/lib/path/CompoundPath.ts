@@ -10,11 +10,14 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Item } from "~/item/Item";
-import { Path } from "./Path";
-import { PathItem } from "./PathItem";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Item } from '~/item/Item';
+import { Path } from './Path';
+import { PathItem } from './PathItem';
 /**
  * @name CompoundPath
  *
@@ -32,7 +35,7 @@ import { PathItem } from "./PathItem";
  */
 export const CompoundPath = PathItem.extend(
   /** @lends CompoundPath# */ {
-    _class: "CompoundPath",
+    _class: 'CompoundPath',
     _serializeFields: {
       children: [],
     },
@@ -107,7 +110,7 @@ export const CompoundPath = PathItem.extend(
       this._children = [];
       this._namedChildren = {};
       if (!this._initialize(arg)) {
-        if (typeof arg === "string") {
+        if (typeof arg === 'string') {
           this.setPathData(arg);
         } else {
           this.addChildren(Array.isArray(arg) ? arg : arguments);
@@ -121,7 +124,7 @@ export const CompoundPath = PathItem.extend(
       // notation for compound-paths.
       var list = items,
         first = list[0];
-      if (first && typeof first[0] === "number") list = [list];
+      if (first && typeof first[0] === 'number') list = [list];
       // Perform some conversions depending on the type of item passed:
       // Convert array-notation to paths, and expand compound-paths in the
       // items list by adding their children to the it replacing their parent.
@@ -258,8 +261,7 @@ export const CompoundPath = PathItem.extend(
     getArea: function () {
       var children = this._children,
         area = 0;
-      for (var i = 0, l = children.length; i < l; i++)
-        area += children[i].getArea();
+      for (var i = 0, l = children.length; i < l; i++) area += children[i].getArea();
       return area;
     },
 
@@ -273,8 +275,7 @@ export const CompoundPath = PathItem.extend(
     getLength: function () {
       var children = this._children,
         length = 0;
-      for (var i = 0, l = children.length; i < l; i++)
-        length += children[i].getLength();
+      for (var i = 0, l = children.length; i < l; i++) length += children[i].getLength();
       return length;
     },
 
@@ -285,14 +286,9 @@ export const CompoundPath = PathItem.extend(
       for (var i = 0, l = children.length; i < l; i++) {
         var child = children[i],
           mx = child._matrix;
-        paths.push(
-          child.getPathData(
-            _matrix && !mx.isIdentity() ? _matrix.appended(mx) : _matrix,
-            _precision
-          )
-        );
+        paths.push(child.getPathData(_matrix && !mx.isIdentity() ? _matrix.appended(mx) : _matrix, _precision));
       }
-      return paths.join("");
+      return paths.join('');
     },
 
     _hitTestChildren: function _hitTestChildren(point, options, viewMatrix) {
@@ -303,9 +299,7 @@ export const CompoundPath = PathItem.extend(
         // options.class == Path, do not test children for fill, since a
         // compound path forms one shape.
         // Also support legacy format `type: 'path'`.
-        options.class === Path || options.type === "path"
-          ? options
-          : Base.set({}, options, { fill: false }),
+        options.class === Path || options.type === 'path' ? options : Base.set({}, options, { fill: false }),
         viewMatrix
       );
     },
@@ -317,15 +311,14 @@ export const CompoundPath = PathItem.extend(
 
       param = param.extend({ dontStart: true, dontFinish: true });
       ctx.beginPath();
-      for (var i = 0, l = children.length; i < l; i++)
-        children[i].draw(ctx, param, strokeMatrix);
+      for (var i = 0, l = children.length; i < l; i++) children[i].draw(ctx, param, strokeMatrix);
 
       if (!param.clip) {
         this._setStyles(ctx, param, viewMatrix);
         var style = this._style;
         if (style.hasFill()) {
           ctx.fill(style.getFillRule());
-          ctx.shadowColor = "rgba(0,0,0,0)";
+          ctx.shadowColor = 'rgba(0,0,0,0)';
         }
         if (style.hasStroke()) ctx.stroke();
       }
@@ -339,10 +332,7 @@ export const CompoundPath = PathItem.extend(
         // Do not draw this child now if it's separately marked as selected,
         // as it would be drawn twice otherwise.
         if (!selectionItems[child._id]) {
-          child._drawSelected(
-            ctx,
-            mx.isIdentity() ? matrix : matrix.appended(mx)
-          );
+          child._drawSelected(ctx, mx.isIdentity() ? matrix : matrix.appended(mx));
         }
       }
     },
@@ -356,24 +346,23 @@ export const CompoundPath = PathItem.extend(
      */
     function getCurrentPath(that, check) {
       var children = that._children;
-      if (check && !children.length)
-        throw new Error("Use a moveTo() command first");
+      if (check && !children.length) throw new Error('Use a moveTo() command first');
       return children[children.length - 1];
     }
 
     // Redirect all other drawing commands to the current path
     return Base.each(
       [
-        "lineTo",
-        "cubicCurveTo",
-        "quadraticCurveTo",
-        "curveTo",
-        "arcTo",
-        "lineBy",
-        "cubicCurveBy",
-        "quadraticCurveBy",
-        "curveBy",
-        "arcBy",
+        'lineTo',
+        'cubicCurveTo',
+        'quadraticCurveTo',
+        'curveTo',
+        'arcTo',
+        'lineBy',
+        'cubicCurveBy',
+        'quadraticCurveBy',
+        'curveBy',
+        'arcBy',
       ],
       function (key) {
         this[key] = function () {
@@ -389,8 +378,7 @@ export const CompoundPath = PathItem.extend(
           // @ts-expect-error = Expected 2 arguments, but got 1
           var current = getCurrentPath(this),
             // Reuse current path if nothing was added yet
-            path =
-              current && current.isEmpty() ? current : new Path(Item.NO_INSERT);
+            path = current && current.isEmpty() ? current : new Path(Item.NO_INSERT);
           if (path !== current) this.addChild(path);
           path.moveTo.apply(path, arguments);
         },
@@ -409,7 +397,7 @@ export const CompoundPath = PathItem.extend(
     );
   })(),
   Base.each(
-    ["reverse", "flatten", "simplify", "smooth"],
+    ['reverse', 'flatten', 'simplify', 'smooth'],
     function (key) {
       // Injection scope for methods forwarded to the child paths.
       // NOTE: Documentation is in PathItem

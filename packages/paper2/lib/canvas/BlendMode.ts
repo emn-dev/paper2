@@ -10,8 +10,11 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { CanvasProvider } from "./CanvasProvider";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { CanvasProvider } from './CanvasProvider';
 
 export const BlendMode = new (function () {
   var min = Math.min,
@@ -108,21 +111,12 @@ export const BlendMode = new (function () {
     // B(Cb, Cs) = HardLight(Cs, Cb)
     overlay: function () {
       // = Reverse of hard-light
-      dr =
-        br < 128
-          ? (2 * br * sr) / 255
-          : 255 - (2 * (255 - br) * (255 - sr)) / 255;
-      dg =
-        bg < 128
-          ? (2 * bg * sg) / 255
-          : 255 - (2 * (255 - bg) * (255 - sg)) / 255;
-      db =
-        bb < 128
-          ? (2 * bb * sb) / 255
-          : 255 - (2 * (255 - bb) * (255 - sb)) / 255;
+      dr = br < 128 ? (2 * br * sr) / 255 : 255 - (2 * (255 - br) * (255 - sr)) / 255;
+      dg = bg < 128 ? (2 * bg * sg) / 255 : 255 - (2 * (255 - bg) * (255 - sg)) / 255;
+      db = bb < 128 ? (2 * bb * sb) / 255 : 255 - (2 * (255 - bb) * (255 - sb)) / 255;
     },
 
-    "soft-light": function () {
+    'soft-light': function () {
       var t = (sr * br) / 255;
       dr = t + (br * (255 - ((255 - br) * (255 - sr)) / 255 - t)) / 255;
       t = (sg * bg) / 255;
@@ -133,25 +127,16 @@ export const BlendMode = new (function () {
 
     // if (Cs <= 0.5) B(Cb, Cs) = Multiply(Cb, 2 x Cs)
     // else B(Cb, Cs) = Screen(Cb, 2 x Cs -1)
-    "hard-light": function () {
-      dr =
-        sr < 128
-          ? (2 * sr * br) / 255
-          : 255 - (2 * (255 - sr) * (255 - br)) / 255;
-      dg =
-        sg < 128
-          ? (2 * sg * bg) / 255
-          : 255 - (2 * (255 - sg) * (255 - bg)) / 255;
-      db =
-        sb < 128
-          ? (2 * sb * bb) / 255
-          : 255 - (2 * (255 - sb) * (255 - bb)) / 255;
+    'hard-light': function () {
+      dr = sr < 128 ? (2 * sr * br) / 255 : 255 - (2 * (255 - sr) * (255 - br)) / 255;
+      dg = sg < 128 ? (2 * sg * bg) / 255 : 255 - (2 * (255 - sg) * (255 - bg)) / 255;
+      db = sb < 128 ? (2 * sb * bb) / 255 : 255 - (2 * (255 - sb) * (255 - bb)) / 255;
     },
 
     // if (Cb == 0) B(Cb, Cs) = 0
     // else if (Cs == 1) B(Cb, Cs) = 1
     // else B(Cb, Cs) = min(1, Cb / (1 - Cs))
-    "color-dodge": function () {
+    'color-dodge': function () {
       dr = br === 0 ? 0 : sr === 255 ? 255 : min(255, (255 * br) / (255 - sr));
       dg = bg === 0 ? 0 : sg === 255 ? 255 : min(255, (255 * bg) / (255 - sg));
       db = bb === 0 ? 0 : sb === 255 ? 255 : min(255, (255 * bb) / (255 - sb));
@@ -160,13 +145,10 @@ export const BlendMode = new (function () {
     // if (Cb == 1) B(Cb, Cs) = 1
     // else if (Cs == 0) B(Cb, Cs) = 0
     // else B(Cb, Cs) = 1 - min(1, (1 - Cb) / Cs)
-    "color-burn": function () {
-      dr =
-        br === 255 ? 255 : sr === 0 ? 0 : max(0, 255 - ((255 - br) * 255) / sr);
-      dg =
-        bg === 255 ? 255 : sg === 0 ? 0 : max(0, 255 - ((255 - bg) * 255) / sg);
-      db =
-        bb === 255 ? 255 : sb === 0 ? 0 : max(0, 255 - ((255 - bb) * 255) / sb);
+    'color-burn': function () {
+      dr = br === 255 ? 255 : sr === 0 ? 0 : max(0, 255 - ((255 - br) * 255) / sr);
+      dg = bg === 255 ? 255 : sg === 0 ? 0 : max(0, 255 - ((255 - bg) * 255) / sg);
+      db = bb === 255 ? 255 : sb === 0 ? 0 : max(0, 255 - ((255 - bb) * 255) / sb);
     },
 
     //  B(Cb, Cs) = min(Cb, Cs)
@@ -249,18 +231,18 @@ export const BlendMode = new (function () {
   // The canvas composite modes are always natively supported:
   var nativeModes = (this.nativeModes = Base.each(
     [
-      "source-over",
-      "source-in",
-      "source-out",
-      "source-atop",
-      "destination-over",
-      "destination-in",
-      "destination-out",
-      "destination-atop",
-      "lighter",
-      "darker",
-      "copy",
-      "xor",
+      'source-over',
+      'source-in',
+      'source-out',
+      'source-atop',
+      'destination-over',
+      'destination-in',
+      'destination-out',
+      'destination-atop',
+      'lighter',
+      'darker',
+      'copy',
+      'xor',
     ],
     function (mode) {
       this[mode] = true;
@@ -276,7 +258,7 @@ export const BlendMode = new (function () {
     Base.each(modes, function (func, mode) {
       // Blend #330000 (51) and #aa0000 (170):
       // Multiplying should lead to #220000 (34)
-      var darken = mode === "darken",
+      var darken = mode === 'darken',
         ok = false;
       ctx.save();
       // FF 3.6 throws exception when setting globalCompositeOperation to
@@ -284,11 +266,11 @@ export const BlendMode = new (function () {
       try {
         // For darken we need to reverse color parameters in order to
         // test mode.
-        ctx.fillStyle = darken ? "#300" : "#a00";
+        ctx.fillStyle = darken ? '#300' : '#a00';
         ctx.fillRect(0, 0, 1, 1);
         ctx.globalCompositeOperation = mode;
         if (ctx.globalCompositeOperation === mode) {
-          ctx.fillStyle = darken ? "#a00" : "#300";
+          ctx.fillStyle = darken ? '#a00' : '#300';
           ctx.fillRect(0, 0, 1, 1);
           // @ts-expect-error = Type 'number' is not assignable to type 'boolean'
           ok = ctx.getImageData(0, 0, 1, 1).data[0] !== darken ? 170 : 51;
@@ -302,7 +284,7 @@ export const BlendMode = new (function () {
 
   this.process = function (mode, srcContext, dstContext, alpha, offset) {
     var srcCanvas = srcContext.canvas,
-      normal = mode === "normal";
+      normal = mode === 'normal';
     // Use native blend-modes if supported, and fall back to emulation.
     if (normal || nativeModes[mode]) {
       dstContext.save();
@@ -316,19 +298,9 @@ export const BlendMode = new (function () {
     } else {
       var process = modes[mode];
       if (!process) return;
-      var dstData = dstContext.getImageData(
-          offset.x,
-          offset.y,
-          srcCanvas.width,
-          srcCanvas.height
-        ),
+      var dstData = dstContext.getImageData(offset.x, offset.y, srcCanvas.width, srcCanvas.height),
         dst = dstData.data,
-        src = srcContext.getImageData(
-          0,
-          0,
-          srcCanvas.width,
-          srcCanvas.height
-        ).data;
+        src = srcContext.getImageData(0, 0, srcCanvas.width, srcCanvas.height).data;
       for (var i = 0, l = dst.length; i < l; i += 4) {
         sr = src[i];
         br = dst[i];

@@ -10,14 +10,17 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Size } from "~/basic/Size";
-import { DomEvent } from "~/dom/DomEvent";
-import { Color } from "~/style/Color";
-import { Tool } from "~/tool/Tool";
-import { PaperScope } from "./PaperScope";
-import { Http } from "~/net/Http";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Size } from '~/basic/Size';
+import { DomEvent } from '~/dom/DomEvent';
+import { Color } from '~/style/Color';
+import { Tool } from '~/tool/Tool';
+import { PaperScope } from './PaperScope';
+import { Http } from '~/net/Http';
 
 declare let paper4444;
 
@@ -46,7 +49,7 @@ if (process.env.PAPER2_FULL) {
       acorn = exports = module = {};
 
       // /*#*/ include("../../node_modules/acorn/acorn.js", { exports: false });
-      acorn = await import("acorn");
+      acorn = await import('acorn');
 
       // Clear object again if it wasn't loaded here; for load.js, see below.
       if (!acorn.version) acorn = null;
@@ -66,27 +69,27 @@ if (process.env.PAPER2_FULL) {
 
     var binaryOperators = {
       // The hidden math methods are to be injected specifically, see below.
-      "+": "__add",
-      "-": "__subtract",
-      "*": "__multiply",
-      "/": "__divide",
-      "%": "__modulo",
-      "==": "__equals",
-      "!=": "__equals",
+      '+': '__add',
+      '-': '__subtract',
+      '*': '__multiply',
+      '/': '__divide',
+      '%': '__modulo',
+      '==': '__equals',
+      '!=': '__equals',
     };
 
     var unaryOperators = {
-      "-": "__negate",
-      "+": "__self",
+      '-': '__negate',
+      '+': '__self',
     };
 
     // Inject underscored math methods as aliases to Point, Size and Color.
     var fields = Base.each(
-      ["add", "subtract", "multiply", "divide", "modulo", "equals", "negate"],
+      ['add', 'subtract', 'multiply', 'divide', 'modulo', 'equals', 'negate'],
       function (name) {
         // Create an alias for each math method to be injected into the
         // classes using Straps.js' #inject()
-        this["__" + name] = "#" + name;
+        this['__' + name] = '#' + name;
       },
       {
         // Needed for '+' unary operator:
@@ -108,22 +111,22 @@ if (process.env.PAPER2_FULL) {
       var handler = binaryOperators[operator];
       if (left && left[handler]) {
         var res = left[handler](right);
-        return operator === "!=" ? !res : res;
+        return operator === '!=' ? !res : res;
       }
       switch (operator) {
-        case "+":
+        case '+':
           return left + right;
-        case "-":
+        case '-':
           return left - right;
-        case "*":
+        case '*':
           return left * right;
-        case "/":
+        case '/':
           return left / right;
-        case "%":
+        case '%':
           return left % right;
-        case "==":
+        case '==':
           return left == right;
-        case "!=":
+        case '!=':
           return left != right;
       }
     }
@@ -133,9 +136,9 @@ if (process.env.PAPER2_FULL) {
       var handler = unaryOperators[operator];
       if (value && value[handler]) return value[handler]();
       switch (operator) {
-        case "+":
+        case '+':
           return +value;
-        case "-":
+        case '-':
           return -value;
       }
     }
@@ -159,7 +162,7 @@ if (process.env.PAPER2_FULL) {
      *     into JavaScript code along with source-maps and other information.
      */
     function compile(code, options) {
-      if (!code) return "";
+      if (!code) return '';
       options = options || {};
       // Use Acorn or Esprima to translate the code into an AST structure
       // which is then walked and parsed for operators to overload. Instead of
@@ -186,18 +189,12 @@ if (process.env.PAPER2_FULL) {
 
       // Returns the node's code as a string, taking insertions into account.
       function getCode(node) {
-        return code.substring(
-          getOffset(node.range[0]),
-          getOffset(node.range[1])
-        );
+        return code.substring(getOffset(node.range[0]), getOffset(node.range[1]));
       }
 
       // Returns the code between two nodes, e.g. an operator and white-space.
       function getBetween(left, right) {
-        return code.substring(
-          getOffset(left.range[1]),
-          getOffset(right.range[0])
-        );
+        return code.substring(getOffset(left.range[1]), getOffset(right.range[0]));
       }
 
       // Replaces the node's code with a new version and keeps insertions
@@ -219,110 +216,86 @@ if (process.env.PAPER2_FULL) {
 
       function handleOverloading(node, parent) {
         switch (node.type) {
-          case "UnaryExpression": // -a
-            if (
-              node.operator in unaryOperators &&
-              node.argument.type !== "Literal"
-            ) {
+          case 'UnaryExpression': // -a
+            if (node.operator in unaryOperators && node.argument.type !== 'Literal') {
               var arg = getCode(node.argument);
-              replaceCode(node, '$__("' + node.operator + '", ' + arg + ")");
+              replaceCode(node, '$__("' + node.operator + '", ' + arg + ')');
             }
             break;
-          case "BinaryExpression": // a + b, a - b, a / b, a * b, a == b, ...
-            if (
-              node.operator in binaryOperators &&
-              node.left.type !== "Literal"
-            ) {
+          case 'BinaryExpression': // a + b, a - b, a / b, a * b, a == b, ...
+            if (node.operator in binaryOperators && node.left.type !== 'Literal') {
               var left = getCode(node.left),
                 right = getCode(node.right),
                 between = getBetween(node.left, node.right),
                 operator = node.operator;
               replaceCode(
                 node,
-                "__$__(" +
+                '__$__(' +
                   left +
-                  "," +
+                  ',' +
                   // To preserve line-breaks, get the code in between
                   // left & right, and replace the occurrence of the
                   // operator with its string counterpart:
-                  between.replace(
-                    new RegExp("\\" + operator),
-                    '"' + operator + '"'
-                  ) +
-                  ", " +
+                  between.replace(new RegExp('\\' + operator), '"' + operator + '"') +
+                  ', ' +
                   right +
-                  ")"
+                  ')'
               );
             }
             break;
-          case "UpdateExpression": // a++, a--, ++a, --a
-          case "AssignmentExpression": /// a += b, a -= b
+          case 'UpdateExpression': // a++, a--, ++a, --a
+          case 'AssignmentExpression': /// a += b, a -= b
             var parentType = parent && parent.type;
             if (
               !(
                 // Filter out for statements to allow loop increments
                 // to perform well
                 (
-                  parentType === "ForStatement" ||
+                  parentType === 'ForStatement' ||
                   // We need to filter out parents that are comparison
                   // operators, e.g. for situations like `if (++i < 1)`,
                   // as we can't replace that with
                   // `if (__$__(i, "+", 1) < 1)`
                   // Match any operator beginning with =, !, < and >.
-                  (parentType === "BinaryExpression" &&
-                    /^[=!<>]/.test(parent.operator)) ||
+                  (parentType === 'BinaryExpression' && /^[=!<>]/.test(parent.operator)) ||
                   // array[i++] is a MemberExpression with computed = true
                   // We can't replace that with array[__$__(i, "+", 1)].
-                  (parentType === "MemberExpression" && parent.computed)
+                  (parentType === 'MemberExpression' && parent.computed)
                 )
               )
             ) {
-              if (node.type === "UpdateExpression") {
+              if (node.type === 'UpdateExpression') {
                 var arg = getCode(node.argument),
-                  exp = "__$__(" + arg + ', "' + node.operator[0] + '", 1)',
-                  str = arg + " = " + exp;
+                  exp = '__$__(' + arg + ', "' + node.operator[0] + '", 1)',
+                  str = arg + ' = ' + exp;
                 if (node.prefix) {
                   // A prefixed update expression (++a / --a),
                   // wrap expression in paranthesis. See #1611
-                  str = "(" + str + ")";
+                  str = '(' + str + ')';
                 } else if (
                   // A suffixed update expression (a++, a--),
                   // assign the old value before updating it.
                   // See #691, #1450
-                  parentType === "AssignmentExpression" ||
-                  parentType === "VariableDeclarator" ||
-                  parentType === "BinaryExpression"
+                  parentType === 'AssignmentExpression' ||
+                  parentType === 'VariableDeclarator' ||
+                  parentType === 'BinaryExpression'
                 ) {
                   // Handle special case where the old value is
                   // assigned to itself, and the expression is just
                   // executed after, e.g.: `var x = ***; x = x++;`
                   if (getCode(parent.left || parent.id) === arg) str = exp;
-                  str = arg + "; " + str;
+                  str = arg + '; ' + str;
                 }
                 replaceCode(node, str);
               } else {
                 // AssignmentExpression
-                if (
-                  /^.=$/.test(node.operator) &&
-                  node.left.type !== "Literal"
-                ) {
+                if (/^.=$/.test(node.operator) && node.left.type !== 'Literal') {
                   var left = getCode(node.left),
                     right = getCode(node.right),
-                    exp =
-                      left +
-                      " = __$__(" +
-                      left +
-                      ', "' +
-                      node.operator[0] +
-                      '", ' +
-                      right +
-                      ")";
+                    exp = left + ' = __$__(' + left + ', "' + node.operator[0] + '", ' + right + ')';
                   // If the original expression is wrapped in
                   // parenthesis, do the same with the replacement:
-                  replaceCode(
-                    node,
-                    /^\(.*\)$/.test(getCode(node)) ? "(" + exp + ")" : exp
-                  );
+                  replaceCode(node, /^\(.*\)$/.test(getCode(node)) ? '(' + exp + ')' : exp);
                 }
               }
             }
@@ -332,16 +305,16 @@ if (process.env.PAPER2_FULL) {
 
       function handleExports(node) {
         switch (node.type) {
-          case "ExportDefaultDeclaration":
+          case 'ExportDefaultDeclaration':
             // Convert `export default` to `module.exports = ` statements:
             replaceCode(
               {
                 range: [node.start, node.declaration.start],
               },
-              "module.exports = "
+              'module.exports = '
             );
             break;
-          case "ExportNamedDeclaration":
+          case 'ExportNamedDeclaration':
             // Convert named exports to `module.exports.NAME = NAME;`
             // statements both for new declarations and existing specifiers:
             var declaration = node.declaration;
@@ -350,25 +323,22 @@ if (process.env.PAPER2_FULL) {
               var declarations = declaration.declarations;
               if (declarations) {
                 declarations.forEach(function (dec) {
-                  replaceCode(dec, "module.exports." + getCode(dec));
+                  replaceCode(dec, 'module.exports.' + getCode(dec));
                 });
                 replaceCode(
                   {
-                    range: [
-                      node.start,
-                      declaration.start + declaration.kind.length,
-                    ],
+                    range: [node.start, declaration.start + declaration.kind.length],
                   },
-                  ""
+                  ''
                 );
               }
             } else if (specifiers) {
               var exports = specifiers
                 .map(function (specifier) {
                   var name = getCode(specifier);
-                  return "module.exports." + name + " = " + name + "; ";
+                  return 'module.exports.' + name + ' = ' + name + '; ';
                 })
-                .join("");
+                .join('');
               if (exports) {
                 replaceCode(node, exports);
               }
@@ -384,13 +354,13 @@ if (process.env.PAPER2_FULL) {
           // loop over each property of the node and filter out fields we
           // don't need to consider...
           for (var key in node) {
-            if (key !== "range" && key !== "loc") {
+            if (key !== 'range' && key !== 'loc') {
               var value = node[key];
               if (Array.isArray(value)) {
                 for (var i = 0, l = value.length; i < l; i++) {
                   walkAST(value[i], node, paperFeatures);
                 }
-              } else if (value && typeof value === "object") {
+              } else if (value && typeof value === 'object') {
                 // Don't use Base.isPlainObject() for these since
                 // Acorn.js uses its own internal prototypes now.
                 walkAST(value, node, paperFeatures);
@@ -410,9 +380,8 @@ if (process.env.PAPER2_FULL) {
       // Encodes a Variable Length Quantity as a Base64 string.
       // See: https://www.html5rocks.com/en/tutorials/developertools/sourcemaps/
       function encodeVLQ(value) {
-        var res = "",
-          base64 =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        var res = '',
+          base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
         value = (Math.abs(value) << 1) + (value < 0 ? 1 : 0);
         while (value || !res) {
           var next = value & (32 - 1);
@@ -423,7 +392,7 @@ if (process.env.PAPER2_FULL) {
         return res;
       }
 
-      var url = options.url || "",
+      var url = options.url || '',
         sourceMaps = options.sourceMaps,
         paperFeatures = options.paperFeatures || {},
         // Include the original code in the sourceMap if there is no linked
@@ -451,11 +420,10 @@ if (process.env.PAPER2_FULL) {
         } else if (window && url && !window.location.href.indexOf(url)) {
           // If the code stems from the actual html page, determine the
           // offset of inlined code.
-          var html = document.getElementsByTagName("html")[0].innerHTML;
+          var html = document.getElementsByTagName('html')[0].innerHTML;
           // Count the amount of line breaks in the html before this code
           // to determine the offset.
-          offset =
-            html.substr(0, html.indexOf(code) + 1).match(lineBreaks).length + 1;
+          offset = html.substr(0, html.indexOf(code) + 1).match(lineBreaks).length + 1;
         }
         // A hack required by older versions of browsers to align inlined
         // code: Instead of starting the mappings at the given offset, we
@@ -469,11 +437,10 @@ if (process.env.PAPER2_FULL) {
             (agent.firefox && version >= 40) ||
             agent.node
           );
-        var mappings = ["AA" + encodeVLQ(offsetCode ? 0 : offset) + "A"];
+        var mappings = ['AA' + encodeVLQ(offsetCode ? 0 : offset) + 'A'];
         // Create empty entries by the amount of lines + 1, so join can be
         // used below to produce the actual instructions that many times.
-        mappings.length =
-          (code.match(lineBreaks) || []).length + 1 + (offsetCode ? offset : 0);
+        mappings.length = (code.match(lineBreaks) || []).length + 1 + (offsetCode ? offset : 0);
         map = {
           version: 3,
           file: url,
@@ -483,22 +450,19 @@ if (process.env.PAPER2_FULL) {
           // mappings string that increments by one between each line.
           // AACA is the instruction to increment the line by one.
           // TODO: Add support for column offsets!
-          mappings: mappings.join(";AACA"),
-          sourceRoot: "",
+          mappings: mappings.join(';AACA'),
+          sourceRoot: '',
           sources: [url],
           sourcesContent: [source],
         };
       }
-      if (
-        paperFeatures.operatorOverloading !== false ||
-        paperFeatures.moduleExports !== false
-      ) {
+      if (paperFeatures.operatorOverloading !== false || paperFeatures.moduleExports !== false) {
         // Now do the parsing magic
         walkAST(
           parse(code, {
             ranges: true,
             preserveParens: true,
-            sourceType: "module",
+            sourceType: 'module',
           }),
           null,
           paperFeatures
@@ -508,14 +472,14 @@ if (process.env.PAPER2_FULL) {
         if (offsetCode) {
           // Adjust the line offset of the resulting code if required.
           // This is part of a browser hack, see above.
-          code = new Array(offset + 1).join("\n") + code;
+          code = new Array(offset + 1).join('\n') + code;
         }
         if (/^(inline|both)$/.test(sourceMaps)) {
           code +=
-            "\n//# sourceMappingURL=data:application/json;base64," +
+            '\n//# sourceMappingURL=data:application/json;base64,' +
             self.btoa(unescape(encodeURIComponent(JSON.stringify(map))));
         }
-        code += "\n//# sourceURL=" + (url || "paperscript");
+        code += '\n//# sourceURL=' + (url || 'paperscript');
       }
       return {
         url: url,
@@ -553,8 +517,7 @@ if (process.env.PAPER2_FULL) {
         // resembling a global tool handler is contained in the code, but
         // no tool objects are actually created.
         tool =
-          /\btool\.\w+|\s+on(?:Key|Mouse)(?:Up|Down|Move|Drag)\b/.test(code) &&
-          !/\bnew\s+Tool\b/.test(code)
+          /\btool\.\w+|\s+on(?:Key|Mouse)(?:Up|Down|Move|Drag)\b/.test(code) && !/\bnew\s+Tool\b/.test(code)
             ? new Tool()
             : null,
         toolHandlers = tool ? tool._events : [],
@@ -563,7 +526,7 @@ if (process.env.PAPER2_FULL) {
         // undefined arguments, so that their name exists, rather than
         // injecting a code line that defines them as variables. They are
         // exported again at the end of the function.
-        handlers = ["onFrame", "onResize"].concat(toolHandlers),
+        handlers = ['onFrame', 'onResize'].concat(toolHandlers),
         // compile a list of parameter names for all variables that need to
         // appear as globals inside the script. At the same time, also
         // collect their values, so we can pass them on as arguments in the
@@ -571,7 +534,7 @@ if (process.env.PAPER2_FULL) {
         params = [],
         args = [],
         func,
-        compiled = typeof code === "object" ? code : compile(code, options);
+        compiled = typeof code === 'object' ? code : compile(code, options);
       code = compiled.code;
       function expose(scope, hidden) {
         // Look through all enumerable properties on the scope and expose
@@ -582,9 +545,7 @@ if (process.env.PAPER2_FULL) {
           // match ^ longer, so include that specifically too.
           if (
             (hidden || !/^_/.test(key)) &&
-            new RegExp(
-              "([\\b\\s\\W]|^)" + key.replace(/\$/g, "\\$") + "\\b"
-            ).test(code)
+            new RegExp('([\\b\\s\\W]|^)' + key.replace(/\$/g, '\\$') + '\\b').test(code)
           ) {
             params.push(key);
             args.push(scope[key]);
@@ -595,7 +556,7 @@ if (process.env.PAPER2_FULL) {
       // @ts-expect-error
       expose(scope);
       // Add a fake `module.exports` object so PaperScripts can export things.
-      code = "var module = { exports: {} }; " + code;
+      code = 'var module = { exports: {} }; ' + code;
       // Finally define the handler variable names as parameters and compose
       // the string describing the properties for the returned exports object
       // at the end of the code execution, so we can retrieve their values
@@ -605,43 +566,34 @@ if (process.env.PAPER2_FULL) {
         function (key) {
           // Check for each handler explicitly and only export them if they
           // seem to exist.
-          if (new RegExp("\\s+" + key + "\\b").test(code)) {
+          if (new RegExp('\\s+' + key + '\\b').test(code)) {
             params.push(key);
-            this.push("module.exports." + key + " = " + key + ";");
+            this.push('module.exports.' + key + ' = ' + key + ';');
           }
         },
         []
-      ).join("\n");
+      ).join('\n');
       // Add the setting of the exported handlers to the end of the code.
       if (exports) {
-        code += "\n" + exports;
+        code += '\n' + exports;
       }
       // End by returning `module.exports` at the end of the generated code:
-      code += "\nreturn module.exports;";
+      code += '\nreturn module.exports;';
       var agent = paper4444.agent;
-      if (
-        document &&
-        (agent.chrome || (agent.firefox && agent.versionNumber < 40))
-      ) {
+      if (document && (agent.chrome || (agent.firefox && agent.versionNumber < 40))) {
         // On older Firefox, all error numbers inside dynamically compiled
         // code are relative to the line where the eval / compilation
         // happened. To fix this issue, we're temporarily inserting a new
         // script tag.
         // We also use this on Chrome to fix issues with compiled functions:
         // https://code.google.com/p/chromium/issues/detail?id=331655
-        var script = document.createElement("script"),
-          head = document.head || document.getElementsByTagName("head")[0];
+        var script = document.createElement('script'),
+          head = document.head || document.getElementsByTagName('head')[0];
         // Add a new-line before the code on Firefox since the error
         // messages appear to be aligned to line number 0...
-        if (agent.firefox) code = "\n" + code;
+        if (agent.firefox) code = '\n' + code;
         script.appendChild(
-          document.createTextNode(
-            "document.__paperscript__ = function(" +
-              params +
-              ") {" +
-              code +
-              "\n}"
-          )
+          document.createTextNode('document.__paperscript__ = function(' + params + ') {' + code + '\n}')
         );
         head.appendChild(script);
         // @ts-expect-error = does not exist
@@ -664,7 +616,7 @@ if (process.env.PAPER2_FULL) {
         if (obj.onResize) view.setOnResize(obj.onResize);
         // Emit resize event directly, so any user
         // defined resize handlers are called.
-        view.emit("resize", {
+        view.emit('resize', {
           size: view.size,
           delta: new Point(),
         });
@@ -680,32 +632,26 @@ if (process.env.PAPER2_FULL) {
     function loadScript(script) {
       // Only load this script if it not loaded already.
       // Support both text/paperscript and text/x-paperscript:
-      if (
-        /^text\/(?:x-|)paperscript$/.test(script.type) &&
-        PaperScope.getAttribute(script, "ignore") !== "true"
-      ) {
+      if (/^text\/(?:x-|)paperscript$/.test(script.type) && PaperScope.getAttribute(script, 'ignore') !== 'true') {
         // Produce a new PaperScope for this script now. Scopes are cheap so
         // let's not worry about the initial one that was already created.
         // Define an id for each PaperScript, so its scope can be retrieved
         // through PaperScope.get().
         // If a canvas id is provided, pass it on to the PaperScope so a
         // project is created for it now.
-        var canvasId = PaperScope.getAttribute(script, "canvas"),
+        var canvasId = PaperScope.getAttribute(script, 'canvas'),
           canvas = document.getElementById(canvasId),
           // To avoid possible duplicate browser requests for PaperScript
           // files, support the data-src attribute as well as src:
           // TODO: Consider switching from data-paper- to data- prefix
           // in PaperScope.getAttribute() and use it here too:
-          src = script.src || script.getAttribute("data-src"),
-          async = PaperScope.hasAttribute(script, "async"),
-          scopeAttribute = "data-paper-scope";
-        if (!canvas)
-          throw new Error('Unable to find canvas with id "' + canvasId + '"');
+          src = script.src || script.getAttribute('data-src'),
+          async = PaperScope.hasAttribute(script, 'async'),
+          scopeAttribute = 'data-paper-scope';
+        if (!canvas) throw new Error('Unable to find canvas with id "' + canvasId + '"');
         // See if there already is a scope for this canvas and reuse it, to
         // support multiple scripts per canvas. Otherwise create a new one.
-        var scope =
-          PaperScope.get(canvas.getAttribute(scopeAttribute)) ||
-          new PaperScope().setup(canvas);
+        var scope = PaperScope.get(canvas.getAttribute(scopeAttribute)) || new PaperScope().setup(canvas);
         // Link the element to this scope, so we can reuse the scope when
         // compiling multiple scripts for the same element.
         canvas.setAttribute(scopeAttribute, scope._id);
@@ -719,7 +665,7 @@ if (process.env.PAPER2_FULL) {
           Http.request({
             url: src,
             async: async,
-            mimeType: "text/plain",
+            mimeType: 'text/plain',
             onLoad: function (code) {
               execute(code, scope, src);
             },
@@ -729,16 +675,13 @@ if (process.env.PAPER2_FULL) {
           execute(script.innerHTML, scope, script.baseURI);
         }
         // Mark script as loaded now.
-        script.setAttribute("data-paper-ignore", "true");
+        script.setAttribute('data-paper-ignore', 'true');
         return scope;
       }
     }
 
     function loadAll() {
-      Base.each(
-        document && document.getElementsByTagName("script"),
-        loadScript
-      );
+      Base.each(document && document.getElementsByTagName('script'), loadScript);
     }
 
     /**
@@ -765,7 +708,7 @@ if (process.env.PAPER2_FULL) {
     if (window) {
       // Catch cases where paper.js is loaded after the browser event has
       // already occurred.
-      if (document.readyState === "complete") {
+      if (document.readyState === 'complete') {
         // Handle it asynchronously
         setTimeout(loadAll);
       } else {

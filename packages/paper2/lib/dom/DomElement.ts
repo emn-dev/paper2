@@ -10,8 +10,11 @@
  * All rights reserved.
  */
 
-import { Rectangle } from "~/basic/Rectangle";
-import { Size } from "~/basic/Size";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Rectangle } from '~/basic/Rectangle';
+import { Size } from '~/basic/Size';
 
 /**
  * @name DomElement
@@ -22,7 +25,7 @@ import { Size } from "~/basic/Size";
 export const DomElement = new (function () {
   // Handles both getting and setting of vendor prefix values
   function handlePrefix(el, name, set, value) {
-    var prefixes = ["", "webkit", "moz", "Moz", "ms", "o"],
+    var prefixes = ['', 'webkit', 'moz', 'Moz', 'ms', 'o'],
       suffix = name[0].toUpperCase() + name.substring(1);
     for (var i = 0; i < 6; i++) {
       var prefix = prefixes[i],
@@ -43,7 +46,7 @@ export const DomElement = new (function () {
       // If el is a document (nodeType == 9), use it directly
       var doc = el && el.nodeType !== 9 ? el.ownerDocument : el,
         view = doc && doc.defaultView;
-      return view && view.getComputedStyle(el, "");
+      return view && view.getComputedStyle(el, '');
     },
 
     getBounds: function (el, viewport) {
@@ -73,12 +76,7 @@ export const DomElement = new (function () {
       var doc = el.ownerDocument,
         view = doc.defaultView,
         html = doc.documentElement;
-      return new Rectangle(
-        0,
-        0,
-        view.innerWidth || html.clientWidth,
-        view.innerHeight || html.clientHeight
-      );
+      return new Rectangle(0, 0, view.innerWidth || html.clientWidth, view.innerHeight || html.clientHeight);
     },
 
     getOffset: function (el, viewport) {
@@ -102,12 +100,7 @@ export const DomElement = new (function () {
     isInView: function (el) {
       // See if the viewport bounds intersect with the windows rectangle
       // which always starts at 0, 0
-      return (
-        !DomElement.isInvisible(el) &&
-        DomElement.getViewportBounds(el).intersects(
-          DomElement.getBounds(el, true)
-        )
-      );
+      return !DomElement.isInvisible(el) && DomElement.getViewportBounds(el).intersects(DomElement.getBounds(el, true));
     },
 
     /**
@@ -127,7 +120,7 @@ export const DomElement = new (function () {
     },
 
     setPrefixed: function (el, name, value) {
-      if (typeof name === "object") {
+      if (typeof name === 'object') {
         for (var key in name) handlePrefix(el, key, true, name[key]);
       } else {
         handlePrefix(el, name, true, value);

@@ -10,16 +10,19 @@
  * All rights reserved.
  */
 
-import type { HitResult as HitResultType } from "./HitResult";
-import type { Path as PathType } from "~/path/Path";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
 
-import { Base } from "~/straps";
-import { Point } from "~/basic/Point";
-import { Rectangle } from "~/basic/Rectangle";
-import { LinkedSize, Size } from "~/basic/Size";
-import { Numerical } from "~/util/Numerical";
-import { Change } from "./ChangeFlag";
-import { Item } from "./Item";
+import type { HitResult as HitResultType } from './HitResult';
+import type { Path as PathType } from '~/path/Path';
+
+import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
+import { Rectangle } from '~/basic/Rectangle';
+import { LinkedSize, Size } from '~/basic/Size';
+import { Numerical } from '~/util/Numerical';
+import { Change } from './ChangeFlag';
+import { Item } from './Item';
 
 // import { HitResult } from "./HitResult";
 // import { Path } from "~/path/Path";
@@ -38,7 +41,7 @@ declare let paper4444;
  */
 export const Shape = Item.extend(
   /** @lends Shape# */ {
-    _class: "Shape",
+    _class: 'Shape',
     _applyMatrix: false,
     _canApplyMatrix: false,
     _canScaleStroke: true,
@@ -87,8 +90,8 @@ export const Shape = Item.extend(
      * @bean
      * @deprecated use {@link #type} instead.
      */
-    getShape: "#getType",
-    setShape: "#setType",
+    getShape: '#getType',
+    setShape: '#setType',
 
     /**
      * The size of the shape.
@@ -98,7 +101,7 @@ export const Shape = Item.extend(
      */
     getSize: function () {
       var size = this._size;
-      return new LinkedSize(size.width, size.height, this, "setSize");
+      return new LinkedSize(size.width, size.height, this, 'setSize');
     },
 
     setSize: function (/* size */) {
@@ -110,15 +113,15 @@ export const Shape = Item.extend(
         var type = this._type,
           width = size.width,
           height = size.height;
-        if (type === "rectangle") {
+        if (type === 'rectangle') {
           // Shrink radius accordingly
           this._radius.set(Size.min(this._radius, size.divide(2).abs()));
-        } else if (type === "circle") {
+        } else if (type === 'circle') {
           // Use average of width and height as new size, then calculate
           // radius as a number from that:
           width = height = (width + height) / 2;
           this._radius = width / 2;
-        } else if (type === "ellipse") {
+        } else if (type === 'ellipse') {
           // The radius is a size.
           this._radius._set(width / 2, height / 2);
         }
@@ -136,14 +139,12 @@ export const Shape = Item.extend(
      */
     getRadius: function () {
       var rad = this._radius;
-      return this._type === "circle"
-        ? rad
-        : new LinkedSize(rad.width, rad.height, this, "setRadius");
+      return this._type === 'circle' ? rad : new LinkedSize(rad.width, rad.height, this, 'setRadius');
     },
 
     setRadius: function (radius) {
       var type = this._type;
-      if (type === "circle") {
+      if (type === 'circle') {
         if (radius === this._radius) return;
         var size = radius * 2;
         this._radius = radius;
@@ -156,12 +157,12 @@ export const Shape = Item.extend(
         } else {
           if (this._radius.equals(radius)) return;
           this._radius.set(radius);
-          if (type === "rectangle") {
+          if (type === 'rectangle') {
             // Grow size accordingly
             // @ts-expect-error = Subsequent variable declarations must have the same type
             var size = Size.max(this._size, radius.multiply(2));
             this._size.set(size);
-          } else if (type === "ellipse") {
+          } else if (type === 'ellipse') {
             this._size._set(radius.width * 2, radius.height * 2);
           }
         }
@@ -205,7 +206,7 @@ export const Shape = Item.extend(
       return path;
     },
 
-    toShape: "#clone",
+    toShape: '#clone',
 
     _asPathItem: function () {
       return this.toPath(false);
@@ -220,7 +221,7 @@ export const Shape = Item.extend(
       if (hasFill || hasStroke || dontPaint) {
         var type = this._type,
           radius = this._radius,
-          isCircle = type === "circle";
+          isCircle = type === 'circle';
         if (!param.dontStart) ctx.beginPath();
         if (untransformed && isCircle) {
           ctx.arc(0, 0, radius, 0, Math.PI * 2, true);
@@ -230,7 +231,7 @@ export const Shape = Item.extend(
             size = this._size,
             width = size.width,
             height = size.height;
-          if (untransformed && type === "rectangle" && rx === 0 && ry === 0) {
+          if (untransformed && type === 'rectangle' && rx === 0 && ry === 0) {
             // Rectangles with no rounding
             ctx.rect(-width / 2, -height / 2, width, height);
           } else {
@@ -295,7 +296,7 @@ export const Shape = Item.extend(
         this._setStyles(ctx, param, viewMatrix);
         if (hasFill) {
           ctx.fill(style.getFillRule());
-          ctx.shadowColor = "rgba(0,0,0,0)";
+          ctx.shadowColor = 'rgba(0,0,0,0)';
         }
         if (hasStroke) ctx.stroke();
       }
@@ -310,18 +311,12 @@ export const Shape = Item.extend(
     _getBounds: function (matrix, options) {
       var rect = new Rectangle(this._size).setCenter(0, 0),
         style = this._style,
-        strokeWidth =
-          options.stroke && style.hasStroke() && style.getStrokeWidth();
+        strokeWidth = options.stroke && style.hasStroke() && style.getStrokeWidth();
       // If we're getting the strokeBounds, include the stroke width before
       // or after transforming the rect, based on strokeScaling.
       if (matrix) rect = matrix._transformBounds(rect);
       return strokeWidth
-        ? rect.expand(
-            Path4444._getStrokePadding(
-              strokeWidth,
-              this._getStrokeMatrix(matrix, options)
-            )
-          )
+        ? rect.expand(Path4444._getStrokePadding(strokeWidth, this._getStrokeMatrix(matrix, options)))
         : rect;
     },
   },
@@ -341,10 +336,7 @@ export const Shape = Item.extend(
           var dir = new Point(q > 1 && q < 4 ? -1 : 1, q > 2 ? -1 : 1),
             corner = dir.multiply(halfSize),
             center = corner.subtract(dir.multiply(radius)),
-            rect = new Rectangle(
-              expand ? corner.add(dir.multiply(expand)) : corner,
-              center
-            );
+            rect = new Rectangle(expand ? corner.add(dir.multiply(expand)) : corner, center);
           if (rect.contains(point)) return { point: center, quadrant: q };
         }
       }
@@ -363,14 +355,13 @@ export const Shape = Item.extend(
       // quarter ellipses in the corners.
       return (
         (!quadrant || vector.isInQuadrant(quadrant)) &&
-        vector.subtract(vector.normalize()).multiply(radius).divide(padding)
-          .length <= 1
+        vector.subtract(vector.normalize()).multiply(radius).divide(padding).length <= 1
       );
     }
 
     return /** @lends Shape# */ {
       _contains: function _contains(point) {
-        if (this._type === "rectangle") {
+        if (this._type === 'rectangle') {
           // @ts-expect-error = Expected 3 arguments, but got 2
           var center = getCornerCenter(this, point);
           return center
@@ -383,12 +374,7 @@ export const Shape = Item.extend(
         }
       },
 
-      _hitTestSelf: function _hitTestSelf(
-        point,
-        options,
-        viewMatrix,
-        strokeMatrix
-      ) {
+      _hitTestSelf: function _hitTestSelf(point, options, viewMatrix, strokeMatrix) {
         var hit = false,
           style = this._style,
           hitStroke = options.stroke && style.hasStroke(),
@@ -400,22 +386,14 @@ export const Shape = Item.extend(
             radius = this._radius,
             strokeRadius = hitStroke ? style.getStrokeWidth() / 2 : 0,
             strokePadding = options._tolerancePadding.add(
-              Path4444._getStrokePadding(
-                strokeRadius,
-                !style.getStrokeScaling() && strokeMatrix
-              )
+              Path4444._getStrokePadding(strokeRadius, !style.getStrokeScaling() && strokeMatrix)
             );
-          if (type === "rectangle") {
+          if (type === 'rectangle') {
             var padding = strokePadding.multiply(2),
               center = getCornerCenter(this, point, padding);
             if (center) {
               // Check the stroke of the quarter corner ellipse:
-              hit = isOnEllipseStroke(
-                point.subtract(center.point),
-                radius,
-                strokePadding,
-                center.quadrant
-              );
+              hit = isOnEllipseStroke(point.subtract(center.point), radius, strokePadding, center.quadrant);
             } else {
               var rect = new Rectangle(this._size).setCenter(0, 0),
                 outer = rect.expand(padding),
@@ -431,7 +409,7 @@ export const Shape = Item.extend(
         // when testing for fill. The actual fill test happens in
         // Item#_hitTestSelf(), through its call of #_contains().
         return hit
-          ? new HitResult4444(hitStroke ? "stroke" : "fill", this)
+          ? new HitResult4444(hitStroke ? 'stroke' : 'fill', this)
           : (_hitTestSelf as any).base.apply(this, arguments);
       },
     };
@@ -482,15 +460,9 @@ export const Shape = Item.extend(
          */
         Circle: function (/* center, radius */) {
           var args = arguments,
-            center = Point.readNamed(args, "center"),
-            radius = Base.readNamed(args, "radius");
-          return createShape(
-            "circle",
-            center,
-            new Size(radius * 2),
-            radius,
-            args
-          );
+            center = Point.readNamed(args, 'center'),
+            radius = Base.readNamed(args, 'radius');
+          return createShape('circle', center, new Size(radius * 2), radius, args);
         },
 
         /**
@@ -585,18 +557,9 @@ export const Shape = Item.extend(
          */
         Rectangle: function (/* rectangle */) {
           var args = arguments,
-            rect = Rectangle.readNamed(args, "rectangle"),
-            radius = Size.min(
-              Size.readNamed(args, "radius"),
-              rect.getSize(true).divide(2)
-            );
-          return createShape(
-            "rectangle",
-            rect.getCenter(true),
-            rect.getSize(true),
-            radius,
-            args
-          );
+            rect = Rectangle.readNamed(args, 'rectangle'),
+            radius = Size.min(Size.readNamed(args, 'radius'), rect.getSize(true).divide(2));
+          return createShape('rectangle', rect.getCenter(true), rect.getSize(true), radius, args);
         },
 
         /**
@@ -638,24 +601,18 @@ export const Shape = Item.extend(
           var args = arguments,
             ellipse = Shape._readEllipse(args),
             radius = ellipse.radius;
-          return createShape(
-            "ellipse",
-            ellipse.center,
-            radius.multiply(2),
-            radius,
-            args
-          );
+          return createShape('ellipse', ellipse.center, radius.multiply(2), radius, args);
         },
 
         // Private method to read ellipse center and radius from arguments list,
         // shared with Path.Ellipse constructor.
         _readEllipse: function (args) {
           var center, radius;
-          if (Base.hasNamed(args, "radius")) {
-            center = Point.readNamed(args, "center");
-            radius = Size.readNamed(args, "radius");
+          if (Base.hasNamed(args, 'radius')) {
+            center = Point.readNamed(args, 'center');
+            radius = Size.readNamed(args, 'radius');
           } else {
-            var rect = Rectangle.readNamed(args, "rectangle");
+            var rect = Rectangle.readNamed(args, 'rectangle');
             center = rect.getCenter(true);
             radius = rect.getSize(true).divide(2);
           }

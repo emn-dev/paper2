@@ -21,12 +21,13 @@
 const version = process.env.PACKAGE_VERSION;
 
 // If this file is loaded in the browser, we're in load.js mode.
-export const load = typeof window === "object";
+export const load = typeof window === 'object';
 
+// eslint-disable-next-line no-underscore-dangle
 export const __options = {
-  version: version + (load ? "-load" : ""),
-  load: load,
-  parser: "acorn",
+  version: version + (load ? '-load' : ''),
+  load,
+  parser: 'acorn',
   svg: true,
   booleanOperations: true,
   nativeContains: false,

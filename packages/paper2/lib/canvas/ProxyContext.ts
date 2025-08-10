@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Base } from "~/straps";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Base } from '~/straps';
 
 /**
  * @name ProxyContext
@@ -26,62 +29,62 @@ import { Base } from "~/straps";
 // @ts-expect-error = 'new' expression, whose target lacks a construct signature
 export const ProxyContext = new (function () {
   var descriptions = [
-    "save()",
-    "restore()",
-    "scale(x,y)",
-    "rotate(angle)",
-    "translate(x,y)",
-    "transform(a,b,c,d,e,f)",
-    "setTransform(a,b,c,d,e,f)",
-    "globalAlpha",
-    "globalCompositeOperation",
-    "strokeStyle",
-    "fillStyle",
-    "createLinearGradient(x0,y0,x1,y1)",
-    "createRadialGradient(x0,y0,r0,x1,y1,r1)",
-    "createPattern(image,repetition)",
-    "lineWidth",
-    "lineCap",
-    "lineJoin",
-    "miterLimit",
-    "shadowOffsetX",
-    "shadowOffsetY",
-    "shadowBlur",
-    "shadowColor",
-    "clearRect(x,y,w,h)",
-    "fillRect(x,y,w,h)",
-    "strokeRect(x,y,w,h)",
-    "beginPath()",
-    "closePath()",
-    "moveTo(x,y)",
-    "lineTo(x,y)",
-    "quadraticCurveTo(cpx,cpy,x,y)",
-    "bezierCurveTo(cp1x,cp1y,cp2x,cp2y,x,y)",
-    "arcTo(x1,y1,x2,y2,radius)",
-    "rect(x,y,w,h)",
-    "arc(x,y,radius,startAngle,endAngle,anticlockwise)",
-    "fill()",
-    "stroke()",
-    "drawSystemFocusRing()",
-    "drawCustomFocusRing()",
-    "scrollPathIntoView()",
-    "clip()",
-    "isPointInPath(x,y)",
-    "font",
-    "textAlign",
-    "textBaseline",
-    "fillText(text,x,y,maxWidth)",
-    "strokeText(text,x,y,maxWidth)",
-    "measureText(text)",
-    "drawImage(image,dx,dy)",
-    "drawImage(image,dx,dy,dw,dh)",
-    "drawImage(image,sx,sy,sw,sh,dx,dy,dw,dh)",
-    "createImageData(sw,sh)",
-    "createImageData(imagedata)",
-    "getImageData(sx,sy,sw,sh)",
-    "putImageData(imagedata,dx,dy,dirtyX,dirtyY,dirtyWidth,dirtyHeight)",
-    "setLineDash(array)",
-    "lineDashOffset",
+    'save()',
+    'restore()',
+    'scale(x,y)',
+    'rotate(angle)',
+    'translate(x,y)',
+    'transform(a,b,c,d,e,f)',
+    'setTransform(a,b,c,d,e,f)',
+    'globalAlpha',
+    'globalCompositeOperation',
+    'strokeStyle',
+    'fillStyle',
+    'createLinearGradient(x0,y0,x1,y1)',
+    'createRadialGradient(x0,y0,r0,x1,y1,r1)',
+    'createPattern(image,repetition)',
+    'lineWidth',
+    'lineCap',
+    'lineJoin',
+    'miterLimit',
+    'shadowOffsetX',
+    'shadowOffsetY',
+    'shadowBlur',
+    'shadowColor',
+    'clearRect(x,y,w,h)',
+    'fillRect(x,y,w,h)',
+    'strokeRect(x,y,w,h)',
+    'beginPath()',
+    'closePath()',
+    'moveTo(x,y)',
+    'lineTo(x,y)',
+    'quadraticCurveTo(cpx,cpy,x,y)',
+    'bezierCurveTo(cp1x,cp1y,cp2x,cp2y,x,y)',
+    'arcTo(x1,y1,x2,y2,radius)',
+    'rect(x,y,w,h)',
+    'arc(x,y,radius,startAngle,endAngle,anticlockwise)',
+    'fill()',
+    'stroke()',
+    'drawSystemFocusRing()',
+    'drawCustomFocusRing()',
+    'scrollPathIntoView()',
+    'clip()',
+    'isPointInPath(x,y)',
+    'font',
+    'textAlign',
+    'textBaseline',
+    'fillText(text,x,y,maxWidth)',
+    'strokeText(text,x,y,maxWidth)',
+    'measureText(text)',
+    'drawImage(image,dx,dy)',
+    'drawImage(image,dx,dy,dw,dh)',
+    'drawImage(image,sx,sy,sw,sh,dx,dy,dw,dh)',
+    'createImageData(sw,sh)',
+    'createImageData(imagedata)',
+    'getImageData(sx,sy,sw,sh)',
+    'putImageData(imagedata,dx,dy,dirtyX,dirtyY,dirtyWidth,dirtyHeight)',
+    'setLineDash(array)',
+    'lineDashOffset',
   ];
   var fields = /** @lends ProxyContext# */ {
     initialize: function (context) {
@@ -90,9 +93,9 @@ export const ProxyContext = new (function () {
     },
 
     getIndentation: function () {
-      var str = "";
+      var str = '';
       for (var i = 0; i < this._indents; i++) {
-        str += "    ";
+        str += '    ';
       }
       return str;
     },
@@ -102,7 +105,7 @@ export const ProxyContext = new (function () {
     try {
       return JSON.stringify(value);
     } catch (e) {
-      return value + "";
+      return value + '';
     }
   }
 
@@ -112,16 +115,11 @@ export const ProxyContext = new (function () {
       isFunction = !!match[2];
     if (isFunction) {
       fields[name] = function () {
-        if (name === "restore") this._indents--;
+        if (name === 'restore') this._indents--;
         console.log(
-          this.getIndentation() +
-            "ctx." +
-            name +
-            "(" +
-            Base.slice(arguments, 0).map(stringify).join(", ") +
-            ");"
+          this.getIndentation() + 'ctx.' + name + '(' + Base.slice(arguments, 0).map(stringify).join(', ') + ');'
         );
-        if (name === "save") this._indents++;
+        if (name === 'save') this._indents++;
         return this._ctx[name].apply(this._ctx, arguments);
       };
     } else {
@@ -131,14 +129,7 @@ export const ProxyContext = new (function () {
         },
 
         set: function (value) {
-          console.log(
-            this.getIndentation() +
-              "ctx." +
-              name +
-              " = " +
-              stringify(value) +
-              ";"
-          );
+          console.log(this.getIndentation() + 'ctx.' + name + ' = ' + stringify(value) + ';');
           return (this._ctx[name] = value);
         },
       };

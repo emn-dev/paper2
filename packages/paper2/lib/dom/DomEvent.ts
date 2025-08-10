@@ -10,8 +10,11 @@
  * All rights reserved.
  */
 
-import { Point } from "~/basic/Point";
-import { DomElement } from "./DomElement";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Point } from '~/basic/Point';
+import { DomElement } from './DomElement';
 
 /**
  * @name DomEvent
@@ -34,10 +37,7 @@ export const DomEvent = /** @lends DomEvent */ {
           // `event.preventDefault()` calls and omit warnings.
           // See #1501 and:
           // https://www.chromestatus.com/features/5093566007214080
-          var options =
-            el === document && (name === "touchstart" || name === "touchmove")
-              ? { passive: false }
-              : false;
+          var options = el === document && (name === 'touchstart' || name === 'touchmove') ? { passive: false } : false;
           el.addEventListener(name, func, options);
         }
       }
@@ -50,8 +50,7 @@ export const DomEvent = /** @lends DomEvent */ {
       for (var type in events) {
         var func = events[type],
           parts = type.split(/[\s,]+/g);
-        for (var i = 0, l = parts.length; i < l; i++)
-          el.removeEventListener(parts[i], func, false);
+        for (var i = 0, l = parts.length; i < l; i++) el.removeEventListener(parts[i], func, false);
       }
     }
   },
@@ -78,15 +77,13 @@ export const DomEvent = /** @lends DomEvent */ {
 
   getOffset: function (event, target) {
     // Remove target offsets from page coordinates
-    return DomEvent.getPoint(event).subtract(
-      DomElement.getOffset(target || DomEvent.getTarget(event))
-    );
+    return DomEvent.getPoint(event).subtract(DomElement.getOffset(target || DomEvent.getTarget(event)));
   },
 };
 
 // @ts-expect-error = Property 'requestAnimationFrame' does not exist on type
 DomEvent.requestAnimationFrame = new (function () {
-  var nativeRequest = DomElement.getPrefixed(window, "requestAnimationFrame"),
+  var nativeRequest = DomElement.getPrefixed(window, 'requestAnimationFrame'),
     requested = false,
     callbacks = [],
     timer;

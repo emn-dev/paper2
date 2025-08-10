@@ -10,15 +10,18 @@
  * All rights reserved.
  */
 
-import { Point } from "~/basic/Point";
-import { Rectangle } from "~/basic/Rectangle";
-import { Size } from "~/basic/Size";
-import { Item } from "~/item/Item";
-import { Shape } from "~/item/Shape";
-import { Base } from "~/straps";
-import { Numerical } from "~/util/Numerical";
-import { Path } from "./Path";
-import { Segment } from "./Segment";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Point } from '~/basic/Point';
+import { Rectangle } from '~/basic/Rectangle';
+import { Size } from '~/basic/Size';
+import { Item } from '~/item/Item';
+import { Shape } from '~/item/Shape';
+import { Base } from '~/straps';
+import { Numerical } from '~/util/Numerical';
+import { Path } from './Path';
+import { Segment } from './Segment';
 
 Path.inject({
   // @ts-expect-error
@@ -33,14 +36,7 @@ Path.inject({
 
     function createPath(segments, closed, args) {
       var props = Base.getNamed(args),
-        path = new Path(
-          props &&
-            (props.insert == true
-              ? Item.INSERT
-              : props.insert == false
-              ? Item.NO_INSERT
-              : null)
-        );
+        path = new Path(props && (props.insert == true ? Item.INSERT : props.insert == false ? Item.NO_INSERT : null));
       path._add(segments);
       // No need to use setter for _closed since _add() called _changed().
       path._closed = closed;
@@ -98,10 +94,7 @@ Path.inject({
       Line: function (/* from, to */) {
         var args = arguments;
         return createPath(
-          [
-            new Segment(Point.readNamed(args, "from")),
-            new Segment(Point.readNamed(args, "to")),
-          ],
+          [new Segment(Point.readNamed(args, 'from')), new Segment(Point.readNamed(args, 'to'))],
           false,
           args
         );
@@ -137,8 +130,8 @@ Path.inject({
        */
       Circle: function (/* center, radius */) {
         var args = arguments,
-          center = Point.readNamed(args, "center"),
-          radius = Base.readNamed(args, "radius");
+          center = Point.readNamed(args, 'center'),
+          radius = Base.readNamed(args, 'radius');
         return createEllipse(center, new Size(radius), args);
       },
 
@@ -234,20 +227,15 @@ Path.inject({
        */
       Rectangle: function (/* rectangle */) {
         var args = arguments,
-          rect = Rectangle.readNamed(args, "rectangle"),
-          radius = Size.readNamed(args, "radius", 0, { readNull: true }),
+          rect = Rectangle.readNamed(args, 'rectangle'),
+          radius = Size.readNamed(args, 'radius', 0, { readNull: true }),
           bl = rect.getBottomLeft(true),
           tl = rect.getTopLeft(true),
           tr = rect.getTopRight(true),
           br = rect.getBottomRight(true),
           segments;
         if (!radius || radius.isZero()) {
-          segments = [
-            new Segment(bl),
-            new Segment(tl),
-            new Segment(tr),
-            new Segment(br),
-          ];
+          segments = [new Segment(bl), new Segment(tl), new Segment(tr), new Segment(br)];
         } else {
           radius = Size.min(radius, rect.getSize(true).divide(2));
           var rx = radius.width,
@@ -271,7 +259,7 @@ Path.inject({
       /**
        * @deprecated use {@link #Path.Rectangle(rectangle, size)} instead.
        */
-      RoundRectangle: "#Rectangle",
+      RoundRectangle: '#Rectangle',
 
       /**
        * Creates an elliptical path item.
@@ -317,7 +305,7 @@ Path.inject({
       /**
        * @deprecated use {@link #Path.Ellipse(rectangle)} instead.
        */
-      Oval: "#Ellipse",
+      Oval: '#Ellipse',
 
       /**
        * Creates a circular arc path item.
@@ -355,9 +343,9 @@ Path.inject({
        */
       Arc: function (/* from, through, to */) {
         var args = arguments,
-          from = Point.readNamed(args, "from"),
-          through = Point.readNamed(args, "through"),
-          to = Point.readNamed(args, "to"),
+          from = Point.readNamed(args, 'from'),
+          through = Point.readNamed(args, 'through'),
+          to = Point.readNamed(args, 'to'),
           props = Base.getNamed(args),
           // See createPath() for an explanation of the following sequence
           path = new Path(props && props.insert == false && Item.NO_INSERT);
@@ -401,18 +389,15 @@ Path.inject({
        */
       RegularPolygon: function (/* center, sides, radius */) {
         var args = arguments,
-          center = Point.readNamed(args, "center"),
-          sides = Base.readNamed(args, "sides"),
-          radius = Base.readNamed(args, "radius"),
+          center = Point.readNamed(args, 'center'),
+          sides = Base.readNamed(args, 'sides'),
+          radius = Base.readNamed(args, 'radius'),
           step = 360 / sides,
           three = sides % 3 === 0,
           vector = new Point(0, three ? -radius : radius),
           offset = three ? -1 : 0.5,
           segments = new Array(sides);
-        for (var i = 0; i < sides; i++)
-          segments[i] = new Segment(
-            center.add(vector.rotate((i + offset) * step))
-          );
+        for (var i = 0; i < sides; i++) segments[i] = new Segment(center.add(vector.rotate((i + offset) * step)));
         return createPath(segments, true, args);
       },
 
@@ -458,19 +443,15 @@ Path.inject({
        */
       Star: function (/* center, points, radius1, radius2 */) {
         var args = arguments,
-          center = Point.readNamed(args, "center"),
-          points = Base.readNamed(args, "points") * 2,
-          radius1 = Base.readNamed(args, "radius1"),
-          radius2 = Base.readNamed(args, "radius2"),
+          center = Point.readNamed(args, 'center'),
+          points = Base.readNamed(args, 'points') * 2,
+          radius1 = Base.readNamed(args, 'radius1'),
+          radius2 = Base.readNamed(args, 'radius2'),
           step = 360 / points,
           vector = new Point(0, -1),
           segments = new Array(points);
         for (var i = 0; i < points; i++)
-          segments[i] = new Segment(
-            center.add(
-              vector.rotate(step * i).multiply(i % 2 ? radius2 : radius1)
-            )
-          );
+          segments[i] = new Segment(center.add(vector.rotate(step * i).multiply(i % 2 ? radius2 : radius1)));
         return createPath(segments, true, args);
       },
     };

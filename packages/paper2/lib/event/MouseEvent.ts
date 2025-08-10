@@ -10,7 +10,10 @@
  * All rights reserved.
  */
 
-import { Event } from "./Event";
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
+import { Event } from './Event';
 
 /**
  * @name MouseEvent
@@ -27,7 +30,7 @@ import { Event } from "./Event";
 /* global MouseEvent: true */
 export const MouseEvent = Event.extend(
   /** @lends MouseEvent# */ {
-    _class: "MouseEvent",
+    _class: 'MouseEvent',
 
     initialize: function MouseEvent(type, event, point, target, delta) {
       this.type = type;
@@ -88,12 +91,12 @@ export const MouseEvent = Event.extend(
         this.type +
         "', point: " +
         this.point +
-        ", target: " +
+        ', target: ' +
         this.target +
-        (this.delta ? ", delta: " + this.delta : "") +
-        ", modifiers: " +
+        (this.delta ? ', delta: ' + this.delta : '') +
+        ', modifiers: ' +
         this.getModifiers() +
-        " }"
+        ' }'
       );
     },
   }

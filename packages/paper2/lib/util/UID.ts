@@ -10,6 +10,9 @@
  * All rights reserved.
  */
 
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+
 /**
  * @name UID
  * @namespace
