@@ -4,7 +4,7 @@ https://github.com/emn-dev/paper2
 
 ## about
 
-The essence of paper.js wrapped in modern tooling.
+The essence of [paper.js](https://github.com/paperjs/paper.js) wrapped in modern tooling.
 
 ## docs
 
@@ -14,6 +14,4 @@ https://emn-dev.github.io/paper2
 
 https://www.npmjs.com/package/paper2
 
-## unpkg
-
-https://unpkg.com/paper2/paper2.esm.js
+> unpkg = https://unpkg.com/paper2/paper2-core.esm.js
