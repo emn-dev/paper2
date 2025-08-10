@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <title>Simple Spin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="paper2-docs.css" />
     <script src="./paper2-nav.js"></script>
   </head>
   <body>
-    <paper2-nav></paper2-nav>
+    <paper2-nav class="paper2NavTable"></paper2-nav>
     <header style="text-align: center"><h1>Simple Spin</h1></header>
     <main>
       <canvas id="myCanvas" resize></canvas>
@@ -32,8 +33,8 @@
         }, DELAY);
 
         const path = new paper.Path.Rectangle({
-          point: [300, 100],
-          size: [150, 150],
+          point: [175, 75],
+          size: [100, 100],
           strokeColor: "black",
         });
 

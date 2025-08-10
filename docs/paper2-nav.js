@@ -11,13 +11,23 @@
       const shadow = this.attachShadow({ mode: "open" });
       const ele = document.createElement("nav");
       ele.innerHTML = `
-        <table style="width: 75%; background-color: #ddd; margin: 0 auto">
+        <style>
+        .paper2NavTable {
+          width: 100%;
+          background-color: #ddd;
+          margin: 0 auto;
+        }
+        </style>
+        <table class="paper2NavTable">
             <tr>
                 <td><a href="index.html">Home</a></td><td>&nbsp;|&nbsp;</td>
                 <td><a href="straps.html">Straps</a></td><td>&nbsp;|&nbsp;</td>
                 <td><a href="simple.html">Simple</a></td><td>&nbsp;|&nbsp;</td>
                 <td><a href="booleanOps.html">Boolean Operations</a></td><td>&nbsp;|&nbsp;</td>
-                <td><a href="chain.html">Chain</a></td>
+                <td><a href="chain.html">Chain</a></td><td>&nbsp;|&nbsp;</td>
+                <td><a href="exportCircle.html">Export Circle</a></td><td>&nbsp;|&nbsp;</td>                
+                <td><a href="importViewbox.html">Import Viewbox 1</a></td><td>&nbsp;|&nbsp;</td>                
+                <td><a href="rasterSpiral.html">Spiral Raster</a></td>
             </tr>
         </table>
       `;

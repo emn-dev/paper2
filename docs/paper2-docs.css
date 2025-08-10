@@ -3,3 +3,13 @@ canvas[resize] {
   height: 100%;
   background-color: #eee;
 }
+
+.paper2NavTable {
+  text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+  .paper2NavTable {
+    font-size: 0.75em;
+  }
+}

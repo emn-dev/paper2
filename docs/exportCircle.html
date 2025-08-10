@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Export Circle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-nav.js"></script>
+    <style>
+      svg {
+        border: 1px red solid;
+      }
+    </style>
+  </head>
+  <body>
+    <paper2-nav class="paper2NavTable"></paper2-nav>
+    <header style="text-align: center"><h1>Export Circle</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script canvas="myCanvas" type="text/paperscript">
+      var topLeft = new Point(200, 200);
+      var size = new Size(150, 100);
+      var rectangle = new Rectangle(topLeft, size);
+      var path = new Path.Ellipse(rectangle);
+      path.fillColor = 'black';
+
+      var topLeft = new Point(5, 400);
+      var size = new Size(100, 50);
+      var rectangle = new Rectangle(topLeft, size);
+      var path = new Path.Ellipse(rectangle);
+      path.fillColor = 'yellow';
+
+      var path = new Path.Circle(new Point(50, 50), 25);
+      path.fillColor = 'red';
+
+      document.body.appendChild(project.exportSVG());
+    </script>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
