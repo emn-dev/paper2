@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { Size } from "../lib/basic/Size";
-import { Point } from "../lib/basic/Point";
+import { Size } from "~/basic/Size";
+import { Point } from "~/basic/Point";
 
 describe("Given: Size Class", () => {
   describe("WHEN new Size(10, 20)", () => {
