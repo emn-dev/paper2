@@ -17,7 +17,7 @@ const sharedOpts: buildOpts = {
   // sourcemap: true,
   sourcemap: false,
   bundle: true,
-  // minify: true, // Cannot do this :(
+  // minify: true, // Do we need a min version?
   allowOverwrite: true,
   define: {
     // GITHUB_REF: 'refs/tags/v1.0.15',
