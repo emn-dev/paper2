@@ -1,4 +1,4 @@
-import { rmSync, writeFileSync, readFileSync } from 'node:fs';
+import { rmSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import 'dotenv/config';
 import * as esbuild from 'esbuild';
@@ -7,8 +7,8 @@ import * as esbuild from 'esbuild';
 type buildOpts = esbuild.SameShape<esbuild.BuildOptions, esbuild.BuildOptions>;
 
 const buildDir = 'dist';
-const coreBaseName = 'paper2-core-pre';
-const fullBaseName = 'paper2-full-pre';
+const coreBaseName = 'paper2-core';
+const fullBaseName = 'paper2-full';
 
 rmSync(buildDir, { force: true, recursive: true });
 
@@ -59,20 +59,6 @@ async function main() {
     await esbuild.build(browserCoreOpts);
     await esbuild.build(browserFullOpts);
     // await esbuild.build(nodeOpts);
-
-    const rawFile = readFileSync(`./dist/${coreBaseName}.esm.js`, {
-      encoding: 'utf-8',
-    });
-    const fixedFile = rawFile.replaceAll('4444', '');
-    writeFileSync(`./dist/${coreBaseName.replace('-pre', '')}.esm.js`, fixedFile);
-    rmSync(`./dist/${coreBaseName}.esm.js`, { force: true, recursive: true });
-
-    const rawFileFull = readFileSync(`./dist/${fullBaseName}.esm.js`, {
-      encoding: 'utf-8',
-    });
-    const fixedFileFull = rawFileFull.replaceAll('4444', '');
-    writeFileSync(`./dist/${fullBaseName.replace('-pre', '')}.esm.js`, fixedFileFull);
-    rmSync(`./dist/${fullBaseName}.esm.js`, { force: true, recursive: true });
   } else {
     const ctxBrowserCore = await esbuild.context(browserCoreOpts);
     await ctxBrowserCore.watch();
