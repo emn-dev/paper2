@@ -25,14 +25,18 @@
     <main>
       <h2 id="showVersion" style="text-align: center">...</h2>
     </main>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-core.esm.js"
+          : "https://unpkg.com/paper2/paper2-core.esm.js";
 
-    <script type="module">
-      import * as paper2Module from "https://unpkg.com/paper2/paper2-core.esm.js";
-      // import * as paper2Module from "./paper2-core.esm.js";
-      window.paper = paper2Module.paper;
-      console.log(window.paper); // Easy access for playing with in DevTools
-      const showVersionEle = document.getElementById("showVersion");
-      showVersionEle.innerHTML = paper.version;
+      import(resourceUri).then((mod) => {
+        window.paper = mod.paper;
+        console.log(window.paper); // Easy access for playing with in DevTools
+        const showVersionEle = document.getElementById("showVersion");
+        showVersionEle.innerHTML = paper.version;
+      });
     </script>
   </body>
 </html>
