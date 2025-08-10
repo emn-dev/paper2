@@ -129,9 +129,13 @@
         square.position = view.center;
       }
     </script>
-    <script type="module">
-      import * as paper2Module from "https://unpkg.com/paper2/paper2-full.esm.js";
-      // import * as paper2Module from "./paper2-full.esm.js";
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
     </script>
   </body>
 </html>

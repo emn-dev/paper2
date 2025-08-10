@@ -27,28 +27,33 @@
     <main>
       <canvas id="myCanvas" resize></canvas>
     </main>
-    <script type="module">
-      import * as paper2Module from "https://unpkg.com/paper2/paper2-core.esm.js";
-      // import * as paper2Module from "./paper2-core.esm.js";
-      window.paper = paper2Module.paper;
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-core.esm.js"
+          : "https://unpkg.com/paper2/paper2-core.esm.js";
 
-      paper.setup("myCanvas");
+      import(resourceUri).then((mod) => {
+        window.paper = mod.paper;
 
-      const DELAY = 1_000; // 1 second
-      let spinSpeed = 1;
+        paper.setup("myCanvas");
 
-      setInterval(() => {
-        spinSpeed += 1;
-        if (spinSpeed > 9) spinSpeed = 1;
-      }, DELAY);
+        const DELAY = 1_000; // 1 second
+        let spinSpeed = 1;
 
-      const path = new paper.Path.Rectangle({
-        point: [300, 100],
-        size: [150, 150],
-        strokeColor: "black",
+        setInterval(() => {
+          spinSpeed += 1;
+          if (spinSpeed > 9) spinSpeed = 1;
+        }, DELAY);
+
+        const path = new paper.Path.Rectangle({
+          point: [300, 100],
+          size: [150, 150],
+          strokeColor: "black",
+        });
+
+        paper.view.onFrame = () => path.rotate(spinSpeed);
       });
-
-      paper.view.onFrame = () => path.rotate(spinSpeed);
     </script>
   </body>
 </html>

@@ -26,62 +26,67 @@
       <ol id="showLogs"></ol>
     </main>
 
-    <script type="module">
-      import * as paper2Module from "https://unpkg.com/paper2/paper2-core.esm.js";
-      // import * as paper2Module from "./paper2-core.esm.js";
-      const straps = paper2Module.straps;
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-core.esm.js"
+          : "https://unpkg.com/paper2/paper2-core.esm.js";
 
-      const showLogsEle = document.getElementById("showLogs");
+      import(resourceUri).then((mod) => {
+        const straps = mod.straps;
 
-      var MyClass = straps.extend({
-        initialize: function MyClass() {
-          this._value = 10;
-          console.log("Creating MyClass instance");
-          showLogsEle.insertAdjacentHTML(
-            "beforeend",
-            "<li>Creating MyClass instance</li>"
-          );
-        },
+        const showLogsEle = document.getElementById("showLogs");
 
-        getValue: function () {
-          console.log("Accessing value, returning: " + this._value);
-          showLogsEle.insertAdjacentHTML(
-            "beforeend",
-            `<li>Accessing value, returning: ${this._value}</li>`
-          );
-          return this._value;
-        },
+        var MyClass = straps.extend({
+          initialize: function MyClass() {
+            this._value = 10;
+            console.log("Creating MyClass instance");
+            showLogsEle.insertAdjacentHTML(
+              "beforeend",
+              "<li>Creating MyClass instance</li>"
+            );
+          },
 
-        setValue: function (value) {
-          console.log("Setting value to: " + value);
-          showLogsEle.insertAdjacentHTML(
-            "beforeend",
-            `<li>Setting value to: ${value}</li>`
-          );
-          this._value = value;
-        },
-      });
+          getValue: function () {
+            console.log("Accessing value, returning: " + this._value);
+            showLogsEle.insertAdjacentHTML(
+              "beforeend",
+              `<li>Accessing value, returning: ${this._value}</li>`
+            );
+            return this._value;
+          },
 
-      var obj = new MyClass();
-      console.log("obj.value is: " + obj.value);
-      showLogsEle.insertAdjacentHTML(
-        "beforeend",
-        `<li>obj.value is: ${obj.value}</li>`
-      );
+          setValue: function (value) {
+            console.log("Setting value to: " + value);
+            showLogsEle.insertAdjacentHTML(
+              "beforeend",
+              `<li>Setting value to: ${value}</li>`
+            );
+            this._value = value;
+          },
+        });
 
-      showLogsEle.insertAdjacentHTML(
-        "beforeend",
-        `<li>waiting 1 second...</li>`
-      );
-
-      setTimeout(() => {
-        obj.value = 20;
+        var obj = new MyClass();
         console.log("obj.value is: " + obj.value);
         showLogsEle.insertAdjacentHTML(
           "beforeend",
           `<li>obj.value is: ${obj.value}</li>`
         );
-      }, 999);
+
+        showLogsEle.insertAdjacentHTML(
+          "beforeend",
+          `<li>waiting 1 second...</li>`
+        );
+
+        setTimeout(() => {
+          obj.value = 20;
+          console.log("obj.value is: " + obj.value);
+          showLogsEle.insertAdjacentHTML(
+            "beforeend",
+            `<li>obj.value is: ${obj.value}</li>`
+          );
+        }, 999);
+      });
     </script>
   </body>
 </html>
