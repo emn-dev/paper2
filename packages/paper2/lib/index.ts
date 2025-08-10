@@ -139,6 +139,20 @@ import './canvas/CanvasProvider';
 import './canvas/BlendMode';
 // import './canvas/ProxyContext'; // I do not know how to use this?
 
+// /*#*/ if (__options.svg) {
+// /*#*/     include('svg/SvgElement.js');
+// /*#*/     include('svg/SvgStyles.js');
+// /*#*/     include('svg/SvgExport.js');
+// /*#*/     include('svg/SvgImport.js');
+// /*#*/ }
+import './svg/SvgElement';
+import './svg/SvgStyles';
+import './svg/SvgExport';
+import './svg/SvgImport';
+
+// /*#*/ if (__options.paperScript) {
+// /*#*/     include('core/PaperScript.js');
+// /*#*/ }
 import './core/PaperScript';
 
 export { Base as straps } from './straps';
