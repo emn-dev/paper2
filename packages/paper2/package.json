@@ -17,9 +17,7 @@
   "homepage": "https://github.com/emn-dev/paper2#readme",
   "scripts": {
     "postinstall": "yarn build-dep",
-    "build-dep-ORIG": "IS_BUILD=true node build.mjs",
     "build-dep": "IS_BUILD=true node --experimental-transform-types build.ts",
-    "serve-ORIG": "node build.mjs",
     "serve": "node --experimental-transform-types build.ts",
     "serve:watch": "node ./build.serve.watch.mjs",
     "test:unit": "vitest",

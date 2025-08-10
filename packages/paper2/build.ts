@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { rmSync, writeFileSync, readFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import 'dotenv/config';

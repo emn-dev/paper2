@@ -20,7 +20,9 @@
   "scripts": {
     "build-dep": "yarn workspaces foreach --all --parallel --topological run build-dep",
     "set-ver": "node --experimental-transform-types ./util-scripts/set-version.ts",
-    "serve:docs": "node --experimental-transform-types ./util-scripts/http-server.ts"
+    "serve:docs": "node --experimental-transform-types ./util-scripts/http-server.ts",
+    "test:unit": "yarn workspace paper2 test:unit:pipeline",
+    "test:lint": "yarn workspace paper2 test:lint"
   },
   "devDependencies": {
     "@types/node": "22.17.1",
