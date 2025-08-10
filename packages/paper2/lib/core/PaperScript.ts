@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Point } from '~/basic/Point';
 import { Size } from '~/basic/Size';
@@ -21,8 +22,6 @@ import { Color } from '~/style/Color';
 import { Tool } from '~/tool/Tool';
 import { PaperScope } from './PaperScope';
 import { Http } from '~/net/Http';
-
-declare let paper4444;
 
 if (process.env.PAPER2_FULL) {
   /**
@@ -399,7 +398,7 @@ if (process.env.PAPER2_FULL) {
         // source file so the debugger can still display it correctly.
         source = options.source || code,
         offset = options.offset || 0,
-        agent = paper4444.agent,
+        agent = ref.paper.agent,
         version = agent.versionNumber,
         offsetCode = false,
         lineBreaks = /\r\n|\n|\r/gm,
@@ -511,7 +510,7 @@ if (process.env.PAPER2_FULL) {
      */
     function execute(code, scope, options) {
       // Set currently active scope.
-      paper4444 = scope;
+      ref.paper = scope;
       var view = scope.getView(),
         // Only create a tool if the tool object is accessed or something
         // resembling a global tool handler is contained in the code, but
@@ -579,7 +578,7 @@ if (process.env.PAPER2_FULL) {
       }
       // End by returning `module.exports` at the end of the generated code:
       code += '\nreturn module.exports;';
-      var agent = paper4444.agent;
+      var agent = ref.paper.agent;
       if (document && (agent.chrome || (agent.firefox && agent.versionNumber < 40))) {
         // On older Firefox, all error numbers inside dynamically compiled
         // code are relative to the line where the eval / compilation

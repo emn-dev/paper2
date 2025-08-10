@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { ChangeFlag } from './ChangeFlag';
 import { Item } from './Item';
@@ -216,3 +217,5 @@ export const Group = Item.extend(
     },
   }
 );
+
+ref.Group = Group;

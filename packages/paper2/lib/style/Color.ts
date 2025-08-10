@@ -13,8 +13,9 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import { CanvasProvider } from '~/canvas/CanvasProvider';
+import { ref } from '~/globals';
 import { Base } from '~/straps';
+import { CanvasProvider } from '~/canvas/CanvasProvider';
 import { Point } from '~/basic/Point';
 import { Change } from '~/item/ChangeFlag';
 import { Formatter } from '~/util/Formatter';
@@ -1377,3 +1378,5 @@ export const Color = Base.extend(
     );
   })()
 );
+
+ref.Color = Color;

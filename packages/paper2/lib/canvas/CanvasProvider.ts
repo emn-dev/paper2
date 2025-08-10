@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 
 // TODO: Run through the canvas array to find a canvas with the requested
@@ -67,3 +68,5 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
     }
   },
 });
+
+ref.CanvasProvider = CanvasProvider;

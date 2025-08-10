@@ -13,9 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { HitResult as HitResultType } from './HitResult';
-import type { Path as PathType } from '~/path/Path';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Point } from '~/basic/Point';
 import { Rectangle } from '~/basic/Rectangle';
@@ -23,14 +21,6 @@ import { LinkedSize, Size } from '~/basic/Size';
 import { Numerical } from '~/util/Numerical';
 import { Change } from './ChangeFlag';
 import { Item } from './Item';
-
-// import { HitResult } from "./HitResult";
-// import { Path } from "~/path/Path";
-
-declare const HitResult4444: typeof HitResultType;
-declare const Path4444: typeof PathType;
-
-declare let paper4444;
 
 /**
  * @name Shape
@@ -190,7 +180,7 @@ export const Shape = Item.extend(
      */
     toPath: function (insert) {
       // TODO: Move to Path.createTYPE creators instead of fake constructors.
-      var path = new Path4444[Base.capitalize(this._type)]({
+      var path = new ref.Path[Base.capitalize(this._type)]({
         center: new Point(),
         size: this._size,
         radius: this._radius,
@@ -201,7 +191,7 @@ export const Shape = Item.extend(
       // will always be false.
       // Respect the setting of paper.settings.applyMatrix for new paths:
 
-      if (paper4444.settings.applyMatrix) path.setApplyMatrix(true);
+      if (ref.paper.settings.applyMatrix) path.setApplyMatrix(true);
       if (insert === undefined || insert) path.insertAbove(this);
       return path;
     },
@@ -316,7 +306,7 @@ export const Shape = Item.extend(
       // or after transforming the rect, based on strokeScaling.
       if (matrix) rect = matrix._transformBounds(rect);
       return strokeWidth
-        ? rect.expand(Path4444._getStrokePadding(strokeWidth, this._getStrokeMatrix(matrix, options)))
+        ? rect.expand(ref.Path._getStrokePadding(strokeWidth, this._getStrokeMatrix(matrix, options)))
         : rect;
     },
   },
@@ -386,7 +376,7 @@ export const Shape = Item.extend(
             radius = this._radius,
             strokeRadius = hitStroke ? style.getStrokeWidth() / 2 : 0,
             strokePadding = options._tolerancePadding.add(
-              Path4444._getStrokePadding(strokeRadius, !style.getStrokeScaling() && strokeMatrix)
+              ref.Path._getStrokePadding(strokeRadius, !style.getStrokeScaling() && strokeMatrix)
             );
           if (type === 'rectangle') {
             var padding = strokePadding.multiply(2),
@@ -409,7 +399,7 @@ export const Shape = Item.extend(
         // when testing for fill. The actual fill test happens in
         // Item#_hitTestSelf(), through its call of #_contains().
         return hit
-          ? new HitResult4444(hitStroke ? 'stroke' : 'fill', this)
+          ? new ref.HitResult(hitStroke ? 'stroke' : 'fill', this)
           : (_hitTestSelf as any).base.apply(this, arguments);
       },
     };
@@ -622,3 +612,5 @@ export const Shape = Item.extend(
     })(),
   }
 );
+
+ref.Shape = Shape;

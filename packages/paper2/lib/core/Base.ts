@@ -13,18 +13,8 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { Layer as LayerType } from '~/item/Layer';
-import type { Item as ItemType } from '~/item/Item';
-import type { Formatter as FormatterType } from '~/util/Formatter';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
-// import { Formatter } from "~/util/Formatter";
-// import { Layer } from "~/item/Layer";
-// import { Item } from "~/item/Item";
-
-declare const Layer4444: typeof LayerType;
-declare const Item4444: typeof ItemType;
-declare const Formatter4444: typeof FormatterType;
 
 /**
  * @name Base
@@ -54,7 +44,7 @@ Base.inject(
                       ': ' +
                       (type === 'number'
                         ? // ? Formatter.instance.number(value)
-                          Formatter4444.instance.number(value)
+                          ref.Formatter.instance.number(value)
                         : type === 'string'
                           ? "'" + value + "'"
                           : value)
@@ -453,7 +443,7 @@ Base.inject(
           res;
         if (isRoot) {
           // options.formatter = new Formatter(options.precision);
-          options.formatter = new Formatter4444(options.precision);
+          options.formatter = new ref.Formatter(options.precision);
           // Create a simple dictionary object that handles all the storing
           // and retrieving of dictionary definitions and references, e.g. for
           // symbols and gradients. Items that want to support this need to
@@ -596,7 +586,7 @@ Base.inject(
             // these to be created on the fly in the active project into
             // which we're importing (except for if it's a preexisting
             // target layer).
-            if (args.length === 1 && obj instanceof Item4444 && (useTarget || !(obj instanceof Layer4444))) {
+            if (args.length === 1 && obj instanceof ref.Item && (useTarget || !(obj instanceof ref.Layer))) {
               var arg = args[0];
               if (Base.isPlainObject(arg)) {
                 arg.insert = false;
@@ -605,7 +595,7 @@ Base.inject(
                 // property that was just set. Pass an exclude
                 // object to the call of `obj.set()` below (#1392).
                 if (useTarget) {
-                  args = args.concat([Item4444.INSERT]);
+                  args = args.concat([ref.Item.INSERT]);
                 }
               }
             }
@@ -665,8 +655,7 @@ Base.inject(
           // Erase the indices of the removed items
           for (var i = 0, l = removed.length; i < l; i++) removed[i]._index = undefined;
           // Adjust the indices of the items above.
-          // @ts-expect-error = Subsequent variable declarations must have the same type
-          for (var i = index + amount, l = list.length; i < l; i++) list[i]._index = i;
+          for (var i = (index as number) + (amount as number), l = list.length; i < l; i++) list[i]._index = i;
           return removed;
         }
       },

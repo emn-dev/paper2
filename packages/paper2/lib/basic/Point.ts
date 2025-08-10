@@ -13,15 +13,11 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { Rectangle as RectangleType } from './Rectangle';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Formatter } from '~/util/Formatter';
 import { Numerical } from '~/util/Numerical';
 import { ItemSelection } from '~/item/ItemSelection';
-// import { Rectangle } from "./Rectangle";
-
-declare const Rectangle4444: typeof RectangleType;
 
 /**
  * @name Point
@@ -699,7 +695,7 @@ export const Point = Base.extend(
      * @return {Boolean} {@true if the point is inside the rectangle}
      */
     isInside: function (/* rect */) {
-      return Rectangle4444.read(arguments).contains(this);
+      return ref.Rectangle.read(arguments).contains(this);
     },
 
     /**

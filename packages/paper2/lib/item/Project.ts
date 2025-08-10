@@ -13,34 +13,13 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { Item as ItemType } from './Item';
-import type { ItemSelection as ItemSelectionType } from './ItemSelection';
-import type { Layer as LayerType } from './Layer';
-import type { View as ViewType } from '~/view/View';
-import type { SymbolItem as SymbolItemType } from './SymbolItem';
-import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
-import type { Style as StyleType } from '~/style/Style';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Matrix } from '~/basic/Matrix';
 import { Point } from '~/basic/Point';
 import { PaperScopeItem } from '~/core/PaperScopeItem';
 import { ChangeFlag, Change } from './ChangeFlag';
-// import { Item } from "./Item";
-// import { ItemSelection } from "./ItemSelection";
-// import { Layer } from "./Layer";
-// import { View } from "~/view/View";
-// import { SymbolItem } from "./SymbolItem";
-// import { CanvasProvider } from "~/canvas/CanvasProvider";
-// import { Style } from "~/style/Style";
-
-declare const Item4444: typeof ItemType;
-declare const ItemSelection4444: typeof ItemSelectionType;
-declare const Layer4444: typeof LayerType;
-declare const View4444: typeof ViewType;
-declare const SymbolItem4444: typeof SymbolItemType;
-declare const CanvasProvider4444: typeof CanvasProviderType;
-declare const Style4444: typeof StyleType;
+import { ItemSelection } from './ItemSelection';
 
 /**
  * @name Project
@@ -90,15 +69,15 @@ export const Project = PaperScopeItem.extend(
       this._children = [];
       this._namedChildren = {};
       this._activeLayer = null;
-      this._currentStyle = new Style4444(null, null, this);
+      this._currentStyle = new ref.Style(null, null, this);
       // If no view is provided, we create a 1x1 px canvas view just so we
       // have something to do size calculations with.
       // (e.g. PointText#_getBounds)
 
-      this._view = View4444.create(
+      this._view = ref.View.create(
         this,
         // @ts-expect-error = Expected 3 arguments, but got 2
-        element || CanvasProvider4444.getCanvas(1, 1)
+        element || ref.CanvasProvider.getCanvas(1, 1)
       );
       this._selectionItems = {};
       this._selectionCount = 0;
@@ -272,7 +251,7 @@ export const Project = PaperScopeItem.extend(
      * @type Layer
      */
     getActiveLayer: function () {
-      return this._activeLayer || new Layer4444({ project: this, insert: true });
+      return this._activeLayer || new ref.Layer({ project: this, insert: true });
     },
 
     /**
@@ -286,7 +265,7 @@ export const Project = PaperScopeItem.extend(
       var definitions = [],
         ids = {};
       this.getItems({
-        class: SymbolItem4444,
+        class: ref.SymbolItem,
         match: function (item) {
           var definition = item._definition,
             id = definition._id;
@@ -321,7 +300,7 @@ export const Project = PaperScopeItem.extend(
       for (var id in selectionItems) {
         var item = selectionItems[id],
           selection = item._selection;
-        if (selection & /*#=*/ ItemSelection4444.ITEM && item.isInserted()) {
+        if (selection & /*#=*/ ItemSelection.ITEM && item.isInserted()) {
           items.push(item);
         } else if (!selection) {
           this._updateSelection(item);
@@ -383,7 +362,7 @@ export const Project = PaperScopeItem.extend(
      * @return {Layer} the added layer, or `null` if adding was not possible
      */
     insertLayer: function (index, layer) {
-      if (layer instanceof Layer4444) {
+      if (layer instanceof ref.Layer) {
         // Notify parent of change. Don't notify item itself yet,
         // as we're doing so when adding it to the new owner below.
         layer._remove(false, true);
@@ -412,7 +391,7 @@ export const Project = PaperScopeItem.extend(
         this.insertLayer(index, item) ||
         // Anything else than layers needs to be added to a layer first.
         // If none exists yet, create one now, then add the item to it.
-        (this._activeLayer || this._insertItem(undefined, new Layer4444(Item4444.NO_INSERT), true)) // _created = true
+        (this._activeLayer || this._insertItem(undefined, new ref.Layer(ref.Item.NO_INSERT), true)) // _created = true
           .insertChild(index, item);
       // If a layer was newly created, also activate it.
       if (_created && item.activate) item.activate();
@@ -727,7 +706,7 @@ export const Project = PaperScopeItem.extend(
      * }
      */
     getItems: function (options) {
-      return Item4444._getItems(this, options);
+      return ref.Item._getItems(this, options);
     },
 
     /**
@@ -745,7 +724,7 @@ export const Project = PaperScopeItem.extend(
      * @return {Item} the first item in the project matching the given criteria
      */
     getItem: function (options) {
-      return Item4444._getItems(this, options, null, null, true)[0] || null;
+      return ref.Item._getItems(this, options, null, null, true)[0] || null;
     },
 
     /**
@@ -925,3 +904,5 @@ export const Project = PaperScopeItem.extend(
     },
   }
 );
+
+ref.Project = Project;

@@ -13,25 +13,9 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { BlendMode as BlendModeType } from '~/canvas/BlendMode';
-import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
-import type { Project as ProjectType } from '~/item/Project';
-import type { View as ViewType } from '~/view/View';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { __options } from '~/options';
-
-// import { BlendMode } from "~/canvas/BlendMode";
-// import { CanvasProvider } from "~/canvas/CanvasProvider";
-// import { Project } from "~/item/Project";
-// import { View } from "~/view/View";
-
-declare const BlendMode4444: typeof BlendModeType;
-declare const CanvasProvider4444: typeof CanvasProviderType;
-declare const Project4444: typeof ProjectType;
-declare const View4444: typeof ViewType;
-
-declare let paper4444;
 
 /**
  * @name PaperScope
@@ -70,7 +54,7 @@ export const PaperScope = Base.extend(
       // element is only used internally when creating scopes for PaperScript.
       // Whenever a PaperScope is created, it automatically becomes the active
       // one.
-      paper4444 = this;
+      ref.paper = this;
       // Default configurable settings.
       this.settings = new Base({
         applyMatrix: true,
@@ -81,22 +65,20 @@ export const PaperScope = Base.extend(
       this.project = null;
       this.projects = [];
       this.tools = [];
-      // Assign a unique id to each scope .
-      // @ts-expect-error = Property '_id' does not exist on type
-      this._id = PaperScope._id++;
-      // @ts-expect-error = Property '_scopes' does not exist on type
-      PaperScope._scopes[this._id] = this;
+      // Assign a unique id to each scope
+      this._id = ref.PaperScope._id++;
+      ref.PaperScope._scopes[this._id] = this;
       var proto = PaperScope.prototype;
       if (!this.support) {
         // Set up paper.support, as an object containing properties that
         // describe the support of various features.
-        // @ts-expect-error = Expected 3 arguments, but got 2
-        var ctx = CanvasProvider4444.getContext(1, 1) || {};
+        // @ts-expect-error TODO
+        var ctx = ref.CanvasProvider.getContext(1, 1) || {};
         proto.support = {
           nativeDash: 'setLineDash' in ctx || 'mozDash' in ctx,
-          nativeBlendModes: BlendMode4444.nativeModes,
+          nativeBlendModes: ref.BlendMode.nativeModes,
         };
-        CanvasProvider4444.release(ctx);
+        ref.CanvasProvider.release(ctx);
       }
       if (!this.agent) {
         // Use self.instead of window, to cover handle web-workers too.
@@ -229,8 +211,8 @@ export const PaperScope = Base.extend(
      */
     execute: function (code, options) {
       /*#*/ if (__options.paperScript) {
-        var exports = paper4444.PaperScript.execute(code, this, options);
-        View4444.updateFocus();
+        var exports = ref.paper.PaperScript.execute(code, this, options);
+        ref.View.updateFocus();
         return exports;
         /*#*/
       }
@@ -281,16 +263,16 @@ export const PaperScope = Base.extend(
     setup: function (element) {
       // Make sure this is the active scope, so the created project and view
       // are automatically associated with it.
-      paper4444 = this;
+      ref.paper = this;
       // Create an empty project for the scope.
-      this.project = new Project4444(element);
+      this.project = new ref.Project(element);
       // This is needed in PaperScript.load().
       return this;
     },
 
     createCanvas: function (width, height) {
-      // @ts-expect-error = Expected 3 arguments, but got 2
-      return CanvasProvider4444.getCanvas(width, height);
+      // @ts-expect-error TODO
+      return ref.CanvasProvider.getCanvas(width, height);
     },
 
     /**
@@ -298,7 +280,7 @@ export const PaperScope = Base.extend(
      * in its active project.
      */
     activate: function () {
-      paper4444 = this;
+      ref.paper = this;
     },
 
     clear: function () {
@@ -346,3 +328,5 @@ export const PaperScope = Base.extend(
     })(),
   }
 );
+
+ref.PaperScope = PaperScope;

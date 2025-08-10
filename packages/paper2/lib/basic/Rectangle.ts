@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Point, LinkedPoint } from './Point';
 import { Formatter } from '~/util/Formatter';
@@ -1009,3 +1010,5 @@ export const LinkedRectangle = Rectangle.extend(
     );
   })()
 );
+
+ref.Rectangle = Rectangle;

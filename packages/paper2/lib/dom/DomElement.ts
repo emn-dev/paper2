@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Rectangle } from '~/basic/Rectangle';
 import { Size } from '~/basic/Size';
 
@@ -128,3 +129,5 @@ export const DomElement = new (function () {
     },
   };
 })();
+
+ref.DomElement = DomElement;

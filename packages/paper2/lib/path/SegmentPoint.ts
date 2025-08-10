@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Point } from '~/basic/Point';
 import { Numerical } from '~/util/Numerical';
 import { SegmentSelection } from './SegmentSelection';
@@ -105,3 +106,5 @@ export const SegmentPoint = Point.extend({
           : 0;
   },
 });
+
+ref.SegmentPoint = SegmentPoint;

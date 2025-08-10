@@ -13,14 +13,13 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import { Point } from '~/basic/Point';
+import { ref } from '~/globals';
 import { Base } from '~/straps';
+import { Point } from '~/basic/Point';
 import { UID } from '~/util/UID';
 import { ChangeFlag, Change } from './ChangeFlag';
 import { Item } from './Item';
 import { SymbolItem } from './SymbolItem';
-
-declare let paper4444;
 
 /**
  * @name SymbolDefinition
@@ -72,7 +71,7 @@ export const SymbolDefinition = Base.extend(
     initialize: function SymbolDefinition(item, dontCenter) {
       // @ts-expect-error = Expected 1 arguments, but got 0
       this._id = UID.get();
-      this.project = paper4444.project;
+      this.project = ref.paper.project;
       if (item) this.setItem(item, dontCenter);
     },
 

@@ -13,11 +13,9 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { Path as PathType } from './Path';
-import type { CompoundPath as CompoundPathType } from '~/path/CompoundPath';
-import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
+import { __options } from '~/options';
 import { Point } from '~/basic/Point';
 import { Size } from '~/basic/Size';
 import { Numerical } from '~/util/Numerical';
@@ -26,15 +24,6 @@ import { Item } from '~/item/Item';
 import { CollisionDetection } from '~/util/CollisionDetection';
 import { Curve } from './Curve';
 import { Segment } from './Segment';
-import { __options } from '~/options';
-
-// import { Path } from "./Path";
-// import { CompoundPath } from "~/path/CompoundPath";
-// import { CanvasProvider } from "~/canvas/CanvasProvider";
-
-declare const Path4444: typeof PathType;
-declare const CompoundPath4444: typeof CompoundPathType;
-declare const CanvasProvider4444: typeof CanvasProviderType;
 
 /**
  * @name PathItem
@@ -108,7 +97,7 @@ export const PathItem = Item.extend(
           // followed by other commands, we have a CompoundPath.
           compound = (data.match(/m/gi) || []).length > 1 || /z\s*\S+/i.test(data);
         }
-        var ctor = compound ? CompoundPath4444 : Path4444;
+        var ctor = compound ? ref.CompoundPath : ref.Path;
         return new ctor(arg);
       },
     },
@@ -275,11 +264,11 @@ export const PathItem = Item.extend(
       /*#*/ if (__options.nativeContains || !__options.booleanOperations) {
         // To compare with native canvas approach:
         // @ts-expect-error = Expected 3 arguments, but got 2
-        var ctx = CanvasProvider4444.getContext(1, 1);
+        var ctx = ref.CanvasProvider.getContext(1, 1);
         // Use dontFinish to tell _draw to only produce geometries for hit-test.
         this._draw(ctx, new Base({ dontFinish: true }));
         var res = ctx.isPointInPath(point.x, point.y, this.getFillRule());
-        CanvasProvider4444.release(ctx);
+        ref.CanvasProvider.release(ctx);
         return res;
         /*#*/
       } else {
@@ -695,7 +684,7 @@ export const PathItem = Item.extend(
       var current = items.length,
         length = itemsTo.length;
       if (current < length) {
-        var ctor = isPath ? Segment : Path4444;
+        var ctor = isPath ? Segment : ref.Path;
         for (var i = current; i < length; i++) {
           this.add(new ctor());
         }
@@ -1117,3 +1106,5 @@ export const PathItem = Item.extend(
      */
   }
 );
+
+ref.PathItem = PathItem;

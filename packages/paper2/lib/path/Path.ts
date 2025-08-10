@@ -13,11 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { CompoundPath as CompoundPathType } from './CompoundPath';
-import type { PathFlattener as PathFlattenerType } from './PathFlattener';
-import type { PathFitter as PathFitterType } from './PathFitter';
-import type { Shape as ShapeType } from '~/item/Shape';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Matrix } from '~/basic/Matrix';
 import { Point } from '~/basic/Point';
@@ -35,18 +31,6 @@ import { CurveLocation } from './CurveLocation';
 import { PathItem } from './PathItem';
 import { Segment } from './Segment';
 import { SegmentSelection } from './SegmentSelection';
-
-// import { CompoundPath } from "./CompoundPath";
-// import { PathFlattener } from "./PathFlattener";
-// import { PathFitter } from "./PathFitter";
-// import { Shape } from "~/item/Shape";
-
-declare const CompoundPath4444: typeof CompoundPathType;
-declare const PathFlattener4444: typeof PathFlattenerType;
-declare const PathFitter4444: typeof PathFitterType;
-declare const Shape4444: typeof ShapeType;
-
-declare let paper4444;
 
 /**
  * @name Path
@@ -194,7 +178,7 @@ export const Path = PathItem.extend(
     getStyle: function () {
       // If this path is part of a compound-path, return the parent's style.
       var parent = this._parent;
-      return (parent instanceof CompoundPath4444 ? parent : this)._style;
+      return (parent instanceof ref.CompoundPath ? parent : this)._style;
     },
 
     /**
@@ -1279,7 +1263,7 @@ export const Path = PathItem.extend(
     flatten: function (flatness) {
       // Use PathFlattener to subdivide the curves into parts that are flat
       // enough, as specified by `flatness` / Curve.isFlatEnough():
-      var flattener = new PathFlattener4444(this, flatness || 0.25, 256, true),
+      var flattener = new ref.PathFlattener(this, flatness || 0.25, 256, true),
         parts = flattener.parts,
         length = parts.length,
         segments = [];
@@ -1295,7 +1279,7 @@ export const Path = PathItem.extend(
 
     // NOTE: Documentation is in PathItem#simplify()
     simplify: function (tolerance) {
-      var segments = new PathFitter4444(this).fit(tolerance || 2.5);
+      var segments = new ref.PathFitter(this).fit(tolerance || 2.5);
       if (segments) this.setSegments(segments);
       return !!segments;
     },
@@ -1531,7 +1515,7 @@ export const Path = PathItem.extend(
       // between straight objects (line, polyline, rect, and polygon) and
       // objects with curves(circle, ellipse, roundedRectangle).
       if (!this.hasHandles() && segments.length === 4 && isCollinear(0, 2) && isCollinear(1, 3) && isOrthogonal(1)) {
-        type = Shape4444.Rectangle;
+        type = ref.Shape.Rectangle;
         size = new Size(getDistance(0, 3), getDistance(0, 1));
         topCenter = segments[1]._point.add(segments[2]._point).divide(2);
       } else if (
@@ -1544,7 +1528,7 @@ export const Path = PathItem.extend(
         isCollinear(3, 7)
       ) {
         // It's a rounded rectangle.
-        type = Shape4444.Rectangle;
+        type = ref.Shape.Rectangle;
         size = new Size(getDistance(1, 6), getDistance(0, 3));
         // Subtract side lengths from total width and divide by 2 to get the
         // corner radius size.
@@ -1554,10 +1538,10 @@ export const Path = PathItem.extend(
         // If the distance between (point0 and point2) and (point1
         // and point3) are equal, then it is a circle
         if (Numerical.isZero(getDistance(0, 2) - getDistance(1, 3))) {
-          type = Shape4444.Circle;
+          type = ref.Shape.Circle;
           radius = getDistance(0, 2) / 2;
         } else {
-          type = Shape4444.Ellipse;
+          type = ref.Shape.Ellipse;
           radius = new Size(getDistance(2, 0) / 2, getDistance(3, 1) / 2);
         }
         topCenter = segments[1]._point;
@@ -1587,7 +1571,7 @@ export const Path = PathItem.extend(
     // NOTE: Documentation is in PathItem#compare()
     compare: function compare(path) {
       // If a compound-path is involved, redirect to PathItem#compare()
-      if (!path || path instanceof CompoundPath4444) return (compare as any).base.call(this, path);
+      if (!path || path instanceof ref.CompoundPath) return (compare as any).base.call(this, path);
       var curves1 = this.getCurves(),
         curves2 = path.getCurves(),
         length1 = curves1.length,
@@ -2311,7 +2295,7 @@ export const Path = PathItem.extend(
           hasStroke = style.hasStroke(),
           dashArray = style.getDashArray(),
           // dashLength is only set if we can't draw dashes natively
-          dashLength = !paper4444.support.nativeDash && hasStroke && dashArray && dashArray.length;
+          dashLength = !ref.paper.support.nativeDash && hasStroke && dashArray && dashArray.length;
 
         if (!dontStart) ctx.beginPath();
 
@@ -2344,7 +2328,7 @@ export const Path = PathItem.extend(
               // We cannot use the path created by drawSegments above
               // Use PathFlattener to draw dashed paths:
               if (!dontStart) ctx.beginPath();
-              var flattener = new PathFlattener4444(this, 0.25, 32, false, strokeMatrix),
+              var flattener = new ref.PathFlattener(this, 0.25, 32, false, strokeMatrix),
                 length = flattener.length,
                 from = -style.getDashOffset(),
                 to,
@@ -2370,7 +2354,7 @@ export const Path = PathItem.extend(
         drawSegments(ctx, this, matrix);
         // Now stroke it and draw its handles:
         ctx.stroke();
-        drawHandles(ctx, this._segments, matrix, paper4444.settings.handleSize);
+        drawHandles(ctx, this._segments, matrix, ref.paper.settings.handleSize);
       },
     };
   })(),
@@ -2951,3 +2935,5 @@ export const Path = PathItem.extend(
     },
   }
 );
+
+ref.Path = Path;

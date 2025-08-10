@@ -1,3 +1,5 @@
+import { ref } from './globals';
+
 import './item/ChangeFlag';
 import './item/ItemSelection';
 import './path/SegmentSelection';
@@ -135,6 +137,7 @@ import './net/Http';
 // /*#*/ }
 import './canvas/CanvasProvider';
 import './canvas/BlendMode';
+// import './canvas/ProxyContext'; // I do not know how to use this?
 
 import './core/PaperScript';
 
@@ -153,3 +156,5 @@ export const paper = new (PaperScope.inject(Base.exports, {
   Symbol: SymbolDefinition,
   PlacedSymbol: SymbolItem,
 }))();
+
+ref.paper = paper;

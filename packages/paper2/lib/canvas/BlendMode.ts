@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { CanvasProvider } from './CanvasProvider';
 
@@ -322,3 +323,5 @@ export const BlendMode = new (function () {
     }
   };
 })();
+
+ref.BlendMode = BlendMode;

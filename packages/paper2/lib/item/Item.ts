@@ -13,18 +13,8 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { Path as PathType } from '~/path/Path';
-import type { CompoundPath as CompoundPathType } from '~/path/CompoundPath';
-import type { Style as StyleType } from '~/style/Style';
-import type { BlendMode as BlendModeType } from '~/canvas/BlendMode';
-import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
-import type { Tween as TweenType } from '~/anim/Tween';
-import type { Group as GroupType } from './Group';
-import type { Layer as LayerType } from './Layer';
-import type { HitResult as HitResultType } from './HitResult';
-import type { Raster as RasterType } from './Raster';
-
 import { Base } from '~/straps';
+import { ref } from '~/globals';
 import { Project } from './Project';
 import { Emitter } from '~/core/Emitter';
 import { Matrix } from '~/basic/Matrix';
@@ -35,30 +25,6 @@ import { Numerical } from '~/util/Numerical';
 import { UID } from '~/util/UID';
 import { Change, ChangeFlag } from '~/item/ChangeFlag';
 import { ItemSelection } from './ItemSelection';
-
-// import { Path } from "~/path/Path";
-// import { CompoundPath } from "~/path/CompoundPath";
-// import { Style } from "~/style/Style";
-// import { BlendMode } from "~/canvas/BlendMode";
-// import { CanvasProvider } from "~/canvas/CanvasProvider";
-// import { Tween } from "~/anim/Tween";
-// import { Group } from "./Group";
-// import { Layer } from "./Layer";
-// import { HitResult } from "./HitResult";
-// import { Raster } from "./Raster";
-
-declare const Path4444: typeof PathType;
-declare const CompoundPath4444: typeof CompoundPathType;
-declare const Style4444: typeof StyleType;
-declare const BlendMode4444: typeof BlendModeType;
-declare const CanvasProvider4444: typeof CanvasProviderType;
-declare const Tween4444: typeof TweenType;
-declare const Group4444: typeof GroupType;
-declare const Layer4444: typeof LayerType;
-declare const HitResult4444: typeof HitResultType;
-declare const Raster4444: typeof RasterType;
-
-declare let paper4444;
 
 /**
  * @name Item
@@ -205,8 +171,8 @@ export const Item = Base.extend(
         internal = hasProps && props.internal === true,
         matrix = (this._matrix = new Matrix()),
         // Allow setting another project than the currently active one.
-        project = (hasProps && props.project) || paper4444.project,
-        settings = paper4444.settings;
+        project = (hasProps && props.project) || ref.paper.project,
+        settings = ref.paper.settings;
       // @ts-expect-error = Expected 1 arguments, but got 0
       this._id = internal ? null : UID.get();
       this._parent = this._index = null;
@@ -216,7 +182,7 @@ export const Item = Base.extend(
       // #addChild() calling _changed() and accessing _matrix already.
       if (point) matrix.translate(point);
       matrix._owner = this;
-      this._style = new Style4444(project._currentStyle, this, project);
+      this._style = new ref.Style(project._currentStyle, this, project);
       // Do not add to the project if it's an internal path,  or if
       // props.insert  or settings.insertItems is false.
       if (
@@ -269,7 +235,7 @@ export const Item = Base.extend(
       // Serialize style fields, but only if they differ from defaults.
       // Do not serialize styles on Groups and Layers, since they just unify
       // their children's own styles.
-      if (!(this instanceof Group4444)) serialize(this._style._defaults);
+      if (!(this instanceof ref.Group)) serialize(this._style._defaults);
       // There is no compact form for Item serialization, we always keep the
       // class.
       return [this._class, props];
@@ -1441,7 +1407,7 @@ export const Item = Base.extend(
     getLayer: function () {
       var parent = this;
       while ((parent = parent._parent)) {
-        if (parent instanceof Layer4444) return parent;
+        if (parent instanceof ref.Layer) return parent;
       }
       return null;
     },
@@ -1837,7 +1803,7 @@ export const Item = Base.extend(
         insert = arg1;
       }
       if (!raster) {
-        raster = new Raster4444(Item.NO_INSERT);
+        raster = new ref.Raster(Item.NO_INSERT);
       }
       var bounds = this.getStrokeBounds(),
         scale = (resolution || this.getView().getResolution()) / 72,
@@ -1936,7 +1902,7 @@ export const Item = Base.extend(
     // matrices into account properly!
     _asPathItem: function () {
       // Creates a temporary rectangular path item with this item's bounds.
-      return new Path4444.Rectangle({
+      return new ref.Path.Rectangle({
         rectangle: this.getInternalBounds(),
         matrix: this._matrix,
         insert: false,
@@ -1961,13 +1927,13 @@ export const Item = Base.extend(
     // Injection scope for hit-test functions shared with project
     function hitTest(/* point, options */) {
       var args = arguments;
-      return this._hitTest(Point.read(args), HitResult4444.getOptions(args));
+      return this._hitTest(Point.read(args), ref.HitResult.getOptions(args));
     }
 
     function hitTestAll(/* point, options */) {
       var args = arguments,
         point = Point.read(args),
-        options = HitResult4444.getOptions(args),
+        options = ref.HitResult.getOptions(args),
         all = [];
       this._hitTest(point, new Base({ all: all }, options));
       return all;
@@ -2099,7 +2065,7 @@ export const Item = Base.extend(
         // To calculate the correct 2D padding for tolerance, we therefore
         // need to apply the inverted item matrix.
         tolerancePadding = (options._tolerancePadding = new Size(
-          Path4444._getStrokePadding(tolerance, matrix._shiftless().invert())
+          ref.Path._getStrokePadding(tolerance, matrix._shiftless().invert())
         ));
       // Transform point to local coordinates.
       point = matrix._inverseTransform(point);
@@ -2141,7 +2107,7 @@ export const Item = Base.extend(
         // Since there are transformations, we cannot simply use a numerical
         // tolerance value. Instead, we divide by a padding size, see above.
         if (point.subtract(pt).divide(tolerancePadding).length <= 1) {
-          return new HitResult4444(type, that, {
+          return new ref.HitResult(type, that, {
             name: part ? Base.hyphenate(part) : type,
             point: pt,
           });
@@ -2207,7 +2173,7 @@ export const Item = Base.extend(
 
     _hitTestSelf: function (point, options) {
       // The default implementation honly handles 'fill' through #_contains()
-      if (options.fill && this.hasFill() && this._contains(point)) return new HitResult4444('fill', this);
+      if (options.fill && this.hasFill() && this._contains(point)) return new ref.HitResult('fill', this);
     },
 
     /**
@@ -2381,7 +2347,7 @@ export const Item = Base.extend(
             rect: rect,
             path:
               overlapping &&
-              new Path4444.Rectangle({
+              new ref.Path.Rectangle({
                 rectangle: rect,
                 insert: false,
               }),
@@ -4370,7 +4336,7 @@ export const Item = Base.extend(
         if (strokeJoin) ctx.lineJoin = strokeJoin;
         if (strokeCap) ctx.lineCap = strokeCap;
         if (miterLimit) ctx.miterLimit = miterLimit;
-        if (paper4444.support.nativeDash) {
+        if (ref.paper.support.nativeDash) {
           var dashArray = style.getDashArray(),
             dashOffset = style.getDashOffset();
           if (dashArray && dashArray.length) {
@@ -4442,7 +4408,7 @@ export const Item = Base.extend(
       var blendMode = this._blendMode,
         opacity = Numerical.clamp(this._opacity, 0, 1),
         normalBlend = blendMode === 'normal',
-        nativeBlend = BlendMode4444.nativeModes[blendMode],
+        nativeBlend = ref.BlendMode.nativeModes[blendMode],
         // Determine if we can draw directly, or if we need to draw into a
         // separate canvas and then composite onto the main canvas.
         direct =
@@ -4475,7 +4441,7 @@ export const Item = Base.extend(
         // it, instead of the mainCtx.
         mainCtx = ctx;
         // @ts-expect-error = Expected 3 arguments, but got 1
-        ctx = CanvasProvider4444.getContext(bounds.getSize().ceil().add(1).multiply(pixelRatio));
+        ctx = CanvasProvider.getContext(bounds.getSize().ceil().add(1).multiply(pixelRatio));
         if (pixelRatio !== 1) ctx.scale(pixelRatio, pixelRatio);
       }
       ctx.save();
@@ -4529,7 +4495,7 @@ export const Item = Base.extend(
       if (!direct) {
         // Use BlendMode.process even for processing normal blendMode with
         // opacity.
-        BlendMode4444.process(
+        ref.BlendMode.process(
           blendMode,
           ctx,
           mainCtx,
@@ -4539,7 +4505,7 @@ export const Item = Base.extend(
           itemOffset.subtract(prevOffset).multiply(pixelRatio)
         );
         // Return the temporary context, so it can be reused
-        CanvasProvider4444.release(ctx);
+        ref.CanvasProvider.release(ctx);
         // Restore previous offset.
         param.offset = prevOffset;
       }
@@ -4554,7 +4520,7 @@ export const Item = Base.extend(
       var parent = this._parent;
       // For compound-paths, use the _updateVersion of the parent, because the
       // shape gets drawn at once at might get cached (e.g. Path2D soon).
-      if (parent instanceof CompoundPath4444) return parent._isUpdated(updateVersion);
+      if (parent instanceof ref.CompoundPath) return parent._isUpdated(updateVersion);
       // In case a parent is visible but isn't drawn (e.g. opacity == 0), the
       // _updateVersion of all its children will not be updated, but the
       // children should still be considered updated, and selections should be
@@ -4904,7 +4870,7 @@ export const Item = Base.extend(
       var easing = options && options.easing,
         start = options && options.start,
         duration = options != null && (typeof options === 'number' ? options : options.duration),
-        tween = new Tween4444(this, from, to, duration, easing, start);
+        tween = new ref.Tween(this, from, to, duration, easing, start);
       function onFrame(event) {
         tween._handleFrame(event.time * 1000);
         if (!tween.running) {
@@ -4957,3 +4923,5 @@ export const Item = Base.extend(
     },
   }
 );
+
+ref.Item = Item;

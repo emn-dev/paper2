@@ -13,9 +13,8 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
-
-declare let paper4444;
 
 /**
  * @name HitResult
@@ -118,7 +117,7 @@ export const HitResult = Base.extend(
             // CompoundPath, Shape, Raster, SymbolItem, ...
             type: null,
             // Tolerance
-            tolerance: paper4444.settings.hitTolerance,
+            tolerance: ref.paper.settings.hitTolerance,
             // Hit the fill of items
             fill: !options,
             // Hit the curves of path items, taking into account the stroke
@@ -149,3 +148,5 @@ export const HitResult = Base.extend(
     },
   }
 );
+
+ref.HitResult = HitResult;

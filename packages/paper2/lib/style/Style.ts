@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Point } from '~/basic/Point';
 import { Change } from '~/item/ChangeFlag';
@@ -21,8 +22,6 @@ import { Item } from '~/item/Item';
 import { CompoundPath } from '~/path/CompoundPath';
 import { TextItem } from '~/text/TextItem';
 import { Color } from './Color';
-
-declare let paper4444;
 
 /**
  * @name Style
@@ -146,7 +145,7 @@ export const Style = Base.extend(
           // We keep values in a separate object that we can iterate over.
           this._values = {};
           this._owner = _owner;
-          this._project = (_owner && _owner._project) || _project || paper4444.project;
+          this._project = (_owner && _owner._project) || _project || ref.paper.project;
           // Use different defaults based on the owner
           this._defaults =
             !_owner || _owner instanceof Group
@@ -726,3 +725,5 @@ export const Style = Base.extend(
      */
   }
 );
+
+ref.Style = Style;

@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Point } from '~/basic/Point';
 import { DomElement } from './DomElement';
 
@@ -122,3 +123,5 @@ DomEvent.requestAnimationFrame = new (function () {
     }
   };
 })();
+
+ref.DomEvent = DomEvent;

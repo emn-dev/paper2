@@ -13,10 +13,9 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Emitter } from '~/core/Emitter';
-
-declare let paper4444;
 
 /**
  * @name Tween
@@ -363,7 +362,7 @@ export const Tween = Base.extend(
     },
 
     _calculate: function (left, operator, right) {
-      return paper4444.PaperScript.calculateBinary(left, operator, right);
+      return ref.paper.PaperScript.calculateBinary(left, operator, right);
     },
 
     _parseKeys: function (keys) {
@@ -396,3 +395,5 @@ export const Tween = Base.extend(
     },
   }
 );
+
+ref.Tween = Tween;

@@ -13,13 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { HitResult as HitResultType } from './HitResult';
-import type { CanvasProvider as CanvasProviderType } from '~/canvas/CanvasProvider';
-import type { PathItem as PathItemType } from '~/path/PathItem';
-import type { Color as ColorType } from '~/style/Color';
-import type { DomEvent as DomEventType } from '~/dom/DomEvent';
-import type { DomElement as DomElementType } from '~/dom/DomElement';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Matrix } from '~/basic/Matrix';
 import { Point } from '~/basic/Point';
@@ -28,23 +22,6 @@ import { Numerical } from '~/util/Numerical';
 import { Change } from '~/item/ChangeFlag';
 import { LinkedSize, Size } from '~/basic/Size';
 import { Item } from './Item';
-
-// import { HitResult } from "./HitResult";
-// import { CanvasProvider } from "~/canvas/CanvasProvider";
-// import { PathItem } from "~/path/PathItem";
-// import { Color } from "~/style/Color";
-// import { DomEvent } from "~/dom/DomEvent";
-// import { DomElement } from "~/dom/DomElement";
-
-declare const HitResult4444: typeof HitResultType;
-declare const CanvasProvider4444: typeof CanvasProviderType;
-declare const PathItem4444: typeof PathItemType;
-declare const Color4444: typeof ColorType;
-declare const DomEvent4444: typeof DomEventType;
-declare const DomElement4444: typeof DomElementType;
-
-declare let paper4444;
-declare let Event4444;
 
 /**
  * @name Raster
@@ -171,7 +148,7 @@ export const Raster = Item.extend(
             var size = Size.read(arguments);
             if (!size.isZero()) {
               // @ts-expect-error = Expected 3 arguments, but got 1
-              image = CanvasProvider4444.getCanvas(size);
+              image = ref.CanvasProvider.getCanvas(size);
             }
           }
         }
@@ -201,7 +178,7 @@ export const Raster = Item.extend(
         // If the Raster contains a Canvas object, we need to create a new
         // one and draw this raster's canvas on it.
         // @ts-expect-error = Expected 3 arguments, but got 1
-        var copyCanvas = CanvasProvider4444.getCanvas(source._size);
+        var copyCanvas = ref.CanvasProvider.getCanvas(source._size);
         copyCanvas.getContext('2d').drawImage(canvas, 0, 0);
         this._setImage(copyCanvas);
       }
@@ -230,7 +207,7 @@ export const Raster = Item.extend(
           // NOTE: Setting canvas internally sets _size.
           // NOTE: No need to release canvas because #_setImage() does so.
           // @ts-expect-error = Expected 3 arguments, but got 1
-          this._setImage(CanvasProvider4444.getCanvas(size));
+          this._setImage(ref.CanvasProvider.getCanvas(size));
           if (element) {
             // Draw element back onto the new, resized canvas.
             this.getContext(true).drawImage(element, 0, 0, size.width, size.height);
@@ -238,7 +215,7 @@ export const Raster = Item.extend(
         } else {
           // 0-width / height dimensions do not require the creation of
           // an internal canvas. Just reflect the size for now.
-          if (this._canvas) CanvasProvider4444.release(this._canvas);
+          if (this._canvas) ref.CanvasProvider.release(this._canvas);
           this._size = size.clone();
         }
       } else if (_clear) {
@@ -333,8 +310,8 @@ export const Raster = Item.extend(
         var view = that.getView(),
           type = (event && event.type) || 'load';
         if (view && that.responds(type)) {
-          paper4444 = view._scope;
-          that.emit(type, new Event4444(event));
+          ref.paper = view._scope;
+          that.emit(type, new ref.Event(event));
         }
       }
 
@@ -345,7 +322,7 @@ export const Raster = Item.extend(
         setTimeout(emit, 0);
       } else if (image) {
         // Trigger the load event on the image once it's loaded
-        DomEvent4444.add(image, {
+        ref.DomEvent.add(image, {
           load: function (event) {
             that._setImage(image);
             emit(event);
@@ -361,7 +338,7 @@ export const Raster = Item.extend(
      * underlying canvases are replaced, resized, etc.
      */
     _setImage: function (image) {
-      if (this._canvas) CanvasProvider4444.release(this._canvas);
+      if (this._canvas) ref.CanvasProvider.release(this._canvas);
       // Due to similarities, we can handle both canvas and image types here.
       if (image && image.getContext) {
         // A Canvas object
@@ -398,14 +375,14 @@ export const Raster = Item.extend(
     getCanvas: function () {
       if (!this._canvas) {
         // @ts-expect-error = Expected 3 arguments, but got 1
-        var ctx = CanvasProvider4444.getContext(this._size);
+        var ctx = ref.CanvasProvider.getContext(this._size);
         // Since drawImage into canvas might fail based on security policies
         // wrap the call in try-catch and only set _canvas if we succeeded.
         try {
           if (this._image) ctx.drawImage(this._image, 0, 0);
           this._canvas = ctx.canvas;
         } catch (e) {
-          CanvasProvider4444.release(ctx);
+          ref.CanvasProvider.release(ctx);
         }
       }
       return this._canvas;
@@ -567,7 +544,7 @@ export const Raster = Item.extend(
     getSubCanvas: function (/* rect */) {
       var rect = Rectangle.read(arguments),
         // @ts-expect-error = Expected 3 arguments, but got 1
-        ctx = CanvasProvider4444.getContext(rect.getSize());
+        ctx = ref.CanvasProvider.getContext(rect.getSize());
       ctx.drawImage(this.getCanvas(), rect.x, rect.y, rect.width, rect.height, 0, 0, rect.width, rect.height);
       return ctx.canvas;
     },
@@ -631,7 +608,7 @@ export const Raster = Item.extend(
       var bounds, path;
       if (!object) {
         bounds = this.getBounds();
-      } else if (object instanceof PathItem4444) {
+      } else if (object instanceof ref.PathItem) {
         // TODO: What if the path is smaller than 1 px?
         // TODO: How about rounding of bounds.size?
         path = object;
@@ -656,7 +633,7 @@ export const Raster = Item.extend(
       var ctx = Raster._sampleContext;
       if (!ctx) {
         // @ts-expect-error = Expected 3 arguments, but got 1
-        ctx = Raster._sampleContext = CanvasProvider4444.getContext(new Size(sampleSize));
+        ctx = Raster._sampleContext = ref.CanvasProvider.getContext(new Size(sampleSize));
       } else {
         // Clear the sample canvas:
         ctx.clearRect(0, 0, sampleSize + 1, sampleSize + 1);
@@ -688,7 +665,7 @@ export const Raster = Item.extend(
         channels[2] += pixels[i + 2] * alpha;
       }
       for (var i = 0; i < 3; i++) channels[i] /= total;
-      return total ? Color4444.read(channels) : null;
+      return total ? ref.Color.read(channels) : null;
     },
 
     /**
@@ -714,7 +691,7 @@ export const Raster = Item.extend(
       var point = Point.read(arguments);
       var data = this.getContext().getImageData(point.x, point.y, 1, 1).data;
       // Alpha is separate now:
-      return new Color4444('rgb', [data[0] / 255, data[1] / 255, data[2] / 255], data[3] / 255);
+      return new ref.Color('rgb', [data[0] / 255, data[1] / 255, data[2] / 255], data[3] / 255);
     },
 
     /**
@@ -738,7 +715,7 @@ export const Raster = Item.extend(
     setPixel: function (/* point, color */) {
       var args = arguments,
         point = Point.read(args),
-        color = Color4444.read(args),
+        color = ref.Color.read(args),
         components = color._convert('rgb'),
         alpha = color._alpha,
         ctx = this.getContext(true),
@@ -847,7 +824,7 @@ export const Raster = Item.extend(
     _hitTestSelf: function (point) {
       if (this._contains(point)) {
         var that = this;
-        return new HitResult4444('pixel', that, {
+        return new ref.HitResult('pixel', that, {
           offset: point.add(that._size.divide(2)).round(),
           // Inject as Straps.js accessor, so #toString renders well too
           color: {
@@ -874,7 +851,7 @@ export const Raster = Item.extend(
         // and `imageSmoothingEnabled` canvas context properties:
         var smoothing = this._smoothing,
           disabled = smoothing === 'off';
-        DomElement4444.setPrefixed(
+        ref.DomElement.setPrefixed(
           ctx,
           disabled ? 'imageSmoothingEnabled' : 'imageSmoothingQuality',
           disabled ? false : smoothing
@@ -889,3 +866,5 @@ export const Raster = Item.extend(
     },
   }
 );
+
+ref.Raster = Raster;

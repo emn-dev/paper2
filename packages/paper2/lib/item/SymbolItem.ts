@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Point } from '~/basic/Point';
 import { Change } from './ChangeFlag';
 import { Item } from './Item';
@@ -146,3 +147,5 @@ export const SymbolItem = Item.extend(
     // TODO: SymbolItem#embed()
   }
 );
+
+ref.SymbolItem = SymbolItem;

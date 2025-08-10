@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Event } from './Event';
 
 /**
@@ -81,3 +82,5 @@ export const KeyEvent = Event.extend(
     },
   }
 );
+
+ref.KeyEvent = KeyEvent;

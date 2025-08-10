@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 
 /**
@@ -63,6 +64,7 @@ export const Formatter = Base.extend(
   }
 );
 
+ref.Formatter = Formatter;
 Formatter.instance = new Formatter();
 
 // export const Formatter = FormatterBase;

@@ -14,6 +14,7 @@
 /* eslint-disable */
 
 import type { Path } from './Path';
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Numerical } from '~/util/Numerical';
 import { Formatter } from '~/util/Formatter';
@@ -615,3 +616,5 @@ export const CurveLocation = Base.extend(
     };
   })()
 );
+
+ref.CurveLocation = CurveLocation;

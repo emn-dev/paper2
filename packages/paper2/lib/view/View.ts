@@ -13,9 +13,10 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { CanvasView as CanvasViewType } from './CanvasView';
-
 // import { Stats } from "fs";
+import { ref } from '~/globals';
+import { Base } from '~/straps';
+import { PaperScope } from '~/core/PaperScope';
 import { Matrix } from '~/basic/Matrix';
 import { Point, LinkedPoint } from '~/basic/Point';
 import { Rectangle } from '~/basic/Rectangle';
@@ -25,16 +26,6 @@ import { DomElement } from '~/dom/DomElement';
 import { DomEvent } from '~/dom/DomEvent';
 import { Change } from '~/item/ChangeFlag';
 import { Item } from '~/item/Item';
-import { Base } from '~/straps';
-import { PaperScope } from '~/core/PaperScope';
-
-// import { CanvasView } from "./CanvasView";
-
-declare const CanvasView4444: typeof CanvasViewType;
-
-declare let paper4444;
-declare let MouseEvent4444;
-declare let KeyEvent4444;
 
 // https://github.com/mrdoob/stats.js
 declare const Stats: any;
@@ -151,7 +142,7 @@ export const View = Base.extend(
       // see #_countItemEvent():
       this._itemEvents = { native: {}, virtual: {} };
       // Do not set _autoUpdate on Node.js by default:
-      this._autoUpdate = !paper4444.agent.node;
+      this._autoUpdate = !ref.paper.agent.node;
       this._needsUpdate = false;
     },
 
@@ -305,7 +296,7 @@ export const View = Base.extend(
 
     _handleFrame: function () {
       // Set the global paper object to the current scope
-      paper4444 = this._scope;
+      ref.paper = this._scope;
       var now = Date.now() / 1000,
         delta = this._last ? now - this._last : 0;
       this._last = now;
@@ -1060,7 +1051,7 @@ export const View = Base.extend(
         if (document && typeof element === 'string') element = document.getElementById(element);
         // Factory to provide the right View subclass for a given element.
         // Produces only CanvasView or View items (for workers) for now:
-        var ctor = window ? CanvasView4444 : View;
+        var ctor = window ? ref.CanvasView : View;
         return new ctor(project, element);
       },
     },
@@ -1254,7 +1245,7 @@ export const View = Base.extend(
           // Only produce the event object if we really need it, and then
           // reuse it if we're bubbling.
           if (!mouseEvent) {
-            mouseEvent = new MouseEvent4444(
+            mouseEvent = new ref.MouseEvent(
               type,
               event,
               point,
@@ -1505,9 +1496,9 @@ export const View = Base.extend(
         function emit(obj) {
           if (obj.responds(type)) {
             // Update global reference to this scope.
-            paper4444 = scope;
+            ref.paper = scope;
             // Only produce the event object if we really need it.
-            obj.emit(type, (keyEvent = keyEvent || new KeyEvent4444(type, event, key, character)));
+            obj.emit(type, (keyEvent = keyEvent || new ref.KeyEvent(type, event, key, character)));
           }
         }
 
@@ -1564,3 +1555,5 @@ export const View = Base.extend(
     };
   })()
 );
+
+ref.View = View;

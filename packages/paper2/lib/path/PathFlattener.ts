@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Curve } from './Curve';
 
@@ -173,3 +174,5 @@ export const PathFlattener = Base.extend(
     {}
   )
 );
+
+ref.PathFlattener = PathFlattener;

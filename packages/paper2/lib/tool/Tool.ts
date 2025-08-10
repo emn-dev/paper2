@@ -13,10 +13,9 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { PaperScopeItem } from '~/core/PaperScopeItem';
 import { ToolEvent } from './ToolEvent';
-
-declare let paper4444;
 
 /**
  * @name Tool
@@ -300,7 +299,7 @@ export const Tool = PaperScopeItem.extend(
      */
     _handleMouseEvent: function (type, event, point, mouse) {
       // Update global reference to this scope.
-      paper4444 = this._scope;
+      ref.paper = this._scope;
       // If there is no mousedrag event installed, fall back to mousemove,
       // with which we share the actual event handling code anyhow.
       if (mouse.drag && !this.responds(type)) type = 'mousemove';

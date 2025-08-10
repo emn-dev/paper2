@@ -13,12 +13,9 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { Project } from '~/item/Project';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Emitter } from '~/core/Emitter';
-
-declare let paper4444;
 
 /**
  * @name PaperScopeItem
@@ -37,7 +34,7 @@ export const PaperScopeItem = Base.extend(
      */
     initialize: function (activate) {
       // Store reference to the currently active global paper scope:
-      this._scope = paper4444;
+      this._scope = ref.paper;
       // Push it onto this._scope[this._list] and set _index:
       this._index = this._scope[this._list].push(this) - 1;
       // If the project has no active reference, activate this one

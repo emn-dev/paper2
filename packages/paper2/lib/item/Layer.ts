@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Group } from './Group';
 
 /**
@@ -101,3 +102,5 @@ export const Layer = Group.extend(
     _hitTestSelf: function () {},
   }
 );
+
+ref.Layer = Layer;

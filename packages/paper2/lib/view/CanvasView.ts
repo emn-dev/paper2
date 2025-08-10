@@ -13,14 +13,13 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Size } from '~/basic/Size';
 import { CanvasProvider } from '~/canvas/CanvasProvider';
 import { PaperScope } from '~/core/PaperScope';
 import { DomElement } from '~/dom/DomElement';
 import { Base } from '~/straps';
 import { View } from './View';
-
-declare let paper4444;
 
 /**
  * @name CanvasView
@@ -108,7 +107,7 @@ export const CanvasView = View.extend(
      * pixels.
      */
     getPixelSize: function getPixelSize(size) {
-      var agent = paper4444.agent,
+      var agent = ref.paper.agent,
         pixels;
       // Firefox doesn't appear to convert context.font sizes to pixels,
       // while other browsers do. Fall-back to View#getPixelSize.
@@ -155,3 +154,5 @@ export const CanvasView = View.extend(
     },
   }
 );
+
+ref.CanvasView = CanvasView;

@@ -13,11 +13,13 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Point } from '~/basic/Point';
 import { Item } from '~/item/Item';
 import { Path } from './Path';
 import { PathItem } from './PathItem';
+
 /**
  * @name CompoundPath
  *
@@ -413,3 +415,5 @@ export const CompoundPath = PathItem.extend(
     {}
   )
 );
+
+ref.CompoundPath = CompoundPath;

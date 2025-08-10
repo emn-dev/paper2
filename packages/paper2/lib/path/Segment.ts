@@ -13,21 +13,11 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import type { SegmentPoint as SegmentPointType } from './SegmentPoint';
-import type { CurveLocation as CurveLocationType } from './CurveLocation';
-import type { Path } from './Path';
-
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Point } from '~/basic/Point';
 import { Change } from '~/item/ChangeFlag';
 import { SegmentSelection } from './SegmentSelection';
-
-// import { SegmentPoint } from "./SegmentPoint";
-// import { CurveLocation } from "./CurveLocation";
-// import { Path } from "./Path";
-
-declare const SegmentPoint4444: typeof SegmentPointType;
-declare const CurveLocation4444: typeof CurveLocationType;
 
 /**
  * @name Segment
@@ -164,9 +154,9 @@ export const Segment = Base.extend(
           handleOut = arg4 !== undefined ? [arg4, arg5] : null;
         }
       }
-      new SegmentPoint4444(point, this, '_point');
-      new SegmentPoint4444(handleIn, this, '_handleIn');
-      new SegmentPoint4444(handleOut, this, '_handleOut');
+      new ref.SegmentPoint(point, this, '_point');
+      new ref.SegmentPoint(handleIn, this, '_handleIn');
+      new ref.SegmentPoint(handleOut, this, '_handleOut');
       if (selection) this.setSelection(selection);
     },
 
@@ -383,7 +373,7 @@ export const Segment = Base.extend(
       var curve = this.getCurve();
       return curve
         ? // Determine whether the parameter for this segment is 0 or 1.
-          new CurveLocation4444(curve, this === curve._segment1 ? 0 : 1)
+          new ref.CurveLocation(curve, this === curve._segment1 ? 0 : 1)
         : null;
     },
 
