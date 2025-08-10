@@ -30,7 +30,7 @@ export const __options = {
   svg: true,
   booleanOperations: true,
   nativeContains: false,
-  paperScript: true,
+  paperScript: process.env.PAPER2_FULL,
 };
 
 // // Export for use in Gulp.js
