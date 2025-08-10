@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 // Based on https://www.npmjs.com/package/http-server-spa
 
+import type { ServerResponse } from "node:http";
 import { readFileSync, readFile as rf, stat } from "fs";
 import { parse } from "url";
 import { join } from "path";
@@ -12,7 +13,7 @@ const port = process.argv[3] || 8080;
 const file = process.argv[4] || "index.html";
 const cwd = process.cwd();
 
-let index;
+let index: any;
 
 // Try put the root file in memory
 try {
@@ -23,13 +24,13 @@ try {
   process.exit();
 }
 
-function sendError(res) {
+function sendError(res: ServerResponse) {
   res.writeHead(500);
   res.write("500 Server Error");
   res.end();
 }
 
-function sendFile(res, uri, data) {
+function sendFile(res: ServerResponse, uri: string, data: string) {
   if (uri.endsWith(".js")) {
     res.writeHead(200, { "Content-Type": "application/javascript" });
   }
@@ -37,20 +38,20 @@ function sendFile(res, uri, data) {
   res.end();
 }
 
-function readFile(res, uri) {
+function readFile(res: ServerResponse, uri: string) {
   rf(uri, "binary", (err, fileToUse) => {
     if (err) sendError(res);
     else sendFile(res, uri, fileToUse);
   });
 }
 
-function sendNotFound(res) {
+function sendNotFound(res: ServerResponse) {
   res.writeHead(404);
   res.write("404 Not Found");
   res.end();
 }
 
-function sendIndex(res, status) {
+function sendIndex(res: ServerResponse, status: number) {
   if (process.env.NODE_ENV !== "production") {
     const uri = join(process.cwd(), root, file);
     index = readFileSync(uri);
@@ -60,13 +61,13 @@ function sendIndex(res, status) {
   res.end();
 }
 
-function isRouteRequest(uri) {
-  return uri.split("/").pop().indexOf(".") === -1;
+function isRouteRequest(uri: string) {
+  return uri.split("/").pop()?.indexOf(".") === -1;
 }
 
 http
   .createServer((req, res) => {
-    const uri = parse(req.url).pathname;
+    const uri = parse(req.url || "").pathname || "";
     let resource = join(cwd, root, decodeURI(uri));
 
     if (uri.endsWith(".esm.js")) {

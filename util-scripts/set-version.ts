@@ -2,6 +2,8 @@ import { readFileSync, writeFileSync, cpSync } from "node:fs";
 
 const input = process.argv[2];
 
+if (!input) throw Error("Missing input param!");
+
 const pkgJsonObj = JSON.parse(
   readFileSync("./packages/paper2/package.json", { encoding: "utf-8" })
 );

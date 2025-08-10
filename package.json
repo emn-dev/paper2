@@ -19,13 +19,11 @@
   "homepage": "https://github.com/emn-dev/paper2#readme",
   "scripts": {
     "build-dep": "yarn workspaces foreach --all --parallel --topological run build-dep",
-    "set-ver": "node ./util-scripts/set-version.mjs",
-    "serve:docs": "node ./util-scripts/http-server.mjs"
+    "set-ver": "node --experimental-transform-types ./util-scripts/set-version.ts",
+    "serve:docs": "node --experimental-transform-types ./util-scripts/http-server.ts"
   },
   "devDependencies": {
     "@types/node": "22.17.1",
-    "dotenv": "^17.2.1",
-    "ts-node": "10.9.2",
     "typescript": "5.9.2"
   }
 }

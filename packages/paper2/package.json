@@ -17,8 +17,10 @@
   "homepage": "https://github.com/emn-dev/paper2#readme",
   "scripts": {
     "postinstall": "yarn build-dep",
-    "build-dep": "IS_BUILD=true node build.mjs",
-    "serve": "node build.mjs",
+    "build-dep-ORIG": "IS_BUILD=true node build.mjs",
+    "build-dep": "IS_BUILD=true node --experimental-transform-types build.ts",
+    "serve-ORIG": "node build.mjs",
+    "serve": "node --experimental-transform-types build.ts",
     "serve:watch": "node ./build.serve.watch.mjs",
     "test:unit": "vitest",
     "test:unit:pipeline": "vitest run",
@@ -31,6 +33,7 @@
   },
   "devDependencies": {
     "@paper2/eslint-configs": "workspace:^",
+    "dotenv": "^17.2.1",
     "esbuild": "^0.25.8",
     "eslint": "^9.33.0",
     "prettier": "^3.6.2",
