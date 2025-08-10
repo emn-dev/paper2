@@ -10,8 +10,8 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Numerical } from "../util/Numerical";
+import { Base } from "~/straps";
+import { Numerical } from "~/util/Numerical";
 import { Segment } from "./Segment";
 
 // An Algorithm for Automatically Fitting Digitized Curves

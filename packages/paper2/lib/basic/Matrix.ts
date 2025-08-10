@@ -15,11 +15,11 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 
-import { Base } from "../straps";
-import { Formatter } from "../util/Formatter";
-import { Change } from "../item/ChangeFlag";
-import { Point } from "../basic/Point";
-import { Rectangle } from "../basic/Rectangle";
+import { Base } from "~/straps";
+import { Formatter } from "~/util/Formatter";
+import { Change } from "~/item/ChangeFlag";
+import { Point } from "~/basic/Point";
+import { Rectangle } from "~/basic/Rectangle";
 
 /**
  * @name Matrix

@@ -10,10 +10,10 @@
  * All rights reserved.
  */
 
-import type { Project } from "../item/Project";
+import type { Project } from "~/item/Project";
 
-import { Base } from "../straps";
-import { Emitter } from "../core/Emitter";
+import { Base } from "~/straps";
+import { Emitter } from "~/core/Emitter";
 
 declare let paper4444;
 

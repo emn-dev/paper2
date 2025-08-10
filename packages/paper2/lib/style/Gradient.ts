@@ -10,8 +10,8 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { UID } from "../util/UID";
+import { Base } from "~/straps";
+import { UID } from "~/util/UID";
 import { GradientStop } from "./GradientStop";
 
 /**

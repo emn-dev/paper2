@@ -10,8 +10,8 @@
  * All rights reserved.
  */
 
-import { Point } from "../basic/Point";
-import { Numerical } from "../util/Numerical";
+import { Point } from "~/basic/Point";
+import { Numerical } from "~/util/Numerical";
 import { SegmentSelection } from "./SegmentSelection";
 
 /**

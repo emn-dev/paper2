@@ -10,9 +10,9 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Item } from "../item/Item";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Item } from "~/item/Item";
 import { Path } from "./Path";
 import { PathItem } from "./PathItem";
 /**

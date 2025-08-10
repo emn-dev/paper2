@@ -10,15 +10,14 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Size } from "../basic/Size";
-import { DomEvent } from "../dom/DomEvent";
-import { Color } from "../style/Color";
-import { Tool } from "../tool/Tool";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Size } from "~/basic/Size";
+import { DomEvent } from "~/dom/DomEvent";
+import { Color } from "~/style/Color";
+import { Tool } from "~/tool/Tool";
 import { PaperScope } from "./PaperScope";
-import { Http } from "../net/Http";
-// import * as acornModule from "acorn";
+import { Http } from "~/net/Http";
 
 declare let paper4444;
 

@@ -10,9 +10,9 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Formatter } from "../util/Formatter";
-import { Numerical } from "../util/Numerical";
+import { Base } from "~/straps";
+import { Formatter } from "~/util/Formatter";
+import { Numerical } from "~/util/Numerical";
 
 /**
  * @name Size

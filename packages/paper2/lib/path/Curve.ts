@@ -13,12 +13,12 @@
 import type { Path as PathType } from "./Path";
 import type { CurveLocation as CurveLocationType } from "./CurveLocation";
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Rectangle } from "../basic/Rectangle";
-import { Numerical } from "../util/Numerical";
-import { CollisionDetection } from "../util/CollisionDetection";
-import { Line } from "../basic/Line";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Rectangle } from "~/basic/Rectangle";
+import { Numerical } from "~/util/Numerical";
+import { CollisionDetection } from "~/util/CollisionDetection";
+import { Line } from "~/basic/Line";
 import { Segment } from "./Segment";
 
 // import { Path } from "./Path";

@@ -10,8 +10,8 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Change } from "../item/ChangeFlag";
+import { Base } from "~/straps";
+import { Change } from "~/item/ChangeFlag";
 import { Color } from "./Color";
 
 // TODO: Support midPoint? (initial tests didn't look nice)

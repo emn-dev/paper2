@@ -10,9 +10,9 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Numerical } from "../util/Numerical";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Numerical } from "~/util/Numerical";
 
 /**
  * @name Line

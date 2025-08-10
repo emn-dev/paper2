@@ -11,18 +11,18 @@
  */
 
 import type { HitResult as HitResultType } from "./HitResult";
-import type { Path as PathType } from "../path/Path";
+import type { Path as PathType } from "~/path/Path";
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Rectangle } from "../basic/Rectangle";
-import { LinkedSize, Size } from "../basic/Size";
-import { Numerical } from "../util/Numerical";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Rectangle } from "~/basic/Rectangle";
+import { LinkedSize, Size } from "~/basic/Size";
+import { Numerical } from "~/util/Numerical";
 import { Change } from "./ChangeFlag";
 import { Item } from "./Item";
 
 // import { HitResult } from "./HitResult";
-// import { Path } from "../path/Path";
+// import { Path } from "~/path/Path";
 
 declare const HitResult4444: typeof HitResultType;
 declare const Path4444: typeof PathType;

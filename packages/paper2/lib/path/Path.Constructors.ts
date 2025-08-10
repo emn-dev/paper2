@@ -10,13 +10,13 @@
  * All rights reserved.
  */
 
-import { Point } from "../basic/Point";
-import { Rectangle } from "../basic/Rectangle";
-import { Size } from "../basic/Size";
-import { Item } from "../item/Item";
-import { Shape } from "../item/Shape";
-import { Base } from "../straps";
-import { Numerical } from "../util/Numerical";
+import { Point } from "~/basic/Point";
+import { Rectangle } from "~/basic/Rectangle";
+import { Size } from "~/basic/Size";
+import { Item } from "~/item/Item";
+import { Shape } from "~/item/Shape";
+import { Base } from "~/straps";
+import { Numerical } from "~/util/Numerical";
 import { Path } from "./Path";
 import { Segment } from "./Segment";
 

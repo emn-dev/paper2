@@ -10,13 +10,13 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Change } from "../item/ChangeFlag";
-import { Group } from "../item/Group";
-import { Item } from "../item/Item";
-import { CompoundPath } from "../path/CompoundPath";
-import { TextItem } from "../text/TextItem";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Change } from "~/item/ChangeFlag";
+import { Group } from "~/item/Group";
+import { Item } from "~/item/Item";
+import { CompoundPath } from "~/path/CompoundPath";
+import { TextItem } from "~/text/TextItem";
 import { Color } from "./Color";
 
 declare let paper4444;

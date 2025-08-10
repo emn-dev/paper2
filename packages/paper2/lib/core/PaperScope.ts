@@ -10,18 +10,18 @@
  * All rights reserved.
  */
 
-import type { BlendMode as BlendModeType } from "../canvas/BlendMode";
-import type { CanvasProvider as CanvasProviderType } from "../canvas/CanvasProvider";
-import type { Project as ProjectType } from "../item/Project";
-import type { View as ViewType } from "../view/View";
+import type { BlendMode as BlendModeType } from "~/canvas/BlendMode";
+import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
+import type { Project as ProjectType } from "~/item/Project";
+import type { View as ViewType } from "~/view/View";
 
-import { Base } from "../straps";
-import { __options } from "../options";
+import { Base } from "~/straps";
+import { __options } from "~/options";
 
-// import { BlendMode } from "../canvas/BlendMode";
-// import { CanvasProvider } from "../canvas/CanvasProvider";
-// import { Project } from "../item/Project";
-// import { View } from "../view/View";
+// import { BlendMode } from "~/canvas/BlendMode";
+// import { CanvasProvider } from "~/canvas/CanvasProvider";
+// import { Project } from "~/item/Project";
+// import { View } from "~/view/View";
 
 declare const BlendMode4444: typeof BlendModeType;
 declare const CanvasProvider4444: typeof CanvasProviderType;

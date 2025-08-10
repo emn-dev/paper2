@@ -10,10 +10,10 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Change } from "../item/ChangeFlag";
-import { Item } from "../item/Item";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Change } from "~/item/ChangeFlag";
+import { Item } from "~/item/Item";
 
 /**
  * @name TextItem

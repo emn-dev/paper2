@@ -10,7 +10,7 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
+import { Base } from "~/straps";
 
 // TODO: Run through the canvas array to find a canvas with the requested
 // width / height, so we don't need to resize it?

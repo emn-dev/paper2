@@ -10,8 +10,8 @@
  * All rights reserved.
  */
 
-import { Rectangle } from "../basic/Rectangle";
-import { Size } from "../basic/Size";
+import { Rectangle } from "~/basic/Rectangle";
+import { Size } from "~/basic/Size";
 
 /**
  * @name DomElement

@@ -10,8 +10,8 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Emitter } from "../core/Emitter";
+import { Base } from "~/straps";
+import { Emitter } from "~/core/Emitter";
 
 declare let paper4444;
 

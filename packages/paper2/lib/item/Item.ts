@@ -10,35 +10,35 @@
  * All rights reserved.
  */
 
-import type { Path as PathType } from "../path/Path";
-import type { CompoundPath as CompoundPathType } from "../path/CompoundPath";
-import type { Style as StyleType } from "../style/Style";
-import type { BlendMode as BlendModeType } from "../canvas/BlendMode";
-import type { CanvasProvider as CanvasProviderType } from "../canvas/CanvasProvider";
-import type { Tween as TweenType } from "../anim/Tween";
+import type { Path as PathType } from "~/path/Path";
+import type { CompoundPath as CompoundPathType } from "~/path/CompoundPath";
+import type { Style as StyleType } from "~/style/Style";
+import type { BlendMode as BlendModeType } from "~/canvas/BlendMode";
+import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
+import type { Tween as TweenType } from "~/anim/Tween";
 import type { Group as GroupType } from "./Group";
 import type { Layer as LayerType } from "./Layer";
 import type { HitResult as HitResultType } from "./HitResult";
 import type { Raster as RasterType } from "./Raster";
 
-import { Base } from "../straps";
+import { Base } from "~/straps";
 import { Project } from "./Project";
-import { Emitter } from "../core/Emitter";
-import { Matrix } from "../basic/Matrix";
-import { Point, LinkedPoint } from "../basic/Point";
-import { Rectangle, LinkedRectangle } from "../basic/Rectangle";
-import { Size } from "../basic/Size";
-import { Numerical } from "../util/Numerical";
-import { UID } from "../util/UID";
-import { Change, ChangeFlag } from "../item/ChangeFlag";
+import { Emitter } from "~/core/Emitter";
+import { Matrix } from "~/basic/Matrix";
+import { Point, LinkedPoint } from "~/basic/Point";
+import { Rectangle, LinkedRectangle } from "~/basic/Rectangle";
+import { Size } from "~/basic/Size";
+import { Numerical } from "~/util/Numerical";
+import { UID } from "~/util/UID";
+import { Change, ChangeFlag } from "~/item/ChangeFlag";
 import { ItemSelection } from "./ItemSelection";
 
-// import { Path } from "../path/Path";
-// import { CompoundPath } from "../path/CompoundPath";
-// import { Style } from "../style/Style";
-// import { BlendMode } from "../canvas/BlendMode";
-// import { CanvasProvider } from "../canvas/CanvasProvider";
-// import { Tween } from "../anim/Tween";
+// import { Path } from "~/path/Path";
+// import { CompoundPath } from "~/path/CompoundPath";
+// import { Style } from "~/style/Style";
+// import { BlendMode } from "~/canvas/BlendMode";
+// import { CanvasProvider } from "~/canvas/CanvasProvider";
+// import { Tween } from "~/anim/Tween";
 // import { Group } from "./Group";
 // import { Layer } from "./Layer";
 // import { HitResult } from "./HitResult";

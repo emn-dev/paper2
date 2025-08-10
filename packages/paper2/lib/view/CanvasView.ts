@@ -10,11 +10,11 @@
  * All rights reserved.
  */
 
-import { Size } from "../basic/Size";
-import { CanvasProvider } from "../canvas/CanvasProvider";
-import { PaperScope } from "../core/PaperScope";
-import { DomElement } from "../dom/DomElement";
-import { Base } from "../straps";
+import { Size } from "~/basic/Size";
+import { CanvasProvider } from "~/canvas/CanvasProvider";
+import { PaperScope } from "~/core/PaperScope";
+import { DomElement } from "~/dom/DomElement";
+import { Base } from "~/straps";
 import { View } from "./View";
 
 declare let paper4444;

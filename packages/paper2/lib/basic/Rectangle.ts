@@ -10,11 +10,11 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
+import { Base } from "~/straps";
 import { Point, LinkedPoint } from "./Point";
-import { Formatter } from "../util/Formatter";
-import { ItemSelection } from "../item/ItemSelection";
-import { Size, LinkedSize } from "../basic/Size";
+import { Formatter } from "~/util/Formatter";
+import { ItemSelection } from "~/item/ItemSelection";
+import { Size, LinkedSize } from "~/basic/Size";
 
 /**
  * @name Rectangle

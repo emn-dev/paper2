@@ -10,8 +10,8 @@
  * All rights reserved.
  */
 
-import { LinkedPoint, Point } from "../basic/Point";
-import { Rectangle } from "../basic/Rectangle";
+import { LinkedPoint, Point } from "~/basic/Point";
+import { Rectangle } from "~/basic/Rectangle";
 import { TextItem } from "./TextItem";
 
 /**

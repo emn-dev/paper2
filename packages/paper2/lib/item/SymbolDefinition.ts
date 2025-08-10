@@ -10,9 +10,9 @@
  * All rights reserved.
  */
 
-import { Point } from "../basic/Point";
-import { Base } from "../straps";
-import { UID } from "../util/UID";
+import { Point } from "~/basic/Point";
+import { Base } from "~/straps";
+import { UID } from "~/util/UID";
 import { ChangeFlag, Change } from "./ChangeFlag";
 import { Item } from "./Item";
 import { SymbolItem } from "./SymbolItem";

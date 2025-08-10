@@ -10,7 +10,7 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
+import { Base } from "~/straps";
 import { CanvasProvider } from "./CanvasProvider";
 
 export const BlendMode = new (function () {

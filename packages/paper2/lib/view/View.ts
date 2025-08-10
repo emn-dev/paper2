@@ -13,17 +13,17 @@
 import type { CanvasView as CanvasViewType } from "./CanvasView";
 
 // import { Stats } from "fs";
-import { Matrix } from "../basic/Matrix";
-import { Point, LinkedPoint } from "../basic/Point";
-import { Rectangle } from "../basic/Rectangle";
-import { Size, LinkedSize } from "../basic/Size";
-import { Emitter } from "../core/Emitter";
-import { DomElement } from "../dom/DomElement";
-import { DomEvent } from "../dom/DomEvent";
-import { Change } from "../item/ChangeFlag";
-import { Item } from "../item/Item";
-import { Base } from "../straps";
-import { PaperScope } from "../core/PaperScope";
+import { Matrix } from "~/basic/Matrix";
+import { Point, LinkedPoint } from "~/basic/Point";
+import { Rectangle } from "~/basic/Rectangle";
+import { Size, LinkedSize } from "~/basic/Size";
+import { Emitter } from "~/core/Emitter";
+import { DomElement } from "~/dom/DomElement";
+import { DomEvent } from "~/dom/DomEvent";
+import { Change } from "~/item/ChangeFlag";
+import { Item } from "~/item/Item";
+import { Base } from "~/straps";
+import { PaperScope } from "~/core/PaperScope";
 
 // import { CanvasView } from "./CanvasView";
 

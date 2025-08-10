@@ -11,23 +11,23 @@
  */
 
 import type { Path as PathType } from "./Path";
-import type { CompoundPath as CompoundPathType } from "../path/CompoundPath";
-import type { CanvasProvider as CanvasProviderType } from "../canvas/CanvasProvider";
+import type { CompoundPath as CompoundPathType } from "~/path/CompoundPath";
+import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Size } from "../basic/Size";
-import { Numerical } from "../util/Numerical";
-import { Change } from "../item/ChangeFlag";
-import { Item } from "../item/Item";
-import { CollisionDetection } from "../util/CollisionDetection";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Size } from "~/basic/Size";
+import { Numerical } from "~/util/Numerical";
+import { Change } from "~/item/ChangeFlag";
+import { Item } from "~/item/Item";
+import { CollisionDetection } from "~/util/CollisionDetection";
 import { Curve } from "./Curve";
 import { Segment } from "./Segment";
-import { __options } from "../options";
+import { __options } from "~/options";
 
 // import { Path } from "./Path";
-// import { CompoundPath } from "../path/CompoundPath";
-// import { CanvasProvider } from "../canvas/CanvasProvider";
+// import { CompoundPath } from "~/path/CompoundPath";
+// import { CanvasProvider } from "~/canvas/CanvasProvider";
 
 declare const Path4444: typeof PathType;
 declare const CompoundPath4444: typeof CompoundPathType;

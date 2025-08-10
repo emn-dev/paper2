@@ -11,27 +11,27 @@
  */
 
 import type { HitResult as HitResultType } from "./HitResult";
-import type { CanvasProvider as CanvasProviderType } from "../canvas/CanvasProvider";
-import type { PathItem as PathItemType } from "../path/PathItem";
-import type { Color as ColorType } from "../style/Color";
-import type { DomEvent as DomEventType } from "../dom/DomEvent";
-import type { DomElement as DomElementType } from "../dom/DomElement";
+import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
+import type { PathItem as PathItemType } from "~/path/PathItem";
+import type { Color as ColorType } from "~/style/Color";
+import type { DomEvent as DomEventType } from "~/dom/DomEvent";
+import type { DomElement as DomElementType } from "~/dom/DomElement";
 
-import { Base } from "../straps";
-import { Matrix } from "../basic/Matrix";
-import { Point } from "../basic/Point";
-import { Rectangle } from "../basic/Rectangle";
-import { Numerical } from "../util/Numerical";
-import { Change } from "../item/ChangeFlag";
-import { LinkedSize, Size } from "../basic/Size";
+import { Base } from "~/straps";
+import { Matrix } from "~/basic/Matrix";
+import { Point } from "~/basic/Point";
+import { Rectangle } from "~/basic/Rectangle";
+import { Numerical } from "~/util/Numerical";
+import { Change } from "~/item/ChangeFlag";
+import { LinkedSize, Size } from "~/basic/Size";
 import { Item } from "./Item";
 
 // import { HitResult } from "./HitResult";
-// import { CanvasProvider } from "../canvas/CanvasProvider";
-// import { PathItem } from "../path/PathItem";
-// import { Color } from "../style/Color";
-// import { DomEvent } from "../dom/DomEvent";
-// import { DomElement } from "../dom/DomElement";
+// import { CanvasProvider } from "~/canvas/CanvasProvider";
+// import { PathItem } from "~/path/PathItem";
+// import { Color } from "~/style/Color";
+// import { DomEvent } from "~/dom/DomEvent";
+// import { DomElement } from "~/dom/DomElement";
 
 declare const HitResult4444: typeof HitResultType;
 declare const CanvasProvider4444: typeof CanvasProviderType;

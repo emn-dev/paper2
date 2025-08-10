@@ -10,7 +10,7 @@
  * All rights reserved.
  */
 
-import { PaperScopeItem } from "../core/PaperScopeItem";
+import { PaperScopeItem } from "~/core/PaperScopeItem";
 import { ToolEvent } from "./ToolEvent";
 
 declare let paper4444;

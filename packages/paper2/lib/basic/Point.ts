@@ -12,10 +12,10 @@
 
 import type { Rectangle as RectangleType } from "./Rectangle";
 
-import { Base } from "../straps";
-import { Formatter } from "../util/Formatter";
-import { Numerical } from "../util/Numerical";
-import { ItemSelection } from "../item/ItemSelection";
+import { Base } from "~/straps";
+import { Formatter } from "~/util/Formatter";
+import { Numerical } from "~/util/Numerical";
+import { ItemSelection } from "~/item/ItemSelection";
 // import { Rectangle } from "./Rectangle";
 
 declare const Rectangle4444: typeof RectangleType;

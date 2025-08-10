@@ -14,9 +14,9 @@ import type { SegmentPoint as SegmentPointType } from "./SegmentPoint";
 import type { CurveLocation as CurveLocationType } from "./CurveLocation";
 import type { Path } from "./Path";
 
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Change } from "../item/ChangeFlag";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Change } from "~/item/ChangeFlag";
 import { SegmentSelection } from "./SegmentSelection";
 
 // import { SegmentPoint } from "./SegmentPoint";

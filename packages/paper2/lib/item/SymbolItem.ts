@@ -10,7 +10,7 @@
  * All rights reserved.
  */
 
-import { Point } from "../basic/Point";
+import { Point } from "~/basic/Point";
 import { Change } from "./ChangeFlag";
 import { Item } from "./Item";
 import { SymbolDefinition } from "./SymbolDefinition";

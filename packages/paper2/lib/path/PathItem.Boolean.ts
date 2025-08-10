@@ -10,10 +10,10 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { Item } from "../item/Item";
-import { CollisionDetection } from "../util/CollisionDetection";
-import { Numerical } from "../util/Numerical";
+import { Base } from "~/straps";
+import { Item } from "~/item/Item";
+import { CollisionDetection } from "~/util/CollisionDetection";
+import { Numerical } from "~/util/Numerical";
 import { Curve } from "./Curve";
 import { CurveLocation } from "./CurveLocation";
 import { Path } from "./Path";

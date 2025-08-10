@@ -10,9 +10,9 @@
  * All rights reserved.
  */
 
-import { Base } from "../straps";
-import { DomEvent } from "../dom/DomEvent";
-import { View } from "../view/View";
+import { Base } from "~/straps";
+import { DomEvent } from "~/dom/DomEvent";
+import { View } from "~/view/View";
 
 declare let paper4444;
 

@@ -11,10 +11,10 @@
  */
 
 import { CanvasProvider } from "~/canvas/CanvasProvider";
-import { Base } from "../straps";
-import { Point } from "../basic/Point";
-import { Change } from "../item/ChangeFlag";
-import { Formatter } from "../util/Formatter";
+import { Base } from "~/straps";
+import { Point } from "~/basic/Point";
+import { Change } from "~/item/ChangeFlag";
+import { Formatter } from "~/util/Formatter";
 import { Gradient } from "./Gradient";
 
 /**

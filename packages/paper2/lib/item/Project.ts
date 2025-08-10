@@ -13,23 +13,23 @@
 import type { Item as ItemType } from "./Item";
 import type { ItemSelection as ItemSelectionType } from "./ItemSelection";
 import type { Layer as LayerType } from "./Layer";
-import type { View as ViewType } from "../view/View";
+import type { View as ViewType } from "~/view/View";
 import type { SymbolItem as SymbolItemType } from "./SymbolItem";
-import type { CanvasProvider as CanvasProviderType } from "../canvas/CanvasProvider";
-import type { Style as StyleType } from "../style/Style";
+import type { CanvasProvider as CanvasProviderType } from "~/canvas/CanvasProvider";
+import type { Style as StyleType } from "~/style/Style";
 
-import { Base } from "../straps";
-import { Matrix } from "../basic/Matrix";
-import { Point } from "../basic/Point";
-import { PaperScopeItem } from "../core/PaperScopeItem";
+import { Base } from "~/straps";
+import { Matrix } from "~/basic/Matrix";
+import { Point } from "~/basic/Point";
+import { PaperScopeItem } from "~/core/PaperScopeItem";
 import { ChangeFlag, Change } from "./ChangeFlag";
 // import { Item } from "./Item";
 // import { ItemSelection } from "./ItemSelection";
 // import { Layer } from "./Layer";
-// import { View } from "../view/View";
+// import { View } from "~/view/View";
 // import { SymbolItem } from "./SymbolItem";
-// import { CanvasProvider } from "../canvas/CanvasProvider";
-// import { Style } from "../style/Style";
+// import { CanvasProvider } from "~/canvas/CanvasProvider";
+// import { Style } from "~/style/Style";
 
 declare const Item4444: typeof ItemType;
 declare const ItemSelection4444: typeof ItemSelectionType;

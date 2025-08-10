@@ -10,14 +10,14 @@
  * All rights reserved.
  */
 
-import type { Layer as LayerType } from "../item/Layer";
-import type { Item as ItemType } from "../item/Item";
-import type { Formatter as FormatterType } from "../util/Formatter";
+import type { Layer as LayerType } from "~/item/Layer";
+import type { Item as ItemType } from "~/item/Item";
+import type { Formatter as FormatterType } from "~/util/Formatter";
 
-import { Base } from "../straps";
-// import { Formatter } from "../util/Formatter";
-// import { Layer } from "../item/Layer";
-// import { Item } from "../item/Item";
+import { Base } from "~/straps";
+// import { Formatter } from "~/util/Formatter";
+// import { Layer } from "~/item/Layer";
+// import { Item } from "~/item/Item";
 
 declare const Layer4444: typeof LayerType;
 declare const Item4444: typeof ItemType;

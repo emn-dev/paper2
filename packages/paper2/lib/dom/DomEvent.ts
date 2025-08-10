@@ -10,7 +10,7 @@
  * All rights reserved.
  */
 
-import { Point } from "../basic/Point";
+import { Point } from "~/basic/Point";
 import { DomElement } from "./DomElement";
 
 /**
