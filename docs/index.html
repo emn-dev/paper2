@@ -6,6 +6,15 @@
     <title>Paper2 Docs</title>
     <link rel="stylesheet" href="paper2-docs.css" />
     <script src="./paper2-nav.js"></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"
+    ></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"
+    ></script>
+    <script defer src="./paper2-ga.js"></script>
   </head>
   <body>
     <paper2-nav></paper2-nav>
@@ -29,28 +38,6 @@
         const showVersionEle = document.getElementById("showVersion");
         showVersionEle.innerHTML = paper.version;
       });
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
-    <script>
-      console.log("----- ga -----");
-
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      const firebaseConfig = {
-        apiKey: "AIzaSyAm-TuV5cpCZQ9MH2iF5rLdnH4mBB_CKBs",
-        authDomain: "paper2-87598.firebaseapp.com",
-        projectId: "paper2-87598",
-        storageBucket: "paper2-87598.firebasestorage.app",
-        messagingSenderId: "631422072190",
-        appId: "1:631422072190:web:bcb53f60e223f259e62f2f",
-        measurementId: "G-C6XKV0MKGM",
-      };
-
-      // // Initialize Firebase
-      const app = firebase.initializeApp(firebaseConfig);
-      const analytics = app.analytics();
-      console.log(analytics);
     </script>
   </body>
 </html>
