@@ -17,25 +17,24 @@ import { Path } from '~/path/Path';
 
 function pointCompare(actual, expected) {
   // Compare with a default tolerance of 1e-5:
-  const okX = Math.abs(actual.x - expected.x) <= 1e-5;
-  const okY = Math.abs(actual.y - expected.y) <= 1e-5;
-  return okX && okY;
+  const xResult = Math.abs(actual.x - expected.x) <= 1e-5;
+  const yResult = Math.abs(actual.y - expected.y) <= 1e-5;
+  return xResult && yResult ? 'success' : 'fail';
 }
 
 function testClassify(curve, expeced) {
   const info = curve.classify();
   if (expeced.type) {
     // equals(info.type, expeced.type, "info.type == '" + expeced.type + "'");
-    expect(info.type).toBe(expeced.type);
+    expect(info.type, `info.type == '${expeced.type}'`).toBe(expeced.type);
   }
   if (expeced.roots !== undefined) {
     // equals(
     //   info.roots,
     //   expeced.roots,
-    //   "info.roots == " +
-    //     (expeced.roots ? "[" + expeced.roots + "]" : expeced.roots)
+    //   "info.roots == " +     (expeced.roots ? "[" + expeced.roots + "]" : expeced.roots)
     // );
-    expect(info.roots).toEqual(expeced.roots);
+    expect(info.roots, `info.roots == ${expeced.roots ? `[${expeced.roots}]` : expeced.roots}`).toEqual(expeced.roots);
   }
 }
 
@@ -85,10 +84,16 @@ describe('Given: Curve Class', () => {
       for (let i = 0; i < points.length; i++) {
         const entry = points[i];
         // equals(curve.getPointAtTime(entry[0]), entry[1], 'curve.getPointAtTime(' + entry[0] + ');');
-        expect(pointCompare(curve.getPointAtTime(entry[0]), entry[1])).toBe(true);
+        expect(pointCompare(curve.getPointAtTime(entry[0]), entry[1]), `curve.getPointAtTime(' + entry[0] + ');`).toBe(
+          'success'
+        );
+
         // // Legacy version:
         // equals(curve.getPointAt(entry[0], true), entry[1], 'Legacy: curve.getPointAt(' + entry[0] + ', true);');
-        expect(pointCompare(curve.getPointAt(entry[0], true), entry[1])).toBe(true);
+        expect(
+          pointCompare(curve.getPointAt(entry[0], true), entry[1]),
+          `Legacy: curve.getPointAt(' + entry[0] + ', true);`
+        ).toBe('success');
       }
 
       // equals(curve.getPointAt(curve.length + 1), null, 'Should return null when offset is out of range.');
@@ -114,6 +119,7 @@ describe('Given: Curve Class', () => {
       }).firstCurve;
 
       const tangents = [
+        // [0, new Point(0, 999)], // FOR_TESTING: force an error
         [0, new Point(0, -165.68542)],
         [0.25, new Point(60.7233, -143.56602)],
         [0.5, new Point(108.57864, -108.57864)],
@@ -125,10 +131,16 @@ describe('Given: Curve Class', () => {
         const entry = tangents[i];
 
         // equals(curve.getTangentAtTime(entry[0]), entry[1].normalize(), 'curve.getTangentAtTime(' + entry[0] + ');');
-        expect(pointCompare(curve.getTangentAtTime(entry[0]), entry[1].normalize())).toBe(true);
+        expect(
+          pointCompare(curve.getTangentAtTime(entry[0]), entry[1].normalize()),
+          `curve.getTangentAtTime(${entry[0]});`
+        ).toBe('success');
 
         // equals(curve.getWeightedTangentAtTime(entry[0]), entry[1], 'curve.getWeightedTangentAtTime(' + entry[0] + ');');
-        expect(pointCompare(curve.getWeightedTangentAtTime(entry[0]), entry[1])).toBe(true);
+        expect(
+          pointCompare(curve.getWeightedTangentAtTime(entry[0]), entry[1]),
+          `curve.getWeightedTangentAtTime(${entry[0]});`
+        ).toBe('success');
 
         // // Legacy version:
         // equals(
@@ -136,14 +148,20 @@ describe('Given: Curve Class', () => {
         //   entry[1].normalize(),
         //   'Legacy: curve.getTangentAt(' + entry[0] + ', true);'
         // );
-        expect(pointCompare(curve.getTangentAt(entry[0], true), entry[1].normalize())).toBe(true);
+        expect(
+          pointCompare(curve.getTangentAt(entry[0], true), entry[1].normalize()),
+          `Legacy: curve.getTangentAt(${entry[0]}, true);`
+        ).toBe('success');
 
         // equals(
         //   curve.getWeightedTangentAt(entry[0], true),
         //   entry[1],
         //   'Legacy: curve.getWeightedTangentAt(' + entry[0] + ', true);'
         // );
-        expect(pointCompare(curve.getWeightedTangentAt(entry[0], true), entry[1])).toBe(true);
+        expect(
+          pointCompare(curve.getWeightedTangentAt(entry[0], true), entry[1]),
+          `Legacy: curve.getWeightedTangentAt(${entry[0]}, true);`
+        ).toBe('success');
       }
     });
   });
