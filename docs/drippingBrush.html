@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dripping Brush</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-nav.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center"><h1>Dripping Brush</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script canvas="myCanvas" type="text/paperscript">
+      var path;
+         var minSize = 5;
+         tool.maxDistance = 20;
+         function onMouseDrag(event) {
+             // If the user dragged more then minSize:
+             if (event.delta.length > minSize) {
+                 // If there is no path, make one:
+                 if (!path) {
+                     path = new Path({
+                         fillColor: 'black'
+                     });
+                     path.add(event.lastPoint);
+                 }
+
+                 var step = event.delta / 2;
+                 step.angle = step.angle + 90;
+
+                 // The top point: the middle point + the step rotated by 90 degrees:
+                 //   -----*
+                 //   |
+                 //   ------
+                 var top = event.middlePoint + step;
+
+                 // The bottom point: the middle point - the step rotated by 90 degrees:
+                 //   ------
+                 //   |
+                 //   -----*
+                 var bottom = event.middlePoint - step;
+
+                 path.add(top);
+                 path.insert(0, bottom);
+                 path.smooth();
+             } else {
+                 // If the user dragged too slowly:
+
+                 // If there is currently a path, close it
+                 if (path) {
+                     path.add(event.point);
+                     path.closed = true;
+                     path.smooth();
+
+                     // Set path to null (nothing) so the path check above
+                     // will force a new path next time the user drags fast enough:
+                     path = null;
+                 }
+             }
+         }
+
+         function onMouseUp(event) {
+             if (path) {
+                 path.add(event.point);
+                 path.closed = true;
+                 path.smooth();
+
+                 // Set path to null (nothing) so the path check above
+                 // will force a new path next time the user drags fast enough:
+                 path = null;
+             }
+         }
+    </script>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

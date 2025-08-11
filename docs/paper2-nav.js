@@ -94,6 +94,7 @@
             <a href="booleanOps.html">Boolean Ops</a>
             <a href="chain.html">Chain</a>
             <a href="exportCircle.html">Export Circle</a>
+            <a href="drippingBrush.html">Dripping Brush</a>
             <a href="importViewbox.html">Import Viewbox 1</a>
             <a href="rasterSpiral.html">Spiral Raster</a>
           </div>
