@@ -3,76 +3,76 @@
 (function () {
   const sharedStyles = new CSSStyleSheet();
   sharedStyles.replaceSync(`
-nav {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  background: #333;
-  color: white;
-  padding: 0.5rem 1rem;
-}
+      nav {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        background: #333;
+        color: white;
+        padding: 0.5rem 1rem;
+      }
 
-/* Hide the checkbox */
-#menu-toggle {
-  display: none;
-}
+      /* Hide the checkbox */
+      #menu-toggle {
+        display: none;
+      }
 
-/* Hamburger icon */
-.menu-icon {
-  display: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
+      /* Hamburger icon */
+      .menu-icon {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
 
-.nav-links {
-  display: grid;
-  grid-auto-flow: column;
-  gap: 1rem;
-  justify-content: center;
-}
+      .nav-links {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 1rem;
+        justify-content: center;
+      }
 
-.nav-links a {
-  color: white;
-  text-decoration: none;
-}
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+      }
 
-.nav-links a:hover {
-  text-decoration: underline;
-}
+      .nav-links a:hover {
+        text-decoration: underline;
+      }
 
-.login {
-  text-align: right;
-}
+      .login {
+        text-align: right;
+      }
 
-/* Responsive styles */
-@media (max-width: 600px) {
-  nav {
-    grid-template-columns: auto auto auto;
-  }
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        nav {
+          grid-template-columns: auto auto auto;
+        }
 
-  .menu-icon {
-    display: block;
-  }
+        .menu-icon {
+          display: block;
+        }
 
-  .nav-links {
-    display: none;
-    grid-auto-flow: row;
-    gap: 0;
-    background: #444;
-    grid-column: 1 / -1;
-    padding: 0.5rem;
-  }
+        .nav-links {
+          display: none;
+          grid-auto-flow: row;
+          gap: 0;
+          background: #444;
+          grid-column: 1 / -1;
+          padding: 0.5rem;
+        }
 
-  .nav-links a {
-    margin: 0.5rem;
-  }
+        .nav-links a {
+          margin: 0.5rem;
+        }
 
-  /* Show menu when checkbox is checked */
-  #menu-toggle:checked + .menu-icon + .nav-links {
-    display: grid;
-  }
-}
-    `);
+        /* Show menu when checkbox is checked */
+        #menu-toggle:checked + .menu-icon + .nav-links {
+          display: grid;
+        }
+      }
+  `);
 
   class Paper2Nav extends HTMLElement {
     constructor() {
