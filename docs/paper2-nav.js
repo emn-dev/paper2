@@ -21,7 +21,7 @@
       .menu-icon {
         display: none;
         cursor: pointer;
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
 
       .nav-links {
