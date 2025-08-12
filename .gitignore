@@ -12,7 +12,6 @@ _env_files
 
 *.code-workspace
 .vscode/
-.github/
 
 .nx
 
