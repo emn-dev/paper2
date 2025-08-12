@@ -1,15 +1,16 @@
 import { beforeAll, beforeEach } from 'vitest';
-import './mocks/canvas';
 import { initialize } from '~/index-core';
-// import '~/index';
-import { ref } from '~/globals';
+
+let paper2 = null;
 
 beforeAll(async () => {
-  const { env, jsdom } = await initialize();
+  const { env, jsdom, nodeCanvas, paper } = await initialize();
+  paper2 = paper;
   console.log('env =', env);
   console.log('jsdom =', jsdom);
+  console.log('nodeCanvas =', nodeCanvas);
 });
 
 beforeEach(async () => {
-  ref.paper.setup(new ref.paper.Size(100, 100));
+  paper2.setup(new paper2.Size(100, 100));
 });

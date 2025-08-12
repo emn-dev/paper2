@@ -1,4 +1,5 @@
 import { ref } from './globals';
+import { HTMLCanvasElement_getContext_mock } from './canvas/canvas-mocks';
 
 async function allImports() {
   await import('./item/ChangeFlag.js');
@@ -175,8 +176,6 @@ async function allImports() {
   ref.paper = paper;
 }
 
-// export { ref as paper2Core };
-
 export async function initialize() {
   if (typeof window !== 'undefined') {
     await allImports();
@@ -212,43 +211,8 @@ export async function initialize() {
     global.document = dom.window.document;
     global.self = dom.window;
 
-    (global.window.HTMLCanvasElement.prototype as any).getContext = () => {
-      return {
-        fillRect() {},
-        clearRect() {},
-        getImageData(x, y, w, h) {
-          return {
-            data: new Array(w * h * 4),
-          };
-        },
-        putImageData() {},
-        createImageData() {
-          return [];
-        },
-        setTransform() {},
-        drawImage() {},
-        save() {},
-        fillText() {},
-        restore() {},
-        beginPath() {},
-        moveTo() {},
-        lineTo() {},
-        closePath() {},
-        stroke() {},
-        translate() {},
-        scale() {},
-        rotate() {},
-        arc() {},
-        fill() {},
-        measureText() {
-          return { width: 0 };
-        },
-        transform() {},
-        rect() {},
-        clip() {},
-        bezierCurveTo() {},
-      };
-    };
+    // This implements a fake for the HTMLCanvasElement.getContext function. jsdom does not provide one.
+    (global.window as any).HTMLCanvasElement.prototype.getContext = HTMLCanvasElement_getContext_mock();
   } else {
     // We can still do some operations without the DOM or the Canvas
     global.window = null;
