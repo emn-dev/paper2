@@ -1,5 +1,7 @@
 name: Auto Merge PRs After Approval
 
+# test
+
 on:
   pull_request_review:
     types: [submitted]
