@@ -211,10 +211,13 @@ export async function initialize() {
     global.document = dom.window.document;
     global.self = dom.window;
 
-    // This implements a fake for the HTMLCanvasElement.getContext function. jsdom does not provide one.
-    (global.window as any).HTMLCanvasElement.prototype.getContext = HTMLCanvasElement_getContext_mock();
+    // TODO: would you ever want to use node-canvas and not use jsdom?
+    if (!nodeCanvas) {
+      // This implements a fake for the HTMLCanvasElement.getContext function. jsdom does not provide one.
+      (global.window as any).HTMLCanvasElement.prototype.getContext = HTMLCanvasElement_getContext_mock();
+    }
   } else {
-    // We can still do some operations without the DOM or the Canvas
+    // We can still do operations without the DOM or the Canvas
     global.window = null;
     global.document = null;
     global.self = {
