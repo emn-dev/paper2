@@ -6,7 +6,7 @@ The essence of [paper.js](https://github.com/paperjs/paper.js) wrapped in modern
 
 The existence of paper2 is to help paperjs extend its life far into the future.
 
-## Getting Started
+## Getting Started....
 
 - Require nodejs version >= `v22` ([Node.js Releases](https://nodejs.org/en/about/previous-releases))
 - Verify [corepack](https://www.npmjs.com/package/corepack) is enabled
