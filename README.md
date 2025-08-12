@@ -57,7 +57,7 @@ Unit Tests:
 
 - [TypeScript](https://www.typescriptlang.org/)
   - Firstly, I love JavaScript since early days, but...
-  - When working on a non-trivial application that has multiple contributors large JS codebases can become very difficult to understand/maintain
+  - When working on medium/large applications that have multiple contributors large JS codebases can become very difficult to understand/maintain
   - Also, having the tsc help catch common bugs during development time can elimate many runtime errors
   - Lastly, trying to reverse engineer JS code to then build types for it is prone to bugs. It is better to have the source be written in TS and you get good typings "for free"
 - [Yarn](https://yarnpkg.com/)... because of [Put simply, our differences lie in our priorities...](https://yarnpkg.com/getting-started/qa#is-yarn-faster-than-other-package-managers)
