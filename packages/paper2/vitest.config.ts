@@ -8,7 +8,7 @@ export default defineConfig({
     globals: true,
     mockReset: true,
     exclude: [...configDefaults.exclude, 'e2e/*'],
-    setupFiles: ['./tests/setup.ts'],
+    setupFiles: ['./tests/_setup.ts'],
   },
   resolve: {
     alias: {
