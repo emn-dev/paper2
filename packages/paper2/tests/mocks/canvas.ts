@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 function mockCanvas(window: any) {
   window.HTMLCanvasElement.prototype.getContext = () => {
     return {

@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Formatter } from '~/util/Formatter';
 import { Numerical } from '~/util/Numerical';
@@ -598,3 +599,5 @@ export const LinkedSize = Size.extend({
     this._owner[this._setter](this);
   },
 });
+
+ref.Size = Size;
