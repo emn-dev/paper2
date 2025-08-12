@@ -1,4 +1,4 @@
-import { ref } from './globals';
+// import { ref } from './globals';
 
 import './item/ChangeFlag';
 import './item/ItemSelection';
@@ -155,7 +155,7 @@ import './svg/SvgImport';
 // /*#*/ }
 import './core/PaperScript';
 
-export { Base as straps } from './straps';
+// export { Base as straps } from './straps';
 
 export const paper = new (PaperScope.inject(Base.exports, {
   Base,
@@ -170,5 +170,3 @@ export const paper = new (PaperScope.inject(Base.exports, {
   Symbol: SymbolDefinition,
   PlacedSymbol: SymbolItem,
 }))();
-
-ref.paper = paper;

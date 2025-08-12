@@ -26,8 +26,8 @@
           ? "./paper2-core.esm.js"
           : "https://unpkg.com/paper2/paper2-core.esm.js";
 
-      import(resourceUri).then((mod) => {
-        const straps = mod.straps;
+      import(resourceUri).then(async (paperModule) => {
+        const { straps } = await paperModule.initialize();
 
         const showLogsEle = document.getElementById("showLogs");
 

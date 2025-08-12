@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { Point } from '~/basic/Point';
-import { Curve } from '~/path/Curve';
-import { Path } from '~/path/Path';
+import { ref } from '~/globals';
+// import { Point } from '~/basic/Point';
+// import { Curve } from '~/path/Curve';
+// import { Path } from '~/path/Path';
 
 // https://github.com/paperjs/paper.js/blob/develop/test/helpers.js
 // Point: function(actual, expected, message, options) {
@@ -42,13 +43,13 @@ describe('Given: Curve Class', () => {
   describe('WHEN Curve#classify()', () => {
     // eslint-disable-next-line vitest/expect-expect
     it('THEN should return expected numbers', () => {
-      const point = new Curve([100, 100], null, null, [100, 100]);
-      const line = new Curve([100, 100], null, null, [200, 200]);
-      const cusp = new Curve([100, 200], [100, -100], [-100, -100], [200, 200]);
-      const loop = new Curve([100, 200], [150, -100], [-150, -100], [200, 200]);
-      const single = new Curve([100, 100], [50, 0], [-27, -46], [200, 200]);
-      const double = new Curve([100, 200], [100, -100], [-40, -80], [200, 200]);
-      const arch = new Curve([100, 100], [50, 0], [0, -50], [200, 200]);
+      const point = new ref.Curve([100, 100], null, null, [100, 100]);
+      const line = new ref.Curve([100, 100], null, null, [200, 200]);
+      const cusp = new ref.Curve([100, 200], [100, -100], [-100, -100], [200, 200]);
+      const loop = new ref.Curve([100, 200], [150, -100], [-150, -100], [200, 200]);
+      const single = new ref.Curve([100, 100], [50, 0], [-27, -46], [200, 200]);
+      const double = new ref.Curve([100, 200], [100, -100], [-40, -80], [200, 200]);
+      const arch = new ref.Curve([100, 100], [50, 0], [0, -50], [200, 200]);
 
       testClassify(point, { type: 'line', roots: null });
       testClassify(line, { type: 'line', roots: null });
@@ -68,17 +69,17 @@ describe('Given: Curve Class', () => {
 
   describe('WHEN Curve#getPointAtTime()', () => {
     it('THEN should return expected numbers', () => {
-      let curve = new Path.Circle({
+      let curve = new ref.Path.Circle({
         center: [100, 100],
         radius: 100,
       }).firstCurve;
 
       const points = [
-        [0, new Point(0, 100)],
-        [0.25, new Point(7.8585, 61.07549)],
-        [0.5, new Point(29.28932, 29.28932)],
-        [0.75, new Point(61.07549, 7.8585)],
-        [1, new Point(100, 0)],
+        [0, new ref.Point(0, 100)],
+        [0.25, new ref.Point(7.8585, 61.07549)],
+        [0.5, new ref.Point(29.28932, 29.28932)],
+        [0.75, new ref.Point(61.07549, 7.8585)],
+        [1, new ref.Point(100, 0)],
       ];
 
       for (let i = 0; i < points.length; i++) {
@@ -100,7 +101,7 @@ describe('Given: Curve Class', () => {
       expect(curve.getPointAt(curve.length + 1)).toBeNull();
 
       // #960:
-      curve = new Curve({
+      curve = new ref.Curve({
         segment1: [178.58559999999994, 333.41440000000006],
         segment2: [178.58559999999994, 178.58560000000008],
       });
@@ -113,18 +114,18 @@ describe('Given: Curve Class', () => {
 
   describe('WHEN Curve#getTangentAtTime()', () => {
     it('THEN should return expected numbers', () => {
-      const curve = new Path.Circle({
+      const curve = new ref.Path.Circle({
         center: [100, 100],
         radius: 100,
       }).firstCurve;
 
       const tangents = [
-        // [0, new Point(0, 999)], // FOR_TESTING: force an error
-        [0, new Point(0, -165.68542)],
-        [0.25, new Point(60.7233, -143.56602)],
-        [0.5, new Point(108.57864, -108.57864)],
-        [0.75, new Point(143.56602, -60.7233)],
-        [1, new Point(165.68542, 0)],
+        // [0, new ref.Point(0, 999)], // FOR_TESTING: force an error
+        [0, new ref.Point(0, -165.68542)],
+        [0.25, new ref.Point(60.7233, -143.56602)],
+        [0.5, new ref.Point(108.57864, -108.57864)],
+        [0.75, new ref.Point(143.56602, -60.7233)],
+        [1, new ref.Point(165.68542, 0)],
       ];
 
       for (let i = 0; i < tangents.length; i++) {

@@ -2452,3 +2452,5 @@ export const Curve = Base.extend(
     };
   })()
 );
+
+ref.Curve = Curve;

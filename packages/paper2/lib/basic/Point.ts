@@ -1071,3 +1071,5 @@ export const LinkedPoint = Point.extend({
     return this._setter === 'setPosition' ? /*#=*/ ItemSelection.POSITION : 0;
   },
 });
+
+ref.Point = Point;

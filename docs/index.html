@@ -26,9 +26,9 @@
           ? "./paper2-core.esm.js"
           : "https://unpkg.com/paper2/paper2-core.esm.js";
 
-      import(resourceUri).then((mod) => {
-        window.paper = mod.paper;
-        console.log(window.paper); // Easy access for playing with in DevTools
+      import(resourceUri).then(async (paperModule) => {
+        const { paper } = await paperModule.initialize();
+        console.log(paper); // Easy access for playing with in DevTools
         const showVersionEle = document.getElementById("showVersion");
         showVersionEle.innerHTML = paper.version;
       });

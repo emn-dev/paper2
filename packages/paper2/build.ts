@@ -13,12 +13,13 @@ const fullBaseName = 'paper2-full';
 rmSync(buildDir, { force: true, recursive: true });
 
 const sharedOpts: buildOpts = {
-  entryPoints: ['lib/index.ts'],
+  // entryPoints: ['lib/index.ts'],
   // sourcemap: true,
   sourcemap: false,
   bundle: true,
   // minify: true, // Do we need a min version?
   allowOverwrite: true,
+  external: ['jsdom'],
   define: {
     // GITHUB_REF: 'refs/tags/v1.0.15',
     'process.env.PACKAGE_VERSION': `'${process.env.GITHUB_REF?.replace('refs/tags/', '')}'`,
@@ -30,6 +31,7 @@ const sharedOpts: buildOpts = {
 
 const browserCoreOpts: buildOpts = {
   ...structuredClone(sharedOpts),
+  entryPoints: ['lib/index-core.ts'],
   outfile: `${buildDir}/${coreBaseName}.esm.js`,
   platform: 'browser',
   format: 'esm',
@@ -37,6 +39,7 @@ const browserCoreOpts: buildOpts = {
 
 const browserFullOpts: buildOpts = {
   ...structuredClone(sharedOpts),
+  entryPoints: ['lib/index-full.ts'],
   outfile: `${buildDir}/${fullBaseName}.esm.js`,
   platform: 'browser',
   format: 'esm',
