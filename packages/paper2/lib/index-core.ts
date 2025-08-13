@@ -1,5 +1,6 @@
 import { ref } from './globals';
 import { HTMLCanvasElement_getContext_mock } from './canvas/canvas-mocks';
+// test
 
 async function allImports() {
   await import('./item/ChangeFlag.js');
