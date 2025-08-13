@@ -1,0 +1,20 @@
+name: Run Tests on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # Or other desired runner environment
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+
+      - run: corepack enable
+      - run: yarn install
+      - run: yarn test:lint:pipeline
+      - run: yarn test:unit:pipeline
