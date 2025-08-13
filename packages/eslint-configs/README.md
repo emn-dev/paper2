@@ -4,12 +4,12 @@ This repo contains our shared eslint configs for our apps.
 
 ## How to use
 
-1. Install the config for your project by running `yarn install -D @core/eslint-configs`
+1. Install the config for your project by running `yarn install -D @paper2/eslint-configs`
 2. Create a `eslint.config.mjs` file
 3. Import a Node config depending on your app.
 
 ```typescript
-import nodeConfig from '@core/eslint-configs/node';
+import nodeConfig from '@paper2/eslint-configs/node';
 
 export default nodeConfig;
 ```
