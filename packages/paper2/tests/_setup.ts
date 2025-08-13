@@ -13,5 +13,5 @@ beforeAll(async () => {
 });
 
 beforeEach(() => {
-  paper2.setup(new paper2.Size(100, 100));
+  // paper2.setup(new paper2.Size(100, 100));
 });
