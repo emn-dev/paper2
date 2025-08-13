@@ -5,7 +5,7 @@ describe('Given: Size Class', () => {
   describe('WHEN new Size(10, 20)', () => {
     it('THEN should set props correctly', () => {
       const size = new p2.Size(10, 20);
-      expect(size.toString()).toBe('{ width: 10, height: 20 }0000');
+      expect(size.toString()).toBe('{ width: 10, height: 20 }');
     });
   });
 
