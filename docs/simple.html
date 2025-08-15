@@ -11,12 +11,61 @@
   </head>
   <body>
     <paper2-nav></paper2-nav>
+    <button
+      style="float: right; margin: 0.5em"
+      type="button"
+      onclick="openInStackblitz()"
+    >
+      Try in Stackblitz
+    </button>
     <header style="text-align: center"><h1>Simple Spin</h1></header>
     <main>
+      <form
+        id="sbMainForm"
+        method="post"
+        action="https://stackblitz.com/run?file=index.html"
+        target="_blank"
+      >
+        <input
+          type="hidden"
+          name="project[files][index.js]"
+          value="// this file empty on purpose, put your code in the script in index.html"
+        />
+        <input
+          type="hidden"
+          id="sbInputHtml"
+          name="project[files][index.html]"
+          value=""
+        />
+        <input
+          type="hidden"
+          name="project[description]"
+          value="Paper2 Example"
+        />
+        <input type="hidden" name="project[template]" value="javascript" />
+        <input
+          type="hidden"
+          name="project[settings]"
+          value='{"compile":{"clearConsole":false}}'
+        />
+      </form>
       <canvas id="myCanvas" resize></canvas>
     </main>
-    <script src="./paper2-ga.js"></script>
     <script>
+      function openInStackblitz() {
+        let html = `
+        <link rel="stylesheet" href="https://emn-dev.github.io/paper2/paper2-docs.css" />
+            <canvas id='myCanvas' resize></canvas>
+            <script>`;
+        const mainPaper2Script = document.getElementById("mainPaper2Script");
+        html += mainPaper2Script.innerHTML;
+        const sbInputHtml = document.getElementById("sbInputHtml");
+        sbInputHtml.value = html + `<\/script>`;
+        document.getElementById("sbMainForm").submit();
+      }
+    </script>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script">
       const resourceUri =
         location.hostname === "localhost"
           ? "./paper2-core.esm.js"
