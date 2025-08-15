@@ -97,6 +97,7 @@
             <a href="drippingBrush.html">Dripping Brush</a>
             <a href="importViewbox.html">Import Viewbox 1</a>
             <a href="rasterSpiral.html">Spiral Raster</a>
+            <a href="animatedStar.html">Animated Star</a>
           </div>
       `;
       shadow.appendChild(ele);
