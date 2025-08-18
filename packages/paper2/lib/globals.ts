@@ -13,6 +13,7 @@ import type { CanvasView } from '~/view/CanvasView';
 import type { PaperScope } from '~/core/PaperScope';
 import type { Formatter } from '~/util/Formatter';
 import type { Rectangle } from '~/basic/Rectangle';
+import type { Matrix } from '~/basic/Matrix';
 import type { Point } from '~/basic/Point';
 import type { Size } from '~/basic/Size';
 import type { Style } from '~/style/Style';
@@ -43,6 +44,7 @@ export const ref = {
   Item: null as typeof Item,
   Formatter: null as typeof Formatter,
   Rectangle: null as typeof Rectangle,
+  Matrix: null as typeof Matrix,
   Point: null as typeof Point,
   Size: null as typeof Size,
   BlendMode: null as typeof BlendMode,

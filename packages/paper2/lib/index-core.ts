@@ -1,16 +1,16 @@
 import { ref } from './globals';
+import { Base } from './straps';
+import './item/ChangeFlag';
+import './item/ItemSelection';
+import './path/SegmentSelection';
 import { HTMLCanvasElement_getContext_mock } from './canvas/canvas-mocks';
 
+// /*#*/ include('init.js.js');
+// Inline Straps.js core (the Base class) inside the paper scope first:
+// /*#*/ include('../node_modules/straps/straps.js.js');
+// const { Base } = await import('./straps.js');
+
 async function allImports() {
-  await import('./item/ChangeFlag.js');
-  await import('./item/ItemSelection.js');
-  await import('./path/SegmentSelection.js');
-
-  // /*#*/ include('init.js.js');
-  // Inline Straps.js core (the Base class) inside the paper scope first:
-  // /*#*/ include('../node_modules/straps/straps.js.js');
-  const { Base } = await import('./straps.js');
-
   // /*#*/ include('core/Base.js.js');
   // /*#*/ include('core/Emitter.js.js');
   // /*#*/ include('core/PaperScope.js.js');
@@ -237,5 +237,4 @@ export async function initialize() {
   };
 }
 
-// export const p2 = getAllRefs();
 export const p2 = ref;
