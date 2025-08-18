@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Paper2 Docs - Straps</title>
     <link rel="stylesheet" href="paper2-docs.css" />
-    <script src="./paper2-nav.js"></script>
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
   </head>
   <body>
     <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
     <header style="text-align: center">
       <h1>
         <a href="https://github.com/lehni/straps.js">Straps</a>
@@ -20,7 +22,7 @@
       <ol id="showLogs"></ol>
     </main>
     <script src="./paper2-ga.js"></script>
-    <script>
+    <script id="mainPaper2Script1">
       const resourceUri =
         location.hostname === "localhost"
           ? "./paper2-core.esm.js"

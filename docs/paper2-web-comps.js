@@ -64,7 +64,8 @@
         }
 
         .nav-links a {
-          margin: 0.5rem;
+          margin: 0.25rem;
+          padding: 0.5rem;
         }
 
         /* Show menu when checkbox is checked */
@@ -98,11 +99,60 @@
             <a href="importViewbox.html">Import Viewbox 1</a>
             <a href="rasterSpiral.html">Spiral Raster</a>
             <a href="animatedStar.html">Animated Star</a>
+            <a href="pathStructure.html">Path Structure</a>
+            <a href="pathTangents.html">Path Tangents</a>
           </div>
       `;
       shadow.appendChild(ele);
     }
   }
 
+  class Paper2Stackblitz extends HTMLElement {
+    constructor() {
+      super();
+
+      // attaches shadow tree and returns shadow root reference
+      // https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow
+      const shadow = this.attachShadow({ mode: "open" });
+      const ele = document.createElement("form");
+      ele.id = "sbMainForm";
+      ele.method = "post";
+      ele.action = "https://stackblitz.com/run?file=index.html";
+      ele.target = "_blank";
+      ele.innerHTML = `          
+        <input
+          type="hidden"
+          name="project[files][index.js]"
+          value="// this file empty on purpose, put your code in the script in index.html"
+        />
+        <input
+          type="hidden"
+          id="sbInputHtml"
+          name="project[files][index.html]"
+          value=""
+        />
+        <input
+          type="hidden"
+          name="project[description]"
+          value="Paper2 Example"
+        />
+        <input type="hidden" name="project[template]" value="javascript" />
+        <input
+          type="hidden"
+          name="project[settings]"
+          value='{"compile":{"clearConsole":false}}'
+        />
+            <button
+      style="float: right; margin: 0.5em"
+      type="button"
+      onclick="openInStackblitz()"
+    >
+      Try in Stackblitz
+    </button>
+      `;
+      shadow.appendChild(ele);
+    }
+  }
   window.customElements.define("paper2-nav", Paper2Nav);
+  window.customElements.define("paper2-stackblitz", Paper2Stackblitz);
 })();

@@ -5,70 +5,18 @@
     <title>Animated Star</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="paper2-docs.css" />
-    <script src="./paper2-nav.js"></script>
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
   </head>
   <body>
     <paper2-nav></paper2-nav>
-    <button
-      style="float: right; margin: 0.5em"
-      type="button"
-      onclick="openInStackblitz()"
-    >
-      Try in Stackblitz
-    </button>
+    <paper2-stackblitz></paper2-stackblitz>
     <header style="text-align: center"><h1>Animated Star</h1></header>
     <main>
-      <form
-        id="sbMainForm"
-        method="post"
-        action="https://stackblitz.com/run?file=index.html"
-        target="_blank"
-      >
-        <input
-          type="hidden"
-          name="project[files][index.js]"
-          value="// this file empty on purpose, put your code in the script in index.html"
-        />
-        <input
-          type="hidden"
-          id="sbInputHtml"
-          name="project[files][index.html]"
-          value=""
-        />
-        <input
-          type="hidden"
-          name="project[description]"
-          value="Paper2 Example"
-        />
-        <input type="hidden" name="project[template]" value="javascript" />
-        <input
-          type="hidden"
-          name="project[settings]"
-          value='{"compile":{"clearConsole":false}}'
-        />
-      </form>
       <canvas id="myCanvas" resize></canvas>
     </main>
-    <script>
-      function openInStackblitz() {
-        let html = `
-        <link rel="stylesheet" href="https://emn-dev.github.io/paper2/paper2-docs.css" />
-            <canvas id='myCanvas' resize></canvas>
-            <script canvas="myCanvas" type="text/paperscript">`;
-        const mainPaper2Script1 = document.getElementById("mainPaper2Script1");
-        html +=
-          mainPaper2Script1.innerHTML +
-          `<\/script>
-        <script>`;
-        const mainPaper2Script2 = document.getElementById("mainPaper2Script2");
-        html += mainPaper2Script2.innerHTML + `<\/script>`;
-        const sbInputHtml = document.getElementById("sbInputHtml");
-        sbInputHtml.value = html + `<\/script>`;
-        document.getElementById("sbMainForm").submit();
-      }
-    </script>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
       var layer = project.activeLayer;
