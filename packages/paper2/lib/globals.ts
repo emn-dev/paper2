@@ -16,6 +16,8 @@ import type { Rectangle } from '~/basic/Rectangle';
 import type { Point } from '~/basic/Point';
 import type { Size } from '~/basic/Size';
 import type { Style } from '~/style/Style';
+import type { Gradient } from '~/style/Gradient';
+import type { GradientStop } from '~/style/GradientStop';
 import type { Tween } from '~/anim/Tween';
 import type { Color } from '~/style/Color';
 import type { DomEvent } from '~/dom/DomEvent';
@@ -51,6 +53,8 @@ export const ref = {
   Path: null as typeof Path,
   CompoundPath: null as typeof CompoundPath,
   Style: null as typeof Style,
+  Gradient: null as typeof Gradient,
+  GradientStop: null as typeof GradientStop,
   Tween: null as typeof Tween,
   Group: null as typeof Group,
   HitResult: null as typeof HitResult,

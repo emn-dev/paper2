@@ -13,6 +13,7 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { UID } from '~/util/UID';
 import { GradientStop } from './GradientStop';
@@ -204,3 +205,5 @@ export const Gradient = Base.extend(
     },
   }
 );
+
+ref.Gradient = Gradient;
