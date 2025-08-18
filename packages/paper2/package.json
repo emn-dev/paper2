@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "main": "dist/paper2-core.esm.js",
   "module": "dist/paper2-core.esm.js",
-  "types": "dist/@types/index.d.ts",
+  "types": "dist/@types/index-core.d.ts",
   "author": "emn-dev",
   "repository": {
     "type": "git",
