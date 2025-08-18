@@ -64,7 +64,8 @@
         }
 
         .nav-links a {
-          margin: 0.5rem;
+          margin: 0.25rem;
+          padding: 0.5rem;
         }
 
         /* Show menu when checkbox is checked */
@@ -98,6 +99,8 @@
             <a href="importViewbox.html">Import Viewbox 1</a>
             <a href="rasterSpiral.html">Spiral Raster</a>
             <a href="animatedStar.html">Animated Star</a>
+            <a href="pathStructure.html">Path Structure</a>
+            <a href="pathTangents.html">Path Tangents</a>
           </div>
       `;
       shadow.appendChild(ele);
