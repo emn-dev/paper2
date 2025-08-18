@@ -9,5 +9,6 @@ export default {
     // tests report that expect() is an unused expression
     '@typescript-eslint/no-unused-expressions': 'off',
     'vitest/no-commented-out-tests': 'off',
+    'vitest/expect-expect': 'warn',
   },
 };
