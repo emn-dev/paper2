@@ -1,13 +1,10 @@
-// import { ref } from './globals';
-
-import './item/ChangeFlag';
-import './item/ItemSelection';
-import './path/SegmentSelection';
-
 // /*#*/ include('init.js');
 // Inline Straps.js core (the Base class) inside the paper scope first:
 // /*#*/ include('../node_modules/straps/straps.js');
 import { Base } from './straps';
+import './item/ChangeFlag';
+import './item/ItemSelection';
+import './path/SegmentSelection';
 
 // /*#*/ include('core/Base.js');
 // /*#*/ include('core/Emitter.js');
@@ -150,12 +147,7 @@ import './svg/SvgStyles';
 import './svg/SvgExport';
 import './svg/SvgImport';
 
-// /*#*/ if (__options.paperScript) {
-// /*#*/     include('core/PaperScript.js');
-// /*#*/ }
 import './core/PaperScript';
-
-// export { Base as straps } from './straps';
 
 export const paper = new (PaperScope.inject(Base.exports, {
   Base,

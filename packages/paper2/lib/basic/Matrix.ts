@@ -18,7 +18,6 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { Formatter } from '~/util/Formatter';
 import { Change } from '~/item/ChangeFlag';
@@ -850,5 +849,3 @@ export const Matrix = Base.extend(
     {}
   )
 );
-
-ref.Matrix = Matrix;

@@ -13,12 +13,10 @@ import type { CanvasView } from '~/view/CanvasView';
 import type { PaperScope } from '~/core/PaperScope';
 import type { Formatter } from '~/util/Formatter';
 import type { Rectangle } from '~/basic/Rectangle';
-import type { Matrix } from '~/basic/Matrix';
 import type { Point } from '~/basic/Point';
 import type { Size } from '~/basic/Size';
 import type { Style } from '~/style/Style';
 import type { Gradient } from '~/style/Gradient';
-import type { GradientStop } from '~/style/GradientStop';
 import type { Tween } from '~/anim/Tween';
 import type { Color } from '~/style/Color';
 import type { DomEvent } from '~/dom/DomEvent';
@@ -32,7 +30,6 @@ import type { Path } from '~/path/Path';
 import type { PathItem } from '~/path/PathItem';
 import type { CompoundPath } from '~/path/CompoundPath';
 import type { SegmentPoint } from '~/path/SegmentPoint';
-import type { Segment } from '~/path/Segment';
 import type { KeyEvent } from '~/event/KeyEvent';
 import type { MouseEvent } from '~/event/MouseEvent';
 
@@ -42,7 +39,6 @@ export const ref = {
   Item: null as typeof Item,
   Formatter: null as typeof Formatter,
   Rectangle: null as typeof Rectangle,
-  Matrix: null as typeof Matrix,
   Point: null as typeof Point,
   Size: null as typeof Size,
   BlendMode: null as typeof BlendMode,
@@ -54,7 +50,6 @@ export const ref = {
   CompoundPath: null as typeof CompoundPath,
   Style: null as typeof Style,
   Gradient: null as typeof Gradient,
-  GradientStop: null as typeof GradientStop,
   Tween: null as typeof Tween,
   Group: null as typeof Group,
   HitResult: null as typeof HitResult,
@@ -71,7 +66,6 @@ export const ref = {
   PathFitter: null as typeof PathFitter,
   Shape: null as typeof Shape,
   SegmentPoint: null as typeof SegmentPoint,
-  Segment: null as typeof Segment,
   CanvasView: null as typeof CanvasView,
   KeyEvent: null as typeof KeyEvent,
   MouseEvent: null as typeof MouseEvent,

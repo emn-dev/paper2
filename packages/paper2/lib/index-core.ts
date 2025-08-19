@@ -73,8 +73,8 @@ export const paper = new (PaperScope.inject(Base.exports, {
   DomEvent,
   DomElement,
   // Export jsdom document and window too, for Node.js
-  document: typeof window === 'undefined' ? null : document,
-  window: typeof window === 'undefined' ? null : window,
+  document,
+  window,
   // TODO: Remove in 1.0.0? (deprecated January 2016):
   Symbol: SymbolDefinition,
   PlacedSymbol: SymbolItem,

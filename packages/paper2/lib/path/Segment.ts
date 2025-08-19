@@ -689,5 +689,3 @@ export const Segment = Base.extend(
     },
   }
 );
-
-ref.Segment = Segment;

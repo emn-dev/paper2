@@ -18,6 +18,25 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+// import { HTMLCanvasElement_getContext_mock } from './canvas/canvas-mocks';
+
+if (typeof window === 'undefined') {
+  // We know that we are NOT in browser context, we must be in NodeJs
+  console.log('NOT in browser context, we must be in NodeJs with no global Window object');
+} else {
+  // We could be in browser OR in NodeJs with global WINDOW object (e.g. jsdom)
+  // eslint-disable-next-line no-lonely-if
+  if (typeof process !== 'undefined' && process?.release) {
+    // We know we are in NodeJs
+    console.log('NodeJs context, but we have a global Window (might be jsdom)');
+    const isJsdom = window.navigator?.userAgent?.toLowerCase()?.includes('jsdom');
+    console.log('userAgentIncludesJsdom? = ', isJsdom);
+  } else {
+    // Here we know we are in a BROWSER context
+    console.log('Browser context');
+  }
+}
+
 // @ts-expect-error = 'new' expression, whose target lacks a construct signature
 export const Base = new (function () {
   var hidden = /^(statics|enumerable|beans|preserve)$/,

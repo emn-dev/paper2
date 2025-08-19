@@ -8,6 +8,7 @@ export default defineConfig({
     mockReset: true,
     exclude: [...configDefaults.exclude, 'e2e/*'],
     setupFiles: ['./tests/_setup.ts'],
+    environment: 'jsdom',
   },
   resolve: {
     alias: {
