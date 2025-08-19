@@ -1,26 +1,9 @@
-import { describe, it, beforeEach } from 'vitest';
-// import { ref as p2 } from '~/globals';
-import { getBaseExports } from '~/index-core';
+import { describe, it } from 'vitest';
+import { Color, Path, Gradient, GradientStop, Group, Shape } from '~/index-core';
 import { equals } from './_helpers';
 
 // Some tests require node-canvas to work correctly
 describe('Given: Color Class', () => {
-  let Color;
-  let Path;
-  let GradientStop;
-  let Gradient;
-  let Group;
-  let Shape;
-
-  beforeEach(() => {
-    Color = getBaseExports().Color;
-    Path = getBaseExports().Path;
-    Gradient = getBaseExports().Gradient;
-    GradientStop = getBaseExports().GradientStop;
-    Group = getBaseExports().Group;
-    Shape = getBaseExports().Shape;
-  });
-
   it('Set named color', () => {
     const path = new Path();
     path.fillColor = 'red';

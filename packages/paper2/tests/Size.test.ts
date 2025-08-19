@@ -1,16 +1,7 @@
-import { beforeEach } from 'vitest';
 import { describe, expect, it } from 'vitest';
-import { getBaseExports } from '~/index-core';
+import { Size, Point } from '~/index-core';
 
 describe('Given: Size Class', () => {
-  let Size;
-  let Point;
-
-  beforeEach(() => {
-    Size = getBaseExports().Size;
-    Point = getBaseExports().Point;
-  });
-
   describe('WHEN new Size(10, 20)', () => {
     it('THEN should set props correctly', () => {
       const size = new Size(10, 20);

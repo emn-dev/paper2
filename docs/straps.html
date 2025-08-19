@@ -28,8 +28,8 @@
           ? "./paper2-core.esm.js"
           : "https://unpkg.com/paper2/paper2-core.esm.js";
 
-      import(resourceUri).then(async (paperModule) => {
-        const { paper } = await paperModule.initialize();
+      import(resourceUri).then((paperModule) => {
+        const { paper } = paperModule;
 
         const showLogsEle = document.getElementById("showLogs");
 

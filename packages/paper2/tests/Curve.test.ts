@@ -1,6 +1,5 @@
-import { describe, expect, it, beforeEach } from 'vitest';
-// import { ref as p2 } from '~/globals';
-import { getBaseExports } from '~/index-core';
+import { describe, expect, it } from 'vitest';
+import { Curve, Path, Point } from '~/index-core';
 
 // https://github.com/paperjs/paper.js/blob/develop/test/helpers.js
 // Point: function(actual, expected, message, options) {
@@ -38,16 +37,6 @@ function testClassify(curve, expeced) {
 }
 
 describe('Given: Curve Class', () => {
-  let Curve;
-  let Path;
-  let Point;
-
-  beforeEach(() => {
-    Curve = getBaseExports().Curve;
-    Path = getBaseExports().Path;
-    Point = getBaseExports().Point;
-  });
-
   describe('WHEN Curve#classify()', () => {
     // eslint-disable-next-line vitest/expect-expect
     it('THEN should return expected numbers', () => {

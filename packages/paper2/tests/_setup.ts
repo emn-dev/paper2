@@ -1,17 +1,6 @@
-import { beforeAll, beforeEach } from 'vitest';
-import { initialize } from '~/index-core';
-
-let paper2 = null;
-
-beforeAll(async () => {
-  paper2 = null;
-  const { env, jsdom, nodeCanvas, paper } = await initialize();
-  paper2 = paper;
-  console.log('env =', env);
-  console.log('jsdom =', jsdom);
-  console.log('nodeCanvas =', nodeCanvas);
-});
+import { beforeEach } from 'vitest';
+import { paper } from '~/index-core';
 
 beforeEach(() => {
-  paper2.setup(new paper2.Size(100, 100));
+  paper.setup(new paper.Size(100, 100));
 });
