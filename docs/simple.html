@@ -27,6 +27,7 @@
       import(resourceUri).then(async (paperModule) => {
         const { paper, env } = await paperModule.initialize();
         console.log("env:", env);
+        const { Path } = paper.Base.exports;
 
         paper.setup("myCanvas");
 
@@ -38,7 +39,7 @@
           if (spinSpeed > 9) spinSpeed = 1;
         }, DELAY);
 
-        const path = new paper.Path.Rectangle({
+        const path = new Path.Rectangle({
           point: [175, 75],
           size: [100, 100],
           strokeColor: "black",

@@ -179,7 +179,7 @@ async function allImports() {
 export async function initialize() {
   if (typeof window !== 'undefined') {
     await allImports();
-    return { paper: ref.paper, straps: ref.straps, env: 'browser', jsdom: false, nodeCanvas: false };
+    return { paper: ref.paper, env: 'browser', jsdom: false, nodeCanvas: false };
   }
 
   // Now we know that we are in nodejs-land (e.g. we can reference 'global')
@@ -230,11 +230,12 @@ export async function initialize() {
   await allImports();
   return {
     paper: ref.paper,
-    straps: ref.straps,
     env: 'node',
     jsdom: !!jsdom,
     nodeCanvas: !!nodeCanvas,
   };
 }
 
-export const p2 = ref;
+export function getBaseExports() {
+  return Base.exports;
+}

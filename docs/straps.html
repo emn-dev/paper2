@@ -29,11 +29,11 @@
           : "https://unpkg.com/paper2/paper2-core.esm.js";
 
       import(resourceUri).then(async (paperModule) => {
-        const { straps } = await paperModule.initialize();
+        const { paper } = await paperModule.initialize();
 
         const showLogsEle = document.getElementById("showLogs");
 
-        var MyClass = straps.extend({
+        var MyClass = paper.Base.extend({
           initialize: function MyClass() {
             this._value = 10;
             console.log("Creating MyClass instance");

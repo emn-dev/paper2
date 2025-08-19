@@ -18,8 +18,6 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-import { ref } from '~/globals';
-
 // @ts-expect-error = 'new' expression, whose target lacks a construct signature
 export const Base = new (function () {
   var hidden = /^(statics|enumerable|beans|preserve)$/,
@@ -340,4 +338,3 @@ export const Base = new (function () {
 // // Export Base class for node
 // if (typeof module !== 'undefined')
 //     module.exports = Base;
-ref.straps = Base;

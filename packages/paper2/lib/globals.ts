@@ -35,10 +35,8 @@ import type { SegmentPoint } from '~/path/SegmentPoint';
 import type { Segment } from '~/path/Segment';
 import type { KeyEvent } from '~/event/KeyEvent';
 import type { MouseEvent } from '~/event/MouseEvent';
-import type { Base } from './straps';
 
 export const ref = {
-  straps: null as typeof Base,
   paper: null as any,
   Layer: null as typeof Layer,
   Item: null as typeof Item,
