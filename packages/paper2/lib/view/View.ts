@@ -62,7 +62,7 @@ export const View = Base.extend(
       }
 
       var size;
-      if (window && element) {
+      if (globalThis.window && element) {
         // Generate an id for this view / element if it does not have one
         this._id = element.getAttribute('id');
         if (this._id == null)
@@ -85,7 +85,7 @@ export const View = Base.extend(
         if (PaperScope.hasAttribute(element, 'resize')) {
           var that = this;
           DomEvent.add(
-            window,
+            globalThis.window,
             (this._windowEvents = {
               resize: function () {
                 that.setViewSize(getCanvasSize());
@@ -105,7 +105,7 @@ export const View = Base.extend(
           style.position = 'absolute';
           style.left = offset.x + 'px';
           style.top = offset.y + 'px';
-          document.body.appendChild(stats);
+          globalThis.document.body.appendChild(stats);
         }
       } else {
         // For web-workers: Allow calling of `paper.setup(new Size(x, y));`
@@ -118,7 +118,7 @@ export const View = Base.extend(
       this._scope = project._scope;
       this._element = element;
       // Sub-classes may set _pixelRatio first
-      if (!this._pixelRatio) this._pixelRatio = (window && window.devicePixelRatio) || 1;
+      if (!this._pixelRatio) this._pixelRatio = (globalThis.window && globalThis.window.devicePixelRatio) || 1;
       // Set canvas size even if we just determined the size from it, since
       // it might have been set to a % size, in which case it would use some
       // default internal size (300x150 on WebKit) and scale up the pixels.
@@ -161,7 +161,7 @@ export const View = Base.extend(
       if (project._view === this) project._view = null;
       // Uninstall event handlers again for this view.
       DomEvent.remove(this._element, this._viewEvents);
-      DomEvent.remove(window, this._windowEvents);
+      DomEvent.remove(globalThis.window, this._windowEvents);
       this._element = this._project = null;
       // Remove all onFrame handlers.
       // TODO: Shouldn't we remove all other event handlers, automatically
@@ -258,7 +258,7 @@ export const View = Base.extend(
             // keep requesting frame regardless though, so the animation
             // picks up again as soon as the view is visible.
             if (
-              (!DomElement.getPrefixed(document, 'hidden') ||
+              (!DomElement.getPrefixed(globalThis.document, 'hidden') ||
                 PaperScope.getAttribute(element, 'keepalive') === 'true') &&
               DomElement.isInView(element)
             ) {
@@ -486,7 +486,7 @@ export const View = Base.extend(
         // also provides a way to determine pixel-size that does not involve
         // a Canvas. It still does not work in a web-worker though.
         var parent = element.parentNode,
-          temp = document.createElement('div');
+          temp = globalThis.document.createElement('div');
         temp.style.fontSize = size;
         parent.appendChild(temp);
         pixels = parseFloat(DomElement.getStyles(temp).fontSize);
@@ -1048,10 +1048,10 @@ export const View = Base.extend(
       _id: 0,
 
       create: function (project, element) {
-        if (document && typeof element === 'string') element = document.getElementById(element);
+        if (globalThis.document && typeof element === 'string') element = globalThis.document.getElementById(element);
         // Factory to provide the right View subclass for a given element.
         // Produces only CanvasView or View items (for workers) for now:
-        var ctor = window ? ref.CanvasView : View;
+        var ctor = globalThis.window ? ref.CanvasView : View;
         return new ctor(project, element);
       },
     },
@@ -1059,7 +1059,7 @@ export const View = Base.extend(
   // @ts-expect-error = Only a void function can be called with the 'new' keyword
   new (function () {
     // Injection scope for event handling on the browser
-    if (!window) return;
+    if (!globalThis.window) return;
     /**
      * Native event handling, coordinate conversion, focus handling and
      * delegation to view and tool objects.
@@ -1094,7 +1094,7 @@ export const View = Base.extend(
     }
 
     // Touch handling inspired by Hammer.js
-    var navigator = window.navigator,
+    var navigator = globalThis.window.navigator,
       mousedown,
       mousemove,
       mouseup;
@@ -1109,7 +1109,11 @@ export const View = Base.extend(
       mousemove = 'touchmove';
       mouseup = 'touchend touchcancel';
       // Do not add mouse events on mobile and tablet devices
-      if (!('ontouchstart' in window && navigator.userAgent.match(/mobile|tablet|ip(ad|hone|od)|android|silk/i))) {
+      if (
+        !(
+          'ontouchstart' in globalThis.window && navigator.userAgent.match(/mobile|tablet|ip(ad|hone|od)|android|silk/i)
+        )
+      ) {
         // For non pointer events browsers and mixed browsers, like chrome
         // on Windows8 touch laptop.
         mousedown += ' mousedown';
@@ -1201,9 +1205,9 @@ export const View = Base.extend(
       mouseDown = dragging = false;
     };
 
-    DomEvent.add(document, docEvents);
+    DomEvent.add(globalThis.document, docEvents);
 
-    DomEvent.add(window, {
+    DomEvent.add(globalThis.window, {
       load: updateFocus,
     });
 

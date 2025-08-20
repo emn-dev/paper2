@@ -415,10 +415,10 @@ Base.exports.PaperScript = async function () {
         // -2 required to remove function header:
         // https://code.google.com/p/chromium/issues/detail?id=331655
         offset -= 2;
-      } else if (window && url && !window.location.href.indexOf(url)) {
+      } else if (globalThis.window && url && !globalThis.window.location.href.indexOf(url)) {
         // If the code stems from the actual html page, determine the
         // offset of inlined code.
-        var html = document.getElementsByTagName('html')[0].innerHTML;
+        var html = globalThis.document.getElementsByTagName('html')[0].innerHTML;
         // Count the amount of line breaks in the html before this code
         // to determine the offset.
         offset = html.substr(0, html.indexOf(code) + 1).match(lineBreaks).length + 1;
@@ -578,26 +578,26 @@ Base.exports.PaperScript = async function () {
     // End by returning `module.exports` at the end of the generated code:
     code += '\nreturn module.exports;';
     var agent = ref.paper.agent;
-    if (document && (agent.chrome || (agent.firefox && agent.versionNumber < 40))) {
+    if (globalThis.document && (agent.chrome || (agent.firefox && agent.versionNumber < 40))) {
       // On older Firefox, all error numbers inside dynamically compiled
       // code are relative to the line where the eval / compilation
       // happened. To fix this issue, we're temporarily inserting a new
       // script tag.
       // We also use this on Chrome to fix issues with compiled functions:
       // https://code.google.com/p/chromium/issues/detail?id=331655
-      var script = document.createElement('script'),
-        head = document.head || document.getElementsByTagName('head')[0];
+      var script = globalThis.document.createElement('script'),
+        head = globalThis.document.head || globalThis.document.getElementsByTagName('head')[0];
       // Add a new-line before the code on Firefox since the error
       // messages appear to be aligned to line number 0...
       if (agent.firefox) code = '\n' + code;
       script.appendChild(
-        document.createTextNode('document.__paperscript__ = function(' + params + ') {' + code + '\n}')
+        globalThis.document.createTextNode('document.__paperscript__ = function(' + params + ') {' + code + '\n}')
       );
       head.appendChild(script);
       // @ts-expect-error = does not exist
-      func = document.__paperscript__;
+      func = globalThis.document.__paperscript__;
       // @ts-expect-error = does not exist
-      delete document.__paperscript__;
+      delete globalThis.document.__paperscript__;
       head.removeChild(script);
     } else {
       // @ts-expect-error = cannot assign
@@ -638,7 +638,7 @@ Base.exports.PaperScript = async function () {
       // If a canvas id is provided, pass it on to the PaperScope so a
       // project is created for it now.
       var canvasId = PaperScope.getAttribute(script, 'canvas'),
-        canvas = document.getElementById(canvasId),
+        canvas = globalThis.document.getElementById(canvasId),
         // To avoid possible duplicate browser requests for PaperScript
         // files, support the data-src attribute as well as src:
         // TODO: Consider switching from data-paper- to data- prefix
@@ -679,7 +679,7 @@ Base.exports.PaperScript = async function () {
   }
 
   function loadAll() {
-    Base.each(document && document.getElementsByTagName('script'), loadScript);
+    Base.each(globalThis.document && globalThis.document.getElementsByTagName('script'), loadScript);
   }
 
   /**
@@ -703,14 +703,14 @@ Base.exports.PaperScript = async function () {
     return script ? loadScript(script) : loadAll();
   }
 
-  if (window) {
+  if (globalThis.window) {
     // Catch cases where paper.js is loaded after the browser event has
     // already occurred.
-    if (document.readyState === 'complete') {
+    if (globalThis.document.readyState === 'complete') {
       // Handle it asynchronously
       setTimeout(loadAll);
     } else {
-      DomEvent.add(window, { load: loadAll });
+      DomEvent.add(globalThis.window, { load: loadAll });
     }
   }
 

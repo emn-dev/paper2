@@ -122,7 +122,7 @@ export const Color = Base.extend(
         // Named
         var color = namedColors[string];
         if (!color) {
-          if (window) {
+          if (globalThis.window) {
             // Use a canvas to draw with the given name, then retrieve
             // RGB values and build a cache for all the used colors.
             if (!colorCtx) {

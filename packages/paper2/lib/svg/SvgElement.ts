@@ -35,7 +35,7 @@ export const SvgElement = new (function () {
     };
 
   function create(tag, attributes, formatter) {
-    return set(document.createElementNS(svg, tag), attributes, formatter);
+    return set(globalThis.document.createElementNS(svg, tag), attributes, formatter);
   }
 
   function get(node, name) {

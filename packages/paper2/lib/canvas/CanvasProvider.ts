@@ -22,7 +22,7 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
   canvases: [],
 
   getCanvas: function (width, height, options) {
-    if (!window) return null;
+    if (!globalThis.window) return null;
     var canvas,
       clear = true;
     if (typeof width === 'object') {
@@ -32,7 +32,7 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
     if (this.canvases.length) {
       canvas = this.canvases.pop();
     } else {
-      canvas = document.createElement('canvas');
+      canvas = globalThis.document.createElement('canvas');
       clear = false; // It's already cleared through createElement().
     }
     var ctx = canvas.getContext('2d', options || {});

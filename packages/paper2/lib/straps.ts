@@ -20,7 +20,7 @@
 
 // import { HTMLCanvasElement_getContext_mock } from './canvas/canvas-mocks';
 
-if (typeof window === 'undefined') {
+if (typeof globalThis.window === 'undefined') {
   // We know that we are NOT in browser context, we must be in NodeJs
   console.log('NOT in browser context, we must be in NodeJs with no global Window object');
   if (typeof self !== 'undefined') {
@@ -32,7 +32,7 @@ if (typeof window === 'undefined') {
   if (typeof process !== 'undefined' && process?.release) {
     // We know we are in NodeJs
     console.log('NodeJs context, but we have a global Window (might be jsdom)');
-    const isJsdom = window.navigator?.userAgent?.toLowerCase()?.includes('jsdom');
+    const isJsdom = globalThis.window.navigator?.userAgent?.toLowerCase()?.includes('jsdom');
     console.log('userAgentIncludesJsdom? = ', isJsdom);
   } else {
     // Here we know we are in a BROWSER context

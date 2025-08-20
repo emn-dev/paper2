@@ -45,7 +45,7 @@ export const CanvasView = View.extend(
      */
     initialize: function CanvasView(project, canvas) {
       // Handle canvas argument
-      if (!(canvas instanceof window.HTMLCanvasElement)) {
+      if (!(canvas instanceof globalThis.window.HTMLCanvasElement)) {
         // See if the arguments describe the view size:
         var size = Size.read(arguments, 1);
         if (size.isZero())
@@ -61,7 +61,7 @@ export const CanvasView = View.extend(
       if (!/^off|false$/.test(PaperScope.getAttribute(canvas, 'hidpi'))) {
         // Hi-DPI Canvas support based on:
         // https://www.html5rocks.com/en/tutorials/canvas/hidpi/
-        var deviceRatio = window.devicePixelRatio || 1,
+        var deviceRatio = globalThis.window.devicePixelRatio || 1,
           backingStoreRatio = DomElement.getPrefixed(ctx, 'backingStorePixelRatio') || 1;
         this._pixelRatio = deviceRatio / backingStoreRatio;
       }

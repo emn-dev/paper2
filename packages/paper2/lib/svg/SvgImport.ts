@@ -574,10 +574,10 @@ new (function () {
       res =
         name &&
         definitions[
-          window
+          globalThis.window
             ? // This is required by Firefox, which can produce absolute
               // urls for local gradients, see #1001:
-              name.replace(window.location.href.split('#')[0] + '#', '')
+              name.replace(globalThis.window.location.href.split('#')[0] + '#', '')
             : name
         ];
     // Patch in support for SVG's gradientUnits="objectBoundingBox" through
@@ -594,7 +594,7 @@ new (function () {
     // jsdom in Node.js uses uppercase values for nodeName...
     var type = node.nodeName.toLowerCase(),
       isElement = type !== '#document',
-      body = document.body,
+      body = globalThis.document.body,
       container,
       parent,
       next;
@@ -718,7 +718,7 @@ new (function () {
     if (typeof source === 'string' && !/^[\s\S]*</.test(source)) {
       // First see if we're meant to import an element with the given
       // id.
-      var node = document.getElementById(source);
+      var node = globalThis.document.getElementById(source);
       // Check if the string does not represent SVG data, in which
       // case it must be the URL of a SVG to be loaded.
       if (node) {

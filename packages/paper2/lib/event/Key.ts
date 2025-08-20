@@ -141,7 +141,7 @@ export const Key = new (function () {
     }
   }
 
-  DomEvent.add(document, {
+  DomEvent.add(globalThis.document, {
     keydown: function (event) {
       var key = getKey(event),
         agent = ref.paper && ref.paper.agent;
@@ -186,7 +186,7 @@ export const Key = new (function () {
     },
   });
 
-  DomEvent.add(window, {
+  DomEvent.add(globalThis.window, {
     blur: function (event) {
       // Emit key-up events for all currently pressed keys.
       for (var key in charMap) handleKey(false, key, charMap[key], event);

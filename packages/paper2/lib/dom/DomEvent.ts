@@ -38,7 +38,8 @@ export const DomEvent = /** @lends DomEvent */ {
           // `event.preventDefault()` calls and omit warnings.
           // See #1501 and:
           // https://www.chromestatus.com/features/5093566007214080
-          var options = el === document && (name === 'touchstart' || name === 'touchmove') ? { passive: false } : false;
+          var options =
+            el === globalThis.document && (name === 'touchstart' || name === 'touchmove') ? { passive: false } : false;
           el.addEventListener(name, func, options);
         }
       }
@@ -63,8 +64,8 @@ export const DomEvent = /** @lends DomEvent */ {
         : event.changedTouches[0]
       : event;
     return new Point(
-      pos.pageX || pos.clientX + document.documentElement.scrollLeft,
-      pos.pageY || pos.clientY + document.documentElement.scrollTop
+      pos.pageX || pos.clientX + globalThis.document.documentElement.scrollLeft,
+      pos.pageY || pos.clientY + globalThis.document.documentElement.scrollTop
     );
   },
 
@@ -84,7 +85,7 @@ export const DomEvent = /** @lends DomEvent */ {
 
 // @ts-expect-error = Property 'requestAnimationFrame' does not exist on type
 DomEvent.requestAnimationFrame = new (function () {
-  var nativeRequest = DomElement.getPrefixed(window, 'requestAnimationFrame'),
+  var nativeRequest = DomElement.getPrefixed(globalThis.window, 'requestAnimationFrame'),
     requested = false,
     callbacks = [],
     timer;

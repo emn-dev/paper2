@@ -139,7 +139,7 @@ export const Raster = Item.extend(
       if (!this._initialize(source, position !== undefined && Point.read(arguments))) {
         var image,
           type = typeof source,
-          object = type === 'string' ? document.getElementById(source) : type === 'object' ? source : null;
+          object = type === 'string' ? globalThis.document.getElementById(source) : type === 'object' ? source : null;
         if (object && object !== Item.NO_INSERT) {
           if (object.getContext || object.naturalHeight != null) {
             image = object;

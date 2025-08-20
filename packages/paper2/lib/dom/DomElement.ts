@@ -108,7 +108,7 @@ export const DomElement = new (function () {
      * Checks if element is inside the DOM.
      */
     isInserted: function (el) {
-      return document.body.contains(el);
+      return globalThis.document.body.contains(el);
     },
 
     /**
