@@ -23,6 +23,9 @@
 if (typeof window === 'undefined') {
   // We know that we are NOT in browser context, we must be in NodeJs
   console.log('NOT in browser context, we must be in NodeJs with no global Window object');
+  if (typeof self !== 'undefined') {
+    console.log('We are in a Web Worker context');
+  }
 } else {
   // We could be in browser OR in NodeJs with global WINDOW object (e.g. jsdom)
   // eslint-disable-next-line no-lonely-if

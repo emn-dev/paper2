@@ -3,15 +3,18 @@ import { Base } from './straps';
 import './item/ChangeFlag';
 import './item/ItemSelection';
 import './path/SegmentSelection';
+import { Numerical } from './util/Numerical';
 // import { HTMLCanvasElement_getContext_mock } from './canvas/canvas-mocks';
 import './core/Base';
+
 export * from './core/Emitter';
-import { PaperScope as PaperScope2 } from './core/PaperScope';
-export const PaperScope = PaperScope2;
+
+import { PaperScope as PaperScopeModule } from './core/PaperScope';
+
+export const PaperScope = PaperScopeModule;
 export * from './core/PaperScopeItem';
 export * from './util/CollisionDetection';
 export * from './util/Formatter';
-import { Numerical } from './util/Numerical';
 export * from './util/UID';
 export * from './basic/Point';
 export * from './basic/Size';
@@ -24,10 +27,14 @@ export * from './item/Group';
 export * from './item/Layer';
 export * from './item/Shape';
 export * from './item/Raster';
-import { SymbolItem as SymbolItem2 } from './item/SymbolItem';
-export const SymbolItem = SymbolItem2;
-import { SymbolDefinition as SymbolDefinition2 } from './item/SymbolDefinition';
-export const SymbolDefinition = SymbolDefinition2;
+
+import { SymbolItem as SymbolItemModule } from './item/SymbolItem';
+
+export const SymbolItem = SymbolItemModule;
+
+import { SymbolDefinition as SymbolDefinitionModule } from './item/SymbolDefinition';
+
+export const SymbolDefinition = SymbolDefinitionModule;
 export * from './item/HitResult';
 export * from './path/Segment';
 export * from './path/SegmentPoint';
@@ -46,11 +53,15 @@ export * from './style/Color';
 export * from './style/Gradient';
 export * from './style/GradientStop';
 export * from './style/Style';
+
 import { DomElement } from './dom/DomElement';
 import { DomEvent } from './dom/DomEvent';
+
 export * from './view/View';
 export * from './view/CanvasView';
+
 import { Key as Key2 } from './event/Key'; // NOTE: Changed order
+
 export const Key = Key2;
 export * from './event/Event';
 export * from './event/KeyEvent';
