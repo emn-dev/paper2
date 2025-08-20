@@ -12,7 +12,7 @@
   </head>
   <body>
     <paper2-nav></paper2-nav>
-    <paper2-stackblitz></paper2-stackblitz>
+    <paper2-stackblitz type="core"></paper2-stackblitz>
     <header style="text-align: center"><h1>Simple Spin</h1></header>
     <main>
       <canvas id="myCanvas" resize></canvas>
@@ -25,9 +25,7 @@
           : "https://unpkg.com/paper2/paper2-core.esm.js";
 
       import(resourceUri).then((paperModule) => {
-        const { paper } = paperModule;
-
-        const { Path } = paper.Base.exports;
+        const { paper, Path } = paperModule;
 
         paper.setup("myCanvas");
 
