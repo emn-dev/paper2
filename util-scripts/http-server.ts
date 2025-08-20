@@ -71,7 +71,12 @@ http
     let resource = join(cwd, root, decodeURI(uri));
 
     if (uri.endsWith(".esm.js")) {
-      resource = resource.replace("/docs/", "/packages/paper2/dist/");
+      if (resource.includes("/")) {
+        resource = resource.replace("/docs/", "/packages/paper2/dist/");
+      } else {
+        // We are on a Windows machine
+        resource = resource.replace("\\docs\\", "\\packages\\paper2\\dist\\");
+      }
     }
 
     // A route was requested
