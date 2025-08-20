@@ -446,7 +446,7 @@ export const Raster = Item.extend(
     },
 
     setSource: function (src) {
-      var image = new self.Image(),
+      var image = new globalThis.Image(),
         crossOrigin = this._crossOrigin;
       if (crossOrigin) image.crossOrigin = crossOrigin;
       // Prevent setting image source to `null`, as this isn't supported by

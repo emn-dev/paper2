@@ -678,7 +678,8 @@ new (function () {
 
     function onLoad(svg) {
       try {
-        var node = typeof svg === 'object' ? svg : new self.DOMParser().parseFromString(svg.trim(), 'image/svg+xml');
+        var node =
+          typeof svg === 'object' ? svg : new globalThis.DOMParser().parseFromString(svg.trim(), 'image/svg+xml');
         if (!node.nodeName) {
           node = null;
           throw new Error('Unsupported SVG source: ' + source);

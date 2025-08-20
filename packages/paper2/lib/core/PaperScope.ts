@@ -82,7 +82,7 @@ export const PaperScope = Base.extend(
       }
       if (!this.agent) {
         // Use self.instead of window, to cover handle web-workers too.
-        var user = self.navigator.userAgent.toLowerCase(),
+        var user = globalThis.navigator.userAgent.toLowerCase(),
           // Detect basic platforms, only mac internally required for now.
           os = (/(darwin|win|mac|linux|freebsd|sunos)/.exec(user) || [])[0],
           platform = os === 'darwin' ? 'mac' : os,

@@ -475,7 +475,7 @@ Base.exports.PaperScript = async function () {
       if (/^(inline|both)$/.test(sourceMaps)) {
         code +=
           '\n//# sourceMappingURL=data:application/json;base64,' +
-          self.btoa(unescape(encodeURIComponent(JSON.stringify(map))));
+          globalThis.btoa(unescape(encodeURIComponent(JSON.stringify(map))));
       }
       code += '\n//# sourceURL=' + (url || 'paperscript');
     }
