@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Export Circle (Core)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+    <style>
+      svg {
+        border: 1px red solid;
+      }
+    </style>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz type="core"></paper2-stackblitz>
+    <header style="text-align: center"><h1>Export Circle (Core)</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-core.esm.js"
+          : "https://unpkg.com/paper2/paper2-core.esm.js";
+
+      import(resourceUri).then((paperModule) => {
+        const { paper, Path, Point, Size, Rectangle } = paperModule;
+
+        paper.setup("myCanvas");
+
+        var topLeft = new Point(200, 200);
+        var size = new Size(150, 100);
+        var rectangle = new Rectangle(topLeft, size);
+        var path = new Path.Ellipse(rectangle);
+        path.fillColor = "black";
+
+        var topLeft = new Point(5, 400);
+        var size = new Size(100, 50);
+        var rectangle = new Rectangle(topLeft, size);
+        var path = new Path.Ellipse(rectangle);
+        path.fillColor = "yellow";
+
+        var path = new Path.Circle(new Point(50, 50), 25);
+        path.fillColor = "red";
+
+        document.body.appendChild(paper.project.exportSVG());
+      });
+    </script>
+  </body>
+</html>

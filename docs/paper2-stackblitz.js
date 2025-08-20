@@ -4,7 +4,7 @@ function openInStackblitz() {
 
   let html = `
         <link rel="stylesheet" href="https://emn-dev.github.io/paper2/paper2-docs.css" />
-            <canvas id='myCanvas' resize></canvas>
+            <main><canvas id='myCanvas' resize></canvas></main>
             `;
   if (type === "core") {
     html += `<script>`;
