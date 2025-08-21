@@ -4441,7 +4441,7 @@ export const Item = Base.extend(
         // it, instead of the mainCtx.
         mainCtx = ctx;
         // @ts-expect-error = Expected 3 arguments, but got 1
-        ctx = CanvasProvider.getContext(bounds.getSize().ceil().add(1).multiply(pixelRatio));
+        ctx = ref.CanvasProvider.getContext(bounds.getSize().ceil().add(1).multiply(pixelRatio));
         if (pixelRatio !== 1) ctx.scale(pixelRatio, pixelRatio);
       }
       ctx.save();

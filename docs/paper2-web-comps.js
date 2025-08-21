@@ -102,6 +102,7 @@
             <a href="animatedStar.html">Animated Star</a>
             <a href="pathStructure.html">Path Structure</a>
             <a href="pathTangents.html">Path Tangents</a>
+            <a href="paperoids.html">Paperoids</a>
           </div>
       `;
       shadow.appendChild(ele);
