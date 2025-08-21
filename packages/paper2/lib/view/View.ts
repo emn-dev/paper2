@@ -13,7 +13,6 @@
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
-// import { Stats } from "fs";
 import { ref } from '~/globals';
 import { Base } from '~/straps';
 import { PaperScope } from '~/core/PaperScope';
@@ -26,9 +25,7 @@ import { DomElement } from '~/dom/DomElement';
 import { DomEvent } from '~/dom/DomEvent';
 import { Change } from '~/item/ChangeFlag';
 import { Item } from '~/item/Item';
-
-// https://github.com/mrdoob/stats.js
-declare const Stats: any;
+import { Stats } from '../stats';
 
 /**
  * @name View
@@ -97,6 +94,7 @@ export const View = Base.extend(
         size = getCanvasSize();
 
         if (PaperScope.hasAttribute(element, 'stats') && typeof Stats !== 'undefined') {
+          // @ts-expect-error
           this._stats = new Stats();
           // Align top-left to the element
           var stats = this._stats.domElement,
