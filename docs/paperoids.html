@@ -4,95 +4,39 @@
     <meta charset="UTF-8" />
     <title>Paperoids</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link rel="stylesheet" href="paper2-docs.css" /> -->
+    <link rel="stylesheet" href="paper2-docs.css" />
     <script src="./paper2-web-comps.js"></script>
     <script src="./paper2-stackblitz.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
-    <style type="text/css">
-      html,
-      body {
-        margin: 0;
-        overflow: hidden;
-        height: 100%;
-      }
-
-      canvas {
-        width: 100%;
-        height: 100%;
-      }
-
-      body {
-        background: #000;
-        font-family: Helvetica, Arial;
-      }
-
-      .footer {
-        position: absolute;
-        bottom: 0;
-        color: #ff0000;
-        background-color: rgba(60, 60, 60, 0.8);
-        font-size: 0.75em;
-        padding: 0.5em;
-        color: #ddd;
-        width: 100%;
-      }
-
-      .footer a {
-        color: #fff;
-        font-weight: bold;
-        text-decoration: none;
-        border-bottom: 1px solid #555;
-      }
-
-      .footer b {
-        background-color: #660000;
-        padding-left: 0.25em;
-        padding-right: 0.25em;
-      }
-
-      .gameover {
-        display: none;
-        position: absolute;
-        left: 40%;
-        top: 40%;
-        color: #fff;
-        background-color: rgba(60, 60, 60, 0.8);
-        padding: 32px;
-        -moz-border-radius: 12px;
-        -webkit-border-radius: 12px;
-        border-radius: 12px;
-        -moz-background-clip: padding;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;
-      }
-
-      .gameover a {
-        color: #fff;
-        font-weight: bold;
-      }
-
-      #stats {
-        position: absolute;
-        left: auto !important;
-        right: 0px;
-      }
-    </style>
   </head>
   <body>
     <paper2-nav></paper2-nav>
-    <!-- <paper2-stackblitz></paper2-stackblitz> -->
-    <header style="text-align: center"><h1>Paperoids</h1></header>
+    <paper2-stackblitz></paper2-stackblitz>
+    <header style="text-align: center">
+      <h1>
+        Paperoids
+        <span style="font-size: 1rem"
+          >(a game by @<a href="http://twitter.com/#/hirmes">hirmes</a>)</span
+        >
+      </h1>
+      <p>
+        To Play: <b class="paperoids-ctrls">&#8592;</b> and
+        <b class="paperoids-ctrls">&#8594;</b> to rotate.
+        <b class="paperoids-ctrls">&#8593;</b> for thrust.
+        <b class="paperoids-ctrls">Z</b> to fire.
+        <b class="paperoids-ctrls">F</b> to show FPS.
+      </p>
+    </header>
     <main>
-      <canvas id="myCanvas" resize stats></canvas>
-      <div id="footer" class="footer">
-        <a href="#">Paperoids</a>. To Play: <b>&#8592;</b> and <b>&#8594;</b> to
-        rotate. <b>&#8593;</b> for thrust. <b>Z</b> to fire. <b>F</b> to show
-        FPS. Follow @<a href="http://twitter.com/#/hirmes">hirmes</a> for
-        updates. Made with the amazing <a href="http://paperjs.org">Paper.js</a>
-      </div>
+      <canvas
+        id="myCanvas"
+        style="background-color: #000; width: 90%; height: 90%"
+        resize
+        stats
+      ></canvas>
 
-      <div id="gameover" class="gameover">
+      <div id="gameover" class="paperoids-gameover">
         Game Over. <a href="paperoids.html">Play again</a>?
       </div>
     </main>
@@ -115,6 +59,9 @@
       // 1.2  - 2011-07-16 - Refactored with closures (@jonathanpuckey)
       // 1.2.1- 2011-08-09 - bug fixes
       //
+
+      document.body.style.backgroundColor = '#000';
+      document.body.style.color = '#ccc';
 
       var presets = {
         speed: 0.2,
@@ -139,6 +86,7 @@
         if (event.key == "z") {
           Ship.fire();
         }
+
         // Show stats:
         if (event.key == "f") {
           var stats = document.getElementById("stats");

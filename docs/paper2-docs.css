@@ -12,3 +12,37 @@ canvas[resize] {
   height: 80%;
   background-color: #eee;
 }
+
+.paperoids-ctrls {
+  background-color: #660000;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
+
+.paperoids-gameover {
+  display: none;
+  position: absolute;
+  left: 40%;
+  top: 40%;
+  color: #fff;
+  background-color: rgba(60, 60, 60, 0.8);
+  padding: 32px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+.paperoids-gameover a {
+  color: #fff;
+  font-weight: bold;
+}
+
+#stats {
+  position: absolute;
+  left: auto !important;
+  right: 0px;
+  display: none;
+}
