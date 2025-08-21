@@ -11,9 +11,57 @@
 //  */
 
 import { expect } from 'vitest';
+import { paper } from '~/index-core';
 
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
+
+function compareProperties(actual, expected, properties, message, options) {
+  for (let i = 0, l = properties.length; i < l; i++) {
+    const key = properties[i];
+    equals(actual[key], expected[key], message + ' (#' + key + ')', options);
+  }
+}
+
+function compareItem(actual, expected, message, options, properties) {
+  options = options || {};
+  if (options.rasterize) {
+    // comparePixels(actual, expected, message, options);
+  } else if (!actual || !expected) {
+    // QUnit.strictEqual(actual, expected, message);
+  } else {
+    // if (options.cloned) QUnit.notStrictEqual(actual.id, expected.id, message + ' (not #id)');
+    // QUnit.strictEqual(actual.constructor, expected.constructor, message + ' (#constructor)');
+    // When item is cloned and has a name, the name will be versioned:
+    equals(actual.name, options.cloned && expected.name ? expected.name + ' 1' : expected.name, message + ' (#name)');
+    compareProperties(
+      actual,
+      expected,
+      [
+        'children',
+        'bounds',
+        'position',
+        'matrix',
+        'data',
+        'opacity',
+        'locked',
+        'visible',
+        'blendMode',
+        'selected',
+        'fullySelected',
+        'clipMask',
+        'guide',
+      ],
+      message,
+      options
+    );
+    if (properties) compareProperties(actual, expected, properties, message, options);
+    // Style
+    var styles = ['fillColor', 'strokeColor', 'strokeCap', 'strokeJoin', 'dashArray', 'dashOffset', 'miterLimit'];
+    // if (expected instanceof TextItem) styles.push('fontSize', 'font', 'leading', 'justification');
+    compareProperties(actual.style, expected.style, styles, message + ' (#style)', options);
+  }
+}
 
 const comparators = {
   Number: function (actual, expected, message, options) {
@@ -33,6 +81,70 @@ const comparators = {
     } else {
       // QUnit.push(expected.equals(actual), actual, expected, message);
     }
+  },
+  Project: function (actual, expected, message, options) {
+    compareProperties(actual, expected, ['layers'], message, options);
+  },
+  Array: function (actual, expected, message, options) {
+    // QUnit.strictEqual(actual.length, expected.length, message + ' (#length)');
+    for (var i = 0, l = actual.length; i < l; i++) {
+      equals(actual[i], expected[i], (message || '') + '[' + i + ']', options);
+    }
+  },
+  Layer: function (actual, expected, message, options) {
+    compareItem(actual, expected, message, options, undefined);
+    // var sameProject = actual.project === expected.project;
+    // var sharedProject = !(options && options.dontShareProject);
+    // QUnit.push(sharedProject ? sameProject : !sameProject,
+    //         actual.project,
+    //         sharedProject ? expected.project : 'not ' + expected.project,
+    //         message + ' (#project)');
+  },
+  Path: function (actual, expected, message, options) {
+    compareItem(actual, expected, message, options, ['segments', 'closed', 'clockwise']);
+  },
+  Point: function (actual, expected, message, options) {
+    comparators.Number(actual.x, expected.x, message + ' (#x)', options);
+    comparators.Number(actual.y, expected.y, message + ' (#y)', options);
+  },
+
+  Size: function (actual, expected, message, options) {
+    comparators.Number(actual.width, expected.width, message + ' (#width)', options);
+    comparators.Number(actual.height, expected.height, message + ' (#height)', options);
+  },
+
+  Rectangle: function (actual, expected, message, options) {
+    comparators.Point(actual, expected, message, options);
+    comparators.Size(actual, expected, message, options);
+  },
+  Matrix: function (actual, expected, message, options) {
+    comparators.Array(actual.values, expected.values, message, options);
+  },
+  Segment: function (actual, expected, message, options) {
+    compareProperties(actual, expected, ['handleIn', 'handleOut', 'point', 'selected'], message, options);
+  },
+  CompoundPath: function (actual, expected, message, options) {
+    compareItem(actual, expected, message, options, undefined);
+  },
+  Group: function (actual, expected, message, options) {
+    compareItem(actual, expected, message, options, ['clipped']);
+  },
+  SymbolItem: function (actual, expected, message, options) {
+    compareItem(
+      actual,
+      expected,
+      message,
+      // Cloning SymbolItems does not result in cloned
+      // SymbolDefinitions
+      options && options.cloned ? paper.Base.set({}, options, { cloned: false }) : options,
+      ['symbol']
+    );
+  },
+  SymbolDefinition: function (actual, expected, message, options) {
+    equals(actual.definition, expected.definition, message + ' (#definition)', options);
+  },
+  PointText: function (actual, expected, message, options) {
+    compareItem(actual, expected, message, options, ['content', 'point']);
   },
 };
 
@@ -83,7 +195,11 @@ export function equals(actual, expected, message = '', options = {}) {
   } else {
     // Finally perform a strict compare
     // QUnit.push(actual === expected, actual, expected, message);
-    expect(actual).toBe(expected);
+    if (typeof actual === 'object' || typeof expected === 'object') {
+      expect(actual).toEqual(expected);
+    } else {
+      expect(actual).toBe(expected);
+    }
   }
   //   if (options && options.cloned && cls) {
   //     var identical = identicalAfterCloning[cls];
