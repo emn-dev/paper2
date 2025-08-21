@@ -103,6 +103,7 @@
             <a href="pathStructure.html">Path Structure</a>
             <a href="pathTangents.html">Path Tangents</a>
             <a href="paperoids.html">Paperoids</a>
+            <a href="paperoids.html">Tiger</a>
           </div>
       `;
       shadow.appendChild(ele);
