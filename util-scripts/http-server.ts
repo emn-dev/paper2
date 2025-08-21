@@ -92,7 +92,11 @@ http
         // console.log(`[OK] GET ${uri}`);
       } else {
         sendNotFound(res);
-        console.log(`[ER] GET ${uri}`);
+        if (uri.includes("com.chrome.devtools")) {
+          // do nothing
+        } else {
+          console.log(`[ER] GET ${uri}`);
+        }
       }
     });
   })
