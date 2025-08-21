@@ -11,6 +11,7 @@ import {
   SymbolDefinition,
   PointText,
   Color,
+  Gradient,
 } from '~/index-core';
 import { equals } from './_helpers';
 
@@ -58,16 +59,16 @@ describe('Given: JSON', () => {
     testExportImportJSON(paper.project);
   });
 
-  // it('Gradients', () => {
-  //   const path = new Path.Circle([100, 100], 40);
-  //   const gradient = new Gradient(['yellow', 'red', 'black'], true);
-  //   const from = path.position;
-  //   const to = path.bounds.rightCenter;
-  //   const gradientColor = new Color(gradient, from, to);
-  //   path.fillColor = gradientColor;
-  //   path.strokeColor = 'black';
-  //   testExportImportJSON(paper.project);
-  // });
+  it.skip('Gradients', () => {
+    const path = new Path.Circle([100, 100], 40);
+    const gradient = new Gradient(['yellow', 'red', 'black'], true);
+    const from = path.position;
+    const to = path.bounds.rightCenter;
+    const gradientColor = new Color(gradient, from, to);
+    path.fillColor = gradientColor;
+    path.strokeColor = 'black';
+    testExportImportJSON(paper.project);
+  });
 
   it('Group transform', () => {
     const circle1 = new Path.Circle([100, 100], 50);
@@ -82,44 +83,44 @@ describe('Given: JSON', () => {
     testExportImportJSON(paper.project);
   });
 
-  // it('Rectangle testing', () => {
-  //   const point1 = new Point(10, 10);
-  //   const size1 = new Size(50, 50);
-  //   const rectangle1 = new Rectangle(point1, size1);
-  //   const path1 = new Path.Rectangle(rectangle1);
-  //   path1.strokeColor = 'black';
-  //   path1.fillColor = 'red';
-  //   path1.name = 'square1';
-  //   path1.strokeCap = 'square';
-  //   path1.opacity = 0.1;
-  //   path1.dashArray = [5, 2];
-  //   path1.dashOffset = 0;
+  it.skip('Rectangle testing', () => {
+    const point1 = new Point(10, 10);
+    const size1 = new Size(50, 50);
+    const rectangle1 = new Rectangle(point1, size1);
+    const path1 = new Path.Rectangle(rectangle1);
+    path1.strokeColor = 'black';
+    path1.fillColor = 'red';
+    path1.name = 'square1';
+    path1.strokeCap = 'square';
+    path1.opacity = 0.1;
+    path1.dashArray = [5, 2];
+    path1.dashOffset = 0;
 
-  //   const point2 = new Point(75, 75);
-  //   const point22 = new Point(100, 100);
-  //   const path2 = new Path.Rectangle(point2, point22);
-  //   path2.strokeColor = 'red';
-  //   path2.strokeWidth = 4;
-  //   path2.fillColor = 'blue';
-  //   path2.name = 'square2';
-  //   path2.strokeCap = 'butt';
+    const point2 = new Point(75, 75);
+    const point22 = new Point(100, 100);
+    const path2 = new Path.Rectangle(point2, point22);
+    path2.strokeColor = 'red';
+    path2.strokeWidth = 4;
+    path2.fillColor = 'blue';
+    path2.name = 'square2';
+    path2.strokeCap = 'butt';
 
-  //   const point3 = new Point(150, 150);
-  //   const size3 = new Size(50, 50);
-  //   const rectangle3 = new Rectangle(point3, size3);
-  //   const path3 = new Path.Rectangle(rectangle3);
-  //   path3.strokeColor = 'blue';
+    const point3 = new Point(150, 150);
+    const size3 = new Size(50, 50);
+    const rectangle3 = new Rectangle(point3, size3);
+    const path3 = new Path.Rectangle(rectangle3);
+    path3.strokeColor = 'blue';
 
-  //   const point4 = new Point(200, 200);
-  //   const size4 = new Size(100, 100);
-  //   const rectangle4 = new Rectangle(point4, size4);
-  //   const cornerSize4 = new Size(30, 30);
-  //   const path4 = new Path.Rectangle(rectangle4, cornerSize4);
-  //   path4.strokeColor = 'yellow';
-  //   path4.fillColor = 'purple';
+    const point4 = new Point(200, 200);
+    const size4 = new Size(100, 100);
+    const rectangle4 = new Rectangle(point4, size4);
+    const cornerSize4 = new Size(30, 30);
+    const path4 = new Path.Rectangle(rectangle4, cornerSize4);
+    path4.strokeColor = 'yellow';
+    path4.fillColor = 'purple';
 
-  //   testExportImportJSON(paper.project);
-  // });
+    testExportImportJSON(paper.project);
+  });
 
   it('RectanglSymbolsesting', () => {
     const ellipse = new Path.Ellipse({
@@ -267,6 +268,7 @@ describe('Given: JSON', () => {
     path.importJSON(
       '["Path",{"segments":[[[50,100],[0,27.61424],[0,-27.61424]],[[100,50],[-27.61424,0],[27.61424,0]],[[150,100],[0,-27.61424],[0,27.61424]],[[100,150],[27.61424,0],[-27.61424,0]]],"closed":true,"fillColor":[1,0,0]}]'
     );
+    // TODO: why these are broken?
     // equals(
     //   function () {
     //     return path.bounds;
