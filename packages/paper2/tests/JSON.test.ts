@@ -268,19 +268,18 @@ describe('Given: JSON', () => {
     path.importJSON(
       '["Path",{"segments":[[[50,100],[0,27.61424],[0,-27.61424]],[[100,50],[-27.61424,0],[27.61424,0]],[[150,100],[0,-27.61424],[0,27.61424]],[[100,150],[27.61424,0],[-27.61424,0]]],"closed":true,"fillColor":[1,0,0]}]'
     );
-    // TODO: why these are broken?
-    // equals(
-    //   function () {
-    //     return path.bounds;
-    //   },
-    //   { x: 50, y: 50, width: 100, height: 100 }
-    // );
-    // equals(
-    //   function () {
-    //     return path.fillColor;
-    //   },
-    //   { red: 1, green: 0, blue: 0 }
-    // );
+    equals(
+      function () {
+        return path.bounds;
+      },
+      { x: 50, y: 50, width: 100, height: 100 }
+    );
+    equals(
+      function () {
+        return path.fillColor;
+      },
+      { red: 1, green: 0, blue: 0 }
+    );
     equals(function () {
       return layer.firstChild === path;
     }, true);

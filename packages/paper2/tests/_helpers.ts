@@ -146,6 +146,11 @@ const comparators = {
   PointText: function (actual, expected, message, options) {
     compareItem(actual, expected, message, options, ['content', 'point']);
   },
+  Object: function (actual, expected, message, options) {
+    const result = paper.Base.equals(actual, expected);
+    expect(result).toBe(true);
+    // QUnit.push(Base.equals(actual, expected), actual, expected, message);
+  },
 };
 
 function getFunctionMessage(func) {
@@ -172,6 +177,7 @@ export function equals(actual, expected, message = '', options = {}) {
   // actual value's type.
   var type = typeof expected,
     cls;
+
   type =
     (expected === null && 'Null') ||
     (type === 'number' && 'Number') ||
