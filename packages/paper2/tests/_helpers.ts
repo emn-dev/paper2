@@ -207,9 +207,20 @@ const comparators = {
     expect(result).toBe(true);
     // QUnit.push(Base.equals(actual, expected), actual, expected, message);
   },
+  Raster: function (actual, expected, message, options) {
+    var pixels = options && options.pixels,
+      properties = ['size', 'width', 'height', 'resolution'];
+    if (!pixels) properties.push('source', 'image');
+    compareItem(actual, expected, message, options, properties);
+    if (pixels) {
+      comparePixels(actual, expected, message, options);
+    } else {
+      equals(actual.toDataURL(), expected.toDataURL(), message + ' (#toDataUrl())');
+    }
+  },
 };
 
-function getFunctionMessage(func) {
+export function getFunctionMessage(func) {
   var message = func
     .toString()
     .match(/^\s*function[^\{]*\{([\s\S]*)\}\s*$/)[1]
