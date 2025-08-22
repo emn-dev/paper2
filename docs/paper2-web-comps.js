@@ -104,6 +104,9 @@
             <a href="pathTangents.html">Path Tangents</a>
             <a href="paperoids.html">Paperoids</a>
             <a href="tiger.html">Tiger</a>
+            <a href="wormFarm.html">Worm Farm</a>
+            <a href="webWorker.html">Web Worker</a>
+            <a href="pathEditing.html">Path Editing</a>
           </div>
       `;
       shadow.appendChild(ele);

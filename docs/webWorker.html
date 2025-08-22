@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Web Worker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center"><h1>Web Worker</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var worker = new Worker("webWorker.js", { type: "module" });
+
+      // Create two paths, and send them to the worker to perform a boolean
+      // operation on them.
+
+      var circle = new Path.Circle({
+        center: [200, 200],
+        radius: 100,
+        fillColor: "red",
+      });
+
+      var rectangle = new Path.Rectangle({
+        point: [200, 200],
+        size: [200, 200],
+        fillColor: "blue",
+      });
+
+      var data = [circle.exportJSON(), rectangle.exportJSON()];
+      setTimeout(() => {
+        console.log("Sent", data);
+        worker.postMessage(data);
+      }, 999);
+
+      // The worker sends the result back in a message, from which we can then
+      // create a new path item and siplay it.
+      worker.onmessage = function (event) {
+        var data = event.data;
+        if (data) {
+          console.log("Received", data);
+          var result = project.activeLayer.importJSON(data);
+          result.fillColor = "yellow";
+          result.fillColor.alpha = 0.5;
+          result.position += [400, 0];
+          result.fullySelected = true;
+        }
+      };
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

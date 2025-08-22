@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Worm Farm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz></paper2-stackblitz>
+    <header style="text-align: center"><h1>Worm Farm</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      /////////////////////////////////////////////////////////////////////
+       // Values
+
+       var values  = {
+           minDistance: 10,
+           maxDistance: 30,
+           varyThickness: true
+       };
+
+       // All newly created items will inherit the following styles:
+       project.currentStyle = {
+           fillColor: 'white',
+           strokeColor: 'black'
+       };
+
+       /////////////////////////////////////////////////////////////////////
+       // Mouse handling
+
+       tool.minDistance = values.minDistance;
+       tool.maxDistance = values.maxDistance;
+
+       var worm;
+
+       // Every time the user clicks the mouse to drag we create a path
+       // and when a user drags the mouse we add points to it
+       function onMouseDown(event) {
+           worm = new Path();
+           worm.add(event.point, event.point);
+           worm.closed = true;
+       }
+
+       function onMouseDrag(event) {
+           // the vector in the direction that the mouse moved
+           var step = event.delta;
+
+           // if the vary thickness checkbox is marked
+           // divide the length of the step vector by two:
+           if (values.varyThickness) {
+               step.length = step.length / 2;
+           } else {
+               // otherwise set the length of the step vector to half of
+               // minDistance
+               step.length = values.minDistance / 2;
+           }
+
+           // the top point: the middle point + the step rotated by -90
+           // degrees
+           //   -----*
+           //   |
+           //   ------
+           var top = event.middlePoint + step.rotate(-90);
+
+           // the bottom point: the middle point + the step rotated by 90
+           // degrees
+           //   ------
+           //   |
+           //   -----*
+           var bottom = event.middlePoint + step.rotate(90);
+
+           // add the top point to the end of the path
+           worm.add(top);
+
+           // insert the bottom point after the first segment of the path
+           worm.insert(1, bottom);
+
+           // make a new line path from top to bottom
+           new Path(top, bottom);
+
+           // This is the point at the front of the worm:
+           worm.firstSegment.point = event.point;
+
+           // smooth the segments of the path
+           worm.smooth();
+       }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
