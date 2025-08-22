@@ -11,7 +11,7 @@
 //  */
 
 import { expect } from 'vitest';
-import { paper, CompoundPath, PathItem } from '~/index-core';
+import { paper, CompoundPath, PathItem, Raster, Item } from '~/index-core';
 
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
@@ -82,6 +82,61 @@ function compareItem(actual, expected, message, options, properties) {
     // if (expected instanceof TextItem) styles.push('fontSize', 'font', 'leading', 'justification');
     compareProperties(actual.style, expected.style, styles, message + ' (#style)', options);
   }
+}
+
+export function compareSVG(done, actual, expected, message = '', options = undefined) {
+  function getItem(item) {
+    return item instanceof Item
+      ? item
+      : typeof item === 'string'
+        ? new Raster({
+            source: 'data:image/svg+xml;base64,' + window.btoa(item),
+            insert: false,
+          })
+        : null;
+  }
+
+  actual = getItem(actual);
+  expected = getItem(expected);
+  actual.position = expected.position;
+
+  if (typeof actual === 'function') {
+    if (!message) message = getFunctionMessage(actual);
+    actual = actual();
+  }
+
+  function compare() {
+    comparePixels(
+      actual,
+      expected,
+      message,
+      paper.Base.set(
+        {
+          tolerance: 1e-3,
+          resolution: 72,
+        },
+        options
+      )
+    );
+    done();
+  }
+
+  if (expected instanceof Raster) {
+    expected.onLoad = compare;
+  } else if (actual instanceof Raster) {
+    actual.onLoad = compare;
+  } else {
+    compare();
+  }
+}
+
+export function createSVG(str, attrs) {
+  // Similar to SvgElement.create():
+  var node = document.createElementNS('http://www.w3.org/2000/svg', str);
+  for (var key in attrs) node.setAttribute(key, attrs[key]);
+  // Paper.js paths do not have a fill by default, SVG does.
+  node.setAttribute('fill', 'none');
+  return node;
 }
 
 export function compareBoolean(actual, expected, message = '', options = undefined) {
@@ -216,6 +271,29 @@ const comparators = {
       comparePixels(actual, expected, message, options);
     } else {
       equals(actual.toDataURL(), expected.toDataURL(), message + ' (#toDataUrl())');
+    }
+  },
+  Element: function (actual, expected, message, options) {
+    // Convention: Loop through the attribute lists of both actual and
+    // expected element, and compare values even if they may be inherited.
+    // This is to handle styling values on SVGElement items more flexibly.
+    equals(actual && actual.tagName, expected.tagName, (message || '') + ' (#tagName)', options);
+    for (var i = 0; i < expected.attributes.length; i++) {
+      var attr = expected.attributes[i];
+      if (attr.specified) {
+        equals(
+          actual && actual.getAttribute(attr.name),
+          attr.value,
+          (message || '') + ' (#' + attr.name + ')',
+          options
+        );
+      }
+    }
+    for (var i = 0; i < actual && actual.attributes.length; i++) {
+      var attr = actual.attributes[i];
+      if (attr.specified) {
+        equals(attr.value, expected.getAttribute(attr.name)(message || '') + ' #(' + attr.name + ')', options);
+      }
     }
   },
 };
