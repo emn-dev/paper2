@@ -37,6 +37,7 @@
       });
 
       var data = [circle.exportJSON(), rectangle.exportJSON()];
+
       setTimeout(() => {
         console.log("Sent", data);
         worker.postMessage(data);
