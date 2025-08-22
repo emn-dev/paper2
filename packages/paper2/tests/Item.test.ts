@@ -726,12 +726,11 @@ describe('Given: Item', () => {
 
   it('Cloning a linked size', () => {
     const path = new Path([40, 75], [140, 75]);
-    const error = null;
+    let error = null;
     try {
       path.bounds.size.clone();
     } catch (e) {
-      // error = e;
-      console.log('err = ', e);
+      error = e;
     }
     let description = 'Cloning a linked size should not throw an error';
     if (error) description += ': ' + error;
