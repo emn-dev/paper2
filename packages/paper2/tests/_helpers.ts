@@ -16,6 +16,27 @@ import { paper, CompoundPath, PathItem } from '~/index-core';
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
 
+export function triggerMouseEvent(type, point, target = undefined) {
+  // Depending on event type, events have to be triggered on different
+  // elements due to the event handling implementation (see `viewEvents`
+  // and `docEvents` in View.js). And we cannot rely on the fact that event
+  // will bubble from canvas to document, since the canvas used in tests is
+  // not inserted in DOM.
+  target = target || (type === 'mousedown' ? paper.view.element : document);
+
+  const event = new MouseEvent(type, {
+    bubbles: true,
+    cancelable: true,
+    composed: true,
+    clientX: point.x,
+    clientY: point.y,
+    screenX: point.x,
+    screenY: point.y,
+  });
+
+  target.dispatchEvent(event);
+}
+
 function compareProperties(actual, expected, properties, message, options) {
   for (let i = 0, l = properties.length; i < l; i++) {
     const key = properties[i];
