@@ -42,3 +42,4 @@ README.md
 lib/version.ts
 cypress/tsconfig.json
 cypress/videos/*
+tests/assets/*
