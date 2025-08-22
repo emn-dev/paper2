@@ -11,7 +11,7 @@
 //  */
 
 import { expect } from 'vitest';
-import { paper } from '~/index-core';
+import { paper, CompoundPath, PathItem } from '~/index-core';
 
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
@@ -60,6 +60,41 @@ function compareItem(actual, expected, message, options, properties) {
     var styles = ['fillColor', 'strokeColor', 'strokeCap', 'strokeJoin', 'dashArray', 'dashOffset', 'miterLimit'];
     // if (expected instanceof TextItem) styles.push('fontSize', 'font', 'leading', 'justification');
     compareProperties(actual.style, expected.style, styles, message + ' (#style)', options);
+  }
+}
+
+export function compareBoolean(actual, expected, message = '', options = undefined) {
+  expected = typeof expected === 'string' ? PathItem.create(expected) : expected;
+  if (typeof actual === 'function') {
+    if (!message) message = getFunctionMessage(actual);
+    actual = actual();
+  }
+  var parent,
+    index,
+    style = {
+      strokeColor: 'black',
+      fillColor:
+        (expected && (expected.closed || (expected.firstChild && expected.firstChild.closed && 'yellow'))) || null,
+    };
+  if (actual) {
+    parent = actual.parent;
+    index = actual.index;
+    // Remove it from parent already now, in case we're comparing children
+    // of compound-paths, so we can apply styling to them.
+    if (parent && parent instanceof CompoundPath) {
+      actual.remove();
+    } else {
+      parent = null;
+    }
+    actual.style = style;
+  }
+  if (expected) {
+    expected.style = style;
+  }
+  equals(actual, expected, message, paper.Base.set({ rasterize: true }, options));
+  if (parent) {
+    // Insert it back.
+    parent.insertChild(index, actual);
   }
 }
 
