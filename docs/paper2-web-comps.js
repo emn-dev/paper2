@@ -105,7 +105,7 @@
             <a href="importViewbox.html">Import Viewbox 1</a> | 
             <a href="animated-lines.html">Lines</a> | 
             <a href="games-paperoids.html">Paperoids</a> | 
-            <a href="pathEditing.html">Path Editing</a> | 
+            <a href="tools-pathEditing.html">Path Editing</a> | 
             <a href="pathStructure.html">Path Structure</a> | 
             <a href="pathTangents.html">Path Tangents</a> | 
             <a href="rasterSpiral.html">Spiral Raster</a> | 
@@ -115,8 +115,8 @@
             <a href="animated-spaceUsingShapes.html">SpaceUsingShapes</a> | 
             <a href="straps.html">Straps</a> | 
             <a href="json-tiger.html">Tiger</a> | 
-            <a href="webWorker.html">Web Worker</a> | 
-            <a href="wormFarm.html">Worm Farm</a>
+            <a href="worker-webWorker.html">Web Worker</a> | 
+            <a href="tools-wormFarm.html">Worm Farm</a>
           </div>
       `;
       shadow.appendChild(ele);

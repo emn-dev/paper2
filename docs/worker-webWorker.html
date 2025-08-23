@@ -19,7 +19,7 @@
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
-      var worker = new Worker("webWorker.js", { type: "module" });
+      var worker = new Worker("worker-webWorker.js", { type: "module" });
 
       // Create two paths, and send them to the worker to perform a boolean
       // operation on them.
