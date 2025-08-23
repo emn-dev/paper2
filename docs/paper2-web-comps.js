@@ -104,6 +104,7 @@
             <a href="json-gradients.html">Gradients (JSON)</a> | 
             <a href="json-groupTransform.html">Group Transform (JSON)</a> | 
             <a href="tools-drippingBrush.html">Dripping Brush</a> | 
+            <a href="rasters-phyllotaxisRaster.html">Phyllotaxis Raster</a> | 
             <a href="svg-export-circleTesting.html">Export Circle (Full)</a> | 
             <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a> | 
             <a href="animated-extruded.html">Extruded</a> |             
@@ -113,6 +114,8 @@
             <a href="tools-pathEditing.html">Path Editing</a> | 
             <a href="scripts-pathStructure.html">Path Structure</a> | 
             <a href="scripts-pathTangents.html">Path Tangents</a> | 
+            <a href="nodejs-BooleanOperations.html">BoolOpts (rendered on Nodejs)</a> | 
+            <a href="scripts-booleanOperations.html">Boolean Study</a> | 
             <a href="paperjs-org-rasterSpiral.html">Spiral Raster</a> | 
             <a href="simple.html">Simple</a> | 
             <a href="animated-smoothing.html">Smoothing</a> | 

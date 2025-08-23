@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>BoolOpts (rendered on Nodejs)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz type="core"></paper2-stackblitz> -->
+    <header style="text-align: center">
+      <h1>BoolOpts (rendered on Nodejs)</h1>
+      <p>NOTE: You must have http://localhost:3000 running.</p>
+      <pre>Run this cmd: <code style="background-color: #ddd">node ./docs/nodejs-BooleanOperations.js</code> Then refresh page.</pre>
+      <p>
+        NOTE: http://localhost:3000 will automatically exit after 30 seconds.
+      </p>
+    </header>
+    <main>
+      <img
+        id="myImg"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+      />
+      <!-- <canvas id="myCanvas" resize></canvas> -->
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1">
+      const ele = document.getElementById("myImg");
+
+      fetch("http://localhost:3000")
+        .then((a) => a.blob())
+        .then((b) => {
+          const blobUrl = URL.createObjectURL(b);
+          ele.src = blobUrl;
+        });
+    </script>
+  </body>
+</html>
