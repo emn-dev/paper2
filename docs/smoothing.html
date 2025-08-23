@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Smoothing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz></paper2-stackblitz>
+    <header style="text-align: center"><h1>Smoothing</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var width, height, center;
+      var points = 10;
+      var smooth = true;
+      var path = new Path({
+        fillColor: "black",
+      });
+      var mousePos = view.center / 2;
+      var pathHeight = mousePos.y;
+      initializePath();
+
+      function initializePath() {
+        center = view.center;
+        width = view.size.width;
+        height = view.size.height / 2;
+        path.segments = [];
+        path.add(view.bounds.bottomLeft);
+        for (var i = 1; i < points; i++) {
+          var point = new Point((width / points) * i, center.y);
+          path.add(point);
+        }
+        path.add(view.bounds.bottomRight);
+        path.fullySelected = true;
+      }
+
+      function onFrame(event) {
+        pathHeight += (center.y - mousePos.y - pathHeight) / 10;
+        for (var i = 1; i < points; i++) {
+          var sinSeed = event.count + (i + (i % 10)) * 100;
+          var sinHeight = Math.sin(sinSeed / 200) * pathHeight;
+          var yPos = Math.sin(sinSeed / 100) * sinHeight + height;
+          path.segments[i].point.y = yPos;
+        }
+        if (smooth) path.smooth({ type: "continuous" });
+      }
+
+      function onMouseMove(event) {
+        mousePos = event.point;
+      }
+
+      function onMouseDown(event) {
+        smooth = !smooth;
+        if (!smooth) {
+          // If smooth has been turned off, we need to reset
+          // the handles of the path:
+          for (var i = 0, l = path.segments.length; i < l; i++) {
+            var segment = path.segments[i];
+            segment.handleIn = segment.handleOut = null;
+          }
+        }
+      }
+
+      // Reposition the path whenever the window is resized:
+      function onResize(event) {
+        initializePath();
+      }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

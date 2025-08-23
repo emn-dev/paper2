@@ -110,6 +110,7 @@
             <a href="candyCrash.html">Candy Crash</a>
             <a href="extruded.html">Extruded</a>
             <a href="lines.html">Lines</a>
+            <a href="smoothing.html">Smoothing</a>
           </div>
       `;
       shadow.appendChild(ele);
