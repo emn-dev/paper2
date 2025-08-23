@@ -107,6 +107,9 @@
             <a href="wormFarm.html">Worm Farm</a>
             <a href="webWorker.html">Web Worker</a>
             <a href="pathEditing.html">Path Editing</a>
+            <a href="candyCrash.html">Candy Crash</a>
+            <a href="extruded.html">Extruded</a>
+            <a href="lines.html">Lines</a>
           </div>
       `;
       shadow.appendChild(ele);
