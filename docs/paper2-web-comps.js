@@ -10,6 +10,8 @@
         background: #333;
         color: white;
         padding: 0.5rem 1rem;
+        overflow-x: auto;
+        text-wrap: nowrap;
       }
 
       /* Hide the checkbox */
@@ -34,6 +36,8 @@
       .nav-links a {
         color: white;
         text-decoration: none;
+        margin: 1px;
+        padding: 1px;
       }
 
       .nav-links a:hover {
@@ -89,28 +93,28 @@
           <label for="menu-toggle" class="menu-icon">&#9776;</label>
           
           <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="straps.html">Straps</a>
-            <a href="simple.html">Simple</a>
-            <a href="booleanOps.html">Boolean Ops</a>
-            <a href="chain.html">Chain</a>
-            <a href="exportCircle.html">Export Circle (Full)</a>
-            <a href="exportCircleCore.html">Export Circle (Core)</a>
-            <a href="drippingBrush.html">Dripping Brush</a>
-            <a href="importViewbox.html">Import Viewbox 1</a>
-            <a href="rasterSpiral.html">Spiral Raster</a>
-            <a href="animatedStar.html">Animated Star</a>
-            <a href="pathStructure.html">Path Structure</a>
-            <a href="pathTangents.html">Path Tangents</a>
-            <a href="paperoids.html">Paperoids</a>
-            <a href="tiger.html">Tiger</a>
+            <a href="index.html">Home</a> | 
+            <a href="animatedStar.html">Animated Star</a> | 
+            <a href="booleanOps.html">Boolean Ops</a> | 
+            <a href="candyCrash.html">Candy Crash</a> | 
+            <a href="chain.html">Chain</a> | 
+            <a href="drippingBrush.html">Dripping Brush</a> | 
+            <a href="exportCircle.html">Export Circle (Full)</a> | 
+            <a href="exportCircleCore.html">Export Circle (Core)</a> | 
+            <a href="extruded.html">Extruded</a> |             
+            <a href="importViewbox.html">Import Viewbox 1</a> | 
+            <a href="lines.html">Lines</a> | 
+            <a href="paperoids.html">Paperoids</a> | 
+            <a href="pathEditing.html">Path Editing</a> | 
+            <a href="pathStructure.html">Path Structure</a> | 
+            <a href="pathTangents.html">Path Tangents</a> | 
+            <a href="rasterSpiral.html">Spiral Raster</a> | 
+            <a href="simple.html">Simple</a> | 
+            <a href="smoothing.html">Smoothing</a> | 
+            <a href="straps.html">Straps</a> | 
+            <a href="tiger.html">Tiger</a> | 
+            <a href="webWorker.html">Web Worker</a> | 
             <a href="wormFarm.html">Worm Farm</a>
-            <a href="webWorker.html">Web Worker</a>
-            <a href="pathEditing.html">Path Editing</a>
-            <a href="candyCrash.html">Candy Crash</a>
-            <a href="extruded.html">Extruded</a>
-            <a href="lines.html">Lines</a>
-            <a href="smoothing.html">Smoothing</a>
           </div>
       `;
       shadow.appendChild(ele);
