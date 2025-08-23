@@ -24,7 +24,7 @@
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
-      if(paper){
+      if(typeof paper !== 'undefined'){
         var topLeft = new Point(200, 200);
         var size = new Size(150, 100);
         var rectangle = new Rectangle(topLeft, size);

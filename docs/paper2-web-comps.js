@@ -104,7 +104,7 @@
             <a href="animated-extruded.html">Extruded</a> |             
             <a href="importViewbox.html">Import Viewbox 1</a> | 
             <a href="animated-lines.html">Lines</a> | 
-            <a href="paperoids.html">Paperoids</a> | 
+            <a href="games-paperoids.html">Paperoids</a> | 
             <a href="pathEditing.html">Path Editing</a> | 
             <a href="pathStructure.html">Path Structure</a> | 
             <a href="pathTangents.html">Path Tangents</a> | 
@@ -114,7 +114,7 @@
             <a href="animated-space.html">Space</a> | 
             <a href="animated-spaceUsingShapes.html">SpaceUsingShapes</a> | 
             <a href="straps.html">Straps</a> | 
-            <a href="tiger.html">Tiger</a> | 
+            <a href="json-tiger.html">Tiger</a> | 
             <a href="webWorker.html">Web Worker</a> | 
             <a href="wormFarm.html">Worm Farm</a>
           </div>
