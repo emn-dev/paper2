@@ -97,12 +97,12 @@
             <a href="animated-animatedStar.html">Animated Star</a> | 
             <a href="animated-booleanOps.html">Boolean Ops</a> | 
             <a href="animated-candyCrash.html">Candy Crash</a> | 
-            <a href="chain.html">Chain</a> | 
-            <a href="drippingBrush.html">Dripping Brush</a> | 
+            <a href="paperjs-org-chain.html">Chain</a> | 
+            <a href="tools-drippingBrush.html">Dripping Brush</a> | 
             <a href="exportCircle.html">Export Circle (Full)</a> | 
             <a href="exportCircleCore.html">Export Circle (Core)</a> | 
             <a href="animated-extruded.html">Extruded</a> |             
-            <a href="importViewbox.html">Import Viewbox 1</a> | 
+            <a href="svg-import-viewbox.html">Import Viewbox 1</a> | 
             <a href="animated-lines.html">Lines</a> | 
             <a href="games-paperoids.html">Paperoids</a> | 
             <a href="tools-pathEditing.html">Path Editing</a> | 
