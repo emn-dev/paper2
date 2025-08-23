@@ -102,6 +102,7 @@
             <a href="json-compoundPath.html">Compound Path (JSON)</a> | 
             <a href="json-emptyPathTesting.html">Empty Path Testing (JSON)</a> | 
             <a href="json-gradients.html">Gradients (JSON)</a> | 
+            <a href="json-groupTransform.html">Group Transform (JSON)</a> | 
             <a href="tools-drippingBrush.html">Dripping Brush</a> | 
             <a href="svg-export-circleTesting.html">Export Circle (Full)</a> | 
             <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a> | 

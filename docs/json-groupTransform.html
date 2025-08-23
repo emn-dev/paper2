@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Empty Path Testing (JSON)</title>
+    <title>Group Transform (JSON)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="paper2-docs.css" />
     <script src="./paper2-web-comps.js"></script>
@@ -14,7 +14,7 @@
     <paper2-nav></paper2-nav>
     <!-- <paper2-stackblitz></paper2-stackblitz> -->
     <header style="text-align: center">
-      <h1>Empty Path Testing (JSON)</h1>
+      <h1>Group Transform (JSON)</h1>
     </header>
     <main>
       <!-- <canvas id="myCanvas" resize></canvas> -->
@@ -23,17 +23,14 @@
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
-      var path = new Path();
-      path.strokeColor = 'red';
-      path.add(new Point(30, 30));
-      path.add(new Point(100, 100));
-
-      var segments = [new Point(30, 90), new Point(100, 150)];
-      var path2 = new Path(segments);
-      path2.strokeColor = 'green';
-
-      var path3 = new Path();
-
+      var circle1 = new Path.Circle(new Point(100, 100), 50);
+      circle1.fillColor = "red";
+      var circle2 = new Path.Circle(new Point(200, 100), 50);
+      circle2.fillColor = "blue";
+      var group = new Group(circle1, circle2);
+      group.translate([100, 100]);
+      group.scale(0.5);
+      group.rotate(10);
       window._json = project.exportJSON();
       console.log(window._json);
     </script>
