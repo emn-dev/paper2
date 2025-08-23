@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Circle Testing (JSON)</title>
+    <title>Compound Path (JSON)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="paper2-docs.css" />
     <script src="./paper2-web-comps.js"></script>
@@ -13,7 +13,7 @@
   <body>
     <paper2-nav></paper2-nav>
     <!-- <paper2-stackblitz></paper2-stackblitz> -->
-    <header style="text-align: center"><h1>Circle Testing (JSON)</h1></header>
+    <header style="text-align: center"><h1>Compound Path (JSON)</h1></header>
     <main>
       <!-- <canvas id="myCanvas" resize></canvas> -->
       <canvas id="myCanvas" width="300" height="300"></canvas>
@@ -21,20 +21,11 @@
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
-      var topLeft = new Point(100, 100);
-      var size = new Size(75, 50);
-      var rectangle = new Rectangle(topLeft, size);
-      var path = new Path.Ellipse(rectangle);
-      path.fillColor = "black";
-
-      var topLeft = new Point(5, 200);
-      var size = new Size(50, 25);
-      var rectangle = new Rectangle(topLeft, size);
-      var path = new Path.Ellipse(rectangle);
-      path.fillColor = "yellow";
-
-      var path = new Path.Circle(new Point(25, 25), 25);
-      path.fillColor = "red";
+      project.currentStyle.fillColor = 'blue';
+      var path1 = new Path.Rectangle([200, 200], [100, 100]);
+      var path2 = new Path.Rectangle([50, 50], [200, 200]);
+      var path3 = new Path.Rectangle([0, 0], [400, 400]);
+      new CompoundPath(path1, path2, path3);
       window._json = project.exportJSON();
       console.log(window._json);
     </script>

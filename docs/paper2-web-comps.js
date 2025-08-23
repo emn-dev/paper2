@@ -99,6 +99,9 @@
             <a href="animated-candyCrash.html">Candy Crash</a> | 
             <a href="paperjs-org-chain.html">Chain</a> | 
             <a href="json-circleTesting.html">Circle Testing (JSON)</a> | 
+            <a href="json-compoundPath.html">Compound Path (JSON)</a> | 
+            <a href="json-emptyPathTesting.html">Empty Path Testing (JSON)</a> | 
+            <a href="json-gradients.html">Gradients (JSON)</a> | 
             <a href="tools-drippingBrush.html">Dripping Brush</a> | 
             <a href="svg-export-circleTesting.html">Export Circle (Full)</a> | 
             <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a> | 
