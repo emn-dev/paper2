@@ -25,14 +25,14 @@
       // operation on them.
 
       var circle = new Path.Circle({
-        center: [200, 200],
-        radius: 100,
+        center: [100, 100],
+        radius: 50,
         fillColor: "red",
       });
 
       var rectangle = new Path.Rectangle({
-        point: [200, 200],
-        size: [200, 200],
+        point: [100, 100],
+        size: [100, 100],
         fillColor: "blue",
       });
 
@@ -52,7 +52,7 @@
           var result = project.activeLayer.importJSON(data);
           result.fillColor = "yellow";
           result.fillColor.alpha = 0.5;
-          result.position += [400, 0];
+          result.position += [200, 0];
           result.fullySelected = true;
         }
       };
