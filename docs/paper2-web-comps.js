@@ -111,6 +111,7 @@
             <a href="rasterSpiral.html">Spiral Raster</a> | 
             <a href="simple.html">Simple</a> | 
             <a href="smoothing.html">Smoothing</a> | 
+            <a href="space.html">Space</a> | 
             <a href="straps.html">Straps</a> | 
             <a href="tiger.html">Tiger</a> | 
             <a href="webWorker.html">Web Worker</a> | 
