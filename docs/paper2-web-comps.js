@@ -2,80 +2,79 @@
 
 (function () {
   const sharedStyles = new CSSStyleSheet();
-  sharedStyles.replaceSync(`
-      nav {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
+  sharedStyles.replaceSync(`    
+      .sidebar {
+        height: 100%;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #333;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      /* Make nav links scrollable */
+      .sidebar-nav {
+        flex: 1; /* take available space */
+        overflow-y: auto;
+        padding-top: 20px;
+      }
+
+      .sidebar-nav a {
+        padding: 12px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+        transition: background 0.2s;
+      }
+
+      .sidebar-nav a:hover {
+        background-color: #575757;
+      }
+
+      .hamburger {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        font-size: 24px;
+        cursor: pointer;
         background: #333;
         color: white;
-        padding: 0.5rem 1rem;
-        overflow-x: auto;
-        text-wrap: nowrap;
+        padding: 8px 12px;
+        border-radius: 4px;
+        z-index: 1100;
       }
 
-      /* Hide the checkbox */
-      #menu-toggle {
-        display: none;
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+        z-index: 900;
       }
 
-      /* Hamburger icon */
-      .menu-icon {
-        display: none;
-        cursor: pointer;
-        font-size: 2rem;
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
       }
 
-      .nav-links {
-        display: grid;
-        grid-auto-flow: column;
-        gap: 1rem;
-        justify-content: center;
-      }
-
-      .nav-links a {
-        color: white;
-        text-decoration: none;
-        margin: 1px;
-        padding: 1px;
-      }
-
-      .nav-links a:hover {
-        text-decoration: underline;
-      }
-
-      .login {
-        text-align: right;
-      }
-
-      /* Responsive styles */
-      @media (max-width: 768px) {
-        nav {
-          grid-template-columns: auto auto auto;
-        }
-
-        .menu-icon {
-          display: block;
-        }
-
-        .nav-links {
-          display: none;
-          grid-auto-flow: row;
-          gap: 0;
-          background: #444;
-          grid-column: 1 / -1;
-          padding: 0.5rem;
-        }
-
-        .nav-links a {
-          margin: 0.25rem;
-          padding: 0.5rem;
-        }
-
-        /* Show menu when checkbox is checked */
-        #menu-toggle:checked + .menu-icon + .nav-links {
-          display: grid;
-        }
+      /* Improve scrolling on iOS */
+      .sidebar-nav {
+        -webkit-overflow-scrolling: touch;
       }
   `);
 
@@ -87,47 +86,54 @@
       // https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow
       const shadow = this.attachShadow({ mode: "open" });
       shadow.adoptedStyleSheets = [sharedStyles];
-      const ele = document.createElement("nav");
-      ele.innerHTML = `          
-          <input type="checkbox" id="menu-toggle">
-          <label for="menu-toggle" class="menu-icon">&#9776;</label>
-          
-          <div class="nav-links">
-            <a href="index.html">Home</a> | 
-            <a href="animated-animatedStar.html">Animated Star</a> | 
-            <a href="animated-booleanOps.html">Boolean Ops</a> | 
-            <a href="animated-candyCrash.html">Candy Crash</a> | 
-            <a href="paperjs-org-chain.html">Chain</a> | 
-            <a href="json-circleTesting.html">Circle Testing (JSON)</a> | 
-            <a href="json-compoundPath.html">Compound Path (JSON)</a> | 
-            <a href="json-emptyPathTesting.html">Empty Path Testing (JSON)</a> | 
-            <a href="json-gradients.html">Gradients (JSON)</a> | 
-            <a href="json-groupTransform.html">Group Transform (JSON)</a> | 
-            <a href="tools-drippingBrush.html">Dripping Brush</a> | 
-            <a href="rasters-phyllotaxisRaster.html">Phyllotaxis Raster</a> | 
-            <a href="svg-export-circleTesting.html">Export Circle (Full)</a> | 
-            <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a> | 
-            <a href="animated-extruded.html">Extruded</a> |             
-            <a href="svg-import-viewbox.html">Import Viewbox 1</a> | 
-            <a href="animated-lines.html">Lines</a> | 
-            <a href="games-paperoids.html">Paperoids</a> | 
-            <a href="tools-pathEditing.html">Path Editing</a> | 
-            <a href="scripts-pathStructure.html">Path Structure</a> | 
-            <a href="scripts-pathTangents.html">Path Tangents</a> | 
-            <a href="nodejs-BooleanOperations.html">BoolOpts (rendered on Nodejs)</a> | 
-            <a href="scripts-booleanOperations.html">Boolean Study</a> | 
-            <a href="paperjs-org-rasterSpiral.html">Spiral Raster</a> | 
-            <a href="simple.html">Simple</a> | 
-            <a href="animated-smoothing.html">Smoothing</a> | 
-            <a href="animated-space.html">Space</a> | 
-            <a href="animated-spaceUsingShapes.html">SpaceUsingShapes</a> | 
-            <a href="straps.html">Straps</a> | 
-            <a href="json-tiger.html">Tiger</a> | 
-            <a href="worker-webWorker.html">Web Worker</a> | 
+      const ele1 = document.createElement("div");
+      ele1.innerHTML = `<div class="hamburger" onclick="toggleSidebar()">☰</div>`;
+      const ele2 = document.createElement("div");
+      ele2.innerHTML = `<div class="sidebar" id="sidebar">
+      <div class="sidebar-nav">
+            <a style="margin-top:3rem;" href="index.html">Home</a>
+            <a href="animated-animatedStar.html">Animated Star</a>
+            <a href="animated-booleanOps.html">Boolean Ops</a>
+            <a href="animated-candyCrash.html">Candy Crash</a>
+            <a href="paperjs-org-chain.html">Chain</a>
+            <a href="json-circleTesting.html">Circle Testing (JSON)</a>
+            <a href="json-compoundPath.html">Compound Path (JSON)</a>
+            <a href="json-emptyPathTesting.html">Empty Path Testing (JSON)</a>
+            <a href="json-gradients.html">Gradients (JSON)</a>
+            <a href="json-groupTransform.html">Group Transform (JSON)</a>
+            <a href="tools-drippingBrush.html">Dripping Brush</a>
+            <a href="rasters-phyllotaxisRaster.html">Phyllotaxis Raster</a>
+            <a href="svg-export-circleTesting.html">Export Circle (Full)</a>
+            <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a>
+            <a href="animated-extruded.html">Extruded</a>
+            <a href="svg-import-viewbox.html">Import Viewbox 1</a>
+            <a href="animated-lines.html">Lines</a>
+            <a href="games-paperoids.html">Paperoids</a>
+            <a href="tools-pathEditing.html">Path Editing</a>
+            <a href="scripts-pathStructure.html">Path Structure</a>
+            <a href="scripts-pathTangents.html">Path Tangents</a>
+            <a href="nodejs-BooleanOperations.html">BoolOpts (rendered on Nodejs)</a>
+            <a href="scripts-booleanOperations.html">Boolean Study</a>
+            <a href="paperjs-org-rasterSpiral.html">Spiral Raster</a>
+            <a href="simple.html">Simple</a>
+            <a href="animated-smoothing.html">Smoothing</a>
+            <a href="animated-space.html">Space</a>
+            <a href="animated-spaceUsingShapes.html">SpaceUsingShapes</a>
+            <a href="straps.html">Straps</a>
+            <a href="json-tiger.html">Tiger</a>
+            <a href="worker-webWorker.html">Web Worker</a>
             <a href="tools-wormFarm.html">Worm Farm</a>
-          </div>
-      `;
-      shadow.appendChild(ele);
+            </div>
+    </div>`;
+      const ele3 = document.createElement("div");
+      ele3.innerHTML = `<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>`;
+      const ele4 = document.createElement("div");
+      ele4.innerHTML = `<div class="hamburger" onclick="toggleSidebar()">☰</div>`;
+
+      shadow.appendChild(ele1);
+      shadow.appendChild(ele2);
+      shadow.appendChild(ele3);
+      shadow.appendChild(ele4);
     }
   }
 
@@ -180,3 +186,9 @@
   window.customElements.define("paper2-nav", Paper2Nav);
   window.customElements.define("paper2-stackblitz", Paper2Stackblitz);
 })();
+
+function toggleSidebar() {
+  const paper2Nav = document.querySelector("paper2-nav").shadowRoot;
+  paper2Nav.getElementById("sidebar").classList.toggle("active");
+  paper2Nav.getElementById("overlay").classList.toggle("active");
+}
