@@ -90,40 +90,40 @@
       ele1.innerHTML = `<div class="hamburger" onclick="toggleSidebar()">☰</div>`;
       const ele2 = document.createElement("div");
       ele2.innerHTML = `<div class="sidebar" id="sidebar">
-      <div class="sidebar-nav">
+          <div class="sidebar-nav">
             <a style="margin-top:3rem;" href="index.html">Home</a>
             <a href="animated-animatedStar.html">Animated Star</a>
+            <a href="nodejs-BooleanOperations.html">BoolOpts (rendered on Nodejs)</a>
             <a href="animated-booleanOps.html">Boolean Ops</a>
+            <a href="scripts-booleanOperations.html">Boolean Study</a>
             <a href="animated-candyCrash.html">Candy Crash</a>
             <a href="paperjs-org-chain.html">Chain</a>
             <a href="json-circleTesting.html">Circle Testing (JSON)</a>
             <a href="json-compoundPath.html">Compound Path (JSON)</a>
+            <a href="tools-drippingBrush.html">Dripping Brush</a>
             <a href="json-emptyPathTesting.html">Empty Path Testing (JSON)</a>
+            <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a>
+            <a href="svg-export-circleTesting.html">Export Circle (Full)</a>
+            <a href="animated-extruded.html">Extruded</a>
             <a href="json-gradients.html">Gradients (JSON)</a>
             <a href="json-groupTransform.html">Group Transform (JSON)</a>
-            <a href="tools-drippingBrush.html">Dripping Brush</a>
-            <a href="rasters-phyllotaxisRaster.html">Phyllotaxis Raster</a>
-            <a href="svg-export-circleTesting.html">Export Circle (Full)</a>
-            <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a>
-            <a href="animated-extruded.html">Extruded</a>
             <a href="svg-import-viewbox.html">Import Viewbox 1</a>
             <a href="animated-lines.html">Lines</a>
             <a href="games-paperoids.html">Paperoids</a>
             <a href="tools-pathEditing.html">Path Editing</a>
             <a href="scripts-pathStructure.html">Path Structure</a>
             <a href="scripts-pathTangents.html">Path Tangents</a>
-            <a href="nodejs-BooleanOperations.html">BoolOpts (rendered on Nodejs)</a>
-            <a href="scripts-booleanOperations.html">Boolean Study</a>
-            <a href="paperjs-org-rasterSpiral.html">Spiral Raster</a>
+            <a href="rasters-phyllotaxisRaster.html">Phyllotaxis Raster</a>
             <a href="simple.html">Simple</a>
             <a href="animated-smoothing.html">Smoothing</a>
             <a href="animated-space.html">Space</a>
             <a href="animated-spaceUsingShapes.html">SpaceUsingShapes</a>
+            <a href="paperjs-org-rasterSpiral.html">Spiral Raster</a>
             <a href="straps.html">Straps</a>
             <a href="json-tiger.html">Tiger</a>
             <a href="worker-webWorker.html">Web Worker</a>
             <a href="tools-wormFarm.html">Worm Farm</a>
-            </div>
+        </div>
     </div>`;
       const ele3 = document.createElement("div");
       ele3.innerHTML = `<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>`;
