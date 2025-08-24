@@ -93,6 +93,7 @@
           <div class="sidebar-nav">
             <a style="margin-top:3rem;" href="index.html">Home</a>
             <a href="animated-animatedStar.html">Animated Star</a>
+            <a href="tools-bezierTool.html">Bezier Tool</a>
             <a href="nodejs-BooleanOperations.html">BoolOpts (rendered on Nodejs)</a>
             <a href="animated-booleanOps.html">Boolean Ops</a>
             <a href="scripts-booleanOperations.html">Boolean Study</a>

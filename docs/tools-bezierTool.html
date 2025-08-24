@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bezier Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz></paper2-stackblitz>
+    <header style="text-align: center"><h1>Bezier Tool</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var path;
+      var types = ["point", "handleIn", "handleOut"];
+      function findHandle(point) {
+        for (var i = 0, l = path.segments.length; i < l; i++) {
+          for (var j = 0; j < 3; j++) {
+            var type = types[j];
+            var segment = path.segments[i];
+            var segmentPoint =
+              type == "point" ? segment.point : segment.point + segment[type];
+            var distance = (point - segmentPoint).length;
+            if (distance < 3) {
+              return {
+                type: type,
+                segment: segment,
+              };
+            }
+          }
+        }
+        return null;
+      }
+
+      var currentSegment, mode, type;
+      function onMouseDown(event) {
+        if (currentSegment) currentSegment.selected = false;
+        mode = type = currentSegment = null;
+
+        if (!path) {
+          path = new Path();
+          path.fillColor = {
+            hue: 360 * Math.random(),
+            saturation: 1,
+            brightness: 1,
+            alpha: 0.5,
+          };
+        }
+
+        var result = findHandle(event.point);
+        if (result) {
+          currentSegment = result.segment;
+          type = result.type;
+          if (
+            path.segments.length > 1 &&
+            result.type == "point" &&
+            result.segment.index == 0
+          ) {
+            mode = "close";
+            path.closed = true;
+            path.selected = false;
+            path = null;
+          }
+        }
+
+        if (mode != "close") {
+          mode = currentSegment ? "move" : "add";
+          if (!currentSegment) currentSegment = path.add(event.point);
+          currentSegment.selected = true;
+        }
+      }
+
+      function onMouseDrag(event) {
+        if (mode == "move" && type == "point") {
+          currentSegment.point = event.point;
+        } else if (mode != "close") {
+          var delta = event.delta.clone();
+          if (type == "handleOut" || mode == "add") delta = -delta;
+          currentSegment.handleIn += delta;
+          currentSegment.handleOut -= delta;
+        }
+      }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
