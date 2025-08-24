@@ -1,4 +1,4 @@
-# [paper2](https://github.com/emn-dev/paper2)
+# [paper2](https://github.com/emn-dev/paper2) [![NPM](https://img.shields.io/npm/v/paper2.svg)](https://www.npmjs.com/package/paper2)
 
 The essence of [paper.js](https://github.com/paperjs/paper.js) wrapped in modern tooling. It is set up as a TypeScript monorepo. The short-term goal of this project is to get as close as possible to 1-to-1 matching functionality with paperjs, while at the same time adopting some newer tooling and techniques for building JS/TS projects. Then, over time, we can try to enhance and extend functionality.
 
@@ -64,4 +64,3 @@ Unit Tests:
 - [esbuild](https://esbuild.github.io/)... because we want simple, low configuration, and fast builds
 - [Vitest](https://vitest.dev/)... because we want simple, low configuration, and fast unit tests
 - [ESLint](https://eslint.org/)... because we want comprehensive and configurable linting
-
