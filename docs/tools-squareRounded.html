@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Square Rounded</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz></paper2-stackblitz>
+    <header style="text-align: center"><h1>Square Rounded</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+
+      /////////////////////////////////////////////////////////////////////
+          // Values
+
+          var values = {
+              radius: 10,
+              tolerance: 5
+          };
+
+          checkValues();
+
+          /////////////////////////////////////////////////////////////////////
+          // Mouse handling
+
+          var handle;
+          function checkValues() {
+              var min = values.radius * 2;
+              if (values.tolerance < min) values.tolerance = min;
+              handle = values.radius * Numerical.KAPPA;
+          }
+
+          var path;
+          function onMouseDown(event) {
+              path = new Path({
+                  segments: [event.point, event.point],
+                  strokeColor: 'black',
+                  strokeWidth: 5,
+                  strokeCap: 'round'
+              });
+              prevPoint = path.firstSegment.point;
+              curPoint = path.lastSegment.point;
+              curHandleSeg = null;
+          }
+
+          var curPoint, prevPoint, curHandleSeg;
+          function onMouseDrag(event) {
+              var point = event.point;
+              var diff = (point - prevPoint).abs();
+              if (diff.x < diff.y) {
+                  curPoint.x = prevPoint.x;
+                  curPoint.y = point.y;
+              } else {
+                  curPoint.x = point.x;
+                  curPoint.y = prevPoint.y;
+              }
+              var normal = curPoint - prevPoint;
+              normal.length = 1;
+              if (curHandleSeg) {
+                  curHandleSeg.point = prevPoint + (normal * values.radius);
+                  curHandleSeg.handleIn = normal * -handle;
+              }
+              var minDiff = Math.min(diff.x, diff.y);
+              if (minDiff > values.tolerance) {
+                  var point = curPoint - (normal * values.radius);
+                  var segment = new Segment(point, null, normal * handle);
+                  path.insert(path.segments.length - 1, segment);
+                  curHandleSeg = path.lastSegment;
+                  // clone as we want the unmodified one:
+                  prevPoint = curHandleSeg.point.clone();
+                  path.add(curHandleSeg);
+                  curPoint = path.lastSegment.point;
+              }
+          }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

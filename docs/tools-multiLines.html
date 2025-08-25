@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Multi Lines</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz type="core"></paper2-stackblitz>
+    <header style="text-align: center"><h1>Multi Lines</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-core.esm.js"
+          : "https://unpkg.com/paper2/paper2-core.esm.js";
+
+      import(resourceUri).then((paperModule) => {
+        const { paper, Path, Tool } = paperModule;
+
+        paper.setup("myCanvas");
+
+        const tool = new Tool();
+        tool.fixedDistance = 30;
+
+        var values = {
+          lines: 5,
+          size: 40,
+          smooth: true,
+        };
+
+        var paths;
+
+        function onMouseDown(event) {
+          paths = [];
+          for (var i = 0; i < values.lines; i++) {
+            var path = new Path();
+            path.strokeColor = "#000000";
+            paths.push(path);
+          }
+        }
+
+        function onMouseDrag(event) {
+          var offset = event.delta;
+          offset.angle = offset.angle + 90;
+          var lineSize = values.size / values.lines;
+          for (var i = 0; i < values.lines; i++) {
+            var path = paths[values.lines - 1 - i];
+            offset.length = lineSize * i + lineSize / 2;
+            // path.add(event.middlePoint + offset); // Paperscript way to do it
+            path.add(event.middlePoint.add(offset));
+            path.smooth();
+          }
+        }
+
+        tool.onMouseDown = onMouseDown;
+        tool.onMouseDrag = onMouseDrag;
+      });
+    </script>
+  </body>
+</html>

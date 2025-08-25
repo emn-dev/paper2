@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Stars</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz type="core"></paper2-stackblitz>
+    <header style="text-align: center"><h1>Stars</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-core.esm.js"
+          : "https://unpkg.com/paper2/paper2-core.esm.js";
+
+      import(resourceUri).then((paperModule) => {
+        const { paper, Path, Tool } = paperModule;
+
+        paper.setup("myCanvas");
+
+        function onMouseDown(event) {
+          var hue = Math.random() * 360;
+          paper.project.currentStyle.fillColor = {
+            hue: hue,
+            saturation: 1,
+            brightness: 1,
+          };
+        }
+
+        function onMouseDrag(event) {
+          var delta = event.point.subtract(event.downPoint);
+          // var delta = event.point - event.downPoint; // This is the Paperscript way
+          var radius = delta.length;
+          var points = 5 + Math.round(radius / 50);
+          var path = new Path.Star({
+            center: event.downPoint,
+            points: points,
+            radius1: radius / 2,
+            radius2: radius,
+          });
+          path.rotate(delta.angle);
+          // Remove the path automatically before the next mouse drag
+          // event:
+          path.removeOnDrag();
+        }
+
+        const tool = new Tool();
+        tool.onMouseDown = onMouseDown;
+        tool.onMouseDrag = onMouseDrag;
+      });
+    </script>
+  </body>
+</html>
