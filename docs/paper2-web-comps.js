@@ -106,6 +106,8 @@
             <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a>
             <a href="svg-export-circleTesting.html">Export Circle (Full)</a>
             <a href="animated-extruded.html">Extruded</a>
+            <a href="tools-fancyBrush.html">Fancy Brush</a>
+            <a href="tools-grid.html">Grid</a>
             <a href="json-gradients.html">Gradients (JSON)</a>
             <a href="json-groupTransform.html">Group Transform (JSON)</a>
             <a href="svg-import-viewbox.html">Import Viewbox 1</a>

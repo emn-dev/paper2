@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fancy Brush</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz></paper2-stackblitz>
+    <header style="text-align: center"><h1>Fancy Brush</h1></header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      ////////////////////////////////////////////////////////////////////////////////
+       // This script belongs to the following tutorial:
+       //
+       // http://scriptographer.org/tutorials/geometry/working-with-mouse-vectors/#adding-brush-stroke-ends
+
+       tool.fixedDistance = 80;
+
+       var path;
+       var strokeEnds = 6;
+
+       function onMouseDown(event) {
+           path = new Path();
+           path.fillColor = event.count % 2 ? 'red' : 'black';
+       }
+
+       var lastPoint;
+       function onMouseDrag(event) {
+           // If this is the first drag event,
+           // add the strokes at the start:
+           if (event.count == 0) {
+               addStrokes(event.middlePoint, event.delta * -1);
+           } else {
+               var step = event.delta / 2;
+               step.angle += 90;
+
+               // The top point: the middle point + the step rotated by 90 degrees:
+               //   -----*
+               //   |
+               //   ------
+               var top = event.middlePoint + step;
+
+               // The bottom point: the middle point - the step rotated by 90 degrees:
+               //   ------
+               //   |
+               //   -----*
+               var bottom = event.middlePoint - step;
+
+               path.add(top);
+               path.insert(0, bottom);
+           }
+           path.smooth();
+
+           lastPoint = event.middlePoint;
+       }
+
+       function onMouseUp(event) {
+           var delta = event.point - lastPoint;
+           delta.length = tool.maxDistance;
+           addStrokes(event.point, delta);
+           path.closed = true;
+           path.smooth();
+       }
+
+       function addStrokes(point, delta) {
+           var step = delta.rotate(90);
+           var strokePoints = strokeEnds * 2 + 1;
+           point -= step / 2;
+           step /= strokePoints - 1;
+           for (var i = 0; i < strokePoints; i++) {
+               var strokePoint = point + step * i;
+               var offset = delta * (Math.random() * 0.3 + 0.1);
+               if (i % 2) {
+                   offset *= -1;
+               }
+               strokePoint += offset;
+               path.insert(0, strokePoint);
+           }
+       }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
