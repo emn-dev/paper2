@@ -104,7 +104,7 @@
             <a href="tools-drippingBrush.html">Dripping Brush</a>
             <a href="json-emptyPathTesting.html">Empty Path Testing (JSON)</a>
             <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a>
-            <a href="svg-export-circleTesting.html">Export Circle (Full)</a>
+            <a href="svg-export-circleTesting.html">Export Circle (Full)</a>            
             <a href="animated-extruded.html">Extruded</a>
             <a href="tools-fancyBrush.html">Fancy Brush</a>
             <a href="tools-grid.html">Grid</a>
@@ -119,6 +119,8 @@
             <a href="scripts-pathStructure.html">Path Structure</a>
             <a href="scripts-pathTangents.html">Path Tangents</a>
             <a href="rasters-phyllotaxisRaster.html">Phyllotaxis Raster</a>
+            <a href="svg-import-polybezier.html">Rect Testing</a>
+            <a href="svg-export-rectAndAttributeTesting.html">Rectangle Testing</a>            
             <a href="simple.html">Simple</a>
             <a href="animated-smoothing.html">Smoothing</a>
             <a href="animated-space.html">Space</a>
@@ -127,6 +129,7 @@
             <a href="paperjs-org-rasterSpiral.html">Spiral Raster</a>
             <a href="straps.html">Straps</a>
             <a href="json-tiger.html">Tiger</a>
+            <a href="svg-export-transformTest1.html">Transform Testing</a>
             <a href="tools-vektor.html">Vektor</a>
             <a href="tools-wave.html">Wave</a>
             <a href="worker-webWorker.html">Web Worker</a>
