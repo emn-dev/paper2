@@ -111,6 +111,7 @@
             <a href="json-gradients.html">Gradients (JSON)</a>
             <a href="json-groupTransform.html">Group Transform (JSON)</a>
             <a href="svg-import-viewbox.html">Import Viewbox 1</a>
+            <a href="svg-import-inkscape.html">Inkscape</a>
             <a href="animated-lines.html">Lines</a>
             <a href="games-paperoids.html">Paperoids</a>
             <a href="tools-pathEditing.html">Path Editing</a>
@@ -124,6 +125,7 @@
             <a href="paperjs-org-rasterSpiral.html">Spiral Raster</a>
             <a href="straps.html">Straps</a>
             <a href="json-tiger.html">Tiger</a>
+            <a href="tools-wave.html">Wave</a>
             <a href="worker-webWorker.html">Web Worker</a>
             <a href="tools-wormFarm.html">Worm Farm</a>
         </div>
