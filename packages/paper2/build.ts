@@ -1,4 +1,4 @@
-import { rmSync } from 'node:fs';
+import { rmSync, cpSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import 'dotenv/config';
 import * as esbuild from 'esbuild';
@@ -72,6 +72,8 @@ async function main() {
     // const ctxNode = await esbuild.context(nodeOpts);
     // await ctxNode.watch();
   }
+
+  cpSync('./lib/paper.d.ts', './dist/paper.d.ts');
 
   try {
     execSync('npx tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
