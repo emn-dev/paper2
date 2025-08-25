@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Multiple Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <paper2-stackblitz></paper2-stackblitz>
+    <header style="text-align: center"><h1>Multiple Tools</h1></header>
+    <main>
+      <a href="#" onclick="paper2App.tool1.activate(); return false;">Lines</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#" onclick="paper2App.tool2.activate(); return false;">Clouds</a>
+      <br />
+      <br />
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+        // Create two drawing tools.
+      // tool1 will draw straight lines, tool2 will draw clouds.
+
+      // Both share the mouseDown event:
+      var path;
+      function onMouseDown(event) {
+          path = new Path();
+          path.strokeColor = 'black';
+          path.add(event.point);
+      }
+
+      window.paper2App = {
+          tool1: new Tool({
+              onMouseDown: onMouseDown,
+              onMouseDrag: function(event) {
+                  path.add(event.point);
+              }
+          }),
+
+          tool2: new Tool({
+              minDistance: 20,
+              onMouseDown: onMouseDown,
+              onMouseDrag: function(event) {
+                  // Use the arcTo command to draw cloudy lines
+                  path.arcTo(event.point);
+              }
+          })
+      };
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-full.esm.js"
+          : "https://unpkg.com/paper2/paper2-full.esm.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

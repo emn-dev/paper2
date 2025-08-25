@@ -113,6 +113,7 @@
             <a href="svg-import-viewbox.html">Import Viewbox 1</a>
             <a href="svg-import-inkscape.html">Inkscape</a>
             <a href="animated-lines.html">Lines</a>
+            <a href="tools-multipleTools.html">Multiple Tools</a>
             <a href="games-paperoids.html">Paperoids</a>
             <a href="tools-pathEditing.html">Path Editing</a>
             <a href="scripts-pathStructure.html">Path Structure</a>
