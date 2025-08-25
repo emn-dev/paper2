@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import { parse } from "url";
 import { Readable } from "stream";
-import "./nodejs-BooleanOperations-setup.js";
+import "./nodejs-booleanOpts-setup.js";
 import {
   paper,
   Color,
