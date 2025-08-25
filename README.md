@@ -6,6 +6,15 @@ The essence of [paper.js](https://github.com/paperjs/paper.js) wrapped in modern
 
 The existence of paper2 is to help paperjs extend its life far into the future.
 
+## Collaboration is Welcomed!
+
+- Just create an Issue asked to be a collaborator
+- I will send you Github invite email to join this repo
+- Once confirmed, you can create a branch off of main (e.g. my-fix-branch)
+- Then do you work locally and commit and push up the changes
+- Then create a PR for "my-fix-branch" to "main"
+- If all tests pass and everything looks good then most likely it will be a approved and merged in :)
+
 ## Getting Started
 
 - Require nodejs version >= `v22` ([Node.js Releases](https://nodejs.org/en/about/previous-releases))
