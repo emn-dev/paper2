@@ -6,7 +6,7 @@ The essence of [paper.js](https://github.com/paperjs/paper.js) wrapped in modern
 
 The existence of paper2 is to help paperjs extend its life far into the future.
 
-## Collaboration is Welcomed!
+## How to collaborate
 
 1. Create an Issue here and just ask to be a collaborator
 2. I will send you Github invite email to join this repo
