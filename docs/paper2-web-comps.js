@@ -186,13 +186,9 @@
           name="project[settings]"
           value='{"compile":{"clearConsole":false}}'
         />
-            <button
-      style="float: right; margin: 0.5em"
-      type="button"
-      onclick="openInStackblitz()"
-    >
-      Try in Stackblitz
-    </button>
+      <button type="button" onclick="openInStackblitz()">
+        Try in Stackblitz
+      </button>
       `;
       shadow.appendChild(ele);
     }
