@@ -17,50 +17,43 @@ The existence of paper2 is to help paperjs extend its life far into the future.
 
 ## Getting Started
 
-- Require nodejs version >= `v22` ([Node.js Releases](https://nodejs.org/en/about/previous-releases))
-- Verify [corepack](https://www.npmjs.com/package/corepack) is enabled
-  - Currently you just run `corepack enable` in your terminal, but that will [change starting with nodejs v25](https://nodejs.org/docs/latest-v22.x/api/corepack.html)
-- Using [yarn (berry)](https://github.com/yarnpkg/berry) for package manager
-  - You do not need to install this manually, corepack will ask you to download the yarn version specified in package.json
-- Run `yarn install`
+1. Nodejs version >= `v22` ([Node.js Releases](https://nodejs.org/en/about/previous-releases))
+1. Verify [corepack](https://www.npmjs.com/package/corepack) is enabled
+   1. Currently you just run `corepack enable` in your terminal, but that will [change starting with nodejs v25](https://nodejs.org/docs/latest-v22.x/api/corepack.html)
+1. Run `yarn install`
+   1. Do not install [yarn (berry)](https://github.com/yarnpkg/berry) manually, corepack will ask you to download the yarn version specified in package.json
 
 ## Examples and Testing - Local
 
 Run and edit browser examples:
 
-- `cd packages/paper2`
-- Run `yarn serve:docs`
-  - Now you can go to [http://localhost:8080](http://localhost:8080) to view examples
-- Open new terminal in same directory
-- Run `yarn serve`
-  - Now your edits to source code show up in the browser
+1. `cd packages/paper2` and run `yarn serve:docs`
+   1. Now you can go to [http://localhost:8080](http://localhost:8080) to view examples
+1. Open new terminal in same directory
+1. Run `yarn serve`
+   1. Now your edits to source code show up in the browser
 
 Linting:
 
-- `cd packages/paper2`
-- Run `yarn test:lint`
+1. `cd packages/paper2` and run `yarn test:lint`
 
 Unit Tests:
 
-- `cd packages/paper2`
-- Run `yarn test:unit`
+1. `cd packages/paper2` and run `yarn test:unit`
 
 ## Examples and Testing - Live
 
-- Browser
-  - https://emn-dev.github.io/paper2
+- Browser = https://paper2.org
 - Nodejs
   - https://github.com/emn-dev/paper2-client
     - This required cloning the repo and you run on your local machine
   - https://stackblitz.com/edit/paper2-client
     - This can be run directly in the browser
 
-## npm
+## npm + unpkg
 
-- https://www.npmjs.com/package/paper2
-- unpkg
-  - core = https://unpkg.com/paper2/paper2-core.esm.js
-  - full = https://unpkg.com/paper2/paper2-full.esm.js
+- core = https://unpkg.com/paper2/paper2-core.esm.js
+- full = https://unpkg.com/paper2/paper2-full.esm.js
 
 ## Tooling Decisions
 
