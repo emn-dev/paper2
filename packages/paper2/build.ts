@@ -29,6 +29,15 @@ const sharedOpts: buildOpts = {
 // const external = [];
 // if(pkg.dependencies) external.push(...Object.keys(pkg.dependencies));
 
+const jsdomSetup: buildOpts = {
+  ...structuredClone(sharedOpts),
+  // entryPoints: ['lib/index-core.ts'],
+  entryPoints: ['lib/jsdom-setup.ts'],
+  outfile: `${buildDir}/jsdom-setup.esm.js`,
+  platform: 'browser',
+  format: 'esm',
+};
+
 const browserCoreOpts: buildOpts = {
   ...structuredClone(sharedOpts),
   entryPoints: ['lib/index-core.ts'],
@@ -56,6 +65,8 @@ browserFullOpts.define['process.env.PAPER2_FULL'] = 'true';
 // };
 
 async function main() {
+  await esbuild.build(jsdomSetup);
+
   if (process.env.IS_BUILD === 'true') {
     // browserCoreOpts.treeShaking = true;
     // browserFullOpts.treeShaking = true;
