@@ -2,8 +2,10 @@ function openInStackblitz() {
   const type = document.querySelector("paper2-stackblitz").getAttribute("type");
   const paper2Sb = document.querySelector("paper2-stackblitz").shadowRoot;
 
+  // <link rel="stylesheet" href="https://emn-dev.github.io/paper2/paper2-docs.css" />
+
   let html = `
-        <link rel="stylesheet" href="https://emn-dev.github.io/paper2/paper2-docs.css" />
+        <link rel="stylesheet" href="https://paper2.org/paper2-docs.css" />
             <main><canvas id='myCanvas' resize></canvas></main>
             `;
   if (type === "core") {
