@@ -1,4 +1,4 @@
-import { rmSync, cpSync } from 'node:fs';
+import { rmSync, cpSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import 'dotenv/config';
 import * as esbuild from 'esbuild';
@@ -8,7 +8,7 @@ type buildOpts = esbuild.SameShape<esbuild.BuildOptions, esbuild.BuildOptions>;
 
 const buildDir = 'dist';
 const coreBaseName = 'paper2-core';
-const fullBaseName = 'paper2-full';
+const fullBaseName = 'paper2';
 
 rmSync(buildDir, { force: true, recursive: true });
 
@@ -31,9 +31,8 @@ const sharedOpts: buildOpts = {
 
 const jsdomSetup: buildOpts = {
   ...structuredClone(sharedOpts),
-  // entryPoints: ['lib/index-core.ts'],
   entryPoints: ['lib/jsdom-setup.ts'],
-  outfile: `${buildDir}/jsdom-setup.esm.js`,
+  outfile: `${buildDir}/jsdom-setup.js`,
   platform: 'browser',
   format: 'esm',
 };
@@ -41,7 +40,7 @@ const jsdomSetup: buildOpts = {
 const browserCoreOpts: buildOpts = {
   ...structuredClone(sharedOpts),
   entryPoints: ['lib/index-core.ts'],
-  outfile: `${buildDir}/${coreBaseName}.esm.js`,
+  outfile: `${buildDir}/${coreBaseName}.js`,
   platform: 'browser',
   format: 'esm',
 };
@@ -49,7 +48,7 @@ const browserCoreOpts: buildOpts = {
 const browserFullOpts: buildOpts = {
   ...structuredClone(sharedOpts),
   entryPoints: ['lib/index-full.ts'],
-  outfile: `${buildDir}/${fullBaseName}.esm.js`,
+  outfile: `${buildDir}/${fullBaseName}.js`,
   platform: 'browser',
   format: 'esm',
 };
@@ -85,6 +84,7 @@ async function main() {
   }
 
   cpSync('./lib/paper.d.ts', './dist/paper.d.ts');
+  writeFileSync('./dist/paper2-core.d.ts', `import './paper';`);
 
   try {
     execSync('npx tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
