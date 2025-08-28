@@ -1,4 +1,4 @@
-import { rmSync, cpSync, writeFileSync } from 'node:fs';
+import { rmSync, cpSync, writeFileSync, readFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import 'dotenv/config';
 import * as esbuild from 'esbuild';
@@ -83,11 +83,12 @@ async function main() {
     // await ctxNode.watch();
   }
 
-  cpSync('./lib/paper.d.ts', './dist/paper.d.ts');
-  writeFileSync('./dist/paper2-core.d.ts', `export * from './paper'; export * from './@types/index-core';`);
-
   try {
     execSync('npx tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
+
+    const indexCoreDts = readFileSync('./dist/@types/index-core.d.ts', { encoding: 'utf8' });
+    writeFileSync('./dist/@types/index-core.d.ts', `import './paper';\n${indexCoreDts}`);
+    cpSync('./lib/paper.d.ts', './dist/@types/paper.d.ts');
   } catch (err) {
     console.log('build.mjs-npx-tsc-ERROR');
     console.log(err);
