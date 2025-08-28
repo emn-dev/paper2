@@ -8,6 +8,7 @@ if (globalThis.process?.release?.name) {
 
   globalThis.window = dom.window as any;
   globalThis.document = dom.window.document;
+  globalThis.XMLSerializer = dom.window.XMLSerializer;
   globalThis.self = dom.window.self as any;
   if (!globalThis.navigator) {
     globalThis.navigator = dom.window.navigator;
