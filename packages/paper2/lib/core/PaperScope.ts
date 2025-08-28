@@ -82,9 +82,9 @@ export const PaperScope = Base.extend(
       }
       if (!this.agent) {
         // Use self.instead of window, to cover handle web-workers too.
-        var user = globalThis.navigator.userAgent.toLowerCase(),
-          // Detect basic platforms, only mac internally required for now.
-          os = (/(darwin|win|mac|linux|freebsd|sunos)/.exec(user) || [])[0],
+        var user = globalThis.navigator?.userAgent.toLowerCase() || 'unknown-user-agent';
+        // Detect basic platforms, only mac internally required for now.
+        var os = (/(darwin|win|mac|linux|freebsd|sunos)/.exec(user) || [])[0],
           platform = os === 'darwin' ? 'mac' : os,
           agent: any = (proto.agent = proto.browser = { platform: platform });
         if (platform) agent[platform] = true;
