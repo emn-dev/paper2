@@ -111,6 +111,8 @@
             <a href="animated-extruded.html">Extruded</a>
             <a href="tools-fancyBrush.html">Fancy Brush</a>
             <a href="tools-grid.html">Grid</a>
+            <a href="tools-circles.html">Circles</a>
+            <a href="tools-clouds.html">Clouds</a>
             <a href="json-gradients.html">Gradients (JSON)</a>
             <a href="json-groupTransform.html">Group Transform (JSON)</a>
             <a href="svg-import-inkscape.html">Inkscape</a>            
