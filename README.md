@@ -52,8 +52,8 @@ Unit Tests:
 
 ## npm + unpkg
 
-- core = https://unpkg.com/paper2/paper2-core.esm.js
-- full = https://unpkg.com/paper2/paper2-full.esm.js
+- core = https://unpkg.com/paper2/paper2-core.js
+- full = https://unpkg.com/paper2/paper2.js
 
 ## Tooling Decisions
 
