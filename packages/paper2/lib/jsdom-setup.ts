@@ -4,12 +4,12 @@ import { JSDOM } from 'jsdom';
 
 if (globalThis.process?.release?.name) {
   console.log('We are running in NodeJS');
-  const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+  const dom = new JSDOM(`<!DOCTYPE html>`);
 
-  globalThis.window = dom.window as any;
+  globalThis.window = dom.window;
   globalThis.document = dom.window.document;
   globalThis.XMLSerializer = dom.window.XMLSerializer;
-  globalThis.self = dom.window.self as any;
+  globalThis.self = dom.window.self;
   if (!globalThis.navigator) {
     globalThis.navigator = dom.window.navigator;
   }
@@ -25,7 +25,7 @@ if (globalThis.window) {
   if (canvasCxtFunctText.includes(' throw ')) {
     console.log('NOT real canvas');
     // This cannot be the real canvas, so let us mock out the 'getContext' funct
-    // @ts-ignore
+    // @ts-expect-error
     window.HTMLCanvasElement.prototype.getContext = () => {
       return {
         fillRect() {},

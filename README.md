@@ -46,7 +46,9 @@ Unit Tests:
 - Browser = https://paper2.org
 - Nodejs
   - https://github.com/emn-dev/paper2-client
-    - This required cloning the repo and you run on your local machine
+    - JavaScript - This required cloning the repo and you run on your local machine
+  - https://github.com/emn-dev/paper2-client-ts
+    - TypeScript - This required cloning the repo and you run on your local machine
   - https://stackblitz.com/edit/paper2-client
     - This can be run directly in the browser
 
