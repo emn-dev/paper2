@@ -7302,12 +7302,19 @@ declare module 'paper/dist/paper-core' {
   export = paperCore;
 }
 
-declare module 'paper2' {
-  const paperCore: Pick<paper.PaperScope, Exclude<keyof paper.PaperScope, 'PaperScript'>>;
-  export = paperCore;
-}
-
 declare module 'paper' {
   const paperFull: paper.PaperScope;
   export = paperFull;
+}
+
+declare module 'paper2/paper2-core' {
+  const paperCore: Pick<paper.PaperScope, Exclude<keyof paper.PaperScope, 'PaperScript'>>;
+  export = paperCore;
+  export const paper: paper.PaperScope;
+}
+
+declare module 'paper2' {
+  const paperFull: paper.PaperScope;
+  export = paperFull;
+  export const paper: paper.PaperScope;
 }
