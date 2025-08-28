@@ -87,8 +87,10 @@ async function main() {
     execSync('npx tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
 
     let indexCoreDts = readFileSync('./dist/@types/index-core.d.ts', { encoding: 'utf8' });
+    indexCoreDts = `import './paper';\n${indexCoreDts}`;
+    writeFileSync('./dist/@types/index-core.d.ts', indexCoreDts);
     indexCoreDts = indexCoreDts.replaceAll(` './`, ` './@types/`);
-    writeFileSync('./dist/paper2-core.d.ts', `import './@types/paper';\n${indexCoreDts}`);
+    writeFileSync('./dist/paper2-core.d.ts', indexCoreDts);
     cpSync('./lib/paper.d.ts', './dist/@types/paper.d.ts');
   } catch (err) {
     console.log('build.mjs-npx-tsc-ERROR');
