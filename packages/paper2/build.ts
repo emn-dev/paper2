@@ -84,7 +84,7 @@ async function main() {
   }
 
   cpSync('./lib/paper.d.ts', './dist/paper.d.ts');
-  writeFileSync('./dist/paper2-core.d.ts', `import './paper';`);
+  writeFileSync('./dist/paper2-core.d.ts', `export * from './paper'; export * from './@types/index-core';`);
 
   try {
     execSync('npx tsc --project tsconfig.esbuild.json', { stdio: 'inherit' });
