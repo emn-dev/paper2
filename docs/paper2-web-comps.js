@@ -99,6 +99,9 @@
             <a href="scripts-booleanOperations.html">Boolean Study</a>
             <a href="animated-candyCrash.html">Candy Crash</a>
             <a href="paperjs-org-chain.html">Chain</a>
+            <a href="paperjs-org-bouncingBalls.html">Bouncing Balls</a>
+            <a href="paperjs-org-divisionRaster.html">Division Raster</a>
+            <a href="paperjs-org-interactiveTiger.html">Interactive Tiger</a>
             <a href="json-circleTesting.html">Circle Testing (JSON)</a>
             <a href="json-compoundPath.html">Compound Path (JSON)</a>
             <a href="tools-drippingBrush.html">Dripping Brush</a>
