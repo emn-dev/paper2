@@ -7,7 +7,7 @@ import {
   Color,
   Path,
   Size,
-} from "../packages/paper2/dist/paper2-core.esm.js";
+} from "../packages/paper2/dist/paper2-core.js";
 
 let timeToLive = 30; // in seconds
 

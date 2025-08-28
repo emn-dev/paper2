@@ -42,8 +42,8 @@
     <script id="mainPaper2Script1">
       const resourceUri =
         location.hostname === "localhost"
-          ? "./paper2-core.esm.js"
-          : "https://unpkg.com/paper2/paper2-core.esm.js";
+          ? "./paper2-core.js"
+          : "https://unpkg.com/paper2/paper2-core.js";
 
       import(resourceUri).then((paperModule) => {
         const { paper } = paperModule;
