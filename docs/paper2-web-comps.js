@@ -1,11 +1,112 @@
 "use strict";
 
+const allPagesData = [
+  {
+    file: "animated-animatedStar.html",
+    name: "(animated) Animated Star",
+  },
+  {
+    file: "animated-booleanOps.html",
+    name: "(animated) Boolean Operations",
+  },
+  { file: "animated-candyCrash.html", name: "(animated) Candy Crash" },
+  { file: "animated-extruded.html", name: "(animated) Extruded" },
+  { file: "animated-lines.html", name: "(animated) Lines" },
+  { file: "animated-smoothing.html", name: "(animated) Smoothing" },
+  { file: "animated-space.html", name: "(animated) Space" },
+  {
+    file: "animated-spaceUsingShapes.html",
+    name: "(animated) Space Using Shapes",
+  },
+  { file: "nodejs-booleanOpts.html", name: "(nodejs) Boolean Operations" },
+  { file: "showcase-rasterSpiral.html", name: "(showcase) Spiral Raster" },
+  { file: "showcase-chain.html", name: "(showcase) Chain" },
+  { file: "showcase-bouncingBalls.html", name: "(showcase) Bouncing Balls" },
+  { file: "showcase-divisionRaster.html", name: "(showcase) Division Raster" },
+  {
+    file: "showcase-interactiveTiger.html",
+    name: "(showcase) Interactive Tiger",
+  },
+  {
+    file: "rasters-phyllotaxisRaster.html",
+    name: "(rasters) Phyllotaxis Raster",
+  },
+  {
+    file: "worker-webWorker.html",
+    name: "(worker) Web Worker",
+  },
+  {
+    file: "paper2-simple.html",
+    name: "(paper2) Simple",
+  },
+  {
+    file: "paper2-straps.html",
+    name: "(straps) Straps",
+  },
+  { file: "tools-wave.html", name: "(tools) Wave" },
+  { file: "tools-wormFarm.html", name: "(tools) Worm Farm" },
+  { file: "tools-vektor.html", name: "(tools) Vektor" },
+  { file: "tools-stars.html", name: "(tools) Stars" },
+  { file: "tools-squareRounded.html", name: "(tools) Square Rounded" },
+  { file: "tools-pathEditing.html", name: "(tools) Path Editing" },
+  { file: "tools-multipleTools.html", name: "(tools) Multiple Tools" },
+  { file: "tools-multiLines.html", name: "(tools) Multi Lines" },
+  { file: "tools-clouds.html", name: "(tools) Clouds" },
+  { file: "tools-circles.html", name: "(tools) Circles" },
+  { file: "tools-grid.html", name: "(tools) Grid" },
+  { file: "tools-fancyBrush.html", name: "(tools) Fancy Brush" },
+  { file: "tools-drippingBrush.html", name: "(tools) Dripping Brush" },
+  { file: "tools-bezierTool.html", name: "(tools) Bezier Tool" },
+  { file: "json-tiger.html", name: "(json) Tiger" },
+  { file: "json-groupTransform.html", name: "(json) Group Transform" },
+  { file: "json-gradients.html", name: "(json) Gradients" },
+  { file: "json-emptyPathTesting.html", name: "(json) Empty Path Testing" },
+  { file: "json-compoundPath.html", name: "(json) Compound Path" },
+  { file: "json-circleTesting.html", name: "(json) Circle Testing" },
+  { file: "games-paperoids.html", name: "(games) Paperoids" },
+  { file: "scripts-pathTangents.html", name: "(scripts) Path Tangents" },
+  { file: "scripts-pathStructure.html", name: "(scripts) Path Structure" },
+  { file: "scripts-booleanOperations.html", name: "(scripts) Boolean Study" },
+  { file: "svg-import-viewbox.html", name: "(svg-import) Viewbox 1" },
+  { file: "svg-import-symbols.html", name: "(svg-import) Symbols Test" },
+  { file: "svg-import-polybezier.html", name: "(svg-import) Rect Testing" },
+  { file: "svg-import-inkscape.html", name: "(svg-import) Inkscape" },
+  {
+    file: "svg-export-transformTest1.html",
+    name: "(svg-export) Transform Testing",
+  },
+  {
+    file: "svg-export-rectAndAttributeTesting.html",
+    name: "(svg-export) Rectangle Testing",
+  },
+  {
+    file: "svg-export-circleTesting.html",
+    name: "(svg-export) Export Circle (Full)",
+  },
+  {
+    file: "svg-export-circleTestingCore.html",
+    name: "(svg-export) Export Circle (Core)",
+  },
+];
+
+const allPagesDataSorted = allPagesData.sort((a, b) => {
+  const nameA = a.name.toUpperCase();
+  const nameB = b.name.toUpperCase();
+  if (nameA < nameB) return -1;
+  if (nameA > nameB) return 1;
+  return 0;
+});
+
+const allPagesHtml = allPagesData.reduce((a, b) => {
+  return `${a}\n<a href="${b.file}">${b.name}</a>`;
+}, "");
+
 (function () {
   const sharedStyles = new CSSStyleSheet();
   sharedStyles.replaceSync(`    
       .sidebar {
         height: 100%;
-        width: 250px;
+        width: 325px;
         position: fixed;
         top: 0;
         left: 0;
@@ -91,57 +192,8 @@
       const ele2 = document.createElement("div");
       ele2.innerHTML = `<div class="sidebar" id="sidebar">
           <div class="sidebar-nav">
-            <a style="margin-top:3rem;" href="index.html">Home</a>
-            <a href="animated-animatedStar.html">Animated Star</a>
-            <a href="tools-bezierTool.html">Bezier Tool</a>
-            <a href="nodejs-booleanOpts.html">BoolOpts (rendered on Nodejs)</a>
-            <a href="animated-booleanOps.html">Boolean Ops</a>
-            <a href="scripts-booleanOperations.html">Boolean Study</a>
-            <a href="animated-candyCrash.html">Candy Crash</a>
-            <a href="paperjs-org-chain.html">Chain</a>
-            <a href="paperjs-org-bouncingBalls.html">Bouncing Balls</a>
-            <a href="paperjs-org-divisionRaster.html">Division Raster</a>
-            <a href="paperjs-org-interactiveTiger.html">Interactive Tiger</a>
-            <a href="json-circleTesting.html">Circle Testing (JSON)</a>
-            <a href="json-compoundPath.html">Compound Path (JSON)</a>
-            <a href="tools-drippingBrush.html">Dripping Brush</a>
-            <a href="json-emptyPathTesting.html">Empty Path Testing (JSON)</a>
-            <a href="svg-export-circleTestingCore.html">Export Circle (Core)</a>
-            <a href="svg-export-circleTesting.html">Export Circle (Full)</a>            
-            <a href="animated-extruded.html">Extruded</a>
-            <a href="tools-fancyBrush.html">Fancy Brush</a>
-            <a href="tools-grid.html">Grid</a>
-            <a href="tools-circles.html">Circles</a>
-            <a href="tools-clouds.html">Clouds</a>
-            <a href="json-gradients.html">Gradients (JSON)</a>
-            <a href="json-groupTransform.html">Group Transform (JSON)</a>
-            <a href="svg-import-inkscape.html">Inkscape</a>            
-            <a href="animated-lines.html">Lines</a>
-            <a href="tools-multiLines.html">Multi Lines</a>
-            <a href="tools-multipleTools.html">Multiple Tools</a>
-            <a href="games-paperoids.html">Paperoids</a>
-            <a href="tools-pathEditing.html">Path Editing</a>
-            <a href="scripts-pathStructure.html">Path Structure</a>
-            <a href="scripts-pathTangents.html">Path Tangents</a>
-            <a href="rasters-phyllotaxisRaster.html">Phyllotaxis Raster</a>
-            <a href="svg-import-polybezier.html">Rect Testing</a>
-            <a href="svg-export-rectAndAttributeTesting.html">Rectangle Testing</a>            
-            <a href="simple.html">Simple</a>
-            <a href="animated-smoothing.html">Smoothing</a>
-            <a href="animated-space.html">Space</a>
-            <a href="animated-spaceUsingShapes.html">SpaceUsingShapes</a>
-            <a href="svg-import-symbols.html">Symbols Test</a>
-            <a href="paperjs-org-rasterSpiral.html">Spiral Raster</a>
-            <a href="tools-squareRounded.html">Square Rounded</a>
-            <a href="tools-stars.html">Stars</a>
-            <a href="straps.html">Straps</a>
-            <a href="json-tiger.html">Tiger</a>
-            <a href="svg-export-transformTest1.html">Transform Testing</a>
-            <a href="tools-vektor.html">Vektor</a>
-            <a href="svg-import-viewbox.html">Viewbox 1</a>
-            <a href="tools-wave.html">Wave</a>
-            <a href="worker-webWorker.html">Web Worker</a>
-            <a href="tools-wormFarm.html">Worm Farm</a>
+            <a style="margin-top:3rem;" href="/">Home</a>
+            ${allPagesHtml}
         </div>
     </div>`;
       const ele3 = document.createElement("div");

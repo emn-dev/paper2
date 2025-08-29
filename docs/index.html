@@ -9,6 +9,12 @@
     <script src="./paper2-stackblitz.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+    <style>
+      li {
+        margin: 3px;
+        padding: 3px;
+      }
+    </style>
   </head>
   <body>
     <paper2-nav></paper2-nav>
@@ -37,6 +43,8 @@
       <a href="tools-bezierTool.html"
         >For example: Bezier Tool, try openning it in Stackblitz</a
       >
+      <h3>All Examples</h3>
+      <ol style="text-align: left; width: 50%; margin: auto"></ol>
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1">
@@ -50,6 +58,11 @@
         console.log(paper); // Easy access for playing with in DevTools
         const showVersionEle = document.getElementById("showVersion");
         showVersionEle.innerHTML = paper.version;
+        document.getElementsByTagName("ol")[0].innerHTML = allPagesHtml
+          .split("\n")
+          .filter(Boolean)
+          .map((a) => `<li>${a}</li>`)
+          .join(" ");
       });
     </script>
   </body>
