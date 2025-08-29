@@ -9,7 +9,7 @@ The existence of [paper2.org](https://paper2.org) is to help paperjs extend its 
 ## How to collaborate
 
 1. [Create an Issue](https://github.com/emn-dev/paper2/issues) and just ask to be a collaborator
-2. I will send you Github invite email to join this repo
+2. We will send you Github invite email to join this repo
 3. Once confirmed, you can create a branch off of main (e.g. my-fix-branch)
 4. Then do you work locally and commit and push up the changes
 5. When happy with your changes then create a PR for "my-fix-branch" to "main"
@@ -17,7 +17,7 @@ The existence of [paper2.org](https://paper2.org) is to help paperjs extend its 
 
 ## Getting Started
 
-1. Nodejs version >= `v22` ([Node.js Releases](https://nodejs.org/en/about/previous-releases))
+1. Verify your Nodejs version >= `v22` ([Node.js Releases](https://nodejs.org/en/about/previous-releases))
 1. Verify [corepack](https://www.npmjs.com/package/corepack) is enabled
    1. Currently you just run `corepack enable` in your terminal, but that will [change starting with nodejs v25](https://nodejs.org/docs/latest-v22.x/api/corepack.html)
 1. Run `yarn install`
