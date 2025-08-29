@@ -4,7 +4,7 @@ The essence of [paper.js](https://github.com/paperjs/paper.js) wrapped in modern
 
 > NOTE: We are BIG fans of paperjs! That library has allowed us to do awesome things :)
 
-The existence of paper2 is to help paperjs extend its life far into the future.
+The existence of [paper2.org](https://paper2.org) is to help paperjs extend its life far into the future.
 
 ## How to collaborate
 
