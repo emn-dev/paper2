@@ -101,6 +101,8 @@ const allPagesHtml = allPagesData.reduce((a, b) => {
   return `${a}\n<a href="${b.file}">${b.name}</a>`;
 }, "");
 
+window.allPagesHtml = allPagesHtml;
+
 (function () {
   const sharedStyles = new CSSStyleSheet();
   sharedStyles.replaceSync(`    
