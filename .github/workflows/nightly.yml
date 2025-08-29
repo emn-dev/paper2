@@ -3,8 +3,8 @@ name: Nightly jobs
 # Trigger the workflow with UTC time using cron syntax
 on:
   schedule:
-    # - cron: "*/5 * * * *" # every 5 minutes FOR_TESTING
-    - cron: "0 0 * * *" # midnight UTC every day
+    - cron: "*/5 * * * *" # every 5 minutes FOR_TESTING
+    # - cron: "0 0 * * *" # midnight UTC every day
 
 jobs:
   test:
@@ -20,3 +20,4 @@ jobs:
       - run: yarn install
       - run: yarn test:lint:pipeline
       - run: yarn test:unit:pipeline
+      - run: yarn cy:run:pipeline

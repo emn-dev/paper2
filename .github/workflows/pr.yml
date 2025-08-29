@@ -18,3 +18,4 @@ jobs:
       - run: yarn install
       - run: yarn test:lint:pipeline
       - run: yarn test:unit:pipeline
+      - run: yarn cy:run:pipeline
