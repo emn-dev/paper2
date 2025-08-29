@@ -25,3 +25,10 @@ _env_files
 
 repomix.config.json
 repomix-output.*
+
+# cypress outputs
+cypress/videos
+cypress/screenshots
+cypress/diff_output
+cypress/downloads
+cypress/logs

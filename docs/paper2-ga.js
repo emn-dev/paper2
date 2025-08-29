@@ -12,7 +12,9 @@ const firebaseConfig = {
   measurementId: "G-C6XKV0MKGM",
 };
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const analytics = app.analytics();
-analytics.logEvent("page_view");
+if (location.hostname !== "localhost") {
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const analytics = app.analytics();
+  analytics.logEvent("page_view");
+}

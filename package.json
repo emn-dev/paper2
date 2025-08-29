@@ -22,10 +22,18 @@
     "set-ver": "node --experimental-transform-types ./util-scripts/set-version.ts",
     "serve:docs": "node --experimental-transform-types ./util-scripts/http-server.ts",
     "test:unit": "yarn workspace paper2 test:unit:pipeline",
-    "test:lint": "yarn workspace paper2 test:lint"
+    "test:lint": "yarn workspace paper2 test:lint",
+    "cy:open": "npx cypress open --config-file cypress/cy.config.ts",
+    "cy:open-by-serve": "yarn serve:docs & yarn cy:open",
+    "cy:run-by-serve": "yarn serve:docs & npx cypress run --browser chrome --headed --config-file cypress/cy.config.ts",
+    "cy:run:pipeline:cmd": "npx cypress run --browser chrome --config-file cypress/cy.config.ts",
+    "cy:run:pipeline": "node util-scripts/cy.tests.mjs"
   },
   "devDependencies": {
     "@types/node": "22.17.1",
+    "cypress": "15.0.0",
+    "cypress-failed-log": "2.10.0",
+    "jest-image-snapshot": "6.5.1",
     "typescript": "5.9.2"
   }
 }
