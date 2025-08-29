@@ -1,9 +1,10 @@
 name: Nightly jobs
 
-# Trigger the workflow every 5 minutes (UTC) using cron syntax
+# Trigger the workflow with UTC time using cron syntax
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    # - cron: "*/5 * * * *" # every 5 minutes FOR_TESTING
+    - cron: "0 0 * * *" # midnight UTC every day
 
 jobs:
   test:
