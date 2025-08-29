@@ -2,7 +2,7 @@
 describe(`GIVEN: Circle Testing (JSON)`, () => {
   beforeEach(() => {
     cy.visit(`/json-circleTesting.html`);
-    cy.wait(750); // Allow timeout to compelete
+    cy.wait(999); // Allow timeout to compelete
   });
 
   describe("WHEN page has loaded", () => {
