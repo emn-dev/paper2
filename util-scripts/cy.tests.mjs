@@ -21,9 +21,11 @@ function cleanup() {
 cyRunner.on("exit", (code) => {
   console.log(`cyRunner exited with code ${code}`);
   cleanup();
+  if (code !== 0) throw Error("Cy errors!");
 });
 
 cyRunner.on("error", (err) => {
   console.error("cyRunner error:", err);
   cleanup();
+  throw Error("Cy errors!");
 });
