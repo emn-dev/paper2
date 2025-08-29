@@ -21,3 +21,5 @@ jobs:
       - run: yarn test:lint:pipeline
       - run: yarn test:unit:pipeline
       - run: yarn cy:run:pipeline
+
+      # TODO: add cy artifacts
