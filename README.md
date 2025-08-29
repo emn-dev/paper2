@@ -8,7 +8,7 @@ The existence of [paper2.org](https://paper2.org) is to help paperjs extend its 
 
 ## How to collaborate
 
-1. Create an Issue here and just ask to be a collaborator
+1. [Create an Issue](https://github.com/emn-dev/paper2/issues) and just ask to be a collaborator
 2. I will send you Github invite email to join this repo
 3. Once confirmed, you can create a branch off of main (e.g. my-fix-branch)
 4. Then do you work locally and commit and push up the changes
