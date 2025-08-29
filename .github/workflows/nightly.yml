@@ -1,0 +1,21 @@
+name: Nightly jobs
+
+# Trigger the workflow every 5 minutes (UTC) using cron syntax
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  test:
+    name: Unit tests and linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+
+      - run: corepack enable
+      - run: yarn install
+      - run: yarn test:lint:pipeline
+      - run: yarn test:unit:pipeline
