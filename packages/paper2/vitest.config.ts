@@ -5,6 +5,11 @@ import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
+    coverage: {
+      enabled: true,
+      include: ['lib/*'],
+      reportsDirectory: '../../docs/test_coverage',
+    },
     mockReset: true,
     exclude: [...configDefaults.exclude, 'e2e/*'],
     setupFiles: ['./tests/_setup.ts'],

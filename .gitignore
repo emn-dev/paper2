@@ -32,3 +32,5 @@ cypress/screenshots
 cypress/diff_output
 cypress/downloads
 cypress/logs
+
+docs/test_coverage/
