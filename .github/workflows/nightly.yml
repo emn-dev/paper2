@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Unit tests and linting
+    name: Testing and linting
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
