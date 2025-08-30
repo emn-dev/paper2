@@ -33,4 +33,4 @@ cypress/diff_output
 cypress/downloads
 cypress/logs
 
-docs/test_coverage/
+# docs/test_coverage/

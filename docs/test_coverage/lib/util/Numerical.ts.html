@@ -1,0 +1,1522 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for lib/util/Numerical.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">lib/util</a> Numerical.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">98.91% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>274/277</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">96.73% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>89/92</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">91.66% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>11/12</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">98.91% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>274/277</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a>
+<a name='L300'></a><a href='#L300'>300</a>
+<a name='L301'></a><a href='#L301'>301</a>
+<a name='L302'></a><a href='#L302'>302</a>
+<a name='L303'></a><a href='#L303'>303</a>
+<a name='L304'></a><a href='#L304'>304</a>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a>
+<a name='L310'></a><a href='#L310'>310</a>
+<a name='L311'></a><a href='#L311'>311</a>
+<a name='L312'></a><a href='#L312'>312</a>
+<a name='L313'></a><a href='#L313'>313</a>
+<a name='L314'></a><a href='#L314'>314</a>
+<a name='L315'></a><a href='#L315'>315</a>
+<a name='L316'></a><a href='#L316'>316</a>
+<a name='L317'></a><a href='#L317'>317</a>
+<a name='L318'></a><a href='#L318'>318</a>
+<a name='L319'></a><a href='#L319'>319</a>
+<a name='L320'></a><a href='#L320'>320</a>
+<a name='L321'></a><a href='#L321'>321</a>
+<a name='L322'></a><a href='#L322'>322</a>
+<a name='L323'></a><a href='#L323'>323</a>
+<a name='L324'></a><a href='#L324'>324</a>
+<a name='L325'></a><a href='#L325'>325</a>
+<a name='L326'></a><a href='#L326'>326</a>
+<a name='L327'></a><a href='#L327'>327</a>
+<a name='L328'></a><a href='#L328'>328</a>
+<a name='L329'></a><a href='#L329'>329</a>
+<a name='L330'></a><a href='#L330'>330</a>
+<a name='L331'></a><a href='#L331'>331</a>
+<a name='L332'></a><a href='#L332'>332</a>
+<a name='L333'></a><a href='#L333'>333</a>
+<a name='L334'></a><a href='#L334'>334</a>
+<a name='L335'></a><a href='#L335'>335</a>
+<a name='L336'></a><a href='#L336'>336</a>
+<a name='L337'></a><a href='#L337'>337</a>
+<a name='L338'></a><a href='#L338'>338</a>
+<a name='L339'></a><a href='#L339'>339</a>
+<a name='L340'></a><a href='#L340'>340</a>
+<a name='L341'></a><a href='#L341'>341</a>
+<a name='L342'></a><a href='#L342'>342</a>
+<a name='L343'></a><a href='#L343'>343</a>
+<a name='L344'></a><a href='#L344'>344</a>
+<a name='L345'></a><a href='#L345'>345</a>
+<a name='L346'></a><a href='#L346'>346</a>
+<a name='L347'></a><a href='#L347'>347</a>
+<a name='L348'></a><a href='#L348'>348</a>
+<a name='L349'></a><a href='#L349'>349</a>
+<a name='L350'></a><a href='#L350'>350</a>
+<a name='L351'></a><a href='#L351'>351</a>
+<a name='L352'></a><a href='#L352'>352</a>
+<a name='L353'></a><a href='#L353'>353</a>
+<a name='L354'></a><a href='#L354'>354</a>
+<a name='L355'></a><a href='#L355'>355</a>
+<a name='L356'></a><a href='#L356'>356</a>
+<a name='L357'></a><a href='#L357'>357</a>
+<a name='L358'></a><a href='#L358'>358</a>
+<a name='L359'></a><a href='#L359'>359</a>
+<a name='L360'></a><a href='#L360'>360</a>
+<a name='L361'></a><a href='#L361'>361</a>
+<a name='L362'></a><a href='#L362'>362</a>
+<a name='L363'></a><a href='#L363'>363</a>
+<a name='L364'></a><a href='#L364'>364</a>
+<a name='L365'></a><a href='#L365'>365</a>
+<a name='L366'></a><a href='#L366'>366</a>
+<a name='L367'></a><a href='#L367'>367</a>
+<a name='L368'></a><a href='#L368'>368</a>
+<a name='L369'></a><a href='#L369'>369</a>
+<a name='L370'></a><a href='#L370'>370</a>
+<a name='L371'></a><a href='#L371'>371</a>
+<a name='L372'></a><a href='#L372'>372</a>
+<a name='L373'></a><a href='#L373'>373</a>
+<a name='L374'></a><a href='#L374'>374</a>
+<a name='L375'></a><a href='#L375'>375</a>
+<a name='L376'></a><a href='#L376'>376</a>
+<a name='L377'></a><a href='#L377'>377</a>
+<a name='L378'></a><a href='#L378'>378</a>
+<a name='L379'></a><a href='#L379'>379</a>
+<a name='L380'></a><a href='#L380'>380</a>
+<a name='L381'></a><a href='#L381'>381</a>
+<a name='L382'></a><a href='#L382'>382</a>
+<a name='L383'></a><a href='#L383'>383</a>
+<a name='L384'></a><a href='#L384'>384</a>
+<a name='L385'></a><a href='#L385'>385</a>
+<a name='L386'></a><a href='#L386'>386</a>
+<a name='L387'></a><a href='#L387'>387</a>
+<a name='L388'></a><a href='#L388'>388</a>
+<a name='L389'></a><a href='#L389'>389</a>
+<a name='L390'></a><a href='#L390'>390</a>
+<a name='L391'></a><a href='#L391'>391</a>
+<a name='L392'></a><a href='#L392'>392</a>
+<a name='L393'></a><a href='#L393'>393</a>
+<a name='L394'></a><a href='#L394'>394</a>
+<a name='L395'></a><a href='#L395'>395</a>
+<a name='L396'></a><a href='#L396'>396</a>
+<a name='L397'></a><a href='#L397'>397</a>
+<a name='L398'></a><a href='#L398'>398</a>
+<a name='L399'></a><a href='#L399'>399</a>
+<a name='L400'></a><a href='#L400'>400</a>
+<a name='L401'></a><a href='#L401'>401</a>
+<a name='L402'></a><a href='#L402'>402</a>
+<a name='L403'></a><a href='#L403'>403</a>
+<a name='L404'></a><a href='#L404'>404</a>
+<a name='L405'></a><a href='#L405'>405</a>
+<a name='L406'></a><a href='#L406'>406</a>
+<a name='L407'></a><a href='#L407'>407</a>
+<a name='L408'></a><a href='#L408'>408</a>
+<a name='L409'></a><a href='#L409'>409</a>
+<a name='L410'></a><a href='#L410'>410</a>
+<a name='L411'></a><a href='#L411'>411</a>
+<a name='L412'></a><a href='#L412'>412</a>
+<a name='L413'></a><a href='#L413'>413</a>
+<a name='L414'></a><a href='#L414'>414</a>
+<a name='L415'></a><a href='#L415'>415</a>
+<a name='L416'></a><a href='#L416'>416</a>
+<a name='L417'></a><a href='#L417'>417</a>
+<a name='L418'></a><a href='#L418'>418</a>
+<a name='L419'></a><a href='#L419'>419</a>
+<a name='L420'></a><a href='#L420'>420</a>
+<a name='L421'></a><a href='#L421'>421</a>
+<a name='L422'></a><a href='#L422'>422</a>
+<a name='L423'></a><a href='#L423'>423</a>
+<a name='L424'></a><a href='#L424'>424</a>
+<a name='L425'></a><a href='#L425'>425</a>
+<a name='L426'></a><a href='#L426'>426</a>
+<a name='L427'></a><a href='#L427'>427</a>
+<a name='L428'></a><a href='#L428'>428</a>
+<a name='L429'></a><a href='#L429'>429</a>
+<a name='L430'></a><a href='#L430'>430</a>
+<a name='L431'></a><a href='#L431'>431</a>
+<a name='L432'></a><a href='#L432'>432</a>
+<a name='L433'></a><a href='#L433'>433</a>
+<a name='L434'></a><a href='#L434'>434</a>
+<a name='L435'></a><a href='#L435'>435</a>
+<a name='L436'></a><a href='#L436'>436</a>
+<a name='L437'></a><a href='#L437'>437</a>
+<a name='L438'></a><a href='#L438'>438</a>
+<a name='L439'></a><a href='#L439'>439</a>
+<a name='L440'></a><a href='#L440'>440</a>
+<a name='L441'></a><a href='#L441'>441</a>
+<a name='L442'></a><a href='#L442'>442</a>
+<a name='L443'></a><a href='#L443'>443</a>
+<a name='L444'></a><a href='#L444'>444</a>
+<a name='L445'></a><a href='#L445'>445</a>
+<a name='L446'></a><a href='#L446'>446</a>
+<a name='L447'></a><a href='#L447'>447</a>
+<a name='L448'></a><a href='#L448'>448</a>
+<a name='L449'></a><a href='#L449'>449</a>
+<a name='L450'></a><a href='#L450'>450</a>
+<a name='L451'></a><a href='#L451'>451</a>
+<a name='L452'></a><a href='#L452'>452</a>
+<a name='L453'></a><a href='#L453'>453</a>
+<a name='L454'></a><a href='#L454'>454</a>
+<a name='L455'></a><a href='#L455'>455</a>
+<a name='L456'></a><a href='#L456'>456</a>
+<a name='L457'></a><a href='#L457'>457</a>
+<a name='L458'></a><a href='#L458'>458</a>
+<a name='L459'></a><a href='#L459'>459</a>
+<a name='L460'></a><a href='#L460'>460</a>
+<a name='L461'></a><a href='#L461'>461</a>
+<a name='L462'></a><a href='#L462'>462</a>
+<a name='L463'></a><a href='#L463'>463</a>
+<a name='L464'></a><a href='#L464'>464</a>
+<a name='L465'></a><a href='#L465'>465</a>
+<a name='L466'></a><a href='#L466'>466</a>
+<a name='L467'></a><a href='#L467'>467</a>
+<a name='L468'></a><a href='#L468'>468</a>
+<a name='L469'></a><a href='#L469'>469</a>
+<a name='L470'></a><a href='#L470'>470</a>
+<a name='L471'></a><a href='#L471'>471</a>
+<a name='L472'></a><a href='#L472'>472</a>
+<a name='L473'></a><a href='#L473'>473</a>
+<a name='L474'></a><a href='#L474'>474</a>
+<a name='L475'></a><a href='#L475'>475</a>
+<a name='L476'></a><a href='#L476'>476</a>
+<a name='L477'></a><a href='#L477'>477</a>
+<a name='L478'></a><a href='#L478'>478</a>
+<a name='L479'></a><a href='#L479'>479</a>
+<a name='L480'></a><a href='#L480'>480</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">23826x</span>
+<span class="cline-any cline-yes">23826x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18020x</span>
+<span class="cline-any cline-yes">21348x</span>
+<span class="cline-any cline-yes">21348x</span>
+<span class="cline-any cline-yes">21348x</span>
+<span class="cline-any cline-yes">21348x</span>
+<span class="cline-any cline-yes">21348x</span>
+<span class="cline-any cline-yes">21348x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18020x</span>
+<span class="cline-any cline-yes">18020x</span>
+<span class="cline-any cline-yes">18020x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">7116x</span>
+<span class="cline-any cline-yes">18020x</span>
+<span class="cline-any cline-yes">18020x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14712x</span>
+<span class="cline-any cline-yes">14712x</span>
+<span class="cline-any cline-yes">14712x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">327777x</span>
+<span class="cline-any cline-yes">327777x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">2138x</span>
+<span class="cline-any cline-yes">2138x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">106719x</span>
+<span class="cline-any cline-yes">106719x</span>
+<span class="cline-any cline-yes">106719x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-yes">31055x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">6700x</span>
+<span class="cline-any cline-yes">24156x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24156x</span>
+<span class="cline-any cline-yes">24156x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24156x</span>
+<span class="cline-any cline-yes">6681x</span>
+<span class="cline-any cline-yes">6681x</span>
+<span class="cline-any cline-yes">6681x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24156x</span>
+<span class="cline-any cline-yes">9022x</span>
+<span class="cline-any cline-yes">9022x</span>
+<span class="cline-any cline-yes">24156x</span>
+<span class="cline-any cline-yes">8453x</span>
+<span class="cline-any cline-yes">8453x</span>
+<span class="cline-any cline-yes">8453x</span>
+<span class="cline-any cline-yes">24156x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6700x</span>
+<span class="cline-any cline-yes">6700x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">843x</span>
+<span class="cline-any cline-yes">350x</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18009x</span>
+<span class="cline-any cline-yes">18009x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18009x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">18009x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16865x</span>
+<span class="cline-any cline-yes">16865x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16865x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">16865x</span>
+<span class="cline-any cline-yes">16863x</span>
+<span class="cline-any cline-yes">16863x</span>
+<span class="cline-any cline-yes">16863x</span>
+<span class="cline-any cline-yes">16865x</span>
+<span class="cline-any cline-yes">18009x</span>
+<span class="cline-any cline-yes">18359x</span>
+<span class="cline-any cline-yes">18359x</span>
+<span class="cline-any cline-yes">18359x</span>
+<span class="cline-any cline-yes">18359x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-yes">18359x</span>
+<span class="cline-any cline-yes">18852x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">63798x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">63798x</span>
+<span class="cline-any cline-yes">63798x</span>
+<span class="cline-any cline-yes">63798x</span>
+<span class="cline-any cline-yes">63798x</span>
+<span class="cline-any cline-yes">63798x</span>
+<span class="cline-any cline-yes">63798x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">2659x</span>
+<span class="cline-any cline-yes">2659x</span>
+<span class="cline-any cline-yes">2659x</span>
+<span class="cline-any cline-yes">2659x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">3091x</span>
+<span class="cline-any cline-yes">3091x</span>
+<span class="cline-any cline-yes">3091x</span>
+<span class="cline-any cline-yes">11999x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-yes">8898x</span>
+<span class="cline-any cline-yes">54890x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">54890x</span>
+<span class="cline-any cline-yes">8898x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8898x</span>
+<span class="cline-any cline-yes">4957x</span>
+<span class="cline-any cline-yes">4957x</span>
+<span class="cline-any cline-yes">4957x</span>
+<span class="cline-any cline-yes">8898x</span>
+<span class="cline-any cline-yes">8908x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">11999x</span>
+<span class="cline-any cline-yes">11831x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">14658x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*
+ * Paper.js - The Swiss Army Knife of Vector Graphics Scripting.
+ * http://paperjs.org/
+ *
+ * Copyright (c) 2011 - 2020, Jürg Lehni &amp; Jonathan Puckey
+ * http://juerglehni.com/ &amp; https://puckey.studio/
+ *
+ * Distributed under the MIT license. See LICENSE file for details.
+ *
+ * All rights reserved.
+ */
+&nbsp;
+// TODO: remove eslint-disable comment and deal with errors over time
+/* eslint-disable */
+&nbsp;
+/**
+ * @name Numerical
+ * @namespace
+ * @private
+ */
+// @ts-expect-error = 'new' expression, whose target lacks a construct signature
+export const Numerical = new (function () {
+  // Lookup tables for abscissas and weights with values for n = 2 .. 16.
+  // As values are symmetric, only store half of them and adapt algorithm
+  // to factor in symmetry.
+  var abscissas = [
+    [0.5773502691896257645091488],
+    [0, 0.7745966692414833770358531],
+    [0.3399810435848562648026658, 0.8611363115940525752239465],
+    [0, 0.5384693101056830910363144, 0.9061798459386639927976269],
+    [0.2386191860831969086305017, 0.6612093864662645136613996, 0.9324695142031520278123016],
+    [0, 0.4058451513773971669066064, 0.7415311855993944398638648, 0.9491079123427585245261897],
+    [0.1834346424956498049394761, 0.525532409916328985817739, 0.7966664774136267395915539, 0.9602898564975362316835609],
+    [
+      0, 0.324253423403808929038538, 0.613371432700590397308702, 0.8360311073266357942994298,
+      0.9681602395076260898355762,
+    ],
+    [
+      0.148874338981631210884826, 0.4333953941292471907992659, 0.6794095682990244062343274, 0.8650633666889845107320967,
+      0.973906528517171720077964,
+    ],
+    [
+      0, 0.269543155952344972331532, 0.5190961292068118159257257, 0.7301520055740493240934163,
+      0.8870625997680952990751578, 0.978228658146056992803938,
+    ],
+    [
+      0.1252334085114689154724414, 0.3678314989981801937526915, 0.5873179542866174472967024,
+      0.7699026741943046870368938, 0.9041172563704748566784659, 0.9815606342467192506905491,
+    ],
+    [
+      0, 0.2304583159551347940655281, 0.4484927510364468528779129, 0.6423493394403402206439846,
+      0.8015780907333099127942065, 0.9175983992229779652065478, 0.9841830547185881494728294,
+    ],
+    [
+      0.1080549487073436620662447, 0.3191123689278897604356718, 0.5152486363581540919652907,
+      0.6872929048116854701480198, 0.8272013150697649931897947, 0.9284348836635735173363911,
+      0.9862838086968123388415973,
+    ],
+    [
+      0, 0.2011940939974345223006283, 0.3941513470775633698972074, 0.5709721726085388475372267,
+      0.7244177313601700474161861, 0.8482065834104272162006483, 0.9372733924007059043077589,
+      0.9879925180204854284895657,
+    ],
+    [
+      0.0950125098376374401853193, 0.2816035507792589132304605, 0.4580167776572273863424194,
+      0.6178762444026437484466718, 0.7554044083550030338951012, 0.8656312023878317438804679,
+      0.9445750230732325760779884, 0.9894009349916499325961542,
+    ],
+  ];
+&nbsp;
+  var weights = [
+    [1],
+    [0.8888888888888888888888889, 0.5555555555555555555555556],
+    [0.6521451548625461426269361, 0.3478548451374538573730639],
+    [0.5688888888888888888888889, 0.4786286704993664680412915, 0.236926885056189087514264],
+    [0.4679139345726910473898703, 0.3607615730481386075698335, 0.1713244923791703450402961],
+    [0.417959183673469387755102, 0.3818300505051189449503698, 0.2797053914892766679014678, 0.1294849661688696932706114],
+    [0.3626837833783619829651504, 0.3137066458778872873379622, 0.222381034453374470544356, 0.1012285362903762591525314],
+    [
+      0.3302393550012597631645251, 0.3123470770400028400686304, 0.2606106964029354623187429, 0.180648160694857404058472,
+      0.0812743883615744119718922,
+    ],
+    [
+      0.295524224714752870173893, 0.2692667193099963550912269, 0.2190863625159820439955349, 0.1494513491505805931457763,
+      0.0666713443086881375935688,
+    ],
+    [
+      0.2729250867779006307144835, 0.2628045445102466621806889, 0.2331937645919904799185237,
+      0.1862902109277342514260976, 0.1255803694649046246346943, 0.0556685671161736664827537,
+    ],
+    [
+      0.2491470458134027850005624, 0.2334925365383548087608499, 0.2031674267230659217490645,
+      0.1600783285433462263346525, 0.1069393259953184309602547, 0.047175336386511827194616,
+    ],
+    [
+      0.2325515532308739101945895, 0.2262831802628972384120902, 0.2078160475368885023125232,
+      0.1781459807619457382800467, 0.1388735102197872384636018, 0.0921214998377284479144218,
+      0.0404840047653158795200216,
+    ],
+    [
+      0.2152638534631577901958764, 0.2051984637212956039659241, 0.1855383974779378137417166,
+      0.1572031671581935345696019, 0.1215185706879031846894148, 0.0801580871597602098056333,
+      0.0351194603317518630318329,
+    ],
+    [
+      0.2025782419255612728806202, 0.1984314853271115764561183, 0.1861610000155622110268006,
+      0.1662692058169939335532009, 0.1395706779261543144478048, 0.1071592204671719350118695,
+      0.0703660474881081247092674, 0.0307532419961172683546284,
+    ],
+    [
+      0.1894506104550684962853967, 0.1826034150449235888667637, 0.1691565193950025381893121,
+      0.1495959888165767320815017, 0.1246289712555338720524763, 0.0951585116824927848099251,
+      0.0622535239386478928628438, 0.0271524594117540948517806,
+    ],
+  ];
+&nbsp;
+  // Math short-cuts for often used methods and values
+  var abs = Math.abs,
+    sqrt = Math.sqrt,
+    pow = Math.pow,
+    // Fallback to polyfill:
+    log2 =
+      Math.<span class="branch-0 cbranch-no" title="branch not covered" >log2 ||</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      function (x) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return Math.log(x) * Math.LOG2E;</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+    // Constants
+    EPSILON = 1e-12,
+    MACHINE_EPSILON = 1.12e-16;
+&nbsp;
+  function clamp(value, min, max) {
+    return value &lt; min ? min : value &gt; max ? max : value;
+  }
+&nbsp;
+  function getDiscriminant(a, b, c) {
+    // d = b^2 - a * c  computed accurately enough by a tricky scheme.
+    // Ported from @hkrish's polysolve.c
+    function split(v) {
+      var x = v * 134217729,
+        y = v - x,
+        hi = y + x, // Don't optimize y away!
+        lo = v - hi;
+      return [hi, lo];
+    }
+&nbsp;
+    var D = b * b - a * c,
+      E = b * b + a * c;
+    if (abs(D) * 3 &lt; E) {
+      var ad = split(a),
+        bd = split(b),
+        cd = split(c),
+        p = b * b,
+        dp = bd[0] * bd[0] - p + 2 * bd[0] * bd[1] + bd[1] * bd[1],
+        q = a * c,
+        dq = ad[0] * cd[0] - q + ad[0] * cd[1] + ad[1] * cd[0] + ad[1] * cd[1];
+      D = p - q + (dp - dq); // Don’t omit parentheses!
+    }
+    return D;
+  }
+&nbsp;
+  function getNormalizationFactor() {
+    // Normalize coefficients à la Jenkins &amp; Traub's RPOLY.
+    // Normalization is done by scaling coefficients with a power of 2, so
+    // that all the bits in the mantissa remain unchanged.
+    // Use the infinity norm (max(sum(abs(a)…)) to determine the appropriate
+    // scale factor. See @hkrish in #1087#issuecomment-231526156
+    var norm = Math.max.apply(Math, arguments);
+    return norm &amp;&amp; (norm &lt; 1e-8 || norm &gt; 1e8) ? pow(2, -Math.round(log2(norm))) : 0;
+  }
+&nbsp;
+  return /** @lends Numerical */ {
+    /**
+     * A very small absolute value used to check if a value is very close to
+     * zero. The value should be large enough to offset any floating point
+     * noise, but small enough to be meaningful in computation in a nominal
+     * range (see MACHINE_EPSILON).
+     *
+     * http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html
+     * http://www.cs.berkeley.edu/~wkahan/Math128/Cubic.pdf
+     */
+    EPSILON: EPSILON,
+    /**
+     * The machine epsilon for a double precision (Javascript Number) is
+     * 2.220446049250313e-16. (try this in the js console:
+     *     (function(){ for (var e = 1; 1 &lt; 1+e/2;) e/=2; return e }())
+     *
+     * The constant MACHINE_EPSILON here refers to the constants δ and ε
+     * such that, the error introduced by addition, multiplication on a
+     * 64bit float (js Number) will be less than δ and ε. That is to say,
+     * for all X and Y representable by a js Number object, S and P be their
+     * 'exact' sum and product respectively, then
+     * |S - (x+y)| &lt;= δ|S|, and |P - (x*y)| &lt;= ε|P|.
+     * This amounts to about half of the actual machine epsilon.
+     */
+    MACHINE_EPSILON: MACHINE_EPSILON,
+    /**
+     * The epsilon to be used when handling curve-time parameters. This
+     * cannot be smaller, because errors add up to around 2e-7 in the bezier
+     * fat-line clipping code as a result of recursive sub-division.
+     */
+    CURVETIME_EPSILON: 1e-8,
+    /**
+     * The epsilon to be used when performing "geometric" checks, such as
+     * distances between points and lines.
+     */
+    GEOMETRIC_EPSILON: 1e-7,
+    /**
+     * The epsilon to be used when performing "trigonometric" checks, such
+     * as examining cross products to check for collinearity.
+     */
+    TRIGONOMETRIC_EPSILON: 1e-8,
+    /**
+     * The epsilon to be used when performing angular checks in degrees,
+     * e.g. in `arcTo()`.
+     */
+    ANGULAR_EPSILON: 1e-5,
+    /**
+     * Kappa is the value which which to scale the curve handles when
+     * drawing a circle with bezier curves.
+     *
+     * http://whizkidtech.redprince.net/bezier/circle/kappa/
+     */
+    KAPPA: (4 * (sqrt(2) - 1)) / 3,
+&nbsp;
+    /**
+     * Checks if the value is 0, within a tolerance defined by
+     * Numerical.EPSILON.
+     */
+    isZero: function (val) {
+      return val &gt;= -EPSILON &amp;&amp; val &lt;= EPSILON;
+    },
+&nbsp;
+    isMachineZero: function (val) {
+      return val &gt;= -MACHINE_EPSILON &amp;&amp; val &lt;= MACHINE_EPSILON;
+    },
+&nbsp;
+    /**
+     * Returns a number whose value is clamped by the given range.
+     *
+     * @param {Number} value the value to be clamped
+     * @param {Number} min the lower boundary of the range
+     * @param {Number} max the upper boundary of the range
+     * @return {Number} a number in the range of [min, max]
+     */
+    clamp: clamp,
+&nbsp;
+    /**
+     * Gauss-Legendre Numerical Integration.
+     */
+    integrate: function (f, a, b, n) {
+      var x = abscissas[n - 2],
+        w = weights[n - 2],
+        A = (b - a) * 0.5,
+        B = A + a,
+        i = 0,
+        m = (n + 1) &gt;&gt; 1,
+        sum = n &amp; 1 ? w[i++] * f(B) : 0; // Handle odd n
+      while (i &lt; m) {
+        var Ax = A * x[i];
+        sum += w[i++] * (f(B + Ax) + f(B - Ax));
+      }
+      return A * sum;
+    },
+&nbsp;
+    /**
+     * Root finding using Newton-Raphson Method combined with Bisection.
+     */
+    findRoot: function (f, df, x, a, b, n, tolerance) {
+      for (var i = 0; i &lt; n; i++) {
+        var fx = f(x),
+          // Calculate a new candidate with the Newton-Raphson method.
+          dx = fx / df(x),
+          nx = x - dx;
+        // See if we can trust the Newton-Raphson result. If not we use
+        // bisection to find another candidate for Newton's method.
+        if (abs(dx) &lt; tolerance) {
+          x = nx;
+          break;
+        }
+        // Update the root-bounding interval and test for containment of
+        // the candidate. If candidate is outside the root-bounding
+        // interval, use bisection instead.
+        // There is no need to compare to lower / upper because the
+        // tangent line has positive slope, guaranteeing that the x-axis
+        // intercept is larger than lower / smaller than upper.
+        if (fx &gt; 0) {
+          b = x;
+          x = nx &lt;= a ? (a + b) * 0.5 : nx;
+        } else {
+          a = x;
+          x = nx &gt;= b ? (a + b) * 0.5 : nx;
+        }
+      }
+      // Return the best result even though we haven't gotten close
+      // enough to the root... (In paper.js this never seems to happen).
+      // But make sure, that it actually is within the given range [a, b]
+      return clamp(x, a, b);
+    },
+&nbsp;
+    /**
+     * Solve a quadratic equation in a numerically robust manner;
+     * given a quadratic equation ax² + bx + c = 0, find the values of x.
+     *
+     * References:
+     *  Kahan W. - "To Solve a Real Cubic Equation"
+     *  http://www.cs.berkeley.edu/~wkahan/Math128/Cubic.pdf
+     *  Blinn J. - "How to solve a Quadratic Equation"
+     *  Harikrishnan G.
+     *  https://gist.github.com/hkrish/9e0de1f121971ee0fbab281f5c986de9
+     *
+     * @param {Number} a the quadratic term
+     * @param {Number} b the linear term
+     * @param {Number} c the constant term
+     * @param {Number[]} roots the array to store the roots in
+     * @param {Number} [min] the lower bound of the allowed roots
+     * @param {Number} [max] the upper bound of the allowed roots
+     * @return {Number} the number of real roots found, or -1 if there are
+     * infinite solutions
+     *
+     * @author Harikrishnan Gopalakrishnan &lt;hari.exeption@gmail.com&gt;
+     */
+    solveQuadratic: function (a, b, c, roots, min, max) {
+      var x1,
+        x2 = Infinity;
+      if (abs(a) &lt; EPSILON) {
+        // This could just be a linear equation
+        if (abs(b) &lt; EPSILON) return abs(c) &lt; EPSILON ? <span class="branch-0 cbranch-no" title="branch not covered" >-1 : 0;</span>
+        x1 = -c / b;
+      } else {
+        // a, b, c are expected to be the coefficients of the equation:
+        // Ax² - 2Bx + C == 0, so we take b = -b/2:
+        b *= -0.5;
+        var D = getDiscriminant(a, b, c);
+        // If the discriminant is very small, we can try to normalize
+        // the coefficients, so that we may get better accuracy.
+        if (D &amp;&amp; abs(D) &lt; MACHINE_EPSILON) {
+          // @ts-expect-error = Expected 0 arguments, but got 3
+          var f = getNormalizationFactor(abs(a), abs(b), abs(c));
+          if (f) {
+            a *= f;
+            b *= f;
+            c *= f;
+            D = getDiscriminant(a, b, c);
+          }
+        }
+        if (D &gt;= -MACHINE_EPSILON) {
+          // No real roots if D &lt; 0
+          var Q = D &lt; 0 ? 0 : sqrt(D),
+            R = b + (b &lt; 0 ? -Q : Q);
+          // Try to minimize floating point noise.
+          if (R === 0) {
+            x1 = c / a;
+            x2 = -x1;
+          } else {
+            x1 = R / a;
+            x2 = c / R;
+          }
+        }
+      }
+      var count = 0,
+        boundless = min == null,
+        minB = min - EPSILON,
+        maxB = max + EPSILON;
+      // We need to include EPSILON in the comparisons with min / max,
+      // as some solutions are ever so lightly out of bounds.
+      if (isFinite(x1) &amp;&amp; (boundless || (x1 &gt; minB &amp;&amp; x1 &lt; maxB)))
+        roots[count++] = boundless ? x1 : clamp(x1, min, max);
+      if (x2 !== x1 &amp;&amp; isFinite(x2) &amp;&amp; (boundless || (x2 &gt; minB &amp;&amp; x2 &lt; maxB)))
+        roots[count++] = boundless ? x2 : clamp(x2, min, max);
+      return count;
+    },
+&nbsp;
+    /**
+     * Solve a cubic equation, using numerically stable methods,
+     * given an equation of the form ax³ + bx² + cx + d = 0.
+     *
+     * This algorithm avoids the trigonometric/inverse trigonometric
+     * calculations required by the "Italins"' formula. Cardano's method
+     * works well enough for exact computations, this method takes a
+     * numerical approach where the double precision error bound is kept
+     * very low.
+     *
+     * References:
+     *  Kahan W. - "To Solve a Real Cubic Equation"
+     *   http://www.cs.berkeley.edu/~wkahan/Math128/Cubic.pdf
+     *  Harikrishnan G.
+     *  https://gist.github.com/hkrish/9e0de1f121971ee0fbab281f5c986de9
+     *
+     * W. Kahan's paper contains inferences on accuracy of cubic
+     * zero-finding methods. Also testing methods for robustness.
+     *
+     * @param {Number} a the cubic term (x³ term)
+     * @param {Number} b the quadratic term (x² term)
+     * @param {Number} c the linear term (x term)
+     * @param {Number} d the constant term
+     * @param {Number[]} roots the array to store the roots in
+     * @param {Number} [min] the lower bound of the allowed roots
+     * @param {Number} [max] the upper bound of the allowed roots
+     * @return {Number} the number of real roots found, or -1 if there are
+     * infinite solutions
+     *
+     * @author Harikrishnan Gopalakrishnan &lt;hari.exeption@gmail.com&gt;
+     */
+    solveCubic: function (a, b, c, d, roots, min, max) {
+      // @ts-expect-error = Expected 0 arguments, but got 4
+      var f = getNormalizationFactor(abs(a), abs(b), abs(c), abs(d)),
+        x,
+        b1,
+        c2,
+        qd,
+        q;
+      if (f) {
+        a *= f;
+        b *= f;
+        c *= f;
+        d *= f;
+      }
+&nbsp;
+      function evaluate(x0) {
+        x = x0;
+        // Evaluate q, q', b1 and c2 at x
+        var tmp = a * x;
+        b1 = tmp + b;
+        c2 = b1 * x + c;
+        qd = (tmp + b1) * x + c2;
+        q = c2 * x + d;
+      }
+&nbsp;
+      // If a or d is zero, we only need to solve a quadratic, so we set
+      // the coefficients appropriately.
+      if (abs(a) &lt; EPSILON) {
+        a = b;
+        b1 = c;
+        c2 = d;
+        x = Infinity;
+      } else if (abs(d) &lt; EPSILON) {
+        b1 = b;
+        c2 = c;
+        x = 0;
+      } else {
+        // Here onwards we iterate for the leftmost root. Proceed to
+        // deflate the cubic into a quadratic (as a side effect to the
+        // iteration) and solve the quadratic.
+        evaluate(-(b / a) / 3);
+        // Get a good initial approximation.
+        var t = q / a,
+          r = pow(abs(t), 1 / 3),
+          s = t &lt; 0 ? -1 : 1,
+          td = -qd / a,
+          // See Kahan's notes on why 1.324718*... works.
+          rd = td &gt; 0 ? 1.324717957244746 * Math.max(r, sqrt(td)) : r,
+          x0 = x - s * rd;
+        if (x0 !== x) {
+          do {
+            evaluate(x0);
+            // Newton's. Divide by 1 + MACHINE_EPSILON (1.000...002)
+            // to avoid x0 crossing over a root.
+            x0 = qd === <span class="branch-0 cbranch-no" title="branch not covered" >0 ? x : x</span> - q / qd / (1 + MACHINE_EPSILON);
+          } while (s * x0 &gt; s * x);
+          // Adjust the coefficients for the quadratic.
+          if (abs(a) * x * x &gt; abs(d / x)) {
+            c2 = -d / x;
+            b1 = (c2 - c) / x;
+          }
+        }
+      }
+      // The cubic has been deflated to a quadratic.
+      var count = Numerical.solveQuadratic(a, b1, c2, roots, min, max),
+        boundless = min == null;
+      if (
+        isFinite(x) &amp;&amp;
+        (count === 0 || (count &gt; 0 &amp;&amp; x !== roots[0] &amp;&amp; x !== roots[1])) &amp;&amp;
+        (boundless || (x &gt; min - EPSILON &amp;&amp; x &lt; max + EPSILON))
+      )
+        roots[count++] = boundless ? x : clamp(x, min, max);
+      return count;
+    },
+  };
+})();
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-08-30T14:11:50.475Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    
