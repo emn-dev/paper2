@@ -46,3 +46,21 @@ canvas[resize] {
   right: 0px;
   display: none;
 }
+
+.link-btn {
+  padding: 4px;
+
+  a {
+    vertical-align: text-top;
+    padding: 4px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  a:link,
+  a:visited,
+  a:focus {
+    background: orange;
+    color: black;
+  }
+}
