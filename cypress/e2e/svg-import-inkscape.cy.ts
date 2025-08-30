@@ -3,6 +3,7 @@ describe(`GIVEN: Inkscape`, () => {
   beforeEach(() => {
     cy.visit(`/svg-import-inkscape.html`);
     cy.wait(999); // Allow timeout to compelete
+    cy.get("paper2-nav").invoke("remove");
   });
 
   describe("WHEN page has loaded", () => {
