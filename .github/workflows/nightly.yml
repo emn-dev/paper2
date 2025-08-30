@@ -4,7 +4,7 @@ name: Nightly jobs
 on:
   schedule:
     # - cron: "*/5 * * * *" # every 5 minutes FOR_TESTING
-    - cron: "0 0 * * *" # midnight UTC every day
+    - cron: "0 7 * * *" # 10pm USA Central Time every day
 
 jobs:
   test:
