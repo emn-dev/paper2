@@ -29,6 +29,7 @@ describe(`GIVEN: Vektor`, () => {
       // Stop
       cy.get("canvas").trigger("mouseup");
 
+      // The fail threshold is difficult to get right for this one
       cy.get("canvas").matchImageSnapshot(snapPath, {
         failureThreshold: 0.5,
         failureThresholdType: "percent",
