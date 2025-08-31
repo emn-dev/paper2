@@ -41,9 +41,14 @@
             for (var j = 0; j < 3; j++) {
               var type = types[j];
               var segment = path.segments[i];
+              // var segmentPoint =
+              //   type == "point" ? segment.point : segment.point + segment[type]; // This way for Paperscript
               var segmentPoint =
-                type == "point" ? segment.point : segment.point + segment[type];
-              var distance = (point - segmentPoint).length;
+                type == "point"
+                  ? segment.point
+                  : segment.point.add(segment[type]);
+              // var distance = (point - segmentPoint).length; // This way for Paperscript
+              var distance = point.subtract(segmentPoint).length;
               if (distance < 3) {
                 return {
                   type: type,
