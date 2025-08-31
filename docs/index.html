@@ -70,7 +70,16 @@
       </section>
 
       <h3>All Examples</h3>
-      <ol style="text-align: left; width: 325px; margin: auto"></ol>
+      <table>
+        <th>
+          <tr>
+            <td></td>
+            <td>paper2</td>
+            <!-- <td>paperjs</td> -->
+          </tr>
+        </th>
+        <tbody id="myTbody"></tbody>
+      </table>
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1">
@@ -84,10 +93,13 @@
         console.log(paper); // Easy access for playing with in DevTools
         const showVersionEle = document.getElementById("showVersion");
         showVersionEle.innerHTML = paper.version;
-        document.getElementsByTagName("ol")[0].innerHTML = allPagesHtml
+        document.getElementById("myTbody").innerHTML = allPagesHtml
           .split("\n")
           .filter(Boolean)
-          .map((a) => `<li>${a}</li>`)
+          .map(
+            (a, i) =>
+              `<tr><td>${i + 1}</td><td style="text-align: left">${a}</td></tr>`
+          )
           .join(" ");
       });
     </script>
