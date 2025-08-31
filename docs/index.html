@@ -75,8 +75,8 @@
         <th>
           <tr>
             <td></td>
-            <td>paper2</td>
-            <!-- <td>paperjs</td> -->
+            <td>Paper2 example</td>
+            <td>Has Cy Test?</td>
           </tr>
         </th>
         <tbody id="myTbody"></tbody>
@@ -99,7 +99,11 @@
           .filter(Boolean)
           .map(
             (a, i) =>
-              `<tr><td>${i + 1}</td><td style="text-align: left">${a}</td></tr>`
+              `<tr>
+                  <td>${i + 1}</td>
+                  <td style="text-align: left">${a}</td>
+                  <td>${a.includes("has-cy-test") ? "yes" : ""}</td>
+                </tr>`
           )
           .join(" ");
       });

@@ -34,6 +34,7 @@ const allPagesData = [
   {
     file: "worker-webWorker.html",
     name: "(worker) Web Worker",
+    hasCyTest: true,
   },
   {
     file: "paper2-simple.html",
@@ -47,7 +48,11 @@ const allPagesData = [
   { file: "tools-wormFarm.html", name: "(tools) Worm Farm" },
   { file: "tools-vektor.html", name: "(tools) Vektor" },
   { file: "tools-stars.html", name: "(tools) Stars" },
-  { file: "tools-squareRounded.html", name: "(tools) Square Rounded" },
+  {
+    file: "tools-squareRounded.html",
+    name: "(tools) Square Rounded",
+    hasCyTest: true,
+  },
   { file: "tools-pathEditing.html", name: "(tools) Path Editing" },
   { file: "tools-multipleTools.html", name: "(tools) Multiple Tools" },
   { file: "tools-multiLines.html", name: "(tools) Multi Lines" },
@@ -59,10 +64,22 @@ const allPagesData = [
   { file: "tools-bezierTool.html", name: "(tools) Bezier Tool" },
   { file: "json-tiger.html", name: "(json) Tiger" },
   { file: "json-groupTransform.html", name: "(json) Group Transform" },
-  { file: "json-gradients.html", name: "(json) Gradients" },
-  { file: "json-emptyPathTesting.html", name: "(json) Empty Path Testing" },
-  { file: "json-compoundPath.html", name: "(json) Compound Path" },
-  { file: "json-circleTesting.html", name: "(json) Circle Testing" },
+  { file: "json-gradients.html", name: "(json) Gradients", hasCyTest: true },
+  {
+    file: "json-emptyPathTesting.html",
+    name: "(json) Empty Path Testing",
+    hasCyTest: true,
+  },
+  {
+    file: "json-compoundPath.html",
+    name: "(json) Compound Path",
+    hasCyTest: true,
+  },
+  {
+    file: "json-circleTesting.html",
+    name: "(json) Circle Testing",
+    hasCyTest: true,
+  },
   { file: "games-paperoids.html", name: "(games) Paperoids" },
   { file: "scripts-pathTangents.html", name: "(scripts) Path Tangents" },
   { file: "scripts-pathStructure.html", name: "(scripts) Path Structure" },
@@ -70,7 +87,11 @@ const allPagesData = [
   { file: "svg-import-viewbox.html", name: "(svg-import) Viewbox 1" },
   { file: "svg-import-symbols.html", name: "(svg-import) Symbols Test" },
   { file: "svg-import-polybezier.html", name: "(svg-import) Rect Testing" },
-  { file: "svg-import-inkscape.html", name: "(svg-import) Inkscape" },
+  {
+    file: "svg-import-inkscape.html",
+    name: "(svg-import) Inkscape",
+    hasCyTest: true,
+  },
   {
     file: "svg-export-transformTest1.html",
     name: "(svg-export) Transform Testing",
@@ -98,7 +119,7 @@ const allPagesDataSorted = allPagesData.sort((a, b) => {
 });
 
 const allPagesHtml = allPagesData.reduce((a, b) => {
-  return `${a}\n<a href="${b.file}">${b.name}</a>`;
+  return `${a}\n<a ${b.hasCyTest ? "data-has-cy-test=yes" : ""} href="${b.file}">${b.name}</a>`;
 }, "");
 
 window.allPagesHtml = allPagesHtml;
