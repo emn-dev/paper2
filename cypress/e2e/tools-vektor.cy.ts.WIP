@@ -1,0 +1,38 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
+describe(`GIVEN: Vektor`, () => {
+  beforeEach(() => {
+    cy.visit(`/tools-vektor.html`);
+    cy.wait(999); // Allow some time for canvas to be ready
+  });
+
+  describe("WHEN drawing with Vektor", () => {
+    it("THEN should pass visual image compare", () => {
+      const snapPath = "tools/vektor";
+
+      cy.get("main canvas").should("have.a.property", "resize");
+
+      // Start
+      cy.get("canvas").trigger("mousedown", {
+        x: 100,
+        y: 100,
+      });
+
+      // // Down
+      // cy.get("canvas").drag({ x: 100, y: 100 }, { x: 100, y: 300 });
+
+      // Right
+      cy.get("canvas").drag({ x: 100, y: 100 }, { x: 300, y: 100 });
+
+      // Down
+      cy.get("canvas").drag({ x: 300, y: 100 }, { x: 300, y: 300 });
+
+      // Stop
+      cy.get("canvas").trigger("mouseup");
+
+      cy.get("canvas").matchImageSnapshot(snapPath, {
+        failureThreshold: 0.5,
+        failureThresholdType: "percent",
+      });
+    });
+  });
+});
