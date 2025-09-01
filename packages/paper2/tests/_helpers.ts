@@ -10,11 +10,173 @@
 //  * All rights reserved.
 //  */
 
+import { writeFileSync } from 'fs';
+import { PNG } from 'pngjs';
 import { expect } from 'vitest';
-import { paper, CompoundPath, PathItem, Raster, Item } from '~/index-core';
+import pixelmatch from 'pixelmatch';
+import { paper, CompoundPath, PathItem, Raster, Item, Shape, Group } from '~/index-core';
 
 // TODO: remove eslint-disable comment and deal with errors over time
 /* eslint-disable */
+
+/**
+ * Compare 2 image data with resemble.js library.
+ * When comparison fails, expected, actual and compared images are displayed.
+ * @param {ImageData} imageData1 the expected image data
+ * @param {ImageData} imageData2 the actual image data
+ * @param {number} tolerance
+ * @param {string} message
+ * @param {string} description text displayed when comparison fails
+ */
+function compareImageData(imageData1, imageData2, tolerance, message = '', description = '') {
+  if (imageData1.width !== imageData2.width) throw Error('Image widths must be the same!');
+  if (imageData1.height !== imageData2.height) throw Error('Image heights must be the same!');
+
+  const imgWidth = imageData1.width;
+  const imgHeight = imageData1.height;
+
+  tolerance = (tolerance || 1e-4) * 100;
+
+  // var id = QUnit.config.current.testId,
+  //     index = QUnit.config.current.assertions.length + 1;
+  // var result;
+
+  const diff = new PNG({ width: imgWidth, height: imgHeight });
+
+  // https://www.npmjs.com/package/pixelmatch
+  const numDiffPixels = pixelmatch(imageData1.data, imageData2.data, diff.data, imgWidth, imgHeight, {
+    threshold: tolerance,
+  });
+
+  // Fail if there’s any difference
+  if (numDiffPixels > 0) {
+    // Optionally save diff image for debugging
+    writeFileSync('diff.png', PNG.sync.write(diff));
+
+    throw new Error(`Images do not match: ${numDiffPixels} pixels differ`);
+  }
+
+  // fs.writeFileSync('diff.png', PNG.sync.write(diff));
+
+  // Compare image-data using resemble.js:
+  // resemble.compare(
+  //   imageData1,
+  //   imageData2,
+  //   {
+  //     output: {
+  //       errorColor: { red: 255, green: 51, blue: 0 },
+  //       errorType: 'flat',
+  //       transparency: 1,
+  //     },
+  //     ignore: ['antialiasing'],
+  //   },
+  //   // When working with imageData, this call is synchronous:
+  //   function (error, data) {
+  //     if (error) {
+  //       console.error(error);
+  //     } else {
+  //       result = data;
+  //     }
+  //   }
+  // );
+  // // Compare with tolerance in percentage...
+  // var fixed = tolerance < 1 ? ((1 / tolerance) + '').length - 1 : 0,
+  //     identical = result ? 100 - result.misMatchPercentage : 0,
+  //     ok = Math.abs(100 - identical) <= tolerance,
+  //     text = identical.toFixed(fixed) + '% identical';
+  // QUnit.push(ok, text, (100).toFixed(fixed) + '% identical', message);
+  // if (!ok && result && !isNodeContext) {
+  //     // Get the right entry for this unit test and assertion, and
+  //     // replace the results with images
+  //     var entry = document.getElementById('qunit-test-output-' + id)
+  //         .querySelector('li:nth-child(' + (index) + ')'),
+  //         bounds = result.diffBounds;
+  //     entry.querySelector('.test-expected td').appendChild(image(imageData2));
+  //     entry.querySelector('.test-actual td').appendChild(image(imageData1));
+  //     entry.querySelector('.test-diff td').innerHTML = '<pre>'
+  //         + text + (description || '')
+  //         + '</pre><br>'
+  //         + '<img src="' + result.getImageDataUrl() + '">';
+  // }
+}
+
+export function comparePixels(actual, expected, message = '', options = undefined) {
+  function rasterize(item, group, resolution) {
+    var raster = null;
+    if (group) {
+      var parent = item.parent,
+        index = item.index;
+      group.addChild(item);
+      raster = group.rasterize(resolution, false);
+      if (parent) {
+        parent.insertChild(index, item);
+      } else {
+        item.remove();
+      }
+    }
+    return raster;
+  }
+
+  if (!expected) {
+    console.log('1-1-1-1-1-1-1-1-1-1-1-1-1-1--1-1');
+    // return QUnit.strictEqual(actual, expected, message, options);
+  } else if (!actual) {
+    // In order to compare pixels, just create an empty item that can be
+    // rasterized to an empty raster.
+    actual = new Group();
+  }
+
+  options = options || {};
+  // In order to properly compare pixel by pixel, we need to put each item
+  // into a group with a white background of the united dimensions of the
+  // bounds of both items before rasterizing.
+  var resolution = options.resolution || 72,
+    actualBounds = actual.strokeBounds,
+    expectedBounds = expected.strokeBounds,
+    bounds = actualBounds.isEmpty()
+      ? expectedBounds
+      : expectedBounds.isEmpty()
+        ? actualBounds
+        : actualBounds.unite(expectedBounds);
+  if (bounds.isEmpty()) {
+    // QUnit.equal('empty', 'empty', message);
+    console.log('1-1-1-1-1-1-1-1-1-1-1-1-1-1--1-1-22222222');
+    return;
+  }
+  var group =
+      actual &&
+      expected &&
+      new Group({
+        insert: false,
+        children: [
+          new Shape.Rectangle({
+            rectangle: bounds,
+            fillColor: 'white',
+          }),
+        ],
+      }),
+    actualRaster = rasterize(actual, group, resolution),
+    expectedRaster = rasterize(expected, group, resolution);
+  if (!actualRaster || !expectedRaster) {
+    console.log('1-1-1-1-1-1-1-1-1-1-1-1-1-1--1-1...3.3.3.3.3.3.3.3.3');
+    // QUnit.push(false, null, null, 'Unable to compare rasterized items: ' +
+    //     (!actualRaster ? 'actual' : 'expected') + ' item is null',
+    //     QUnit.stack(2));
+  } else {
+    // Compare the two rasterized items.
+    var description =
+      actual instanceof PathItem && expected instanceof PathItem
+        ? '\nExpected:\n' + expected.pathData + '\nActual:\n' + actual.pathData
+        : '';
+    compareImageData(
+      actualRaster.getImageData(),
+      expectedRaster.getImageData(),
+      options.tolerance,
+      message,
+      description
+    );
+  }
+}
 
 export function triggerMouseEvent(type, point, target = undefined) {
   // Depending on event type, events have to be triggered on different

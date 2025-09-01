@@ -37,6 +37,8 @@
     "esbuild": "^0.25.8",
     "eslint": "^9.33.0",
     "jsdom": "^26.1.0",
+    "pixelmatch": "7.1.0",
+    "pngjs": "7.0.0",
     "prettier": "^3.6.2",
     "vitest": "^3.2.4"
   }

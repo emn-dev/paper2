@@ -17,7 +17,7 @@ import {
   Size,
   SymbolItem,
 } from '~/index-core';
-import { equals } from './_helpers';
+import { equals, comparePixels } from './_helpers';
 
 describe('Given: Item', () => {
   it('copyTo(project)', () => {
@@ -1134,6 +1134,7 @@ describe('Given: Item', () => {
     );
   });
 
+  // TODO: still broken
   it.skip('Item#draw() with CompoundPath as clip item', () => {
     function createdClippedGroup(invertedOrder) {
       const compound = new CompoundPath({
@@ -1145,7 +1146,8 @@ describe('Given: Item', () => {
 
       const group = new Group();
       group.children = invertedOrder ? [compound, rectangle] : [rectangle, compound];
-      group.fillColor = 'black';
+      // group.fillColor = 'black';
+      group.fillColor = new Color(0, 0, 0);
       group.clipped = true;
       return group;
     }

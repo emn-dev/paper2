@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { JSDOM } from 'jsdom';
-// import { Canvas } from "canvas"; // You can use node-canvas for most complete server-side canvas
+// import { Canvas } from 'canvas'; // You can use node-canvas for most complete server-side canvas
 
 if (globalThis.process?.release?.name) {
   console.log('We are running in NodeJS');

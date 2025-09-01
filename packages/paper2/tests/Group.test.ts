@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 import { paper, Group, Path, Rectangle, Point, PointText } from '~/index-core';
-import { equals } from './_helpers';
+import { equals, comparePixels } from './_helpers';
 
 describe('Given: Group', () => {
   it('new Group()', () => {
@@ -126,6 +126,7 @@ describe('Given: Group', () => {
     equals(group.children.length, 2, 'adding the same item twice should only add it once.');
   });
 
+  // TODO: still broken
   it.skip('group.setSelectedColor() with selected bound and position', () => {
     // Working: Set selected color first then add child.
     const group1 = new Group();
@@ -137,8 +138,9 @@ describe('Given: Group', () => {
     const group2 = new Group();
     group2.bounds.selected = true;
     group2.position.selected = true;
-    group2.addChild(new Path.Circle([50, 50], 40));
+    group2.addChild(new Path.Rectangle([50, 50], 40));
     group2.selectedColor = 'black';
+
     comparePixels(group1, group2);
   });
 
