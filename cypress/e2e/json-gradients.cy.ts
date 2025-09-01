@@ -2,7 +2,7 @@
 describe(`GIVEN: Gradients (JSON)`, () => {
   beforeEach(() => {
     cy.visit(`/json-gradients.html`);
-    cy.wait(999); // Allow timeout to compelete
+    cy.wait(500); // Allow some time for loading
   });
 
   describe("WHEN page has loaded", () => {

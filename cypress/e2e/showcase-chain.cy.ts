@@ -1,17 +1,20 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Square Rounded`, () => {
+describe(`GIVEN: Chain`, () => {
   beforeEach(() => {
-    cy.visit(`/tools-squareRounded.html`);
+    cy.visit(`/showcase-chain.html`);
     cy.wait(500); // Allow some time for loading
   });
 
   describe("WHEN drawing a curving line", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = "tools/squareRounded";
+      const snapPath = "showcase/chain";
 
       cy.get("main canvas").should("have.a.property", "resize");
 
       // Start
+      cy.get("canvas").drag({ x: 0, y: 0 }, { x: 100, y: 100 });
+
+      // Mousedown to see points
       cy.get("canvas").trigger("mousedown", {
         x: 100,
         y: 100,
@@ -26,14 +29,10 @@ describe(`GIVEN: Square Rounded`, () => {
       // Up
       cy.get("canvas").drag({ x: 300, y: 300 }, { x: 300, y: 150 });
 
-      // Left
-      cy.get("canvas").drag({ x: 300, y: 150 }, { x: 150, y: 150 });
+      cy.wait(333);
 
-      // Up
-      cy.get("canvas").drag({ x: 150, y: 150 }, { x: 150, y: 100 });
-
-      // Stop
-      cy.get("canvas").trigger("mouseup");
+      //   // Stop
+      //   cy.get("canvas").trigger("mouseup");
 
       cy.get("canvas").matchImageSnapshot(snapPath);
     });
