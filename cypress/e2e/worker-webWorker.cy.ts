@@ -5,7 +5,7 @@ describe(`GIVEN: Web Worker`, () => {
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(750); // Allow extra time for loading
+    cy.wait(999); // Allow extra time for loading
   });
 
   describe("WHEN passing data to a web worker", () => {
