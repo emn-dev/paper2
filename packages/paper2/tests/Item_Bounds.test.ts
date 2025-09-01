@@ -96,8 +96,7 @@ describe('Given: Item_Bounds', () => {
     equals(shape.strokeBounds, new Rectangle(-5, -5, 60, 60), 'shape.strokeBounds after enabling strokeScaling');
   });
 
-  // TODO: why is this test broken?
-  it.skip('text.bounds', () => {
+  it('text.bounds', () => {
     const text = new PointText({
       fontFamily: 'Arial, Helvetica',
       fontSize: 14,
