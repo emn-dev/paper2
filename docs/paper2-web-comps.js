@@ -20,7 +20,7 @@ const allPagesData = [
   },
   { file: "nodejs-booleanOpts.html", name: "(nodejs) Boolean Operations" },
   { file: "showcase-rasterSpiral.html", name: "(showcase) Spiral Raster" },
-  { file: "showcase-chain.html", name: "(showcase) Chain" },
+  { file: "showcase-chain.html", name: "(showcase) Chain", hasCyTest: true },
   { file: "showcase-bouncingBalls.html", name: "(showcase) Bouncing Balls" },
   { file: "showcase-divisionRaster.html", name: "(showcase) Division Raster" },
   {
@@ -84,6 +84,8 @@ const allPagesData = [
   { file: "scripts-pathTangents.html", name: "(scripts) Path Tangents" },
   { file: "scripts-pathStructure.html", name: "(scripts) Path Structure" },
   { file: "scripts-booleanOperations.html", name: "(scripts) Boolean Study" },
+  { file: "scripts-roundRectangle.html", name: "(scripts) Rounded Rectangle" },
+  { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },
   { file: "svg-import-viewbox.html", name: "(svg-import) Viewbox 1" },
   { file: "svg-import-symbols.html", name: "(svg-import) Symbols Test" },
   { file: "svg-import-polybezier.html", name: "(svg-import) Rect Testing" },

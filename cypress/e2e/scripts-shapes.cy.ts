@@ -1,16 +1,13 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Circle Testing (JSON)`, () => {
-  const type = "json";
-  const name = "circleTesting";
-
+describe(`GIVEN: Shapes`, () => {
   beforeEach(() => {
-    cy.visit(`/${type}-${name}.html`);
+    cy.visit(`/scripts-shapes.html`);
     cy.wait(500); // Allow some time for loading
   });
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = `${type}/${name}`;
+      const snapPath = "scripts/shapes";
 
       cy.get("main").matchImageSnapshot(snapPath);
     });

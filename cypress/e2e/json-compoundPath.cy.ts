@@ -1,13 +1,16 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 describe(`GIVEN: Compound Path (JSON)`, () => {
+  const type = "json";
+  const name = "compoundPath";
+
   beforeEach(() => {
-    cy.visit(`/json-compoundPath.html`);
-    cy.wait(999); // Allow timeout to compelete
+    cy.visit(`/${type}-${name}.html`);
+    cy.wait(500); // Allow some time for loading
   });
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = "json/compoundPath";
+      const snapPath = `${type}/${name}`;
 
       cy.get("main").matchImageSnapshot(snapPath);
     });

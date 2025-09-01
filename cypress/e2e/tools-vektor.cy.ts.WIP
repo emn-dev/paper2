@@ -2,7 +2,7 @@
 describe(`GIVEN: Vektor`, () => {
   beforeEach(() => {
     cy.visit(`/tools-vektor.html`);
-    cy.wait(999); // Allow some time for canvas to be ready
+    cy.wait(500); // Allow some time for loading
   });
 
   describe("WHEN drawing with Vektor", () => {
