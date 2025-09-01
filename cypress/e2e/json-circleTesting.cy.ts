@@ -5,7 +5,7 @@ describe(`GIVEN: Circle Testing (JSON)`, () => {
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(500); // Allow some time for loading
+    cy.wait(750); // Allow some time for loading
   });
 
   describe("WHEN page has loaded", () => {

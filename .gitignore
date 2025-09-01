@@ -34,3 +34,5 @@ cypress/downloads
 cypress/logs
 
 # docs/test_coverage/
+
+packages/paper2/test_img_diff.png

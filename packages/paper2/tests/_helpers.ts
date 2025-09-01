@@ -51,12 +51,10 @@ function compareImageData(imageData1, imageData2, tolerance, message = '', descr
   // Fail if there’s any difference
   if (numDiffPixels > 0) {
     // Optionally save diff image for debugging
-    writeFileSync('diff.png', PNG.sync.write(diff));
+    writeFileSync('test_img_diff.png', PNG.sync.write(diff));
 
-    throw new Error(`Images do not match: ${numDiffPixels} pixels differ`);
+    throw new Error(`Images do not match: ${numDiffPixels} pixels differ | ${message}`);
   }
-
-  // fs.writeFileSync('diff.png', PNG.sync.write(diff));
 
   // Compare image-data using resemble.js:
   // resemble.compare(
@@ -118,7 +116,6 @@ export function comparePixels(actual, expected, message = '', options = undefine
   }
 
   if (!expected) {
-    console.log('1-1-1-1-1-1-1-1-1-1-1-1-1-1--1-1');
     // return QUnit.strictEqual(actual, expected, message, options);
   } else if (!actual) {
     // In order to compare pixels, just create an empty item that can be
@@ -140,7 +137,6 @@ export function comparePixels(actual, expected, message = '', options = undefine
         : actualBounds.unite(expectedBounds);
   if (bounds.isEmpty()) {
     // QUnit.equal('empty', 'empty', message);
-    console.log('1-1-1-1-1-1-1-1-1-1-1-1-1-1--1-1-22222222');
     return;
   }
   var group =
@@ -158,7 +154,6 @@ export function comparePixels(actual, expected, message = '', options = undefine
     actualRaster = rasterize(actual, group, resolution),
     expectedRaster = rasterize(expected, group, resolution);
   if (!actualRaster || !expectedRaster) {
-    console.log('1-1-1-1-1-1-1-1-1-1-1-1-1-1--1-1...3.3.3.3.3.3.3.3.3');
     // QUnit.push(false, null, null, 'Unable to compare rasterized items: ' +
     //     (!actualRaster ? 'actual' : 'expected') + ' item is null',
     //     QUnit.stack(2));
@@ -209,7 +204,7 @@ function compareProperties(actual, expected, properties, message, options) {
 function compareItem(actual, expected, message, options, properties) {
   options = options || {};
   if (options.rasterize) {
-    // comparePixels(actual, expected, message, options);
+    comparePixels(actual, expected, message, options);
   } else if (!actual || !expected) {
     // QUnit.strictEqual(actual, expected, message);
   } else {
@@ -329,6 +324,7 @@ export function compareBoolean(actual, expected, message = '', options = undefin
   if (expected) {
     expected.style = style;
   }
+
   equals(actual, expected, message, paper.Base.set({ rasterize: true }, options));
   if (parent) {
     // Insert it back.
@@ -338,8 +334,9 @@ export function compareBoolean(actual, expected, message = '', options = undefin
 
 const comparators = {
   Number: function (actual, expected, message, options) {
+    const tolerance = options?.tolerance ? options.tolerance : 1e-5;
     // Compare with a default tolerance of 1e-5:
-    expect(Math.abs(actual - expected)).lessThanOrEqual(1e-5);
+    expect(Math.abs(actual - expected)).lessThanOrEqual(tolerance);
     // var ok = Math.abs(actual - expected) <= Base.pick(options && options.tolerance, 1e-5);
     // QUnit.push(ok, ok ? expected : actual, expected, message);
   },

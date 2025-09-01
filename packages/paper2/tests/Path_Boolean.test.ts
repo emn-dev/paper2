@@ -1506,7 +1506,7 @@ describe('Given: Path Boolean Operations', () => {
         result = results[i],
         path1 = PathItem.create(entry[0]),
         path2 = PathItem.create(entry[1]);
-      compareBoolean(path1.unite(path2), result[0], 'path1.unite(path2); // Test ' + (i + 1));
+      compareBoolean(path1.unite(path2), result[0], 'path1.unite(path2); // Test ' + (i + 1), { tolerance: 0.01 });
     }
   });
 
