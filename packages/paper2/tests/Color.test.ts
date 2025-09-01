@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 import { Color, Path, Gradient, GradientStop, Group, Shape } from '~/index-core';
-import { equals } from './_helpers';
+import { equals, comparePixels } from './_helpers';
 
 // Some tests require node-canvas to work correctly
 describe('Given: Color Class', () => {
@@ -285,8 +285,7 @@ describe('Given: Color Class', () => {
     }, 0.5);
   });
 
-  // TODO: need to port over the "comparePixels" function
-  it.skip('Gradients with applyMatrix', () => {
+  it('Gradients with applyMatrix', () => {
     const topLeft = [100, 100];
     const bottomRight = [400, 400];
     const gradientColor = {

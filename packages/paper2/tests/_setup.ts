@@ -1,4 +1,5 @@
 import { beforeEach } from 'vitest';
+// import '~/jsdom-setup';
 import { paper } from '~/index-core';
 
 beforeEach(() => {
