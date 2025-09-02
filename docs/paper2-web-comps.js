@@ -48,7 +48,7 @@ const allPagesData = [
   },
   { file: "tools-wave.html", name: "(tools) Wave" },
   { file: "tools-wormFarm.html", name: "(tools) Worm Farm" },
-  { file: "tools-vektor.html", name: "(tools) Vektor" },
+  { file: "tools-vektor.html", name: "(tools) Vektor", hasCyTest: true },
   { file: "tools-stars.html", name: "(tools) Stars", hasCyTest: true },
   {
     file: "tools-squareRounded.html",
