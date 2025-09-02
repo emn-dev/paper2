@@ -130,8 +130,8 @@ describe('Given: Raster', () => {
     };
   });
 
-  // TODO: why is this broken?
-  it.skip('Raster#getAverageColor(path)', () => {
+  it('Raster#getAverageColor(path)', () => {
+    // eslint-disable-next-line no-new
     new Path.Rectangle({
       point: [0, 0],
       size: [100, 100],
@@ -144,11 +144,12 @@ describe('Given: Raster', () => {
     });
     const raster = paper.project.activeLayer.rasterize(72);
     circle.scale(0.8);
+
     equals(raster.getAverageColor(circle), circle.fillColor, null, { tolerance: 1e-3 });
   });
 
   // TODO: why is this broken?
-  it.skip('Raster#getAverageColor(path) with compound path', () => {
+  it('Raster#getAverageColor(path) with compound path', () => {
     new Path.Rectangle({
       point: [0, 0],
       size: [100, 100],
@@ -167,6 +168,7 @@ describe('Given: Raster', () => {
     const raster = paper.project.activeLayer.rasterize(72);
     path.scale(0.8);
     path2.scale(1.2);
+
     equals(raster.getAverageColor(compoundPath), new Color(1, 0, 0), null, { tolerance: 1e-3 });
   });
 
