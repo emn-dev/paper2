@@ -29,6 +29,85 @@
     </header>
     <main style="padding-top: 0">
       <section>
+        <article>
+          <details>
+            <summary>View simple core setup example <sup>code</sup></summary>
+            <pre style="text-align: left">
+                <code>
+&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;My App&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;canvas id=&quot;myCanvas&quot; resize&gt;&lt;/canvas&gt;
+    &lt;script&gt;
+      import(&quot;https://unpkg.com/paper2/paper2-core.js&quot;).then((paperModule) =&gt; {
+        const { paper, Path } = paperModule;
+
+        paper.setup(&quot;myCanvas&quot;);
+
+        const DELAY = 1_000; // 1 second
+        let spinSpeed = 1;
+
+        setInterval(() =&gt; {
+          spinSpeed += 1;
+          if (spinSpeed &gt; 9) spinSpeed = 1;
+        }, DELAY);
+
+        const path = new Path.Rectangle({
+          point: [125, 50],
+          size: [75, 75],
+          strokeColor: &quot;black&quot;,
+        });
+
+        paper.view.onFrame = () =&gt; path.rotate(spinSpeed);
+      });
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+              </code>
+            </pre>
+          </details>
+          <details>
+            <summary>View paperscript setup example <sup>code</sup></summary>
+            <pre style="text-align: left">
+                <code>
+&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;My App (Paperscript)&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;canvas id=&quot;myCanvas&quot; resize&gt;&lt;/canvas&gt;
+    &lt;script canvas=&quot;myCanvas&quot; type=&quot;text/paperscript&quot;&gt;
+      const DELAY = 1_000; // 1 second
+      let spinSpeed = 1;
+
+      setInterval(() =&gt; {
+        spinSpeed += 1;
+        if (spinSpeed &gt; 9) spinSpeed = 1;
+      }, DELAY);
+
+      const path = new Path.Rectangle({
+        point: [125, 50],
+        size: [75, 75],
+        strokeColor: &quot;black&quot;,
+      });
+
+      paper.view.onFrame = () =&gt; path.rotate(spinSpeed);
+    &lt;/script&gt;
+    &lt;script type=&quot;module&quot; src=&quot;https://unpkg.com/paper2/paper2.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+              </code>
+            </pre>
+          </details>
+        </article>
+      </section>
+      <section>
         <p>
           These examples are a showcase for many how-to's, they come directly
           from
