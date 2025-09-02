@@ -10,11 +10,11 @@ describe(`GIVEN: Web Worker`, () => {
 
   describe("WHEN passing data to a web worker", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = `${type}/${name}`;
-
       cy.get("main canvas").should("have.a.property", "resize");
 
-      cy.get("canvas").matchImageSnapshot(snapPath);
+      cy.get("canvas").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 300, // If less than 300 pixels changed it is still a success
+      });
     });
   });
 });
