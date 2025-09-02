@@ -126,8 +126,8 @@ describe('Given: Group', () => {
     equals(group.children.length, 2, 'adding the same item twice should only add it once.');
   });
 
-  // TODO: still broken
-  it.skip('group.setSelectedColor() with selected bound and position', () => {
+  // TODO: Not sure if this test is doing anything?
+  it('group.setSelectedColor() with selected bound and position', () => {
     // Working: Set selected color first then add child.
     const group1 = new Group();
     group1.bounds.selected = true;

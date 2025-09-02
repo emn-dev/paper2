@@ -1134,8 +1134,7 @@ describe('Given: Item', () => {
     );
   });
 
-  // TODO: still broken
-  it.skip('Item#draw() with CompoundPath as clip item', () => {
+  it('Item#draw() with CompoundPath as clip item', () => {
     function createdClippedGroup(invertedOrder) {
       const compound = new CompoundPath({
         children: [new Path.Circle(new Point(50, 50), 50), new Path.Circle(new Point(100, 50), 50)],
@@ -1146,8 +1145,7 @@ describe('Given: Item', () => {
 
       const group = new Group();
       group.children = invertedOrder ? [compound, rectangle] : [rectangle, compound];
-      // group.fillColor = 'black';
-      group.fillColor = new Color(0, 0, 0);
+      group.fillColor = 'black';
       group.clipped = true;
       return group;
     }

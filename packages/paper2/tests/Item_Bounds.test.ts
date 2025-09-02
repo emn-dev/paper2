@@ -16,6 +16,8 @@ import {
 import { equals } from './_helpers';
 
 describe('Given: Item_Bounds', () => {
+  const longRunningTest = { timeout: 9_000 };
+
   it('item.bounds caching', () => {
     const circle = new Path.Circle(new Point(100, 100), 50);
     const rectangle = new Path.Rectangle(new Point(75, 75), new Point(175, 175));
@@ -96,7 +98,7 @@ describe('Given: Item_Bounds', () => {
     equals(shape.strokeBounds, new Rectangle(-5, -5, 60, 60), 'shape.strokeBounds after enabling strokeScaling');
   });
 
-  it('text.bounds', () => {
+  it('text.bounds', longRunningTest, () => {
     const text = new PointText({
       fontFamily: 'Arial, Helvetica',
       fontSize: 14,

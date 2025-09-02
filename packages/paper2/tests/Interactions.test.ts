@@ -277,12 +277,13 @@ describe('Given: Interactions', () => {
     const point2 = new Point(15, 15);
     item.onMouseDrag = function (event) {
       equals(event.type, 'mousedrag');
-      // TODO: why this not working?
-      // equals(event.point, point2);
+
+      // equals(event.point, point2); // TODO: why this not working?
+
       equals(event.target, item);
       equals(event.currentTarget, item);
-      // TODO: why this not working?
-      // equals(event.delta, new Point(10, 10));
+
+      // equals(event.delta, new Point(10, 10)); // TODO: why this not working?
     };
     triggerMouseEvent('mousedown', point1);
     triggerMouseEvent('mousemove', point2);

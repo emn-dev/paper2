@@ -18,8 +18,7 @@ describe('Given: Path', () => {
     }, 0.2255849553116685);
   });
 
-  // TODO: why is this broken?
-  it.skip('Path#area', () => {
+  it('Path#area', () => {
     const rect = new Path.Rectangle({
       point: [0, 0],
       size: [10, 10],

@@ -2,8 +2,6 @@ import { describe, it } from 'vitest';
 import { paper, Point, Path, Color, Group, Rectangle, Shape, Size, SymbolDefinition } from '~/index-core';
 import { compareSVG, createSVG, equals } from './_helpers';
 
-// TODO: these are going to need some figuring out... I think we will need a canvas instance
-
 describe('Given: SvgExport', () => {
   function createPolyPath(str) {
     const points = str.split(' ').map(function (point) {

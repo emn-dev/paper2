@@ -7,7 +7,6 @@ export default defineConfig({
   test: {
     coverage: {
       provider: 'v8',
-      enabled: true, // Comment this out to stop running the report when working locally
       include: ['lib/*'],
       reportsDirectory: '../../docs/test_coverage',
     },

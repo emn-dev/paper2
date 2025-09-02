@@ -540,7 +540,7 @@ describe('Given: Path Boolean Operations', () => {
   it('#885', () => {
     const p1 = new Path.Rectangle(100, 100, 100, 100);
     const p2 = p1.clone();
-    // const empty = new Path();
+    const empty = new Path();
 
     compareBoolean(function () {
       return p1.unite(p2);
@@ -549,13 +549,12 @@ describe('Given: Path Boolean Operations', () => {
       return p1.intersect(p2);
     }, p1);
 
-    // TODO: why these not working?
-    // compareBoolean(function () {
-    //   return p1.subtract(p2);
-    // }, empty);
-    // compareBoolean(function () {
-    //   return p1.exclude(p2);
-    // }, empty);
+    compareBoolean(function () {
+      return p1.subtract(p2);
+    }, empty);
+    compareBoolean(function () {
+      return p1.exclude(p2);
+    }, empty);
   });
 
   it('#889', () => {

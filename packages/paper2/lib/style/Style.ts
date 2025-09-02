@@ -195,7 +195,7 @@ export const Style = Base.extend(
               // description that wasn't coerced to a color object yet
               if (old) {
                 Color._setOwner(old, null);
-                old._canvasStyle = null;
+                if (typeof old !== 'string') old._canvasStyle = null;
               }
               if (value && value.constructor === Color) {
                 // NOTE: If value is not a Color, it is only
