@@ -1,14 +1,15 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 describe(`GIVEN: Vektor`, () => {
+  const type = "tools";
+  const name = "vektor";
+
   beforeEach(() => {
-    cy.visit(`/tools-vektor.html`);
+    cy.visit(`/${type}-${name}.html`);
     cy.wait(500); // Allow some time for loading
   });
 
   describe("WHEN drawing with Vektor", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = "tools/vektor";
-
       cy.get("main canvas").should("have.a.property", "resize");
 
       // Start
@@ -16,9 +17,6 @@ describe(`GIVEN: Vektor`, () => {
         x: 100,
         y: 100,
       });
-
-      // // Down
-      // cy.get("canvas").drag({ x: 100, y: 100 }, { x: 100, y: 300 });
 
       // Right
       cy.get("canvas").drag({ x: 100, y: 100 }, { x: 300, y: 100 });
@@ -29,10 +27,8 @@ describe(`GIVEN: Vektor`, () => {
       // Stop
       cy.get("canvas").trigger("mouseup");
 
-      // The fail threshold is difficult to get right for this one
-      cy.get("canvas").matchImageSnapshot(snapPath, {
-        failureThreshold: 0.5,
-        failureThresholdType: "percent",
+      cy.get("canvas").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 400, // If less than 400 pixels changed it is still a success
       });
     });
   });
