@@ -10,9 +10,7 @@ describe(`GIVEN: Circle Testing (JSON)`, () => {
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = `${type}/${name}`;
-
-      cy.get("main").matchImageSnapshot(snapPath);
+      cy.get("main").matchImageSnapshot(`${type}/${name}`);
     });
   });
 });
