@@ -4,8 +4,6 @@ import { Point, Path, Color, CompoundPath, paper, Raster, Rectangle, Size } from
 import { DomEvent } from '~/dom/DomEvent';
 import { equals } from './_helpers';
 
-// TODO: these are going to need some figuring out... I think we will need a canvas instance
-
 describe('Given: Raster', () => {
   function pushFailure(msg: string) {
     console.log('PUSH-FAILURE = ', msg);
@@ -148,7 +146,6 @@ describe('Given: Raster', () => {
     equals(raster.getAverageColor(circle), circle.fillColor, null, { tolerance: 1e-3 });
   });
 
-  // TODO: why is this broken?
   it('Raster#getAverageColor(path) with compound path', () => {
     new Path.Rectangle({
       point: [0, 0],
