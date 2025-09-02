@@ -34,6 +34,9 @@
 
         function onMouseDown(event) {
           var hue = Math.random() * 360;
+
+          if (window.Cypress) hue = 180;
+
           paper.project.currentStyle.fillColor = {
             hue: hue,
             saturation: 1,
