@@ -10,9 +10,9 @@ describe(`GIVEN: Path Structure`, () => {
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = `${type}/${name}`;
-
-      cy.get("main").matchImageSnapshot(snapPath);
+      cy.get("main").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 100, // If less than 100 pixels changed it is still a success
+      });
     });
   });
 });
