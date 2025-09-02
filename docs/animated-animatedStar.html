@@ -22,7 +22,10 @@
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+
       var layer = project.activeLayer;
+      var stopAt = window.Cypress ? 60 : Infinity; // Doing this so we can have Cypress test
+      var counter = 0;
 
       var values = {
         count: 34,
@@ -53,10 +56,14 @@
       }
 
       function onFrame(event) {
-        for (var i = 0; i < values.count; i++) {
-          var item = layer.children[i];
-          var angle = ((values.count - i) * Math.sin(event.count / 128)) / 10;
-          item.rotate(angle);
+        counter += 1;
+
+        if (counter < stopAt) {
+          for (var i = 0; i < values.count; i++) {
+            var item = layer.children[i];
+            var angle = ((values.count - i) * Math.sin(event.count / 128)) / 10;
+            item.rotate(angle);
+          }
         }
       }
 

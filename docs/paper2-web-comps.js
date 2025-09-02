@@ -4,6 +4,7 @@ const allPagesData = [
   {
     file: "animated-animatedStar.html",
     name: "(animated) Animated Star",
+    hasCyTest: true,
   },
   {
     file: "animated-booleanOps.html",
