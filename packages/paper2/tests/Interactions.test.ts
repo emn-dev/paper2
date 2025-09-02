@@ -278,12 +278,14 @@ describe('Given: Interactions', () => {
     item.onMouseDrag = function (event) {
       equals(event.type, 'mousedrag');
 
-      // equals(event.point, point2); // TODO: why this not working?
+      // equals(event.point, point2, '', { tolerance: 9 }); // TODO: this works, but why?
+      // equals(event.point, point2);
 
       equals(event.target, item);
       equals(event.currentTarget, item);
 
-      // equals(event.delta, new Point(10, 10)); // TODO: why this not working?
+      // equals(event.delta, new Point(10, 10), '', { tolerance: 19 }); // TODO: this works, but why?
+      // equals(event.delta, new Point(10, 10));
     };
     triggerMouseEvent('mousedown', point1);
     triggerMouseEvent('mousemove', point2);
