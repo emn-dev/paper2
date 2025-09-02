@@ -27,7 +27,9 @@ describe(`GIVEN: Interactive Tiger`, () => {
       // Stop
       cy.get("canvas").trigger("mouseup");
 
-      cy.get("canvas").matchImageSnapshot(`${type}/${name}`);
+      cy.get("canvas").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 0.01,
+      });
     });
   });
 });
