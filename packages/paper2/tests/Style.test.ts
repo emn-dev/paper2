@@ -25,8 +25,7 @@ describe('Given: Style', () => {
     }, [] + '');
   });
 
-  // TODO: why is this broken?
-  it.skip('Project#currentStyle', () => {
+  it('Project#currentStyle', () => {
     paper.project.currentStyle.fillColor = 'black';
     const path = new Path();
     equals(path.fillColor, new Color('black'), 'path.fillColor');
