@@ -333,12 +333,18 @@ export function compareBoolean(actual, expected, message = '', options = undefin
 }
 
 const comparators = {
+  //   Null: QUnit.strictEqual,
+  //   Undefined: QUnit.strictEqual,
+  //   Boolean: QUnit.strictEqual,
   Number: function (actual, expected, message, options) {
     const tolerance = options?.tolerance ? options.tolerance : 1e-5;
     // Compare with a default tolerance of 1e-5:
     expect(Math.abs(actual - expected), message).lessThanOrEqual(tolerance);
     // var ok = Math.abs(actual - expected) <= Base.pick(options && options.tolerance, 1e-5);
     // QUnit.push(ok, ok ? expected : actual, expected, message);
+  },
+  Shape: function (actual, expected, message, options) {
+    compareItem(actual, expected, message, options, ['shape', 'size', 'radius']);
   },
   Color: function (actual, expected, message, options) {
     if (actual && expected) {
@@ -393,6 +399,12 @@ const comparators = {
   Segment: function (actual, expected, message, options) {
     compareProperties(actual, expected, ['handleIn', 'handleOut', 'point', 'selected'], message, options);
   },
+  SegmentPoint: function (actual, expected, message, options) {
+    comparators.Point(actual, expected, message, options);
+    // comparators.Boolean(actual.selected, expected.selected, message + ' (#selected)', options);
+    expect(actual.selected, `${message} (#selected)`).toBe(expected.selected);
+  },
+  Item: compareItem,
   CompoundPath: function (actual, expected, message, options) {
     compareItem(actual, expected, message, options, undefined);
   },
@@ -431,6 +443,9 @@ const comparators = {
     } else {
       equals(actual.toDataURL(), expected.toDataURL(), message + ' (#toDataUrl())');
     }
+  },
+  Base: function (actual, expected, message, options) {
+    comparators.Object(actual, expected, message, options);
   },
   Element: function (actual, expected, message, options) {
     // Convention: Loop through the attribute lists of both actual and
@@ -865,9 +880,6 @@ export function equals(actual, expected, message = '', options = {}) {
 // // A list of comparator functions, based on `expected` type. See equals() for
 // // an explanation of how the type is determined.
 // var comparators = {
-//   Null: QUnit.strictEqual,
-//   Undefined: QUnit.strictEqual,
-//   Boolean: QUnit.strictEqual,
 
 //   Object: function (actual, expected, message, options) {
 //     // QUnit.push(Base.equals(actual, expected), actual, expected, message);
