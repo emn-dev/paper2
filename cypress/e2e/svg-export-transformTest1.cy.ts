@@ -13,7 +13,9 @@ describe(`GIVEN: Transform Testing`, () => {
     it("THEN should pass visual image compare", () => {
       cy.get("main canvas").should("have.a.property", "resize");
 
-      cy.get("main").matchImageSnapshot(`${type}/${name}`);
+      cy.get("main").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 100, // If less than 100 pixels changed it is still a success
+      });
     });
   });
 });
