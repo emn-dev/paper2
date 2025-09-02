@@ -18,7 +18,7 @@
       <p>&nbsp;</p>
     </header>
     <main>
-      <canvas id="myCanvas" resize></canvas>
+      <canvas style="width: 50%; height: 50%" id="myCanvas" resize></canvas>
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
@@ -35,7 +35,7 @@
             clonedPath.rotate(angle * i, circlePath.bounds.topLeft);
         };
 
-        document.body.appendChild(project.exportSVG());
+        document.getElementsByTagName('main')[0].appendChild(project.exportSVG());
       }
     </script>
     <script id="mainPaper2Script2">

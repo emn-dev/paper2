@@ -102,6 +102,7 @@ const allPagesData = [
   {
     file: "svg-export-transformTest1.html",
     name: "(svg-export) Transform Testing",
+    hasCyTest: true,
   },
   {
     file: "svg-export-rectAndAttributeTesting.html",
