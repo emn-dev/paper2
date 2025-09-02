@@ -63,7 +63,7 @@ const allPagesData = [
   },
   { file: "tools-clouds.html", name: "(tools) Clouds" },
   { file: "tools-circles.html", name: "(tools) Circles" },
-  { file: "tools-grid.html", name: "(tools) Grid" },
+  { file: "tools-grid.html", name: "(tools) Grid", hasCyTest: true },
   { file: "tools-fancyBrush.html", name: "(tools) Fancy Brush" },
   { file: "tools-drippingBrush.html", name: "(tools) Dripping Brush" },
   { file: "tools-bezierTool.html", name: "(tools) Bezier Tool" },
