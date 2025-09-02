@@ -10,8 +10,6 @@ describe(`GIVEN: Grid`, () => {
 
   describe("WHEN drawing", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = "tools/squareRounded";
-
       cy.get("main canvas").should("have.a.property", "resize");
 
       // Start
@@ -20,17 +18,14 @@ describe(`GIVEN: Grid`, () => {
         y: 100,
       });
 
+      // Down and Right
+      cy.get("canvas").drag({ x: 100, y: 100 }, { x: 300, y: 300 });
+
+      // Up and Right
+      cy.get("canvas").drag({ x: 300, y: 300 }, { x: 500, y: 200 });
+
       // Down
-      cy.get("canvas").drag({ x: 100, y: 100 }, { x: 100, y: 300 });
-
-      // Right
-      cy.get("canvas").drag({ x: 100, y: 300 }, { x: 300, y: 300 });
-
-      // Up
-      cy.get("canvas").drag({ x: 300, y: 300 }, { x: 300, y: 150 });
-
-      // Left
-      cy.get("canvas").drag({ x: 300, y: 150 }, { x: 150, y: 150 });
+      cy.get("canvas").drag({ x: 500, y: 200 }, { x: 500, y: 400 });
 
       // Stop
       cy.get("canvas").trigger("mouseup");
