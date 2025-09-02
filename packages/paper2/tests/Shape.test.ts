@@ -4,8 +4,7 @@ import { Shape, Size } from '~/index-core';
 import { equals } from './_helpers';
 
 describe('Given: Shape', () => {
-  // TODO: why is this broken?
-  it.skip('shape.toPath().toShape()', () => {
+  it('shape.toPath().toShape()', () => {
     const shapes = {
       circle: new Shape.Circle({
         center: [100, 100],
