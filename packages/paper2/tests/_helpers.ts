@@ -11,8 +11,8 @@
 //  */
 
 import { writeFileSync } from 'fs';
-import { PNG } from 'pngjs';
 import { expect } from 'vitest';
+import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
 import { paper, CompoundPath, PathItem, Raster, Item, Shape, Group } from '~/index-core';
 
@@ -20,7 +20,7 @@ import { paper, CompoundPath, PathItem, Raster, Item, Shape, Group } from '~/ind
 /* eslint-disable */
 
 /**
- * Compare 2 image data with resemble.js library.
+ * Compare 2 image data with pixelmatch library.
  * When comparison fails, expected, actual and compared images are displayed.
  * @param {ImageData} imageData1 the expected image data
  * @param {ImageData} imageData2 the actual image data
@@ -336,18 +336,18 @@ const comparators = {
   Number: function (actual, expected, message, options) {
     const tolerance = options?.tolerance ? options.tolerance : 1e-5;
     // Compare with a default tolerance of 1e-5:
-    expect(Math.abs(actual - expected)).lessThanOrEqual(tolerance);
+    expect(Math.abs(actual - expected), message).lessThanOrEqual(tolerance);
     // var ok = Math.abs(actual - expected) <= Base.pick(options && options.tolerance, 1e-5);
     // QUnit.push(ok, ok ? expected : actual, expected, message);
   },
   Color: function (actual, expected, message, options) {
     if (actual && expected) {
-      // equals(actual.type, expected.type, message + ' (#type)', options);
-      expect(actual.type, `${message} (#type)`).toBe(expected.type);
+      equals(actual.type, expected.type, message + ' (#type)', options);
+      // expect(actual.type, `${message} (#type)`).toBe(expected.type);
 
       // // NOTE: This also compares gradients, with identity checks and all.
-      // equals(actual.components, expected.components, message + ' (#components)', options);
-      expect(actual.components, `${message} (#components)`).toEqual(expected.components);
+      equals(actual.components, expected.components, message + ' (#components)', options);
+      // expect(actual.components, `${message} (#components)`).toEqual(expected.components);
     } else {
       // QUnit.push(expected.equals(actual), actual, expected, message);
     }
