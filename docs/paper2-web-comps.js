@@ -47,7 +47,7 @@ const allPagesData = [
   { file: "tools-wave.html", name: "(tools) Wave" },
   { file: "tools-wormFarm.html", name: "(tools) Worm Farm" },
   { file: "tools-vektor.html", name: "(tools) Vektor" },
-  { file: "tools-stars.html", name: "(tools) Stars" },
+  { file: "tools-stars.html", name: "(tools) Stars", hasCyTest: true },
   {
     file: "tools-squareRounded.html",
     name: "(tools) Square Rounded",
@@ -55,7 +55,11 @@ const allPagesData = [
   },
   { file: "tools-pathEditing.html", name: "(tools) Path Editing" },
   { file: "tools-multipleTools.html", name: "(tools) Multiple Tools" },
-  { file: "tools-multiLines.html", name: "(tools) Multi Lines" },
+  {
+    file: "tools-multiLines.html",
+    name: "(tools) Multi Lines",
+    hasCyTest: true,
+  },
   { file: "tools-clouds.html", name: "(tools) Clouds" },
   { file: "tools-circles.html", name: "(tools) Circles" },
   { file: "tools-grid.html", name: "(tools) Grid" },
