@@ -86,8 +86,16 @@ const allPagesData = [
     hasCyTest: true,
   },
   { file: "games-paperoids.html", name: "(games) Paperoids" },
-  { file: "scripts-pathTangents.html", name: "(scripts) Path Tangents" },
-  { file: "scripts-pathStructure.html", name: "(scripts) Path Structure" },
+  {
+    file: "scripts-pathTangents.html",
+    name: "(scripts) Path Tangents",
+    hasCyTest: true,
+  },
+  {
+    file: "scripts-pathStructure.html",
+    name: "(scripts) Path Structure",
+    hasCyTest: true,
+  },
   { file: "scripts-booleanOperations.html", name: "(scripts) Boolean Study" },
   { file: "scripts-roundRectangle.html", name: "(scripts) Rounded Rectangle" },
   { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },
