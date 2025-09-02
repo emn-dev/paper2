@@ -26,6 +26,7 @@ const allPagesData = [
   {
     file: "showcase-interactiveTiger.html",
     name: "(showcase) Interactive Tiger",
+    hasCyTest: true,
   },
   {
     file: "rasters-phyllotaxisRaster.html",
