@@ -9,6 +9,17 @@
     <script src="./paper2-stackblitz.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+    <style>
+      #myCanvas {
+        width: 50%;
+      }
+
+      @media (max-width: 768px) {
+        #myCanvas {
+          width: 95%;
+        }
+      }
+    </style>
   </head>
   <body>
     <paper2-nav></paper2-nav>
@@ -18,7 +29,7 @@
       <p>&nbsp;</p>
     </header>
     <main>
-      <canvas style="width: 50%; height: 50%" id="myCanvas" resize></canvas>
+      <canvas id="myCanvas" resize></canvas>
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
