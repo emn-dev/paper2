@@ -3,6 +3,10 @@ import path from 'path';
 import { configDefaults, defineConfig } from 'vitest/config';
 // import viteConfig from './vite.config';
 
+console.log('a=sd-fas=-fd=a-sdf=-as=f-as=-fd-a=s-fd-sa=df-=asd=f=sadf');
+console.log('a=sd-fas=-fd=a-sdf=-as=f-as=-fd-a=s-fd-sa=df-=asd=f=sadf');
+console.log(process.env);
+
 export default defineConfig({
   test: {
     coverage: {
