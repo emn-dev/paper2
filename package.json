@@ -22,6 +22,7 @@
     "set-ver": "node --experimental-transform-types ./util-scripts/set-version.ts",
     "serve:docs": "node --experimental-transform-types ./util-scripts/http-server.ts",
     "test:unit": "yarn workspace paper2 test:unit:pipeline",
+    "test:unit:with-coverage": "yarn workspace paper2 test:unit:pipeline --coverage.enabled true",
     "test:lint": "yarn workspace paper2 test:lint",
     "cy:open": "npx cypress open --config-file cypress/cy.config.ts",
     "cy:open-by-serve": "yarn serve:docs & yarn cy:open",
