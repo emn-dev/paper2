@@ -107,6 +107,16 @@ const allPagesData = [
     name: "(scripts) BlendModes",
     hasCyTest: false,
   },
+  {
+    file: "scripts-compoundPath.html",
+    name: "(scripts) Compound Path",
+    hasCyTest: true,
+  },
+  {
+    file: "scripts-curveTimeParameterization.html",
+    name: "(scripts) Curve Time Parameterization",
+    hasCyTest: true,
+  },
   { file: "scripts-booleanOperations.html", name: "(scripts) Boolean Study" },
   { file: "scripts-roundRectangle.html", name: "(scripts) Rounded Rectangle" },
   { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },
