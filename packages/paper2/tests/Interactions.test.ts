@@ -1,8 +1,12 @@
-import { describe, it } from 'vitest';
+import { beforeEach, describe, it } from 'vitest';
 import { Point, Path, Size } from '~/index-core';
 import { equals, triggerMouseEvent } from './_helpers';
 
 describe('Given: Interactions', () => {
+  beforeEach(async () => {
+    await import('~/jsdom-canvas-setup.js');
+  });
+
   //
   // Mouse
   //
@@ -277,15 +281,10 @@ describe('Given: Interactions', () => {
     const point2 = new Point(15, 15);
     item.onMouseDrag = function (event) {
       equals(event.type, 'mousedrag');
-
-      // equals(event.point, point2, '', { tolerance: 9 }); // TODO: this works, but why?
-      // equals(event.point, point2);
-
+      equals(event.point, point2);
       equals(event.target, item);
       equals(event.currentTarget, item);
-
-      // equals(event.delta, new Point(10, 10), '', { tolerance: 19 }); // TODO: this works, but why?
-      // equals(event.delta, new Point(10, 10));
+      equals(event.delta, new Point(10, 10));
     };
     triggerMouseEvent('mousedown', point1);
     triggerMouseEvent('mousemove', point2);
