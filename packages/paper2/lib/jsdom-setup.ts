@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { JSDOM } from 'jsdom';
-// import { Canvas } from 'canvas'; // You can use node-canvas for most complete server-side canvas
 
 if (globalThis.process?.release?.name) {
   console.log('We are running in NodeJS');
@@ -13,8 +12,6 @@ if (globalThis.process?.release?.name) {
   if (!globalThis.navigator) {
     globalThis.navigator = dom.window.navigator;
   }
-
-  // global.window.HTMLCanvasElement = Canvas; // You can use node-canvas for most complete server-side canvas
 } else {
   console.log('Unknown runtime!');
 }
