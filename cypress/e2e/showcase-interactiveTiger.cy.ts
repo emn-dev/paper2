@@ -11,8 +11,6 @@ describe(`GIVEN: Interactive Tiger`, () => {
 
   describe("WHEN moving some tiger pieces", () => {
     it("THEN should pass visual image compare", () => {
-      const snapPath = "showcase/chain";
-
       cy.get("main canvas").should("have.a.property", "resize");
 
       // Start
