@@ -16,6 +16,13 @@
           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans,
           Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
       }
+      input[type="search"] {
+        margin: auto;
+        width: 300px;
+      }
+      tbody tr[hidden] {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -150,17 +157,22 @@
         </aside>
       </section>
 
-      <h3>All Examples</h3>
-      <table>
-        <th>
-          <tr>
-            <td></td>
-            <td>Paper2 example</td>
-            <td>Cypress Test?</td>
-          </tr>
-        </th>
-        <tbody id="myTbody"></tbody>
-      </table>
+      <section>
+        <header>
+          <h3>All Examples</h3>
+          <input type="search" id="table-filter" placeholder="Search…" />
+        </header>
+        <table id="allExamplesTable">
+          <thead>
+            <tr>
+              <td></td>
+              <td>Paper2 example</td>
+              <td>Cypress Test?</td>
+            </tr>
+          </thead>
+          <tbody id="myTbody"></tbody>
+        </table>
+      </section>
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1">
@@ -182,10 +194,23 @@
               `<tr>
                   <td>${i + 1}</td>
                   <td style="text-align: left">${a}</td>
-                  <td>${a.includes("has-cy-test") ? "yes" : ""}</td>
+                  <td>${a.includes("has-cy-test") ? "yes" : "--"}</td>
                 </tr>`
           )
           .join(" ");
+      });
+    </script>
+    <script>
+      const filterInput = document.getElementById("table-filter");
+
+      filterInput.addEventListener("input", () => {
+        const table = document.getElementById("allExamplesTable");
+        const rows = Array.from(table.tBodies[0].rows);
+        const query = filterInput.value.toLowerCase();
+        rows.forEach((row) => {
+          const text = row.textContent.toLowerCase();
+          row.hidden = !text.includes(query);
+        });
       });
     </script>
   </body>
