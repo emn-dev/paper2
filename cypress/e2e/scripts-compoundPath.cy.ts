@@ -1,7 +1,7 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Gradients (JSON)`, () => {
-  const type = "json";
-  const name = "gradients";
+describe(`GIVEN: Compound Path`, () => {
+  const type = "scripts";
+  const name = "compoundPath";
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
@@ -10,7 +10,7 @@ describe(`GIVEN: Gradients (JSON)`, () => {
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
-      cy.get("main").matchImageSnapshot(`${type}/${name}`);
+      cy.get("canvas").matchImageSnapshot(`${type}/${name}`);
     });
   });
 });

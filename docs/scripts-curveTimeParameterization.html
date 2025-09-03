@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Curve Time Parameterization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Curve Time Parameterization</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var path = new Path();
+      path.moveTo(200, 200);
+      path.curveTo([170, 50], [300, 200]);
+      path.strokeWidth = 1;
+      path.strokeColor = "black";
+      var curve = path.curves[0];
+
+      function onMouseMove(event) {
+        modifyCurve(event.point, true);
+      }
+
+      function modifyCurve(point, remove) {
+        curve.segment2.point = point;
+        var length = curve.length;
+        var step = 10;
+        var iteratively = true;
+        var flatten = true;
+        var num = Math.floor(length / step);
+        var prev = 0;
+        if (flatten) {
+          var clone = path.clone();
+          clone.flatten(step);
+          for (var i = 0; i < clone.segments.length; i++) {
+            var point = clone.segments[i].point;
+            var circle = new Path.Circle(point, step / 2);
+            circle.strokeColor = "red";
+            if (remove) circle.removeOnMove();
+          }
+          clone.remove();
+        } else {
+          for (var i = 0, pos = 0; i <= num; i++, pos += step) {
+            var t = iteratively
+              ? curve.getTimeAt(step, prev)
+              : curve.getTimeAt(pos);
+            var point = curve.getPointAtTime(t);
+            var circle = new Path.Circle(point, step / 2);
+            circle.strokeColor = "red";
+            if (remove) circle.removeOnMove();
+            prev = t;
+          }
+        }
+      }
+
+      // modifyCurve(new Point(400, 377), false);
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
