@@ -102,6 +102,11 @@ const allPagesData = [
     name: "(scripts) Arcs",
     hasCyTest: true,
   },
+  {
+    file: "scripts-blendModes.html",
+    name: "(scripts) BlendModes",
+    hasCyTest: false,
+  },
   { file: "scripts-booleanOperations.html", name: "(scripts) Boolean Study" },
   { file: "scripts-roundRectangle.html", name: "(scripts) Rounded Rectangle" },
   { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },
