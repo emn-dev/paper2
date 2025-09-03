@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HslColor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>HslColor</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var steps = {
+        hue: 100,
+        saturation: 20,
+        lightness: 3,
+      };
+
+      for (var i = 0; i < steps.lightness; i++) {
+        var radius = (view.size.width / steps.lightness) * 0.45;
+        var offset = new Point(view.size.width / steps.lightness, 0);
+        var position = view.bounds.leftCenter + offset * (i + 0.5);
+        var lightness = 1 - (i + 1) / (steps.lightness + 1);
+        createWheel(position, radius, steps, lightness);
+      }
+
+      function createWheel(center, radius, steps, lightness) {
+        var hUnit = 360 / steps.hue;
+        for (var h = 0; h < steps.hue; h++) {
+          var hue = h * hUnit;
+          var vector = new Point({
+            angle: hue - 90,
+            length: radius,
+          });
+          path = new Path(new Point(), vector.rotate(hUnit / 2));
+          path.closed = true;
+          path.arcTo(vector, vector.rotate(hUnit / -2));
+          path.position += center;
+          var colors = [];
+          for (var i = 0; i < steps.saturation; i++) {
+            var saturation = i / steps.saturation;
+            var color = {
+              hue: hue,
+              saturation: saturation,
+              lightness: lightness,
+            };
+            colors.push(color);
+          }
+          var gradient = new Gradient(colors, true);
+          var from = center;
+          var to = center + vector;
+          var gradientColor = new Color(gradient, from, to);
+          path.fillColor = path.strokeColor = gradientColor;
+        }
+      }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

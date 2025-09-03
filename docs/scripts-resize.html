@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Resize</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Resize</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var redPath = new Path.Circle({
+        center: view.center,
+        radius: 5,
+        fillColor: "red",
+      });
+
+      var whitePath = new Path.Circle({
+        center: view.center,
+        radius: 5,
+        fillColor: "white",
+      });
+
+      var text = new PointText({
+        content: "Resize your window",
+        justification: "center",
+        point: view.center,
+      });
+
+      function onResize(event) {
+        // Resize the red circle to fill the bounds of the view:
+        redPath.fitBounds(view.bounds, true);
+
+        // Resize the white circle to fit within the bounds of the view:
+        whitePath.fitBounds(view.bounds, false);
+
+        // Move the text to the center of the view:
+        text.position = view.bounds.center;
+      }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
