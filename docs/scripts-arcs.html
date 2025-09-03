@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Arcs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Arcs</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var values = {
+          points: 20,
+          radius: 20,
+          initialRadius: 10
+      };
+      for (var i = 0; i < 30; i++) {
+          var path = new Path({
+              fillColor: i % 2 ? 'red' : 'black',
+              closed: true
+          });
+
+          var point = new Point({
+              length: values.initialRadius + values.radius * i,
+              angle: 0
+          });
+          for (var j = 0; j <= values.points; j++) {
+              point.angle += 360 / values.points;
+              if (j == 0) {
+                  path.add(view.center + point);
+              } else {
+                  path.arcTo(view.center + point);
+              }
+          }
+          project.activeLayer.insertChild(0, path);
+      }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

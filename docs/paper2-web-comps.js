@@ -97,6 +97,11 @@ const allPagesData = [
     name: "(scripts) Path Structure",
     hasCyTest: true,
   },
+  {
+    file: "scripts-arcs.html",
+    name: "(scripts) Arcs",
+    hasCyTest: true,
+  },
   { file: "scripts-booleanOperations.html", name: "(scripts) Boolean Study" },
   { file: "scripts-roundRectangle.html", name: "(scripts) Rounded Rectangle" },
   { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },
