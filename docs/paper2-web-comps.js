@@ -117,6 +117,26 @@ const allPagesData = [
     name: "(scripts) Curve Time Parameterization",
     hasCyTest: true,
   },
+  {
+    file: "scripts-hslColor.html",
+    name: "(scripts) HslColor",
+    hasCyTest: true,
+  },
+  {
+    file: "scripts-resize.html",
+    name: "(scripts) Resize",
+    hasCyTest: true,
+  },
+  {
+    file: "scripts-strokeBounds.html",
+    name: "(scripts) Stroke Bounds",
+    hasCyTest: true,
+  },
+  {
+    file: "scripts-strokeScaling.html",
+    name: "(scripts) Shapes 2",
+    hasCyTest: true,
+  },
   { file: "scripts-booleanOperations.html", name: "(scripts) Boolean Study" },
   { file: "scripts-roundRectangle.html", name: "(scripts) Rounded Rectangle" },
   { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },

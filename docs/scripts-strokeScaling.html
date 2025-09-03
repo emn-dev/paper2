@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shapes 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+    <style>
+      @media (max-width: 768px) {
+        #myCanvas {
+          width: 95%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Shapes 2</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      view.zoom = 1.5;
+      settings.applyMatrix = false;
+      var strokeScaling = false;
+      var path = new Path.Circle({
+        center: view.center - [0, 140],
+        radius: 50,
+        fillColor: "red",
+        strokeColor: "black",
+        strokeWidth: 10,
+        strokeScaling: strokeScaling,
+        opacity: 0.5,
+        selected: true,
+      });
+      path.scale(2, 1);
+
+      var shape = new Shape.Circle({
+        center: view.center,
+        radius: 50,
+        fillColor: "red",
+        strokeColor: "black",
+        strokeWidth: 10,
+        strokeScaling: strokeScaling,
+        opacity: 0.5,
+        selected: true,
+      });
+      shape.scale(2, 1);
+
+      var hole;
+      var compound = new CompoundPath({
+        children: [
+          new Path.Rectangle({
+            point: [0, 0],
+            size: [100, 100],
+          }),
+          (hole = new Path.Circle({
+            center: [50, 50],
+            radius: 25,
+          })),
+        ],
+        fillColor: "red",
+        strokeColor: "black",
+        strokeWidth: 10,
+        position: view.center + [0, 140],
+        strokeScaling: strokeScaling,
+        opacity: 0.5,
+        selected: true,
+      });
+      hole.position += 15;
+      compound.scale(2, 1);
+
+      document.getElementsByTagName("main")[0].appendChild(project.exportSVG());
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
