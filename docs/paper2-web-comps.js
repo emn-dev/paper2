@@ -32,6 +32,22 @@ const allPagesData = [
   {
     file: "rasters-phyllotaxisRaster.html",
     name: "(rasters) Phyllotaxis Raster",
+    hasCyTest: false,
+  },
+  {
+    file: "rasters-raster.html",
+    name: "(rasters) Raster",
+    hasCyTest: false,
+  },
+  {
+    file: "rasters-rotationRaster.html",
+    name: "(rasters) Rotation Raster",
+    hasCyTest: true,
+  },
+  {
+    file: "rasters-smoothing.html",
+    name: "(rasters) Smoothing",
+    hasCyTest: true,
   },
   {
     file: "worker-webWorker.html",
