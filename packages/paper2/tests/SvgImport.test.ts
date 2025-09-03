@@ -146,7 +146,7 @@ describe('Given: SvgImport', () => {
     });
   });
 
-  it.skip('Import SVG string with leading line-breaks', () => {
+  it('Import SVG string with leading line-breaks', () => {
     const svg =
       '\n<?xml version="1.0" encoding="utf-8"?>\n<!-- Some Comment  -->\n<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n  <rect fill="red" width="100" height="100"/>\n</svg>\n';
     const imported = paper.project.importSVG(svg);

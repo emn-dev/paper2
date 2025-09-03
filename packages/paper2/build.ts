@@ -37,6 +37,14 @@ const jsdomSetup: buildOpts = {
   format: 'esm',
 };
 
+const jsdomCanvasSetup: buildOpts = {
+  ...structuredClone(sharedOpts),
+  entryPoints: ['lib/jsdom-canvas-setup.ts'],
+  outfile: `${buildDir}/jsdom-canvas-setup.js`,
+  platform: 'browser',
+  format: 'esm',
+};
+
 const browserCoreOpts: buildOpts = {
   ...structuredClone(sharedOpts),
   entryPoints: ['lib/index-core.ts'],
@@ -65,6 +73,7 @@ browserFullOpts.define['process.env.PAPER2_FULL'] = 'true';
 
 async function main() {
   await esbuild.build(jsdomSetup);
+  await esbuild.build(jsdomCanvasSetup);
 
   if (process.env.IS_BUILD === 'true') {
     // browserCoreOpts.treeShaking = true;

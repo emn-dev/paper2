@@ -743,8 +743,7 @@ describe('Given: Item', () => {
     equals(new CompoundPath().className, 'CompoundPath');
     equals(new Raster().className, 'Raster');
     equals(new SymbolItem().className, 'SymbolItem');
-    // TODO: what is PlacedSymbol ?
-    // equals(new PlacedSymbol().className, 'SymbolItem'); // deprecated
+    equals(new paper.PlacedSymbol().className, 'SymbolItem'); // deprecated
     equals(new PointText().className, 'PointText');
   });
 

@@ -59,6 +59,7 @@ describe('Given: JSON', () => {
     testExportImportJSON(paper.project);
   });
 
+  // TODO: still broken
   it.skip('Gradients', () => {
     const path = new Path.Circle([100, 100], 40);
     const gradient = new Gradient(['yellow', 'red', 'black'], true);
@@ -83,7 +84,7 @@ describe('Given: JSON', () => {
     testExportImportJSON(paper.project);
   });
 
-  it.skip('Rectangle testing', () => {
+  it('Rectangle testing', () => {
     const point1 = new Point(10, 10);
     const size1 = new Size(50, 50);
     const rectangle1 = new Rectangle(point1, size1);
