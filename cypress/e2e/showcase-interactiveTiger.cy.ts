@@ -1,5 +1,4 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-
 describe(`GIVEN: Interactive Tiger`, () => {
   const type = "showcase";
   const name = "interactiveTiger";
