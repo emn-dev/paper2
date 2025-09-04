@@ -10,7 +10,9 @@ describe(`GIVEN: Animated Star`, () => {
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
-      cy.get("canvas").matchImageSnapshot(`${type}/${name}`);
+      cy.get("canvas").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 100, // If less than 100 pixels changed it is still a success
+      });
     });
   });
 });

@@ -53,6 +53,11 @@ const allPagesData = [
     hasCyTest: true,
   },
   {
+    file: "showcase-nyanRainbow.html",
+    name: "(showcase) Nyan Rainbow",
+    hasCyTest: false,
+  },
+  {
     file: "rasters-phyllotaxisRaster.html",
     name: "(rasters) Phyllotaxis Raster",
     hasCyTest: false,
