@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="paper2-docs.css" />
     <script src="./paper2-web-comps.js"></script>
     <script src="./paper2-stackblitz.js"></script>
-    <!-- <script src="http://paperjs.org/assets/mediaelement/mediaelement.js"></script> -->
+    <script src="./assets/mediaelement.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
   </head>
@@ -15,36 +15,44 @@
     <paper2-nav></paper2-nav>
     <header style="text-align: center">
       <h1>Nyan Rainbow</h1>
-      <paper2-stackblitz></paper2-stackblitz>
+      <p>
+        A tribute to Nyan Cat
+        <a href="https://youtu.be/2yJgwwDcgV8">https://youtu.be/2yJgwwDcgV8</a>
+      </p>
+      <!-- <paper2-stackblitz></paper2-stackblitz> -->
+      <button onclick="window.startIt()">Start Sound</button>
       <p>&nbsp;</p>
     </header>
     <main>
-      <!-- <audio
+      <audio
         id="nyan"
-        src="http://dl.dropbox.com/u/31703/nyan.mp3"
-        autoplay
+        src="assets/nyan-cat_1.mp3"
         autobuffer
         preload="none"
         loop
         style="display: none"
-      ></audio> -->
+      ></audio>
       <canvas id="myCanvas" resize></canvas>
     </main>
     <script src="./paper2-ga.js"></script>
+    <!-- type="text/paperscript" -->
     <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
-      // A tribute to Nyan Cat http://www.youtube.com/watch?v=QH2-TGUlwu4
+      // A tribute to Nyan Cat https://youtu.be/2yJgwwDcgV8
       var mediaElement = undefined;
       var playing = false;
-      // MediaElement("nyan", {
-      //   pluginPath: "/assets/mediaelement/",
-      //   success: function (me) {
-      //     mediaElement = me;
-      //     me.play();
-      //     me.addEventListener("timeupdate", function (time) {
-      //       if (me.currentTime > 3.7) playing = true;
-      //     });
-      //   },
-      // });
+
+      window.startIt = () => {
+        MediaElement("nyan", {
+          pluginPath: "/assets/",
+          success: function (me) {
+            mediaElement = me;
+            me.play();
+            me.addEventListener("timeupdate", function (time) {
+              if (me.currentTime > 3.7) playing = true;
+            });
+          },
+        });
+      };
 
       var mousePos = view.center + [view.bounds.width / 3, 100];
       var position = view.center;
