@@ -7,30 +7,40 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest # Or other desired runner environment
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        part: [1, 2] # two parallel jobs
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22.x"
+          # cache: "yarn" # cannot use this with yarn berry, only legacy yarn
 
       - run: corepack enable
       - run: yarn install
-      - run: yarn test:lint:pipeline
-      - run: yarn test:unit:pipeline
-      - run: yarn cy:run:pipeline
+      - name: Run Test Group ${{ matrix.part }}
+        run: |
+          if [ ${{ matrix.part }} -eq 1 ]; then
+            yarn test:lint:pipeline
+            yarn cy:run:pipeline:a
+          else
+            yarn test:unit:pipeline
+            yarn cy:run:pipeline:b
+          fi
 
       # Always try to upload artifacts, even if Cypress fails
       - name: Upload Cypress diff_output
         if: always() # ensures diff_output get uploaded on failure
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-diff_output
+          name: cypress-diff_output-${{ matrix.part }}
           path: cypress/diff_output
 
       - name: Upload Cypress videos
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-videos
+          name: cypress-videos-${{ matrix.part }}
           path: cypress/videos

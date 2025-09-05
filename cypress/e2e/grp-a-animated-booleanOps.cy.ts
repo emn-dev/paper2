@@ -1,5 +1,5 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Animated Star`, () => {
+describe(`GIVEN: Boolean Ops (animated)`, () => {
   const type = "animated";
   const name = "booleanOps";
 
