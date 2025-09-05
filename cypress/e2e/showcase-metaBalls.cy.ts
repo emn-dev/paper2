@@ -21,6 +21,8 @@ describe(`GIVEN: Meta Balls`, () => {
       // Right
       cy.get("canvas").drag({ x: 100, y: 300 }, { x: 300, y: 300 });
 
+      cy.wait(333);
+
       cy.get("canvas").matchImageSnapshot(`${type}/${name}`);
     });
   });
