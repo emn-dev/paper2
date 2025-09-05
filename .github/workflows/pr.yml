@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.x"
-          cache: "yarn"
+          # cache: "yarn" # cannot use this with yarn berry, only legacy yarn
 
       - run: corepack enable
       - run: yarn install
