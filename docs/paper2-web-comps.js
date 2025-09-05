@@ -152,7 +152,7 @@ const allPagesData = [
   { file: "tools-fancyBrush.html", name: "(tools) Fancy Brush" },
   { file: "tools-drippingBrush.html", name: "(tools) Dripping Brush" },
   { file: "tools-bezierTool.html", name: "(tools) Bezier Tool" },
-  { file: "json-tiger.html", name: "(json) Tiger" },
+  { file: "json-tiger.html", name: "(json) Tiger", hasCyTest: true },
   {
     file: "json-groupTransform.html",
     name: "(json) Group Transform",
@@ -222,12 +222,12 @@ const allPagesData = [
   {
     file: "json-transformTesting.html",
     name: "(json) Transform Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-transformTesting2.html",
     name: "(json) Transform Testing 2",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   { file: "games-paperoids.html", name: "(games) Paperoids" },
   {

@@ -18,7 +18,9 @@
       <p>&nbsp;</p>
     </header>
     <main>
-      <canvas id="myCanvas" resize></canvas>
+      <canvas style="width: 600px" id="myCanvas" resize></canvas>
+      <br />
+      <br />
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1">
@@ -38,7 +40,9 @@
         paper.project.importJSON(tiger);
         console.log("Load JSON", Date.now() - start);
         start = Date.now();
-        document.body.appendChild(paper.project.exportSVG());
+        document
+          .getElementsByTagName("main")[0]
+          .appendChild(paper.project.exportSVG());
         console.log("Export SVG", Date.now() - start);
       });
     </script>
