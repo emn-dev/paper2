@@ -66,10 +66,13 @@
           if (currentSegment) currentSegment.selected = false;
           mode = type = currentSegment = null;
 
+          let hue = 360 * Math.random();
+          if (window.Cypress) hue = 180; // So we can do Cypress visual tests
+
           if (!path) {
             path = new Path();
             path.fillColor = {
-              hue: 360 * Math.random(),
+              hue,
               saturation: 1,
               brightness: 1,
               alpha: 0.5,

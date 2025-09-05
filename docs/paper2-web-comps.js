@@ -150,12 +150,16 @@ const allPagesData = [
     name: "(tools) Multi Lines",
     hasCyTest: true,
   },
-  { file: "tools-clouds.html", name: "(tools) Clouds" },
-  { file: "tools-circles.html", name: "(tools) Circles" },
+  { file: "tools-clouds.html", name: "(tools) Clouds", hasCyTest: true },
+  { file: "tools-circles.html", name: "(tools) Circles", hasCyTest: true },
   { file: "tools-grid.html", name: "(tools) Grid", hasCyTest: true },
   { file: "tools-fancyBrush.html", name: "(tools) Fancy Brush" },
   { file: "tools-drippingBrush.html", name: "(tools) Dripping Brush" },
-  { file: "tools-bezierTool.html", name: "(tools) Bezier Tool" },
+  {
+    file: "tools-bezierTool.html",
+    name: "(tools) Bezier Tool",
+    hasCyTest: true,
+  },
   { file: "json-tiger.html", name: "(json) Tiger", hasCyTest: true },
   {
     file: "json-groupTransform.html",
@@ -287,8 +291,16 @@ const allPagesData = [
   { file: "scripts-booleanOperations.html", name: "(scripts) Boolean Study" },
   { file: "scripts-roundRectangle.html", name: "(scripts) Rounded Rectangle" },
   { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },
-  { file: "svg-import-viewbox.html", name: "(svg-import) Viewbox 1" },
-  { file: "svg-import-symbols.html", name: "(svg-import) Symbols Test" },
+  {
+    file: "svg-import-viewbox.html",
+    name: "(svg-import) Viewbox 1",
+    hasCyTest: true,
+  },
+  {
+    file: "svg-import-symbols.html",
+    name: "(svg-import) Symbols Test",
+    hasCyTest: true,
+  },
   {
     file: "svg-import-polybezier.html",
     name: "(svg-import) Polybezier",
@@ -307,6 +319,7 @@ const allPagesData = [
   {
     file: "svg-export-rectAndAttributeTesting.html",
     name: "(svg-export) Rectangle Testing",
+    hasCyTest: true,
   },
   {
     file: "svg-export-circleTesting.html",
