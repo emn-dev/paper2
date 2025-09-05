@@ -7,7 +7,12 @@ function runScript(scriptName) {
   });
 }
 
-const cyRunner = runScript("cy:run:pipeline:cmd");
+let cyCmd = "cy:run:pipeline:cmd";
+
+if (process.argv[2] === "a") cyCmd += ":a";
+if (process.argv[2] === "b") cyCmd += ":b";
+
+const cyRunner = runScript(cyCmd);
 const httpServer = runScript("serve:docs");
 
 function cleanup() {

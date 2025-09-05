@@ -28,7 +28,11 @@
     "cy:open-by-serve": "yarn serve:docs & yarn cy:open",
     "cy:run-by-serve": "yarn serve:docs & npx cypress run --browser chrome --headed --config-file cypress/cy.config.ts",
     "cy:run:pipeline:cmd": "npx cypress run --browser chrome --config-file cypress/cy.config.ts",
-    "cy:run:pipeline": "node util-scripts/cy.tests.mjs"
+    "cy:run:pipeline:cmd:a": "npx cypress run --browser chrome --config-file cypress/cy.config.ts --spec 'cypress/e2e/**/grp-a-*.cy.ts'",
+    "cy:run:pipeline:cmd:b": "npx cypress run --browser chrome --config-file cypress/cy.config.ts --spec 'cypress/e2e/**/grp-b-*.cy.ts'",
+    "cy:run:pipeline": "node util-scripts/cy.tests.mjs",
+    "cy:run:pipeline:a": "node util-scripts/cy.tests.mjs a",
+    "cy:run:pipeline:b": "node util-scripts/cy.tests.mjs b"
   },
   "devDependencies": {
     "@types/node": "22.17.1",
