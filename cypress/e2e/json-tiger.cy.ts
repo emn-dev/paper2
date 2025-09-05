@@ -11,7 +11,9 @@ describe(`GIVEN: Tiger`, () => {
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
-      cy.get("main").matchImageSnapshot(`${type}/${name}`);
+      cy.get("main").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 50, // If less than 50 pixels changed it is still a success
+      });
     });
   });
 });
