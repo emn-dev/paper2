@@ -6,21 +6,21 @@ on:
       - main
 
 jobs:
+  # test:
+  #   runs-on: ubuntu-latest # Or other desired runner environment
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: "22.x"
+
+  #     - run: corepack enable
+  #     - run: yarn install
+  #     - run: yarn test:lint:pipeline
+  #     - run: yarn test:unit:pipeline
+  #     # - run: yarn cy:run:pipeline
+
   test:
-    runs-on: ubuntu-latest # Or other desired runner environment
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.x"
-
-      - run: corepack enable
-      - run: yarn install
-      - run: yarn test:lint:pipeline
-      - run: yarn test:unit:pipeline
-      # - run: yarn cy:run:pipeline
-
-  cypress:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,8 +35,10 @@ jobs:
       - run: yarn install
       - run: |
           if [ ${{ matrix.part }} -eq 1 ]; then
+            yarn test:lint:pipeline
             yarn cy:run:pipeline:a
           else
+            yarn test:unit:pipeline
             yarn cy:run:pipeline:b
           fi
 
