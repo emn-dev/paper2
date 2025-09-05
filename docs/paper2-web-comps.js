@@ -292,7 +292,7 @@ const allPagesData = [
   {
     file: "svg-import-polybezier.html",
     name: "(svg-import) Polybezier",
-    hasCyTest: true,
+    hasCyTest: false,
   },
   {
     file: "svg-import-inkscape.html",
