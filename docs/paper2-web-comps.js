@@ -212,12 +212,12 @@ const allPagesData = [
   {
     file: "json-symbols.html",
     name: "(json) Symbols",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-textTesting.html",
     name: "(json) Text Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-transformTesting.html",
