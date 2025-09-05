@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simplify</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Simplify</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var path;
+
+      var textItem = new PointText({
+        content: "Click and drag to draw a line.",
+        point: new Point(20, 30),
+        fillColor: "black",
+      });
+
+      function onMouseDown(event) {
+        // If we produced a path before, deselect it:
+        if (path) {
+          path.selected = false;
+        }
+
+        // Create a new path and set its stroke color to black:
+        path = new Path({
+          segments: [event.point],
+          strokeColor: "black",
+          // Select the path, so we can see its segment points:
+          fullySelected: true,
+        });
+      }
+
+      // While the user drags the mouse, points are added to the path
+      // at the position of the mouse:
+      function onMouseDrag(event) {
+        path.add(event.point);
+
+        // Update the content of the text item to show how many
+        // segments it has:
+        textItem.content = "Segment count: " + path.segments.length;
+      }
+
+      // When the mouse is released, we simplify the path:
+      function onMouseUp(event) {
+        var segmentCount = path.segments.length;
+
+        // When the mouse is released, simplify it:
+        path.simplify(10);
+
+        // Select the path, so we can see its segments:
+        path.fullySelected = true;
+
+        var newSegmentCount = path.segments.length;
+        var difference = segmentCount - newSegmentCount;
+        var percentage =
+          100 - Math.round((newSegmentCount / segmentCount) * 100);
+        textItem.content =
+          difference +
+          " of the " +
+          segmentCount +
+          " segments were removed. Saving " +
+          percentage +
+          "%";
+      }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

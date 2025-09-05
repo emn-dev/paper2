@@ -9,6 +9,7 @@ const allPagesData = [
   {
     file: "animated-booleanOps.html",
     name: "(animated) Boolean Operations",
+    hasCyTest: true,
   },
   { file: "animated-candyCrash.html", name: "(animated) Candy Crash" },
   { file: "animated-extruded.html", name: "(animated) Extruded" },
@@ -20,6 +21,13 @@ const allPagesData = [
     name: "(animated) Space Using Shapes",
   },
   { file: "nodejs-booleanOpts.html", name: "(nodejs) Boolean Operations" },
+  // This = https://github.com/paperjs/paper.js/blob/develop/examples/Animated/BooleanOperations.html
+  // is same as this = https://github.com/paperjs/paper.js/blob/develop/examples/Paperjs.org/BooleanOperattions.html
+  {
+    file: "animated-booleanOps.html",
+    name: "(showcase) Path Intersections aka Boolean Opts",
+    hasCyTest: true,
+  },
   { file: "showcase-rasterSpiral.html", name: "(showcase) Spiral Raster" },
   { file: "showcase-chain.html", name: "(showcase) Chain", hasCyTest: true },
   { file: "showcase-bouncingBalls.html", name: "(showcase) Bouncing Balls" },
@@ -28,6 +36,66 @@ const allPagesData = [
     file: "showcase-interactiveTiger.html",
     name: "(showcase) Interactive Tiger",
     hasCyTest: true,
+  },
+  {
+    file: "showcase-futureSplash.html",
+    name: "(showcase) Future Splash",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-hitTesting.html",
+    name: "(showcase) Hit Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-metaBalls.html",
+    name: "(showcase) Meta Balls",
+    hasCyTest: true,
+  },
+  {
+    file: "showcase-nyanRainbow.html",
+    name: "(showcase) Nyan Rainbow",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-pathIntersections.html",
+    name: "(showcase) Path Intersections",
+    hasCyTest: true,
+  },
+  {
+    file: "showcase-qbertify.html",
+    name: "(showcase) Q*bertify",
+    hasCyTest: true,
+  },
+  {
+    file: "showcase-radialRainbows.html",
+    name: "(showcase) Radial Rainbows",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-roundedRectangles.html",
+    name: "(showcase) Rounded Rectangles",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-satieLikedToDraw.html",
+    name: "(showcase) Erik Liked To Dance",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-simplify.html",
+    name: "(showcase) Simplify",
+    hasCyTest: true,
+  },
+  {
+    file: "showcase-tadpoles.html",
+    name: "(showcase) Tadpoles",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-voronoi.html",
+    name: "(showcase) Voronoi",
+    hasCyTest: false,
   },
   {
     file: "rasters-phyllotaxisRaster.html",

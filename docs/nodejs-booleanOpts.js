@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import { parse } from "url";
 import { Readable } from "stream";
-import "./nodejs-booleanOpts-setup.js";
+import "../packages/paper2/dist/jsdom-canvas-setup.js";
 import {
   paper,
   Color,

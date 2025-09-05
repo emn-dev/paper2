@@ -19,7 +19,7 @@ const sharedOpts: buildOpts = {
   bundle: true,
   // minify: true, // Do we need a min version?
   allowOverwrite: true,
-  external: ['jsdom'],
+  external: ['jsdom', 'canvas'],
   define: {
     // GITHUB_REF: 'refs/tags/v1.0.15',
     'process.env.PACKAGE_VERSION': `'${process.env.GITHUB_REF?.replace('refs/tags/', '')}'`,

@@ -1,28 +1,35 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Interactive Tiger`, () => {
+describe(`GIVEN: Simplify`, () => {
   const type = "showcase";
-  const name = "interactiveTiger";
+  const name = "simplify";
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
     cy.wait(500); // Allow some time for loading
   });
 
-  describe("WHEN moving some tiger pieces", () => {
+  describe("WHEN drawing on the canvas", () => {
     it("THEN should pass visual image compare", () => {
       cy.get("main canvas").should("have.a.property", "resize");
 
-      // Start
+      // Mousedown to see points
       cy.get("canvas").trigger("mousedown", {
-        x: 450,
-        y: 350,
+        x: 100,
+        y: 100,
       });
 
-      // Left
-      cy.get("canvas").drag({ x: 450, y: 350 }, { x: 200, y: 350 });
+      // Down
+      cy.get("canvas").drag({ x: 100, y: 100 }, { x: 100, y: 300 });
 
-      // Stop
+      // Right
+      cy.get("canvas").drag({ x: 100, y: 300 }, { x: 300, y: 300 });
+
+      // Up
+      cy.get("canvas").drag({ x: 300, y: 300 }, { x: 300, y: 150 });
+
       cy.get("canvas").trigger("mouseup");
+
+      cy.wait(333);
 
       cy.get("canvas").matchImageSnapshot(`${type}/${name}`, {
         failureThreshold: 100, // If less than 100 pixels changed it is still a success
