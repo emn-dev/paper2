@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Symbols</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Symbols</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" style="width: 400px; height: 400px" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var ellipse = new Path.Ellipse({
+        from: [0, 0],
+        to: [200, 100],
+        fillColor: "red",
+      });
+      var symbol = new SymbolDefinition(ellipse);
+      var p1 = symbol.place([100, 100]);
+      p1.rotate(45);
+      var p2 = symbol.place([300, 200]);
+      p2.rotate(-30);
+
+      document.getElementsByTagName("main")[0].appendChild(project.exportSVG());
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

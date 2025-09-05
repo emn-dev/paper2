@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rotated Primitives</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Rotated Primitives</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" style="width: 500px; height: 500px" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      // This "arbitrary" shape triggered rectangles in the original code,
+      // since point2 is as far from point0 as point3 is from point1.
+      var path = new Path({
+        closed: true,
+        strokeColor: "black",
+      });
+      path.moveTo(0, 0);
+      path.lineTo(50, 50);
+      path.lineTo(100, 100);
+      path.lineTo(-50, 150);
+      path.position += 100;
+
+      var rect = new Path.Rectangle({
+        point: [200, 100],
+        size: [200, 300],
+        fillColor: "red",
+      });
+      rect.rotate(40);
+
+      var circle = new Path.Circle({
+        center: [200, 300],
+        radius: 100,
+        fillColor: "green",
+      });
+      circle.scale(0.5, 1);
+      circle.rotate(40);
+
+      var ellipse = new Path.Ellipse({
+        point: [300, 300],
+        size: [100, 200],
+        fillColor: "blue",
+      });
+      ellipse.rotate(-40);
+
+      var rect = new Path.Rectangle({
+        point: [250, 20],
+        size: [200, 300],
+        radius: [40, 20],
+        fillColor: "yellow",
+      });
+      rect.rotate(-20);
+      rect.data = {
+        string: "----",
+        number: 1234,
+        array: ["a ray", "some rays"],
+        bool: true,
+        nil: null,
+        point: new Point(12, 34),
+        size: new Size(12, 34),
+        rectangle: new Rectangle([12, 34], [56, 78]),
+        deep: {
+          deeper: {
+            deepest: true,
+          },
+        },
+      };
+
+      var parallelogram = new Path({
+        closed: true,
+        segments: [
+          [50, 0],
+          [50, 100],
+          [90, 120],
+          [90, 20],
+        ],
+        fillColor: "#99c",
+      });
+
+      document
+        .getElementsByTagName("main")[0]
+        .appendChild(project.exportSVG({ matchShapes: true }));
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

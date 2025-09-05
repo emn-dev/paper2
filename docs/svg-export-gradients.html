@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gradients</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Gradients</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" style="width: 400px; height: 400px" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var stops = [new Color(1, 1, 0, 0), "red", "black"];
+
+      var radius = view.bounds.width * 0.4,
+        from = new Point(view.center.x),
+        to = from + [radius, 0];
+
+      var circle = new Path.Circle({
+        center: from,
+        radius: radius,
+        fillColor: {
+          stops: stops,
+          radial: true,
+          origin: from,
+          destination: to,
+        },
+        strokeColor: "black",
+      });
+
+      var from = view.bounds.leftCenter,
+        to = view.bounds.bottomRight;
+
+      var rect = new Path.Rectangle({
+        from: from,
+        to: to,
+        fillColor: {
+          stops: stops,
+          radial: false,
+          origin: from,
+          destination: to,
+        },
+        strokeColor: "black",
+      });
+
+      rect.rotate(45).scale(0.7);
+
+      document.getElementsByTagName("main")[0].appendChild(project.exportSVG());
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
