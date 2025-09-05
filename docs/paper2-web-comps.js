@@ -88,6 +88,16 @@ const allPagesData = [
     hasCyTest: true,
   },
   {
+    file: "showcase-tadpoles.html",
+    name: "(showcase) Tadpoles",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-voronoi.html",
+    name: "(showcase) Voronoi",
+    hasCyTest: false,
+  },
+  {
     file: "rasters-phyllotaxisRaster.html",
     name: "(rasters) Phyllotaxis Raster",
     hasCyTest: false,

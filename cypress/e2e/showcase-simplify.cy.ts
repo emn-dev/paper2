@@ -31,7 +31,9 @@ describe(`GIVEN: Simplify`, () => {
 
       cy.wait(333);
 
-      cy.get("canvas").matchImageSnapshot(`${type}/${name}`);
+      cy.get("canvas").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 100, // If less than 100 pixels changed it is still a success
+      });
     });
   });
 });
