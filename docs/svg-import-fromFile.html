@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>From File</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center"><h1>From File</h1></header>
+    <main>
+      <form>
+        <input type="file" id="file" />
+      </form>
+      <br />
+      <canvas id="myCanvas" style="width: 500px; height: 500px" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script canvas="myCanvas" type="text/paperscript">
+      var file = document.getElementById("file");
+      file.addEventListener("change", function (event) {
+        var files = event.target.files;
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+          if (file.type.match("svg")) {
+            project.clear();
+            project.importSVG(file, function (item) {
+              console.log(item);
+            });
+          }
+        }
+      });
+    </script>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

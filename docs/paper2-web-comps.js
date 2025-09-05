@@ -312,6 +312,51 @@ const allPagesData = [
     hasCyTest: true,
   },
   {
+    file: "svg-import-arcs.html",
+    name: "(svg-import) Arcs Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-lineTesting.html",
+    name: "(svg-import) Line Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-gradient.html",
+    name: "(svg-import) Gradient",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-gradients.html",
+    name: "(svg-import) Gradients",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-inkscapePivot.html",
+    name: "(svg-import) Inkscape Pivot",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-fromFile.html",
+    name: "(svg-import) From File",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-clipping.html",
+    name: "(svg-import) Clipping",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-butterfly.html",
+    name: "(svg-import) Butterfly",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-circleAndEllipseTesting.html",
+    name: "(svg-import) Circle and Ellipse Testing",
+    hasCyTest: false,
+  },
+  {
     file: "svg-export-transformTest1.html",
     name: "(svg-export) Transform Testing",
     hasCyTest: true,

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inkscape Pivot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center"><h1>Inkscape Pivot</h1></header>
+    <main>
+      <canvas id="myCanvas" style="width: 500px; height: 500px" resize></canvas>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        width="500"
+        height="500"
+        id="svg"
+      >
+        <rect
+          id="rectangle"
+          x="50"
+          y="200"
+          width="200"
+          height="100"
+          fill="red"
+          inkscape:transform-center-x="100"
+          inkscape:transform-center-y="0"
+        />
+      </svg>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script canvas="myCanvas" type="text/paperscript">
+      // Import Inkscape-style SVG, preserving pivots
+      var svg = project.importSVG(document.getElementById("svg"), {
+        onImport: function (node, item) {
+          var prefix = "inkscape:transform-center-";
+          var x = node.getAttribute(prefix + "x");
+          var y = node.getAttribute(prefix + "y");
+          if (x != null && y != null) {
+            item.pivot = new Point(+x, +y);
+          }
+        },
+      });
+
+      // Illustrate pivot using a simple animation
+      var rect = svg.children.rectangle;
+      // Show the pivot
+      new Path.Circle({
+        center: rect.localToGlobal(rect.pivot),
+        radius: 4,
+        strokeColor: "black",
+      });
+
+      rect.onFrame = function () {
+        rect.rotate(1);
+      };
+
+      // And export again, preserving Inkscape pivots
+      console.log(
+        rect.exportSVG({
+          onExport: function (item, node) {
+            var prefix = "inkscape:transform-center-";
+            if (item.pivot) {
+              node.setAttribute(prefix + "x", item.pivot.x);
+              node.setAttribute(prefix + "y", item.pivot.y);
+            }
+          },
+        })
+      );
+    </script>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
