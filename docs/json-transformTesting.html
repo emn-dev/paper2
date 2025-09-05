@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Transform Testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center">
+      <h1>Transform Testing</h1>
+    </header>
+    <main>
+      <!-- <canvas id="myCanvas" resize></canvas> -->
+      <canvas id="myCanvas" width="400" height="400"></canvas>
+      <canvas id="myCanvas2" width="400" height="400"></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var circlePath = new Path.Circle(new Point(280, 100), 25);
+      circlePath.strokeColor = "black";
+      circlePath.fillColor = "white";
+
+      var clones = 30;
+      var angle = 360 / clones;
+
+      for (var i = 0; i < clones; i++) {
+        var clonedPath = circlePath.clone();
+        clonedPath.rotate(angle * i, circlePath.bounds.topLeft);
+      }
+
+      window._json = project.exportJSON();
+      console.log(window._json);
+    </script>
+    <script id="mainPaper2Script1b" canvas="myCanvas2" type="text/paperscript">
+      setTimeout(() => {
+        project.importJSON(window._json);
+      }, 333);
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

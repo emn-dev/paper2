@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rectangle Testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center">
+      <h1>Rectangle Testing</h1>
+    </header>
+    <main>
+      <!-- <canvas id="myCanvas" resize></canvas> -->
+      <canvas id="myCanvas" width="300" height="300"></canvas>
+      <canvas id="myCanvas2" width="300" height="300"></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var point1 = new Point(10, 10);
+      var size1 = new Size(50, 50);
+      var rectangle1 = new Rectangle(point1, size1);
+      var path1 = new Path.Rectangle(rectangle1);
+      path1.strokeColor = "black";
+      path1.fillColor = "red";
+      path1.id = "square1";
+      path1.strokeCap = "square";
+      path1.opacity = ".1";
+      path1.dashArray = [5, 2];
+      path1.dashOffset = "0";
+
+      var point2 = new Point(75, 75);
+      var point22 = new Point(100, 100);
+      var path2 = new Path.Rectangle(point2, point22);
+      path2.strokeColor = "red";
+      path2.strokeWidth = "4";
+      path2.fillColor = "blue";
+      path2.id = "square2";
+      path2.strokeCap = "butt";
+      path2.opacity = "1";
+
+      var point3 = new Point(150, 150);
+      var size3 = new Size(50, 50);
+      var rectangle3 = new Rectangle(point3, size3);
+      var path3 = new Path.Rectangle(rectangle3);
+      path3.strokeColor = "blue";
+
+      var point4 = new Point(200, 200);
+      var size4 = new Size(100, 100);
+      var rectangle4 = new Rectangle(point4, size4);
+      var cornerSize4 = new Size(30, 30);
+      var path4 = new Path.Rectangle(rectangle4, cornerSize4);
+      path4.strokeColor = "yellow";
+      path4.fillColor = "purple";
+
+      window._json = project.exportJSON();
+      console.log(window._json);
+    </script>
+    <script id="mainPaper2Script1b" canvas="myCanvas2" type="text/paperscript">
+      setTimeout(() => {
+        project.importJSON(window._json);
+      }, 333);
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

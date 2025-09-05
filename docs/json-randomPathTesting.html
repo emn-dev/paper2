@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Random Path Testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center">
+      <h1>Random Path Testing</h1>
+    </header>
+    <main>
+      <!-- <canvas id="myCanvas" resize></canvas> -->
+      <canvas id="myCanvas" width="300" height="300"></canvas>
+      <canvas id="myCanvas2" width="300" height="300"></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var center = new Point(100, 100);
+      var sides = 3;
+      var radius = 50;
+      var triangle = new Path.RegularPolygon(center, sides, radius);
+      triangle.fillColor = "black";
+      copy = triangle.clone();
+      copy.strokeColor = "blue";
+      copy.rotate(45);
+
+      var center = new Point(100, 300);
+      var sides = 10;
+      var radius = 50;
+      var decahedron = new Path.RegularPolygon(center, sides, radius);
+      decahedron.fillColor = "black";
+
+      var center = new Point(100, 400);
+      var points = 6;
+      var radius1 = 20;
+      var radius2 = 50;
+      var path = new Path.Star(center, points, radius1, radius2);
+      path.fillColor = "black";
+
+      window._json = project.exportJSON();
+      console.log(window._json);
+    </script>
+    <script id="mainPaper2Script1b" canvas="myCanvas2" type="text/paperscript">
+      setTimeout(() => {
+        project.importJSON(window._json);
+      }, 333);
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

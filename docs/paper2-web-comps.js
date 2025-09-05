@@ -170,6 +170,61 @@ const allPagesData = [
     name: "(json) Circle Testing",
     hasCyTest: true,
   },
+  {
+    file: "json-lineTesting.html",
+    name: "(json) Line Testing",
+    hasCyTest: true,
+  },
+  {
+    file: "json-randomPathTesting.html",
+    name: "(json) Random Path Testing",
+    hasCyTest: true,
+  },
+  {
+    file: "json-raster.html",
+    name: "(json) Raster",
+    hasCyTest: false,
+  },
+  {
+    file: "json-rectAndAttributeTesting.html",
+    name: "(json) Rectangle Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "json-rotatedPrimitives.html",
+    name: "(json) Rotated Primitives",
+    hasCyTest: false,
+  },
+  {
+    file: "json-selection.html",
+    name: "(json) Selection",
+    hasCyTest: false,
+  },
+  {
+    file: "json-shapes.html",
+    name: "(json) Shapes",
+    hasCyTest: false,
+  },
+  {
+    file: "json-symbols.html",
+    name: "(json) Symbols",
+    hasCyTest: false,
+  },
+  {
+    file: "json-textTesting.html",
+    name: "(json) Text Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "json-transformTesting.html",
+    name: "(json) Transform Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "json-transformTesting2.html",
+    name: "(json) Transform Testing 2",
+    hasCyTest: false,
+  },
   { file: "games-paperoids.html", name: "(games) Paperoids" },
   {
     file: "scripts-pathTangents.html",
