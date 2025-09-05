@@ -78,6 +78,16 @@ const allPagesData = [
     hasCyTest: false,
   },
   {
+    file: "showcase-satieLikedToDraw.html",
+    name: "(showcase) Erik Liked To Dance",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-simplify.html",
+    name: "(showcase) Simplify",
+    hasCyTest: true,
+  },
+  {
     file: "rasters-phyllotaxisRaster.html",
     name: "(rasters) Phyllotaxis Raster",
     hasCyTest: false,
