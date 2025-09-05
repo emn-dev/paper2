@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Rect Testing</title>
+    <title>Polybezier</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="paper2-docs.css" />
     <script src="./paper2-web-comps.js"></script>
@@ -48,8 +48,9 @@
   <body>
     <paper2-nav></paper2-nav>
     <!-- <paper2-stackblitz></paper2-stackblitz> -->
-    <header style="text-align: center"><h1>Rect Testing</h1></header>
+    <header style="text-align: center"><h1>Polybezier</h1></header>
     <main>
+      <canvas id="myCanvas" style="width: 500px; height: 500px" resize></canvas>
       <svg
         id="svg"
         width="500"
@@ -80,7 +81,6 @@
           S400,300 400,200
         </text>
       </svg>
-      <canvas id="myCanvas" resize></canvas>
     </main>
     <script src="./paper2-ga.js"></script>
     <script canvas="myCanvas" type="text/paperscript">

@@ -1,7 +1,7 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Inkscape`, () => {
+describe(`GIVEN: Polybezier`, () => {
   const type = "svg-import";
-  const name = "inkscape";
+  const name = "polybezier";
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);

@@ -31,7 +31,11 @@ const allPagesData = [
   { file: "showcase-rasterSpiral.html", name: "(showcase) Spiral Raster" },
   { file: "showcase-chain.html", name: "(showcase) Chain", hasCyTest: true },
   { file: "showcase-bouncingBalls.html", name: "(showcase) Bouncing Balls" },
-  { file: "showcase-divisionRaster.html", name: "(showcase) Division Raster" },
+  {
+    file: "showcase-divisionRaster.html",
+    name: "(showcase) Division Raster",
+    hasCyTest: true,
+  },
   {
     file: "showcase-interactiveTiger.html",
     name: "(showcase) Interactive Tiger",
@@ -285,7 +289,11 @@ const allPagesData = [
   { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },
   { file: "svg-import-viewbox.html", name: "(svg-import) Viewbox 1" },
   { file: "svg-import-symbols.html", name: "(svg-import) Symbols Test" },
-  { file: "svg-import-polybezier.html", name: "(svg-import) Rect Testing" },
+  {
+    file: "svg-import-polybezier.html",
+    name: "(svg-import) Polybezier",
+    hasCyTest: true,
+  },
   {
     file: "svg-import-inkscape.html",
     name: "(svg-import) Inkscape",
@@ -307,6 +315,7 @@ const allPagesData = [
   {
     file: "svg-export-circleTestingCore.html",
     name: "(svg-export) Export Circle (Core)",
+    hasCyTest: true,
   },
 ];
 
