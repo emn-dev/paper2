@@ -192,22 +192,22 @@ const allPagesData = [
   {
     file: "json-rectAndAttributeTesting.html",
     name: "(json) Rectangle Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-rotatedPrimitives.html",
     name: "(json) Rotated Primitives",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-selection.html",
     name: "(json) Selection",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-shapes.html",
     name: "(json) Shapes",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-symbols.html",
