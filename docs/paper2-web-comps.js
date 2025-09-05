@@ -153,7 +153,11 @@ const allPagesData = [
   { file: "tools-drippingBrush.html", name: "(tools) Dripping Brush" },
   { file: "tools-bezierTool.html", name: "(tools) Bezier Tool" },
   { file: "json-tiger.html", name: "(json) Tiger" },
-  { file: "json-groupTransform.html", name: "(json) Group Transform" },
+  {
+    file: "json-groupTransform.html",
+    name: "(json) Group Transform",
+    hasCyTest: true,
+  },
   { file: "json-gradients.html", name: "(json) Gradients", hasCyTest: true },
   {
     file: "json-emptyPathTesting.html",
@@ -183,7 +187,7 @@ const allPagesData = [
   {
     file: "json-raster.html",
     name: "(json) Raster",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-rectAndAttributeTesting.html",
