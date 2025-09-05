@@ -63,6 +63,11 @@ const allPagesData = [
     hasCyTest: true,
   },
   {
+    file: "showcase-qbertify.html",
+    name: "(showcase) Q*bertify",
+    hasCyTest: true,
+  },
+  {
     file: "rasters-phyllotaxisRaster.html",
     name: "(rasters) Phyllotaxis Raster",
     hasCyTest: false,
