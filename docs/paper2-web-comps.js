@@ -25,7 +25,7 @@ const allPagesData = [
   // is same as this = https://github.com/paperjs/paper.js/blob/develop/examples/Paperjs.org/BooleanOperattions.html
   {
     file: "animated-booleanOps.html",
-    name: "(showcase) Path Intersections",
+    name: "(showcase) Path Intersections aka Boolean Opts",
     hasCyTest: true,
   },
   { file: "showcase-rasterSpiral.html", name: "(showcase) Spiral Raster" },
@@ -56,6 +56,11 @@ const allPagesData = [
     file: "showcase-nyanRainbow.html",
     name: "(showcase) Nyan Rainbow",
     hasCyTest: false,
+  },
+  {
+    file: "showcase-pathIntersections.html",
+    name: "(showcase) Path Intersections",
+    hasCyTest: true,
   },
   {
     file: "rasters-phyllotaxisRaster.html",
