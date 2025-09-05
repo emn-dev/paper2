@@ -68,6 +68,16 @@ const allPagesData = [
     hasCyTest: true,
   },
   {
+    file: "showcase-radialRainbows.html",
+    name: "(showcase) Radial Rainbows",
+    hasCyTest: false,
+  },
+  {
+    file: "showcase-roundedRectangles.html",
+    name: "(showcase) Rounded Rectangles",
+    hasCyTest: false,
+  },
+  {
     file: "rasters-phyllotaxisRaster.html",
     name: "(rasters) Phyllotaxis Raster",
     hasCyTest: false,

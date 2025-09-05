@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rounded Rectangles</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Rounded Rectangles</h1>
+      <paper2-stackblitz></paper2-stackblitz>
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="myCanvas" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1" canvas="myCanvas" type="text/paperscript">
+      var mousePoint = view.center;
+        var amount = 25;
+        var colors = ['red', 'white', 'blue', 'white'];
+
+        for (var i = 0; i < amount; i++) {
+            var rect = new Rectangle([0, 0], [25, 25]);
+            rect.center = mousePoint;
+            var path = new Path.Rectangle(rect, 6);
+            path.fillColor = colors[i % 4];
+            var scale = (1 - i / amount) * 20;
+            path.scale(scale);
+        }
+
+        function onMouseMove(event) {
+            mousePoint = event.point;
+        }
+
+        var children = project.activeLayer.children;
+        function onFrame(event) {
+            for (var i = 0, l = children.length; i < l; i++) {
+                var item = children[i];
+                var delta = (mousePoint - item.position) / (i + 5);
+                item.rotate(Math.sin((event.count + i) / 10) * 7);
+                if (delta.length > 0.1)
+                    item.position += delta;
+            }
+        }
+    </script>
+    <script id="mainPaper2Script2">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>
