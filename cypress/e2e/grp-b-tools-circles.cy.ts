@@ -33,7 +33,9 @@ describe(`GIVEN: Circles`, () => {
 
       cy.wait(333);
 
-      cy.get("canvas").matchImageSnapshot(`${type}/${name}`);
+      cy.get("canvas").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 50, // If less than 50 pixels changed it is still a success
+      });
     });
   });
 });

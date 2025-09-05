@@ -186,21 +186,22 @@
         console.log(paper); // Easy access for playing with in DevTools
         const showVersionEle = document.getElementById("showVersion");
         showVersionEle.innerHTML = paper.version;
-        document.getElementById("myTbody").innerHTML = allPagesHtml
-          .split("\n")
-          .filter(Boolean)
-          .map(
-            (a, i) =>
-              `<tr>
+      });
+    </script>
+    <script>
+      document.getElementById("myTbody").innerHTML = allPagesHtml
+        .split("\n")
+        .filter(Boolean)
+        .map(
+          (a, i) =>
+            `<tr>
                   <td>${i + 1}</td>
                   <td style="text-align: left">${a}</td>
                   <td>${a.includes("has-cy-test") ? "<strong>yes</strong>" : "not_yet"}</td>
                 </tr>`
-          )
-          .join(" ");
-      });
-    </script>
-    <script>
+        )
+        .join(" ");
+
       const filterInput = document.getElementById("table-filter");
 
       filterInput.addEventListener("input", () => {
