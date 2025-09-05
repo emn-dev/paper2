@@ -170,6 +170,16 @@ const allPagesData = [
     name: "(json) Circle Testing",
     hasCyTest: true,
   },
+  {
+    file: "json-lineTesting.html",
+    name: "(json) Line Testing",
+    hasCyTest: true,
+  },
+  {
+    file: "json-randomPathTesting.html",
+    name: "(json) Random Path Testing",
+    hasCyTest: true,
+  },
   { file: "games-paperoids.html", name: "(games) Paperoids" },
   {
     file: "scripts-pathTangents.html",
