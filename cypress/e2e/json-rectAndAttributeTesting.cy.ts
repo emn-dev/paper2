@@ -1,11 +1,11 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Inkscape`, () => {
-  const type = "svg-import";
-  const name = "inkscape";
+describe(`GIVEN: Rectangle Testing`, () => {
+  const type = "json";
+  const name = "rectAndAttributeTesting";
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(500); // Allow some time for loading
+    cy.wait(750); // Allow some time for loading
     cy.get("paper2-nav").invoke("remove");
   });
 

@@ -31,7 +31,11 @@ const allPagesData = [
   { file: "showcase-rasterSpiral.html", name: "(showcase) Spiral Raster" },
   { file: "showcase-chain.html", name: "(showcase) Chain", hasCyTest: true },
   { file: "showcase-bouncingBalls.html", name: "(showcase) Bouncing Balls" },
-  { file: "showcase-divisionRaster.html", name: "(showcase) Division Raster" },
+  {
+    file: "showcase-divisionRaster.html",
+    name: "(showcase) Division Raster",
+    hasCyTest: true,
+  },
   {
     file: "showcase-interactiveTiger.html",
     name: "(showcase) Interactive Tiger",
@@ -152,8 +156,12 @@ const allPagesData = [
   { file: "tools-fancyBrush.html", name: "(tools) Fancy Brush" },
   { file: "tools-drippingBrush.html", name: "(tools) Dripping Brush" },
   { file: "tools-bezierTool.html", name: "(tools) Bezier Tool" },
-  { file: "json-tiger.html", name: "(json) Tiger" },
-  { file: "json-groupTransform.html", name: "(json) Group Transform" },
+  { file: "json-tiger.html", name: "(json) Tiger", hasCyTest: true },
+  {
+    file: "json-groupTransform.html",
+    name: "(json) Group Transform",
+    hasCyTest: true,
+  },
   { file: "json-gradients.html", name: "(json) Gradients", hasCyTest: true },
   {
     file: "json-emptyPathTesting.html",
@@ -183,47 +191,47 @@ const allPagesData = [
   {
     file: "json-raster.html",
     name: "(json) Raster",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-rectAndAttributeTesting.html",
     name: "(json) Rectangle Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-rotatedPrimitives.html",
     name: "(json) Rotated Primitives",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-selection.html",
     name: "(json) Selection",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-shapes.html",
     name: "(json) Shapes",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-symbols.html",
     name: "(json) Symbols",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-textTesting.html",
     name: "(json) Text Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-transformTesting.html",
     name: "(json) Transform Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "json-transformTesting2.html",
     name: "(json) Transform Testing 2",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   { file: "games-paperoids.html", name: "(games) Paperoids" },
   {
@@ -281,7 +289,11 @@ const allPagesData = [
   { file: "scripts-shapes.html", name: "(scripts) Shapes", hasCyTest: true },
   { file: "svg-import-viewbox.html", name: "(svg-import) Viewbox 1" },
   { file: "svg-import-symbols.html", name: "(svg-import) Symbols Test" },
-  { file: "svg-import-polybezier.html", name: "(svg-import) Rect Testing" },
+  {
+    file: "svg-import-polybezier.html",
+    name: "(svg-import) Polybezier",
+    hasCyTest: false,
+  },
   {
     file: "svg-import-inkscape.html",
     name: "(svg-import) Inkscape",
@@ -303,6 +315,7 @@ const allPagesData = [
   {
     file: "svg-export-circleTestingCore.html",
     name: "(svg-export) Export Circle (Core)",
+    hasCyTest: true,
   },
 ];
 
