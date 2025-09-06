@@ -5,14 +5,14 @@ describe(`GIVEN: Q*bertify`, () => {
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(333); // Allow some time for loading
+    cy.wait(500); // Allow some time for loading
   });
 
   describe("WHEN canvas is done loading", () => {
     it("THEN should pass visual image compare", () => {
       cy.get("main canvas").should("have.a.property", "resize");
 
-      cy.wait(333); // Allow some more time for loading
+      cy.wait(500); // Allow some more time for loading
 
       cy.get("canvas").matchImageSnapshot(`${type}/${name}`);
     });
