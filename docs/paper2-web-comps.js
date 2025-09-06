@@ -463,17 +463,17 @@ const allPagesData = [
   {
     file: "svg-export-rotatedPrimitives.html",
     name: "(svg-export) Rotated Primitives",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-shapes.html",
     name: "(svg-export) Shapes",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-symbols.html",
     name: "(svg-export) Symbols",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-textTesting.html",
