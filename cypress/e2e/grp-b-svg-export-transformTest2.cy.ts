@@ -1,7 +1,7 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Inkscape`, () => {
-  const type = "svg-import";
-  const name = "inkscape";
+describe(`GIVEN: Transform Test 2`, () => {
+  const type = "svg-export";
+  const name = "transformTest2";
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
@@ -11,6 +11,8 @@ describe(`GIVEN: Inkscape`, () => {
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
+      cy.get("main canvas").should("have.a.property", "resize");
+
       cy.get("main").matchImageSnapshot(`${type}/${name}`);
     });
   });

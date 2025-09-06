@@ -5,7 +5,7 @@ describe(`GIVEN: Shapes`, () => {
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(500); // Allow some time for loading
+    cy.wait(333); // Allow some time for loading
     cy.get("paper2-nav").invoke("remove");
   });
 

@@ -483,12 +483,12 @@ const allPagesData = [
   {
     file: "svg-export-tiger.html",
     name: "(svg-export) Tiger",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-transformTest2.html",
     name: "(svg-export) Transform Test 2",
-    hasCyTest: false,
+    hasCyTest: true,
   },
 ];
 
