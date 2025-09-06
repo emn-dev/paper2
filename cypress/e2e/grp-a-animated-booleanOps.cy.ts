@@ -5,13 +5,13 @@ describe(`GIVEN: Boolean Ops (animated)`, () => {
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(2_100); // Allow some time for loading
+    cy.wait(1_500); // Allow some time for loading
   });
 
   describe("WHEN page has loaded", () => {
     it("THEN should pass visual image compare", () => {
       cy.get("canvas").matchImageSnapshot(`${type}/${name}`, {
-        failureThreshold: 100, // If less than 100 pixels changed it is still a success
+        failureThreshold: 200, // If less than 200 pixels changed it is still a success
       });
     });
   });

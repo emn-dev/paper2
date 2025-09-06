@@ -423,22 +423,22 @@ const allPagesData = [
   {
     file: "svg-export-clipping.html",
     name: "(svg-export) Clipping",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-compoundPath.html",
     name: "(svg-export) Compound Path",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-emptyPathTesting.html",
     name: "(svg-export) Empty Path Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-gradients.html",
     name: "(svg-export) Gradients",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-groupTransform.html",
@@ -448,32 +448,32 @@ const allPagesData = [
   {
     file: "svg-export-lineTesting.html",
     name: "(svg-export) Line Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-randomPathTesting.html",
     name: "(svg-export) Random Path Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-raster.html",
     name: "(svg-export) Raster",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-rotatedPrimitives.html",
     name: "(svg-export) Rotated Primitives",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-shapes.html",
     name: "(svg-export) Shapes",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-symbols.html",
     name: "(svg-export) Symbols",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-textTesting.html",
@@ -483,12 +483,12 @@ const allPagesData = [
   {
     file: "svg-export-tiger.html",
     name: "(svg-export) Tiger",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-transformTest2.html",
     name: "(svg-export) Transform Test 2",
-    hasCyTest: false,
+    hasCyTest: true,
   },
 ];
 

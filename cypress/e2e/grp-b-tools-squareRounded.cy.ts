@@ -2,7 +2,7 @@
 describe(`GIVEN: Square Rounded`, () => {
   beforeEach(() => {
     cy.visit(`/tools-squareRounded.html`);
-    cy.wait(500); // Allow some time for loading
+    cy.wait(333); // Allow some time for loading
   });
 
   describe("WHEN drawing a curving line", () => {
