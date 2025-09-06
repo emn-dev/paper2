@@ -428,12 +428,12 @@ const allPagesData = [
   {
     file: "svg-export-compoundPath.html",
     name: "(svg-export) Compound Path",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-emptyPathTesting.html",
     name: "(svg-export) Empty Path Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-gradients.html",
