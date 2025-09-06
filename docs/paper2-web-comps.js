@@ -423,7 +423,7 @@ const allPagesData = [
   {
     file: "svg-export-clipping.html",
     name: "(svg-export) Clipping",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-compoundPath.html",
