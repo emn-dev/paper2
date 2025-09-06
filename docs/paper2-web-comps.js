@@ -453,12 +453,12 @@ const allPagesData = [
   {
     file: "svg-export-randomPathTesting.html",
     name: "(svg-export) Random Path Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-raster.html",
     name: "(svg-export) Raster",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-rotatedPrimitives.html",
