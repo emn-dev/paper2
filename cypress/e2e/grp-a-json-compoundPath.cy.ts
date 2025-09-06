@@ -5,7 +5,7 @@ describe(`GIVEN: Compound Path (JSON)`, () => {
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(333); // Allow some time for loading
+    cy.wait(500); // Allow some time for loading
   });
 
   describe("WHEN page has loaded", () => {
