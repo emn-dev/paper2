@@ -438,7 +438,7 @@ const allPagesData = [
   {
     file: "svg-export-gradients.html",
     name: "(svg-export) Gradients",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-groupTransform.html",
@@ -448,7 +448,7 @@ const allPagesData = [
   {
     file: "svg-export-lineTesting.html",
     name: "(svg-export) Line Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-randomPathTesting.html",
