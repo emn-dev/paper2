@@ -48,7 +48,7 @@
       setTimeout(() => {
         console.log("Sent", data);
         worker.postMessage(data);
-      }, 333);
+      }, 250);
 
       // The worker sends the result back in a message, from which we can then
       // create a new path item and siplay it.
