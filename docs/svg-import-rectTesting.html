@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rect Testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center"><h1>Rect Testing</h1></header>
+    <main>
+      <canvas id="myCanvas" style="width: 500px; height: 500px" resize></canvas>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        width="500"
+        height="500"
+        id="svg"
+      >
+        <rect
+          rx="20"
+          ry="10"
+          width="50px"
+          height="50px"
+          style="fill: green; stroke: black; stroke-width: 5px"
+          id="round1"
+          data-paper-data='{"string":"----","number":1234,"array":["a ray","some rays"],"bool":true,"nil":null,"point":["Point",12,34],"size":["Size",12,34],"rectangle":["Rectangle",12,34,56,78],"deep":{"deeper":{"deepest":true}}}'
+        />
+        <rect
+          x="100"
+          y="10"
+          rx="20"
+          ry="10"
+          width="75px"
+          height="75px"
+          style="
+            fill: red;
+            stroke: brown;
+            stroke-width: 1px;
+            fill-opacity: 0.5;
+            stroke-opacity: 0.9;
+          "
+          id="round2"
+        />
+        <rect
+          x="10"
+          y="300"
+          rx="20"
+          ry="10"
+          width="75px"
+          height="150px"
+          style="fill: blue; opacity: 0.5"
+          id="round3"
+        />
+        <rect
+          x="50"
+          y="100"
+          rx="20"
+          ry="10"
+          width="150px"
+          height="150px"
+          style="fill: orange"
+          id="round4"
+        />
+        <rect
+          x="300"
+          y="10"
+          width="50"
+          height="50px"
+          fill="gold"
+          style="stroke-dasharray: 10, 4; stroke: black; stroke-width: 5px"
+          id="rect1"
+        />
+        <rect
+          x="300"
+          y="300"
+          width="100"
+          height="100px"
+          fill="pink"
+          style="stroke-dasharray: 10, 4; stroke-width: 50px"
+          id="rect2"
+        />
+        <rect
+          x="300"
+          y="180"
+          width="178"
+          height="100px"
+          fill="hotpink"
+          style="stroke-dasharray: 10, 4; stroke-width: 10px"
+          id="rect3"
+        />
+      </svg>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script canvas="myCanvas" type="text/paperscript">
+      project.importSVG(document.getElementById('svg'));
+      console.log(JSON.stringify(group.children[0].data));
+    </script>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

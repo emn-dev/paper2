@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Multiple Paths Test 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center"><h1>Multiple Paths Test 2</h1></header>
+    <main>
+      <canvas id="myCanvas" style="width: 500px; height: 500px" resize></canvas>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        width="500"
+        height="500"
+        id="svg"
+      >
+        <path
+          id="lineAB"
+          d="M 100 350 l 150 -300"
+          stroke="red"
+          stroke-width="3px"
+          fill="none"
+        />
+        <path
+          id="lineBC"
+          d="M 250 50 l 150 300"
+          stroke="red"
+          stroke-width="3px"
+          fill="none"
+        />
+        <path
+          id="lineBC"
+          d="M 175 200 l 150 0"
+          stroke="red"
+          stroke-width="3px"
+          fill="none"
+        />
+        <path
+          id="quadcurveABC"
+          d="M 100 350 q 150 -300 300 0"
+          stroke="blue"
+          stroke-width="5px"
+          fill="none"
+        />
+        <!-- Mark relevant points -->
+        <g stroke="black" stroke-width="3" fill="black">
+          <circle id="pointA" cx="100" cy="350" r="3" />
+          <circle id="pointB" cx="250" cy="50" r="3" />
+          <circle id="pointC" cx="400" cy="350" r="3" />
+        </g>
+        <!-- Label the points -->
+        <g fill="black" stroke="none" text-anchor="middle">
+          <text font-size="30" font-family="times" x="100" y="350" dx="-30">
+            A
+          </text>
+          <text font-size="30" font-family="times" x="250" y="50" dy="-10">
+            B
+          </text>
+          <text font-size="30" font-family="times" x="400" y="350" dx="30">
+            C
+          </text>
+        </g>
+      </svg>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script canvas="myCanvas" type="text/paperscript">
+      project.importSVG(document.getElementById('svg'));
+    </script>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

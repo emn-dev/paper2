@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Transform Testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center"><h1>Transform Testing</h1></header>
+    <main>
+      <canvas id="myCanvas" style="width: 500px; height: 500px" resize></canvas>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        width="500"
+        height="500"
+        id="svg"
+      >
+        <g transform="scale(5) translate(15, 15) rotate(20) skewX(20) skewY(5)">
+          <rect x="10" y="10" width="5" height="5" fill="firebrick" />
+          <circle r="10" fill="seagreen" stroke="blue" />
+          <rect x="5" y="5" width="12" height="2" fill="grey" stroke="silver" />
+        </g>
+      </svg>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script canvas="myCanvas" type="text/paperscript">
+      project.importSVG(document.getElementById('svg'));
+    </script>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

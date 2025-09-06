@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Text Testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz></paper2-stackblitz> -->
+    <header style="text-align: center"><h1>Text Testing</h1></header>
+    <main>
+      <canvas id="myCanvas" style="width: 300px; height: 300px" resize></canvas>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        width="300"
+        height="300"
+        id="svg"
+      >
+        <text
+          x="20"
+          y="15"
+          stroke="green"
+          fill="green"
+          style="font: 15px arial"
+          id="text"
+        >
+          Plain SVG Text
+        </text>
+        <text
+          x="20"
+          y="50"
+          fill="red"
+          transform="rotate(30 20,40)"
+          style="font: 12px helvetica"
+        >
+          Rotated SVG Text
+        </text>
+      </svg>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script canvas="myCanvas" type="text/paperscript">
+      project.importSVG(document.getElementById('svg'));
+    </script>
+    <script>
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2.js"
+          : "https://unpkg.com/paper2/paper2.js";
+
+      import(resourceUri).catch((err) => console.log("err: ", err));
+    </script>
+  </body>
+</html>

@@ -357,6 +357,51 @@ const allPagesData = [
     hasCyTest: false,
   },
   {
+    file: "svg-import-transformTesting.html",
+    name: "(svg-import) Transform Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-gradients2.html",
+    name: "(svg-import) Gradients 2",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-nestedGroupsTest.html",
+    name: "(svg-import) Nested Groups Test",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-rectTesting.html",
+    name: "(svg-import) Rect Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-strokeBounds.html",
+    name: "(svg-import) Stroke Bounds",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-tiger.html",
+    name: "(svg-import) Tiger",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-textTesting.html",
+    name: "(svg-import) Text Testing",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-multiplePathsTest1.html",
+    name: "(svg-import) Multiple Paths Test 1",
+    hasCyTest: false,
+  },
+  {
+    file: "svg-import-multiplePathsTest2.html",
+    name: "(svg-import) Multiple Paths Test 2",
+    hasCyTest: false,
+  },
+  {
     file: "svg-export-transformTest1.html",
     name: "(svg-export) Transform Testing",
     hasCyTest: true,
