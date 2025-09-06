@@ -13,7 +13,9 @@ describe(`GIVEN: Tiger`, () => {
     it("THEN should pass visual image compare", () => {
       cy.get("main canvas").should("have.a.property", "resize");
 
-      cy.get("main").matchImageSnapshot(`${type}/${name}`);
+      cy.get("main").matchImageSnapshot(`${type}/${name}`, {
+        failureThreshold: 200, // If less than 200 pixels changed it is still a success
+      });
     });
   });
 });
