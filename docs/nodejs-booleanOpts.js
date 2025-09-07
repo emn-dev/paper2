@@ -11,6 +11,8 @@ import {
 
 let timeToLive = 30; // in seconds
 
+if (process.argv[2]) timeToLive = process.argv[2];
+
 function dataURLtoStream(dataURL) {
   // Extract base64 data part
   const base64Data = dataURL.split(",")[1];

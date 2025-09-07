@@ -1,3 +1,4 @@
+import { exec } from "child_process";
 import { defineConfig } from "cypress";
 import cyFailed from "cypress-failed-log/src/failed";
 import os from "os";
@@ -21,6 +22,13 @@ export default defineConfig({
         printLog(message) {
           // eslint-disable-next-line no-console
           console.log(message);
+          return null;
+        },
+      });
+      on("task", {
+        nodejsBooleanOpts() {
+          const secondsToLive = 4;
+          exec(`node ../docs/nodejs-booleanOpts.js ${secondsToLive}`);
           return null;
         },
       });
