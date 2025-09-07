@@ -1,7 +1,7 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Multiple Paths Test 2`, () => {
+describe(`GIVEN: Rect Testing`, () => {
   const type = "svg-import";
-  const name = "multiplePathsTest2";
+  const name = "rectTesting";
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
@@ -13,9 +13,7 @@ describe(`GIVEN: Multiple Paths Test 2`, () => {
     it("THEN should pass visual image compare", () => {
       cy.get("main canvas").should("have.a.property", "resize");
 
-      cy.get("main").matchImageSnapshot(`${type}/${name}`, {
-        failureThreshold: 100, // If less than 100 pixels changed it is still a success
-      });
+      cy.get("main").matchImageSnapshot(`${type}/${name}`);
     });
   });
 });

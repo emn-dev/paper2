@@ -369,17 +369,17 @@ const allPagesData = [
   {
     file: "svg-import-nestedGroupsTest.html",
     name: "(svg-import) Nested Groups Test",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-rectTesting.html",
     name: "(svg-import) Rect Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-strokeBounds.html",
     name: "(svg-import) Stroke Bounds",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-tiger.html",

@@ -1,7 +1,7 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Multiple Paths Test 2`, () => {
+describe(`GIVEN: Stroke Bounds`, () => {
   const type = "svg-import";
-  const name = "multiplePathsTest2";
+  const name = "strokeBounds";
 
   beforeEach(() => {
     cy.visit(`/${type}-${name}.html`);
