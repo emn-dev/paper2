@@ -20,7 +20,11 @@ const allPagesData = [
     file: "animated-spaceUsingShapes.html",
     name: "(animated) Space Using Shapes",
   },
-  { file: "nodejs-booleanOpts.html", name: "(nodejs) Boolean Operations" },
+  {
+    file: "nodejs-booleanOpts.html",
+    name: "(nodejs) Boolean Operations",
+    hasCyTest: true,
+  },
   // This = https://github.com/paperjs/paper.js/blob/develop/examples/Animated/BooleanOperations.html
   // is same as this = https://github.com/paperjs/paper.js/blob/develop/examples/Paperjs.org/BooleanOperattions.html
   {
