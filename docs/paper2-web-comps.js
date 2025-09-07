@@ -359,7 +359,7 @@ const allPagesData = [
   {
     file: "svg-import-transformTesting.html",
     name: "(svg-import) Transform Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-gradients2.html",
@@ -384,7 +384,7 @@ const allPagesData = [
   {
     file: "svg-import-tiger.html",
     name: "(svg-import) Tiger",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-textTesting.html",
