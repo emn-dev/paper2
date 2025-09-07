@@ -344,17 +344,17 @@ const allPagesData = [
   {
     file: "svg-import-clipping.html",
     name: "(svg-import) Clipping",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-butterfly.html",
     name: "(svg-import) Butterfly",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-circleAndEllipseTesting.html",
     name: "(svg-import) Circle and Ellipse Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-transformTesting.html",
@@ -443,7 +443,7 @@ const allPagesData = [
   {
     file: "svg-export-groupTransform.html",
     name: "(svg-export) Group Transform",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-lineTesting.html",
