@@ -319,7 +319,7 @@ const allPagesData = [
   {
     file: "svg-import-lineTesting.html",
     name: "(svg-import) Line Testing",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-gradient.html",
@@ -334,7 +334,7 @@ const allPagesData = [
   {
     file: "svg-import-inkscapePivot.html",
     name: "(svg-import) Inkscape Pivot",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-fromFile.html",
@@ -394,12 +394,12 @@ const allPagesData = [
   {
     file: "svg-import-multiplePathsTest1.html",
     name: "(svg-import) Multiple Paths Test 1",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-multiplePathsTest2.html",
     name: "(svg-import) Multiple Paths Test 2",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-export-transformTest1.html",
