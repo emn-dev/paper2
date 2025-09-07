@@ -324,12 +324,12 @@ const allPagesData = [
   {
     file: "svg-import-gradient.html",
     name: "(svg-import) Gradient",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-gradients.html",
     name: "(svg-import) Gradients",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-inkscapePivot.html",
@@ -339,7 +339,7 @@ const allPagesData = [
   {
     file: "svg-import-fromFile.html",
     name: "(svg-import) From File",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-clipping.html",
@@ -364,7 +364,7 @@ const allPagesData = [
   {
     file: "svg-import-gradients2.html",
     name: "(svg-import) Gradients 2",
-    hasCyTest: false,
+    hasCyTest: true,
   },
   {
     file: "svg-import-nestedGroupsTest.html",
