@@ -1,9 +1,13 @@
 /* eslint-disable no-console */
 import { JSDOM } from 'jsdom';
-import { Canvas } from 'canvas'; // You can use node-canvas for most complete server-side canvas
+import { createCanvas } from 'canvas'; // You can use node-canvas for most complete server-side canvas
 
 if (globalThis.process?.release?.name) {
   console.log('We are running in NodeJS');
+
+  globalThis.thisIsNodeJs = true;
+  globalThis.jsdomCreateCanvas = createCanvas;
+
   const dom = new JSDOM(`<!DOCTYPE html>`);
 
   globalThis.window = dom.window;
@@ -13,8 +17,6 @@ if (globalThis.process?.release?.name) {
   if (!globalThis.navigator) {
     globalThis.navigator = dom.window.navigator;
   }
-
-  globalThis.window.HTMLCanvasElement = Canvas as any; // You can use node-canvas for most complete server-side canvas
 } else {
   console.log('Unknown runtime!');
 }

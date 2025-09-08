@@ -60,50 +60,54 @@ export const View = Base.extend(
 
       var size;
       if (globalThis.window && element) {
-        // Generate an id for this view / element if it does not have one
-        this._id = element.getAttribute('id');
-        if (this._id == null)
-          // @ts-expect-error = Property '_id' does not exist on type
-          element.setAttribute('id', (this._id = 'paper-view-' + View._id++));
-        // Install event handlers
-        DomEvent.add(element, this._viewEvents);
-        // Borrowed from Hammer.js:
-        var none = 'none';
-        DomElement.setPrefixed(element.style, {
-          userDrag: none,
-          userSelect: none,
-          touchCallout: none,
-          contentZooming: none,
-          tapHighlightColor: 'rgba(0,0,0,0)',
-        });
+        if (!globalThis.thisIsNodeJs) {
+          // Generate an id for this view / element if it does not have one
+          this._id = element.getAttribute('id');
+          if (this._id == null)
+            // @ts-expect-error = Property '_id' does not exist on type
+            element.setAttribute('id', (this._id = 'paper-view-' + View._id++));
+          // Install event handlers
+          DomEvent.add(element, this._viewEvents);
+          // Borrowed from Hammer.js:
+          var none = 'none';
+          DomElement.setPrefixed(element.style, {
+            userDrag: none,
+            userSelect: none,
+            touchCallout: none,
+            contentZooming: none,
+            tapHighlightColor: 'rgba(0,0,0,0)',
+          });
 
-        // If the element has the resize attribute, listen to resize events
-        // and update its coordinate space accordingly
-        if (PaperScope.hasAttribute(element, 'resize')) {
-          var that = this;
-          DomEvent.add(
-            globalThis.window,
-            (this._windowEvents = {
-              resize: function () {
-                that.setViewSize(getCanvasSize());
-              },
-            })
-          );
+          // If the element has the resize attribute, listen to resize events
+          // and update its coordinate space accordingly
+          if (PaperScope.hasAttribute(element, 'resize')) {
+            var that = this;
+            DomEvent.add(
+              globalThis.window,
+              (this._windowEvents = {
+                resize: function () {
+                  that.setViewSize(getCanvasSize());
+                },
+              })
+            );
+          }
         }
 
         size = getCanvasSize();
 
-        if (PaperScope.hasAttribute(element, 'stats') && typeof Stats !== 'undefined') {
-          // @ts-expect-error
-          this._stats = new Stats();
-          // Align top-left to the element
-          var stats = this._stats.domElement,
-            style = stats.style,
-            offset = DomElement.getOffset(element);
-          style.position = 'absolute';
-          style.left = offset.x + 'px';
-          style.top = offset.y + 'px';
-          globalThis.document.body.appendChild(stats);
+        if (!globalThis.thisIsNodeJs) {
+          if (PaperScope.hasAttribute(element, 'stats') && typeof Stats !== 'undefined') {
+            // @ts-expect-error
+            this._stats = new Stats();
+            // Align top-left to the element
+            var stats = this._stats.domElement,
+              style = stats.style,
+              offset = DomElement.getOffset(element);
+            style.position = 'absolute';
+            style.left = offset.x + 'px';
+            style.top = offset.y + 'px';
+            globalThis.document.body.appendChild(stats);
+          }
         }
       } else {
         // For web-workers: Allow calling of `paper.setup(new Size(x, y));`

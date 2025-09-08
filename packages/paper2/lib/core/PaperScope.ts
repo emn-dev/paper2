@@ -303,6 +303,7 @@ export const PaperScope = Base.extend(
       // 'data-paper-canvas' attributes:
       function handleAttribute(name) {
         name += 'Attribute';
+        if (globalThis.thisIsNodeJs) return '';
         return function (el, attr) {
           return el[name](attr) || el[name]('data-paper-' + attr);
         };
