@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
 import { JSDOM } from 'jsdom';
-import { createCanvas } from 'canvas'; // You can use node-canvas for most complete server-side canvas
+import { createCanvas, Image } from 'canvas';
 
 if (globalThis.process?.release?.name) {
   console.log('We are running in NodeJS');
 
   globalThis.hasNodeCanvas = true;
   globalThis.jsdomCreateCanvas = createCanvas;
+  globalThis.jsdomImage = Image;
 
   const dom = new JSDOM('<!DOCTYPE html>', {
     // Use the current working directory as the document's origin, so

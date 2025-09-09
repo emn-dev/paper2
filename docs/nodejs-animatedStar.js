@@ -1,14 +1,54 @@
-// Uncomment this to fix CODE_BLOCK_1
-import fs from "fs";
+import { createServer } from "http";
+import { parse } from "url";
+import { createWriteStream, readFileSync } from "fs";
+import { Readable } from "stream";
 import path from "path";
 import "../packages/paper2/dist/jsdom-canvas-setup.js";
 import { paper } from "../packages/paper2/dist/paper2-core.js";
+
+const serverPort = 3001;
+let timeToLive = 30; // in seconds
+if (process.argv[2]) timeToLive = process.argv[2];
+
+let outputDir = "./animatedStar-temp";
+
+if (process.argv[3] === "cyTest") outputDir = "../docs/animatedStar-temp";
+
+function main() {
+  createServer(function (req, res) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    const parsedUrl = parse(req.url, true); // true to parse query string
+    const queryParams = parsedUrl.query; // queryParams is an object
+    let frameNum = "01";
+    if (queryParams.frameNum) frameNum = queryParams.frameNum;
+
+    const fileBuffer = readFileSync(`${outputDir}/frame-${frameNum}.png`);
+
+    const stream = new Readable();
+    stream.push(fileBuffer); // Push the entire buffer as a single chunk
+    stream.push(null); // Signal the end of the stream
+
+    stream.on("data", function (chunk) {
+      res.write(chunk);
+    });
+    stream.on("end", function () {
+      res.end();
+      setTimeout(() => {
+        process.exit();
+      }, timeToLive * 1000);
+    });
+  }).listen(serverPort);
+
+  console.log(`Server running at http://127.0.0.1:${serverPort}`);
+}
 
 // Override requestAnimationFrame() to avoid setInterval() timers.
 // NOTE: In Node.js, we only support manual updating for now, but
 // View#exportFrames() below offers a way to emulate animations by exporting
 // them frame by frame at the given frame-rate.
-paper.DomEvent.requestAnimationFrame = function (callback) {};
+// TODO: do we need this?
+// paper.DomEvent.requestAnimationFrame = function (callback) {};
 
 // Node.js based image exporting code.
 paper.CanvasView.inject({
@@ -83,7 +123,7 @@ paper.CanvasView.inject({
   // DOCS: CanvasView#exportImage(path, callback);
   exportImage: function (path, callback) {
     this.update();
-    var out = fs.createWriteStream(path),
+    var out = createWriteStream(path),
       format = /\.jp(e?)g$/.test(path) ? "jpeg" : "png",
       stream = this._element[format + "Stream"]();
     stream.pipe(out);
@@ -94,9 +134,8 @@ paper.CanvasView.inject({
   },
 });
 
-var canvas22 = paper.createCanvas(800, 800);
-paper.setup(canvas22);
-
+var canvas = paper.createCanvas(800, 800);
+paper.setup(canvas);
 // paper.setup(new paper.Size(1024, 768));
 
 var layer = paper.project.activeLayer;
@@ -107,11 +146,12 @@ var values = {
 };
 
 paper.view.exportFrames({
-  amount: 50,
+  amount: 31,
   // directory: __dirname,
-  directory: "./temp2",
+  directory: outputDir,
   onComplete: function () {
     console.log("Done exporting.");
+    main();
   },
   onProgress: function (event) {
     console.log(event.percentage + "% complete, frame took: " + event.delta);

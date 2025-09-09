@@ -32,6 +32,20 @@ export default defineConfig({
           return null;
         },
       });
+      on("task", {
+        nodejsAnimatedStar() {
+          const secondsToLive = 6;
+          exec(`node ../docs/nodejs-animatedStar.js ${secondsToLive} cyTest`);
+          return null;
+        },
+      });
+      on("task", {
+        nodejsRaster() {
+          const secondsToLive = 6;
+          exec(`node ../docs/nodejs-raster.js ${secondsToLive} cyTest`);
+          return null;
+        },
+      });
 
       // eslint-disable-next-line default-param-last
       on("before:browser:launch", (browser: any = {}, launchOptions: any) => {

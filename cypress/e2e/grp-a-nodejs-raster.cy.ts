@@ -1,13 +1,13 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-describe(`GIVEN: Boolean Opts (nodejs)`, () => {
+describe(`GIVEN: Raster (nodejs)`, () => {
   const type = "nodejs";
-  const name = "booleanOpts";
+  const name = "raster";
 
   beforeEach(() => {
-    cy.task("nodejsBooleanOpts");
-    cy.wait(999); // Allow some time for nodejs script
+    cy.task("nodejsRaster");
+    cy.wait(2_500); // Allow some time for nodejs script
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(333); // Allow some extra time for loading
+    cy.wait(500); // Allow some extra time for loading
   });
 
   describe("WHEN drawing on the canvas", () => {

@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/node": "22.17.1",
-    "cypress": "15.0.0",
+    "cypress": "15.1.0",
     "cypress-failed-log": "2.10.0",
     "jest-image-snapshot": "6.5.1",
     "typescript": "5.9.2"
