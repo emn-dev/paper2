@@ -151,9 +151,9 @@ paper.view.exportFrames({
   directory: outputDir,
   onComplete: function () {
     console.log("Done exporting.");
+    main();
   },
   onProgress: function (event) {
-    if (event.percentage === 100) main();
     console.log(event.percentage + "% complete, frame took: " + event.delta);
   },
 });
