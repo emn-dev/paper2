@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Interactions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Interactions</h1>
+      <!-- <paper2-stackblitz type="core"></paper2-stackblitz> -->
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="test1" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test2" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test3" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test4" style="width: 100px; height: 100px" resize></canvas>
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-core.js"
+          : "https://unpkg.com/paper2/paper2-core.js";
+
+      window.interactions = {};
+
+      const canvasId = window.location.search.replace("?canvasId=", "");
+
+      function test1(paperModule) {
+        const { paper, Path, Point, Size } = paperModule;
+
+        paper.setup(canvasId);
+
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        item.onMouseDown = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mousedown" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: null },
+          };
+        };
+      }
+
+      function test2(paperModule) {
+        const { paper, Path, Point, Size } = paperModule;
+
+        paper.setup(canvasId);
+
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.strokeColor = "red";
+        const point = new Point(10, 10); // Must hit the line
+
+        item.onMouseDown = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mousedown" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: null },
+          };
+        };
+      }
+
+      function test3(paperModule) {
+        const { paper, Path, Point, Size } = paperModule;
+
+        paper.setup(canvasId);
+
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        const point = new Point(20, 20);
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test4(paperModule) {
+        const { paper, Path, Point, Size } = paperModule;
+
+        paper.setup(canvasId);
+
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        item.visible = false;
+        const point = new Point(20, 20);
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      import(resourceUri).then((paperModule) => {
+        if (canvasId === "test1") test1(paperModule);
+        if (canvasId === "test2") test2(paperModule);
+        if (canvasId === "test3") test3(paperModule);
+        if (canvasId === "test4") test4(paperModule);
+      });
+    </script>
+  </body>
+</html>
