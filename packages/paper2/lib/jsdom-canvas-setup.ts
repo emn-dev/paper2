@@ -5,7 +5,7 @@ import { createCanvas } from 'canvas'; // You can use node-canvas for most compl
 if (globalThis.process?.release?.name) {
   console.log('We are running in NodeJS');
 
-  globalThis.thisIsNodeJs = true;
+  globalThis.hasNodeCanvas = true;
   globalThis.jsdomCreateCanvas = createCanvas;
 
   const dom = new JSDOM('<!DOCTYPE html>', {
