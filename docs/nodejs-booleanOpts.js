@@ -10,7 +10,6 @@ import {
 } from "../packages/paper2/dist/paper2-core.js";
 
 let timeToLive = 30; // in seconds
-
 if (process.argv[2]) timeToLive = process.argv[2];
 
 function dataURLtoStream(dataURL) {
