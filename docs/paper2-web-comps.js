@@ -25,6 +25,11 @@ const allPagesData = [
     name: "(nodejs) Boolean Operations",
     hasCyTest: true,
   },
+  {
+    file: "nodejs-animatedStar.html",
+    name: "(nodejs) Animated Star",
+    hasCyTest: true,
+  },
   // This = https://github.com/paperjs/paper.js/blob/develop/examples/Animated/BooleanOperations.html
   // is same as this = https://github.com/paperjs/paper.js/blob/develop/examples/Paperjs.org/BooleanOperattions.html
   {

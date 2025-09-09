@@ -5,9 +5,9 @@ describe(`GIVEN: Boolean Opts (nodejs)`, () => {
 
   beforeEach(() => {
     cy.task("nodejsBooleanOpts");
-    cy.wait(999); // Allow some time for http server
+    cy.wait(999); // Allow some time for nodejs script
     cy.visit(`/${type}-${name}.html`);
-    cy.wait(333); // Allow some time for loading
+    cy.wait(333); // Allow some extra time for loading
   });
 
   describe("WHEN drawing on the canvas", () => {

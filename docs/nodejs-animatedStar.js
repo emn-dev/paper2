@@ -6,8 +6,13 @@ import path from "path";
 import "../packages/paper2/dist/jsdom-canvas-setup.js";
 import { paper } from "../packages/paper2/dist/paper2-core.js";
 
+const serverPort = 3001;
 let timeToLive = 30; // in seconds
 if (process.argv[2]) timeToLive = process.argv[2];
+
+let outputDir = "./animatedStar-temp";
+
+if (process.argv[3] === "cyTest") outputDir = "../docs/animatedStar-temp";
 
 function main() {
   createServer(function (req, res) {
@@ -15,12 +20,10 @@ function main() {
 
     const parsedUrl = parse(req.url, true); // true to parse query string
     const queryParams = parsedUrl.query; // queryParams is an object
-    let frameNum = "30";
+    let frameNum = "01";
     if (queryParams.frameNum) frameNum = queryParams.frameNum;
 
-    const fileBuffer = readFileSync(
-      `./animatedStar-temp/frame-${frameNum}.png`
-    );
+    const fileBuffer = readFileSync(`${outputDir}/frame-${frameNum}.png`);
 
     const stream = new Readable();
     stream.push(fileBuffer); // Push the entire buffer as a single chunk
@@ -35,9 +38,9 @@ function main() {
         process.exit();
       }, timeToLive * 1000);
     });
-  }).listen(3000);
+  }).listen(serverPort);
 
-  console.log("Server running at http://127.0.0.1:3000/");
+  console.log(`Server running at http://127.0.0.1:${serverPort}`);
 }
 
 // Override requestAnimationFrame() to avoid setInterval() timers.
@@ -131,9 +134,8 @@ paper.CanvasView.inject({
   },
 });
 
-var canvas22 = paper.createCanvas(800, 800);
-paper.setup(canvas22);
-
+var canvas = paper.createCanvas(800, 800);
+paper.setup(canvas);
 // paper.setup(new paper.Size(1024, 768));
 
 var layer = paper.project.activeLayer;
@@ -146,7 +148,7 @@ var values = {
 paper.view.exportFrames({
   amount: 31,
   // directory: __dirname,
-  directory: "./animatedStar-temp",
+  directory: outputDir,
   onComplete: function () {
     console.log("Done exporting.");
   },
