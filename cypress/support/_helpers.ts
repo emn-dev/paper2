@@ -98,15 +98,6 @@ function compareItem(actual, expected, message, options, properties) {
   }
 }
 
-export function createSVG(str, attrs) {
-  // Similar to SvgElement.create():
-  var node = document.createElementNS("http://www.w3.org/2000/svg", str);
-  for (var key in attrs) node.setAttribute(key, attrs[key]);
-  // Paper.js paths do not have a fill by default, SVG does.
-  node.setAttribute("fill", "none");
-  return node;
-}
-
 export function compareBoolean(
   actual,
   expected,
@@ -293,21 +284,6 @@ const comparators = {
     const result = paper.Base.equals(actual, expected);
     expect(result).toBe(true);
     // QUnit.push(Base.equals(actual, expected), actual, expected, message);
-  },
-  Raster: function (actual, expected, message, options) {
-    var pixels = options && options.pixels,
-      properties = ["size", "width", "height", "resolution"];
-    if (!pixels) properties.push("source", "image");
-    compareItem(actual, expected, message, options, properties);
-    if (pixels) {
-      // comparePixels(actual, expected, message, options);
-    } else {
-      equals(
-        actual.toDataURL(),
-        expected.toDataURL(),
-        message + " (#toDataUrl())"
-      );
-    }
   },
   Base: function (actual, expected, message, options) {
     comparators.Object(actual, expected, message, options);

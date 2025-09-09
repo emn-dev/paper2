@@ -22,6 +22,13 @@
       <canvas id="test2" style="width: 100px; height: 100px" resize></canvas>
       <canvas id="test3" style="width: 100px; height: 100px" resize></canvas>
       <canvas id="test4" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test5" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test6" style="width: 100px; height: 100px" resize></canvas>
+      <span id="test7"
+        ><canvas style="width: 100px; height: 100px" resize></canvas
+      ></span>
+      <canvas id="test8" style="width: 100px; height: 100px" resize></canvas>
+      <br />
     </main>
     <script src="./paper2-ga.js"></script>
     <script id="mainPaper2Script1">
@@ -34,11 +41,7 @@
 
       const canvasId = window.location.search.replace("?canvasId=", "");
 
-      function test1(paperModule) {
-        const { paper, Path, Point, Size } = paperModule;
-
-        paper.setup(canvasId);
-
+      function test1(Path, Point, Size) {
         const item = new Path.Rectangle(new Point(10, 10), new Size(50));
         item.fillColor = "red";
         const point = new Point(20, 20);
@@ -58,11 +61,7 @@
         };
       }
 
-      function test2(paperModule) {
-        const { paper, Path, Point, Size } = paperModule;
-
-        paper.setup(canvasId);
-
+      function test2(Path, Point, Size) {
         const item = new Path.Rectangle(new Point(10, 10), new Size(50));
         item.strokeColor = "red";
         const point = new Point(10, 10); // Must hit the line
@@ -82,39 +81,88 @@
         };
       }
 
-      function test3(paperModule) {
-        const { paper, Path, Point, Size } = paperModule;
-
-        paper.setup(canvasId);
-
+      function test3(Path, Point, Size) {
         const item = new Path.Rectangle(new Point(10, 10), new Size(50));
-        const point = new Point(20, 20);
 
         item.onMouseDown = function (event) {
           throw Error("this should not be called");
         };
       }
 
-      function test4(paperModule) {
-        const { paper, Path, Point, Size } = paperModule;
-
-        paper.setup(canvasId);
-
+      function test4(Path, Point, Size) {
         const item = new Path.Rectangle(new Point(10, 10), new Size(50));
         item.fillColor = "red";
         item.visible = false;
-        const point = new Point(20, 20);
 
         item.onMouseDown = function (event) {
           throw Error("this should not be called");
+        };
+      }
+
+      function test5(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        item.locked = true;
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test6(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        item.clone();
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test7(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+
+        item.onMouseDown = function (event) {
+          console.log("---- test7 ------");
+          console.log(event);
+          // throw Error("this should not be called");
+        };
+      }
+
+      function test8(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        item.onMouseMove = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mousemove" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: null },
+          };
         };
       }
 
       import(resourceUri).then((paperModule) => {
-        if (canvasId === "test1") test1(paperModule);
-        if (canvasId === "test2") test2(paperModule);
-        if (canvasId === "test3") test3(paperModule);
-        if (canvasId === "test4") test4(paperModule);
+        const { paper, Path, Point, Size } = paperModule;
+
+        paper.setup(canvasId);
+
+        if (canvasId === "test1") test1(Path, Point, Size);
+        if (canvasId === "test2") test2(Path, Point, Size);
+        if (canvasId === "test3") test3(Path, Point, Size);
+        if (canvasId === "test4") test4(Path, Point, Size);
+        if (canvasId === "test5") test5(Path, Point, Size);
+        if (canvasId === "test6") test6(Path, Point, Size);
+        if (canvasId === "test7") test7(Path, Point, Size);
+        if (canvasId === "test8") test8(Path, Point, Size);
       });
     </script>
   </body>
