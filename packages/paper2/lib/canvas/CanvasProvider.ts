@@ -36,7 +36,7 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
       clear = false; // It's already cleared through createElement().
     }
 
-    if (globalThis.thisIsNodeJs) {
+    if (globalThis.hasNodeCanvas) {
       const widthOrig = canvas.width || 500;
       const heightOrig = canvas.height || 500;
       canvas = globalThis.jsdomCreateCanvas(widthOrig, heightOrig);

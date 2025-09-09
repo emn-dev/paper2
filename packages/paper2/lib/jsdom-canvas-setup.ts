@@ -8,7 +8,13 @@ if (globalThis.process?.release?.name) {
   globalThis.thisIsNodeJs = true;
   globalThis.jsdomCreateCanvas = createCanvas;
 
-  const dom = new JSDOM(`<!DOCTYPE html>`);
+  const dom = new JSDOM('<!DOCTYPE html>', {
+    // Use the current working directory as the document's origin, so
+    // requests to local files work correctly with CORS.
+    url: 'file://' + process.cwd() + '/',
+    resources: 'usable',
+    pretendToBeVisual: true,
+  });
 
   globalThis.window = dom.window;
   globalThis.document = dom.window.document;

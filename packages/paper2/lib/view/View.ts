@@ -60,7 +60,7 @@ export const View = Base.extend(
 
       var size;
       if (globalThis.window && element) {
-        if (!globalThis.thisIsNodeJs) {
+        if (!globalThis.hasNodeCanvas) {
           // Generate an id for this view / element if it does not have one
           this._id = element.getAttribute('id');
           if (this._id == null)
@@ -95,7 +95,7 @@ export const View = Base.extend(
 
         size = getCanvasSize();
 
-        if (!globalThis.thisIsNodeJs) {
+        if (!globalThis.hasNodeCanvas) {
           if (PaperScope.hasAttribute(element, 'stats') && typeof Stats !== 'undefined') {
             // @ts-expect-error
             this._stats = new Stats();

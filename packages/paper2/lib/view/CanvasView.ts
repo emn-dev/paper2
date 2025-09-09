@@ -58,7 +58,7 @@ export const CanvasView = View.extend(
       // save() again in _setElementSize() to prevent accumulation of scaling.
       ctx.save();
       this._pixelRatio = 1;
-      if (!globalThis.thisIsNodeJs && !/^off|false$/.test(PaperScope.getAttribute(canvas, 'hidpi'))) {
+      if (!globalThis.hasNodeCanvas && !/^off|false$/.test(PaperScope.getAttribute(canvas, 'hidpi'))) {
         // Hi-DPI Canvas support based on:
         // https://www.html5rocks.com/en/tutorials/canvas/hidpi/
         var deviceRatio = globalThis.window.devicePixelRatio || 1,
