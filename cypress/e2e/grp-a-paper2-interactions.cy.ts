@@ -3,7 +3,7 @@ import { equals } from "../support/_helpers";
 
 describe(`GIVEN: Interactions`, () => {
   const type = "paper2";
-  const name = "Interactions";
+  const name = "interactions";
 
   describe("WHEN mouse actions", () => {
     it("Item#onMouseDown()", () => {
