@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import { createWriteStream } from "fs";
+import { createWriteStream, readFileSync } from "fs";
 import { Readable } from "stream";
 import path from "path";
 import "../packages/paper2/dist/jsdom-canvas-setup.js";
