@@ -1,0 +1,412 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Interactions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <header style="text-align: center">
+      <h1>Interactions</h1>
+      <!-- <paper2-stackblitz type="core"></paper2-stackblitz> -->
+      <p>&nbsp;</p>
+    </header>
+    <main>
+      <canvas id="test1" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test2" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test3" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test4" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test5" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test6" style="width: 100px; height: 100px" resize></canvas>
+      <!-- <span id="test7Span" style="display: inline-block"
+        ><canvas id="test7" style="width: 100px; height: 100px" resize></canvas
+      ></span> -->
+      <canvas id="test8" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test9" style="width: 100px; height: 100px" resize></canvas>
+      <hr />
+      <canvas id="test10" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test11" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test12" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test13" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test14" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test15" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test16" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test17" style="width: 100px; height: 100px" resize></canvas>
+      <hr />
+      <canvas id="test18" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test19" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test20" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test21" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test22" style="width: 100px; height: 100px" resize></canvas>
+      <canvas id="test23" style="width: 100px; height: 100px" resize></canvas>
+      <hr />
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1">
+      const resourceUri =
+        location.hostname === "localhost"
+          ? "./paper2-core.js"
+          : "https://unpkg.com/paper2/paper2-core.js";
+
+      window.interactions = {};
+
+      const canvasId = window.location.search.replace("?canvasId=", "");
+
+      function test1(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        item.onMouseDown = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mousedown" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: null },
+          };
+        };
+      }
+
+      function test2(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.strokeColor = "red";
+        const point = new Point(10, 10); // Must hit the line
+
+        item.onMouseDown = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mousedown" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: null },
+          };
+        };
+      }
+
+      function test3(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test4(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        item.visible = false;
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test5(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        item.locked = true;
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test6(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        item.clone();
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test7(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+
+        item.onMouseDown = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test8(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        item.onMouseMove = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mousemove" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: null },
+          };
+        };
+      }
+
+      function test9(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        let counter = 0;
+
+        item.onMouseMove = function (event) {
+          counter += 1;
+          window.interactions = counter;
+        };
+      }
+
+      function test10(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        item.onMouseUp = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mouseup" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: new Point(0, 0) },
+          };
+        };
+      }
+
+      function test11(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+
+        item.onMouseUp = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test12(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        item.onClick = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "click" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: new Point(0, 0) },
+          };
+        };
+      }
+
+      function test13(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+
+        item.onClick = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test14(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+
+        item.onClick = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test15(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        item.onDoubleClick = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "doubleclick" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: new Point(0, 0) },
+          };
+        };
+      }
+
+      function test16(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        item.clone().translate(25);
+
+        item.onDoubleClick = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test17(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+
+        item.onDoubleClick = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      function test18(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(20, 20);
+
+        item.onMouseEnter = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mouseenter" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: null },
+          };
+        };
+      }
+
+      function test19(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+
+        let counter = 0;
+
+        item.onMouseEnter = function (event) {
+          counter += 1;
+          window.interactions = counter;
+        };
+      }
+
+      function test20(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(8, 8);
+
+        item.onMouseLeave = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mouseleave" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: null },
+          };
+        };
+      }
+
+      function test21(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const point = new Point(8, 8);
+
+        item.onMouseDrag = function (event) {
+          window.interactions = {
+            type: { actual: event.type, expected: "mousedrag" },
+            point: {
+              // .floor() should not be necessary, but something with Cypress adds an extra .125 to y
+              actual: event.point.floor(),
+              expected: point,
+            },
+            target: { actual: event.target, expected: item },
+            currentTarget: { actual: event.currentTarget, expected: item },
+            delta: { actual: event.delta, expected: new Point(-4, -4) },
+          };
+        };
+      }
+
+      function test22(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+
+        let counter = 0;
+
+        item.onMouseDrag = function (event) {
+          counter += 1;
+          window.interactions = counter;
+        };
+      }
+
+      function test23(Path, Point, Size) {
+        const item = new Path.Rectangle(new Point(10, 10), new Size(50));
+        item.fillColor = "red";
+        const item2 = item.clone().translate(25);
+
+        item.onMouseDrag = function (event) {
+          throw Error("this should not be called");
+        };
+      }
+
+      import(resourceUri).then((paperModule) => {
+        const { paper, Path, Point, Size } = paperModule;
+
+        paper.setup(canvasId);
+
+        if (canvasId === "test1") test1(Path, Point, Size);
+        if (canvasId === "test2") test2(Path, Point, Size);
+        if (canvasId === "test3") test3(Path, Point, Size);
+        if (canvasId === "test4") test4(Path, Point, Size);
+        if (canvasId === "test5") test5(Path, Point, Size);
+        if (canvasId === "test6") test6(Path, Point, Size);
+        // if (canvasId === "test7") test7(Path, Point, Size);
+        if (canvasId === "test8") test8(Path, Point, Size);
+        if (canvasId === "test9") test9(Path, Point, Size);
+        if (canvasId === "test10") test10(Path, Point, Size);
+        if (canvasId === "test11") test11(Path, Point, Size);
+        if (canvasId === "test12") test12(Path, Point, Size);
+        if (canvasId === "test13") test13(Path, Point, Size);
+        if (canvasId === "test14") test14(Path, Point, Size);
+        if (canvasId === "test15") test15(Path, Point, Size);
+        if (canvasId === "test16") test16(Path, Point, Size);
+        if (canvasId === "test17") test17(Path, Point, Size);
+        if (canvasId === "test18") test18(Path, Point, Size);
+        if (canvasId === "test19") test19(Path, Point, Size);
+        if (canvasId === "test20") test20(Path, Point, Size);
+        if (canvasId === "test21") test21(Path, Point, Size);
+        if (canvasId === "test22") test22(Path, Point, Size);
+        if (canvasId === "test23") test23(Path, Point, Size);
+      });
+    </script>
+  </body>
+</html>

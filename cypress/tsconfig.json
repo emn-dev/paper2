@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["cypress", "node"],
     "esModuleInterop": true,
     "sourceMap": false,
     "strict": true

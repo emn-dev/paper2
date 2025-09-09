@@ -3,7 +3,16 @@ import { JSDOM } from 'jsdom';
 
 if (globalThis.process?.release?.name) {
   console.log('We are running in NodeJS');
-  const dom = new JSDOM(`<!DOCTYPE html>`);
+
+  globalThis.hasNodeCanvas = false;
+
+  const dom = new JSDOM('<!DOCTYPE html>', {
+    // Use the current working directory as the document's origin, so
+    // requests to local files work correctly with CORS.
+    url: 'file://' + process.cwd() + '/',
+    resources: 'usable',
+    pretendToBeVisual: true,
+  });
 
   globalThis.window = dom.window;
   globalThis.document = dom.window.document;

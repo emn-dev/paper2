@@ -35,6 +35,13 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
       canvas = globalThis.document.createElement('canvas');
       clear = false; // It's already cleared through createElement().
     }
+
+    if (globalThis.hasNodeCanvas) {
+      const widthOrig = canvas.width || 500;
+      const heightOrig = canvas.height || 500;
+      canvas = globalThis.jsdomCreateCanvas(widthOrig, heightOrig);
+    }
+
     var ctx = canvas.getContext('2d', options || {});
     if (!ctx) {
       throw new Error('Canvas ' + canvas + ' is unable to provide a 2D context.');

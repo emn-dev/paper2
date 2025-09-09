@@ -52,8 +52,8 @@ export const DomElement = new (function () {
 
     getBounds: function (el, viewport) {
       var doc = el.ownerDocument,
-        body = doc.body,
-        html = doc.documentElement,
+        body = doc?.body,
+        html = doc?.documentElement,
         rect;
       try {
         // On IE, for nodes that are not inside the DOM, this throws an
@@ -63,8 +63,8 @@ export const DomElement = new (function () {
       } catch (e) {
         rect = { left: 0, top: 0, width: 0, height: 0 };
       }
-      var x = rect.left - (html.clientLeft || body.clientLeft || 0),
-        y = rect.top - (html.clientTop || body.clientTop || 0);
+      var x = rect.left - (html?.clientLeft || body?.clientLeft || 0),
+        y = rect.top - (html?.clientTop || body?.clientTop || 0);
       if (!viewport) {
         var view = doc.defaultView;
         x += view.pageXOffset || html.scrollLeft || body.scrollLeft;
@@ -76,8 +76,8 @@ export const DomElement = new (function () {
     getViewportBounds: function (el) {
       var doc = el.ownerDocument,
         view = doc.defaultView,
-        html = doc.documentElement;
-      return new Rectangle(0, 0, view.innerWidth || html.clientWidth, view.innerHeight || html.clientHeight);
+        html = doc?.documentElement;
+      return new Rectangle(0, 0, view.innerWidth || html?.clientWidth, view.innerHeight || html?.clientHeight);
     },
 
     getOffset: function (el, viewport) {
