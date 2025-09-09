@@ -34,5 +34,6 @@ cypress/downloads
 cypress/logs
 
 # docs/test_coverage/
+docs/animatedStar-temp/*.png
 
 packages/paper2/test_img_diff.png

@@ -107,9 +107,9 @@ var values = {
 };
 
 paper.view.exportFrames({
-  amount: 50,
+  amount: 31,
   // directory: __dirname,
-  directory: "./temp2",
+  directory: "./animatedStar-temp",
   onComplete: function () {
     console.log("Done exporting.");
   },
