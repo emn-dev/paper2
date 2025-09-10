@@ -209,7 +209,7 @@ function compareProperties(actual, expected, properties, message, options) {
 function compareItem(actual, expected, message, options, properties) {
   options = options || {};
   if (options.rasterize) {
-    comparePixels(actual, expected, message, options, null);
+    comparePixels(actual, expected, message, options, undefined);
   } else if (!actual || !expected) {
     // QUnit.strictEqual(actual, expected, message);
   } else {
@@ -445,7 +445,7 @@ const comparators = {
     if (!pixels) properties.push('source', 'image');
     compareItem(actual, expected, message, options, properties);
     if (pixels) {
-      comparePixels(actual, expected, message, options, null);
+      comparePixels(actual, expected, message, options, undefined);
     } else {
       equals(actual.toDataURL(), expected.toDataURL(), message + ' (#toDataUrl())');
     }
