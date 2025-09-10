@@ -1,6 +1,9 @@
 import { beforeEach } from 'vitest';
-import { paper } from '~/index-core';
+// import '~/jsdom-canvas-setup';
+// import { paper } from '~/index-core';
 
-beforeEach(() => {
+beforeEach(async () => {
+  await import('~/jsdom-canvas-setup.js');
+  const { paper } = await import('~/index-core.js');
   paper.setup(new paper.Size(100, 100));
 });

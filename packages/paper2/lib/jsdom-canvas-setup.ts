@@ -3,7 +3,7 @@ import { JSDOM } from 'jsdom';
 import { createCanvas, Image } from 'canvas';
 
 if (globalThis.process?.release?.name) {
-  console.log('We are running in NodeJS');
+  console.log('[jsdom-canvas-setup] hasNodeCanvas = true');
 
   globalThis.hasNodeCanvas = true;
   globalThis.jsdomCreateCanvas = createCanvas;

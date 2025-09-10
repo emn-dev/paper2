@@ -857,7 +857,13 @@ export const Raster = Item.extend(
           disabled ? false : smoothing
         );
 
-        ctx.drawImage(element, -this._size.width / 2, -this._size.height / 2);
+        if (globalThis.hasNodeCanvas && element.constructor?.name === 'HTMLImageElement') {
+          const jsdomImage = new globalThis.jsdomImage();
+          jsdomImage.src = element.src;
+          ctx.drawImage(jsdomImage, -this._size.width / 2, -this._size.height / 2);
+        } else {
+          ctx.drawImage(element, -this._size.width / 2, -this._size.height / 2);
+        }
       }
     },
 

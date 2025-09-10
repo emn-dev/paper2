@@ -32,14 +32,14 @@ export const CanvasProvider = (Base.exports.CanvasProvider = {
     if (this.canvases.length) {
       canvas = this.canvases.pop();
     } else {
-      canvas = globalThis.document.createElement('canvas');
-      clear = false; // It's already cleared through createElement().
-    }
-
-    if (globalThis.hasNodeCanvas) {
-      const widthOrig = canvas.width || 500;
-      const heightOrig = canvas.height || 500;
-      canvas = globalThis.jsdomCreateCanvas(widthOrig, heightOrig);
+      if (globalThis.hasNodeCanvas) {
+        const widthOrig = canvas?.width || 500;
+        const heightOrig = canvas?.height || 500;
+        canvas = globalThis.jsdomCreateCanvas(widthOrig, heightOrig);
+      } else {
+        canvas = globalThis.document.createElement('canvas');
+        clear = false; // It's already cleared through createElement().
+      }
     }
 
     var ctx = canvas.getContext('2d', options || {});
