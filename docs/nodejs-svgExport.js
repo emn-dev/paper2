@@ -15,9 +15,9 @@ const serverPort = 3002;
 let timeToLive = 30; // in seconds
 if (process.argv[2]) timeToLive = process.argv[2];
 
-let outputDir = "./raster-temp";
+let outputDir = "./_temp-svgExport";
 
-if (process.argv[3] === "cyTest") outputDir = "../docs/raster-temp";
+if (process.argv[3] === "cyTest") outputDir = "../docs/_temp-svgExport";
 
 function main2() {
   createServer(function (req, res) {

@@ -34,8 +34,10 @@ cypress/downloads
 cypress/logs
 
 # docs/test_coverage/
-docs/animatedStar-temp/*.png
-docs/raster-temp/*.png
-docs/raster-temp/*.svg
+docs/_temp-animatedStar/*.png
+docs/_temp-svgExport/*.png
+docs/_temp-svgImport/*.png
+docs/_temp-raster/*.png
+docs/_temp-raster/*.svg
 
 packages/paper2/test_img_diff.png

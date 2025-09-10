@@ -10,9 +10,9 @@ const serverPort = 3001;
 let timeToLive = 30; // in seconds
 if (process.argv[2]) timeToLive = process.argv[2];
 
-let outputDir = "./animatedStar-temp";
+let outputDir = "./_temp-animatedStar";
 
-if (process.argv[3] === "cyTest") outputDir = "../docs/animatedStar-temp";
+if (process.argv[3] === "cyTest") outputDir = "../docs/_temp-animatedStar";
 
 function main() {
   createServer(function (req, res) {
