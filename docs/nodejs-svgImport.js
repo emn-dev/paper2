@@ -5,15 +5,17 @@ import path from "path";
 import "../packages/paper2/dist/jsdom-canvas-setup.js";
 import { paper } from "../packages/paper2/dist/paper2-core.js";
 
-const serverPort = 3002;
+const serverPort = 3004;
 let timeToLive = 30; // in seconds
 if (process.argv[2]) timeToLive = process.argv[2];
 
 let outputDir = "./_temp-svgImport";
+let svgIn = "./in.svg";
 
 if (process.argv[3] === "cyTest") outputDir = "../docs/_temp-svgImport";
+if (process.argv[3] === "cyTest") svgIn = "../docs/in.svg";
 
-function main2() {
+function main() {
   createServer(function (req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -123,13 +125,14 @@ paper.CanvasView.inject({
 
 paper.setup(new paper.Size(300, 600));
 
-paper.project.importSVG("in.svg", {
+paper.project.importSVG(svgIn, {
   onLoad: function (item) {
     paper.view.exportFrames({
       amount: 1,
       directory: outputDir,
       onComplete: function () {
         console.log("Done exporting.");
+        main();
       },
       onProgress: function (event) {
         console.log(

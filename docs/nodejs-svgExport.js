@@ -11,7 +11,7 @@ import {
   Point,
 } from "../packages/paper2/dist/paper2-core.js";
 
-const serverPort = 3002;
+const serverPort = 3003;
 let timeToLive = 30; // in seconds
 if (process.argv[2]) timeToLive = process.argv[2];
 
@@ -19,25 +19,18 @@ let outputDir = "./_temp-svgExport";
 
 if (process.argv[3] === "cyTest") outputDir = "../docs/_temp-svgExport";
 
-function main2() {
+function main() {
   createServer(function (req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
-    const fileBuffer = readFileSync(`${outputDir}/frame-0.png`);
+    const fileBuffer = readFileSync(`${outputDir}/out.svg`);
 
-    const stream = new Readable();
-    stream.push(fileBuffer); // Push the entire buffer as a single chunk
-    stream.push(null); // Signal the end of the stream
+    res.end(fileBuffer);
 
-    stream.on("data", function (chunk) {
-      res.write(chunk);
-    });
-    stream.on("end", function () {
-      res.end();
-      setTimeout(() => {
-        process.exit();
-      }, timeToLive * 1000);
-    });
+    setTimeout(() => {
+      process.exit();
+    }, timeToLive * 1000);
+    // });
   }).listen(serverPort);
 
   console.log(`Server running at http://127.0.0.1:${serverPort}`);
@@ -82,7 +75,8 @@ rect.rotate(45).scale(0.7);
 var svg = paper.project.exportSVG({ asString: true });
 // console.log(svg);
 
-writeFile(path.resolve("./out.svg"), svg, function (err) {
+writeFile(path.resolve(`${outputDir}/out.svg`), svg, function (err) {
   if (err) throw err;
   console.log("Saved!");
+  main();
 });

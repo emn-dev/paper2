@@ -46,6 +46,20 @@ export default defineConfig({
           return null;
         },
       });
+      on("task", {
+        nodejsSvgExport() {
+          const secondsToLive = 5;
+          exec(`node ../docs/nodejs-svgExport.js ${secondsToLive} cyTest`);
+          return null;
+        },
+      });
+      on("task", {
+        nodejsSvgImport() {
+          const secondsToLive = 5;
+          exec(`node ../docs/nodejs-svgImport.js ${secondsToLive} cyTest`);
+          return null;
+        },
+      });
 
       // eslint-disable-next-line default-param-last
       on("before:browser:launch", (browser: any = {}, launchOptions: any) => {
