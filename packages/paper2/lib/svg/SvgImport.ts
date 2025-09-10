@@ -670,6 +670,8 @@ new (function () {
   }
 
   function importSVG(source, options, owner) {
+    console.log('process.cwd() 22 ====== ', process.cwd());
+
     if (!source) return null;
     options = typeof options === 'function' ? { onLoad: options } : options || {};
     // Remember current scope so we can restore it in onLoad.

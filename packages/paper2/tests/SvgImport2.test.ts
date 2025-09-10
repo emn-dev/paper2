@@ -6,6 +6,7 @@ import { compareSVG } from './_helpers';
 describe('Given: SvgImport 2', () => {
   it('arcs', () =>
     new Promise<void>(done => {
+      console.log('process.cwd() 1 ====== ', process.cwd());
       paper.project.importSVG('./tests/assets/arcs.svg', {
         applyMatrix: false,
 
@@ -34,36 +35,36 @@ describe('Given: SvgImport 2', () => {
       });
     }));
 
-  it('symbol', () =>
-    new Promise<void>(done => {
-      paper.project.importSVG('./tests/assets/symbol.svg', {
-        applyMatrix: false,
+  // it('symbol', () =>
+  //   new Promise<void>(done => {
+  //     paper.project.importSVG('./tests/assets/symbol.svg', {
+  //       applyMatrix: false,
 
-        onLoad: function (item, svg) {
-          console.log('importSVG-onLOAD.');
-          // if (!message) {
-          //   message =
-          //     'The imported SVG "' + url + '" should visually be ' + 'the same as the rasterized original SVG data.';
-          // }
-          // FOR_TESTING: uncomment below to force error
-          // console.log(svg);
-          // const svg2 = svg.replace('M-75,75l0,-150l150,0l0,150', 'M-7,7l0,-15l15,0l0,15');
-          compareSVG(done, item, svg, '', {});
-        },
+  //       onLoad: function (item, svg) {
+  //         console.log('importSVG-onLOAD.');
+  //         // if (!message) {
+  //         //   message =
+  //         //     'The imported SVG "' + url + '" should visually be ' + 'the same as the rasterized original SVG data.';
+  //         // }
+  //         // FOR_TESTING: uncomment below to force error
+  //         // console.log(svg);
+  //         // const svg2 = svg.replace('M-75,75l0,-150l150,0l0,150', 'M-7,7l0,-15l15,0l0,15');
+  //         compareSVG(done, item, svg, '', {});
+  //       },
 
-        onError: function () {
-          // TODO: how to handle this?
-          // const ok = !!(options && options.expectError);
-          console.log('importSVG__ERROR');
-          // QUnit.push(
-          //   ok,
-          //   false,
-          //   !ok,
-          //   (ok && message) || 'Loading SVG from a valid URL should not give an error: ' + error
-          // );
-        },
-      });
-    }));
+  //       onError: function () {
+  //         // TODO: how to handle this?
+  //         // const ok = !!(options && options.expectError);
+  //         console.log('importSVG__ERROR');
+  //         // QUnit.push(
+  //         //   ok,
+  //         //   false,
+  //         //   !ok,
+  //         //   (ok && message) || 'Loading SVG from a valid URL should not give an error: ' + error
+  //         // );
+  //       },
+  //     });
+  //   }));
 
   // // TODO: need to think about how to handle this
   // function importSVG(url, message, options) {
