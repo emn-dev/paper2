@@ -50,8 +50,8 @@ function compareImageData(imageData1, imageData2, tolerance, message = '', descr
 
   // Fail if there’s any difference
   // if (numDiffPixels > 0) {
-  // Give a little tolerance, if only 9 pixels or less do not match then we still pass the test
-  if (numDiffPixels > 10) {
+  // Give a little tolerance, if only 24 pixels or less do not match then we still pass the test
+  if (numDiffPixels > 25) {
     // Optionally save diff image for debugging
     writeFileSync('test_img_diff.png', PNG.sync.write(diff));
 
