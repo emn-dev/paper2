@@ -398,7 +398,15 @@ export const Raster = Item.extend(
      * @type CanvasRenderingContext2D
      */
     getContext: function (_change) {
-      if (!this._context) this._context = this.getCanvas().getContext('2d');
+      if (!this._context) {
+        if (globalThis.hasNodeCanvas) {
+          this._context = globalThis.jsdomCreateCanvas(500, 500).getContext('2d');
+        } else {
+          this._context = this.getCanvas().getContext('2d');
+        }
+      }
+
+      // if (!this._context) this._context = this.getCanvas().getContext('2d');
       // Support a hidden parameter that indicates if the context will be used
       // to change the Raster object. We can notify such changes ahead since
       // they are only used afterwards for redrawing.
@@ -545,7 +553,9 @@ export const Raster = Item.extend(
       var rect = Rectangle.read(arguments),
         // @ts-expect-error = Expected 3 arguments, but got 1
         ctx = ref.CanvasProvider.getContext(rect.getSize());
-      ctx.drawImage(this.getCanvas(), rect.x, rect.y, rect.width, rect.height, 0, 0, rect.width, rect.height);
+
+      const canvasToUse = this.getCanvas() || ctx.canvas;
+      ctx.drawImage(canvasToUse, rect.x, rect.y, rect.width, rect.height, 0, 0, rect.width, rect.height);
       return ctx.canvas;
     },
 

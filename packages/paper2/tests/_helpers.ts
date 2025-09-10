@@ -511,7 +511,7 @@ export function equals(actual, expected, message = '', options = {}) {
     (type === 'boolean' && 'Boolean') ||
     (type === 'undefined' && 'Undefined') ||
     (Array.isArray(expected) && 'Array') ||
-    (expected instanceof window.Element && 'Element') || // DOM Elements
+    (expected instanceof globalThis.Element && 'Element') || // DOM Elements
     (cls = expected && expected._class) || // check _class 2nd last
     (type === 'object' && 'Object'); // Object as catch-all
   var comparator = type && comparators[type];
