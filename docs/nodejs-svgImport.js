@@ -1,29 +1,25 @@
 import { createServer } from "http";
-import { parse } from "url";
 import { createWriteStream, readFileSync } from "fs";
 import { Readable } from "stream";
 import path from "path";
 import "../packages/paper2/dist/jsdom-canvas-setup.js";
 import { paper } from "../packages/paper2/dist/paper2-core.js";
 
-const serverPort = 3001;
+const serverPort = 3004;
 let timeToLive = 30; // in seconds
 if (process.argv[2]) timeToLive = process.argv[2];
 
-let outputDir = "./_temp-animatedStar";
+let outputDir = "./_temp-svgImport";
+let svgIn = "./in.svg";
 
-if (process.argv[3] === "cyTest") outputDir = "../docs/_temp-animatedStar";
+if (process.argv[3] === "cyTest") outputDir = "../docs/_temp-svgImport";
+if (process.argv[3] === "cyTest") svgIn = "../docs/in.svg";
 
 function main() {
   createServer(function (req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
-    const parsedUrl = parse(req.url, true); // true to parse query string
-    const queryParams = parsedUrl.query; // queryParams is an object
-    let frameNum = "01";
-    if (queryParams.frameNum) frameNum = queryParams.frameNum;
-
-    const fileBuffer = readFileSync(`${outputDir}/frame-${frameNum}.png`);
+    const fileBuffer = readFileSync(`${outputDir}/frame-0.png`);
 
     const stream = new Readable();
     stream.push(fileBuffer); // Push the entire buffer as a single chunk
@@ -42,13 +38,6 @@ function main() {
 
   console.log(`Server running at http://127.0.0.1:${serverPort}`);
 }
-
-// Override requestAnimationFrame() to avoid setInterval() timers.
-// NOTE: In Node.js, we only support manual updating for now, but
-// View#exportFrames() below offers a way to emulate animations by exporting
-// them frame by frame at the given frame-rate.
-// TODO: do we need this?
-// paper.DomEvent.requestAnimationFrame = function (callback) {};
 
 // Node.js based image exporting code.
 paper.CanvasView.inject({
@@ -134,55 +123,25 @@ paper.CanvasView.inject({
   },
 });
 
-var canvas = paper.createCanvas(800, 800);
-paper.setup(canvas);
-// paper.setup(new paper.Size(1024, 768));
+paper.setup(new paper.Size(300, 600));
 
-var layer = paper.project.activeLayer;
-
-var values = {
-  count: 34,
-  points: 32,
-};
-
-paper.view.exportFrames({
-  amount: 31,
-  // directory: __dirname,
-  directory: outputDir,
-  onComplete: function () {
-    console.log("Done exporting.");
-    main();
+paper.project.importSVG(svgIn, {
+  onLoad: function (item) {
+    paper.view.exportFrames({
+      amount: 1,
+      directory: outputDir,
+      onComplete: function () {
+        console.log("Done exporting.");
+        main();
+      },
+      onProgress: function (event) {
+        console.log(
+          event.percentage + "% complete, frame took: " + event.delta
+        );
+      },
+    });
   },
-  onProgress: function (event) {
-    console.log(event.percentage + "% complete, frame took: " + event.delta);
+  onError: function (message) {
+    console.error(message);
   },
 });
-
-function initialize() {
-  for (var i = 0; i < values.count; i++) {
-    var offset = new paper.Point(20 + 10 * i, 0);
-    var path = new paper.Path();
-    path.fillColor = i % 2 ? "red" : "black";
-    path.closed = true;
-
-    var l = offset.length;
-    for (var j = 0; j < values.points * 2; j++) {
-      offset.angle += 360 / values.points;
-      var vector = offset.normalize(l * (j % 2 ? 0.1 : -0.1));
-      path.add(offset.add(vector));
-    }
-    path.smooth();
-    layer.insertChild(0, path);
-  }
-  layer.fitBounds(paper.view.bounds);
-}
-
-paper.view.onFrame = function (event) {
-  for (var i = 0, l = layer.children.length; i < l; i++) {
-    var item = layer.children[i];
-    var angle = ((values.count - i) * Math.sin(event.count / 128)) / 10;
-    item.rotate(angle);
-  }
-};
-
-initialize();

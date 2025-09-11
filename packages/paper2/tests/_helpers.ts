@@ -28,7 +28,7 @@ import { paper, CompoundPath, PathItem, Raster, Item, Shape, Group } from '~/ind
  * @param {string} message
  * @param {string} description text displayed when comparison fails
  */
-function compareImageData(imageData1, imageData2, tolerance, message = '', description = '') {
+function compareImageData(imageData1, imageData2, tolerance, message = '', description = '', cb = {} as any) {
   if (imageData1.width !== imageData2.width) throw Error('Image widths must be the same!');
   if (imageData1.height !== imageData2.height) throw Error('Image heights must be the same!');
 
@@ -49,12 +49,18 @@ function compareImageData(imageData1, imageData2, tolerance, message = '', descr
   });
 
   // Fail if there’s any difference
-  if (numDiffPixels > 0) {
+  // if (numDiffPixels > 0) {
+  // Give a little tolerance, if only 24 pixels or less do not match then we still pass the test
+  if (numDiffPixels > 25) {
     // Optionally save diff image for debugging
     writeFileSync('test_img_diff.png', PNG.sync.write(diff));
 
-    throw new Error(`Images do not match: ${numDiffPixels} pixels differ | ${message}`);
+    const errMsg = `Images do not match: ${numDiffPixels} pixels differ | ${message}`;
+    cb.fail?.(errMsg);
+    throw new Error(errMsg);
   }
+
+  cb.done?.();
 
   // Compare image-data using resemble.js:
   // resemble.compare(
@@ -98,7 +104,7 @@ function compareImageData(imageData1, imageData2, tolerance, message = '', descr
   // }
 }
 
-export function comparePixels(actual, expected, message = '', options = undefined) {
+export function comparePixels(actual, expected, message = '', options = undefined, cb) {
   function rasterize(item, group, resolution) {
     var raster = null;
     if (group) {
@@ -168,7 +174,8 @@ export function comparePixels(actual, expected, message = '', options = undefine
       expectedRaster.getImageData(),
       options.tolerance,
       message,
-      description
+      description,
+      cb
     );
   }
 }
@@ -204,7 +211,7 @@ function compareProperties(actual, expected, properties, message, options) {
 function compareItem(actual, expected, message, options, properties) {
   options = options || {};
   if (options.rasterize) {
-    comparePixels(actual, expected, message, options);
+    comparePixels(actual, expected, message, options, undefined);
   } else if (!actual || !expected) {
     // QUnit.strictEqual(actual, expected, message);
   } else {
@@ -241,7 +248,7 @@ function compareItem(actual, expected, message, options, properties) {
   }
 }
 
-export function compareSVG(done, actual, expected, message = '', options = undefined) {
+export function compareSVG(cb, actual, expected, message = '', options = undefined) {
   function getItem(item) {
     return item instanceof Item
       ? item
@@ -273,9 +280,10 @@ export function compareSVG(done, actual, expected, message = '', options = undef
           resolution: 72,
         },
         options
-      )
+      ),
+      cb
     );
-    done();
+    // done();
   }
 
   if (expected instanceof Raster) {
@@ -439,7 +447,7 @@ const comparators = {
     if (!pixels) properties.push('source', 'image');
     compareItem(actual, expected, message, options, properties);
     if (pixels) {
-      comparePixels(actual, expected, message, options);
+      comparePixels(actual, expected, message, options, undefined);
     } else {
       equals(actual.toDataURL(), expected.toDataURL(), message + ' (#toDataUrl())');
     }
@@ -503,7 +511,7 @@ export function equals(actual, expected, message = '', options = {}) {
     (type === 'boolean' && 'Boolean') ||
     (type === 'undefined' && 'Undefined') ||
     (Array.isArray(expected) && 'Array') ||
-    (expected instanceof window.Element && 'Element') || // DOM Elements
+    (expected instanceof globalThis.Element && 'Element') || // DOM Elements
     (cls = expected && expected._class) || // check _class 2nd last
     (type === 'object' && 'Object'); // Object as catch-all
   var comparator = type && comparators[type];

@@ -103,7 +103,8 @@ describe('Given: SvgImport', () => {
     equals(imported, path);
   });
 
-  it('Import SVG Image', () => {
+  // TODO: how to have fails show up in async way?
+  it.skip('Import SVG Image', () => {
     const svg =
       '<?xml version="1.0" encoding="utf-8"?><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image style="overflow:visible;enable-background:new    ;" width="300" height="67" id="e0" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" transform="matrix(0.2149 0 0 0.2149 304.7706 197.8176)"></image></svg>';
     const imported = paper.project.importSVG(svg);

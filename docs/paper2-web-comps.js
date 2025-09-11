@@ -35,6 +35,16 @@ const allPagesData = [
     name: "(nodejs) Raster",
     hasCyTest: true,
   },
+  {
+    file: "nodejs-svgExport.html",
+    name: "(nodejs) SVG Export",
+    hasCyTest: true,
+  },
+  {
+    file: "nodejs-svgImport.html",
+    name: "(nodejs) SVG Import",
+    hasCyTest: false,
+  },
   // This = https://github.com/paperjs/paper.js/blob/develop/examples/Animated/BooleanOperations.html
   // is same as this = https://github.com/paperjs/paper.js/blob/develop/examples/Paperjs.org/BooleanOperattions.html
   {

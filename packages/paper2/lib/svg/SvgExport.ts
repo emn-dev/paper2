@@ -385,7 +385,7 @@ new (function () {
       // Clear definitions at the end of export
       definitions = null;
     }
-    return options.asString ? new globalThis.XMLSerializer().serializeToString(svg) : svg;
+    return options.asString ? new globalThis.window.XMLSerializer().serializeToString(svg) : svg;
   }
 
   function exportSVG(item, options, isRoot) {

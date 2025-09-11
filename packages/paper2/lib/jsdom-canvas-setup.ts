@@ -3,7 +3,7 @@ import { JSDOM } from 'jsdom';
 import { createCanvas, Image } from 'canvas';
 
 if (globalThis.process?.release?.name) {
-  console.log('We are running in NodeJS');
+  console.log('[jsdom-canvas-setup] hasNodeCanvas = true');
 
   globalThis.hasNodeCanvas = true;
   globalThis.jsdomCreateCanvas = createCanvas;
@@ -12,18 +12,15 @@ if (globalThis.process?.release?.name) {
   const dom = new JSDOM('<!DOCTYPE html>', {
     // Use the current working directory as the document's origin, so
     // requests to local files work correctly with CORS.
-    url: 'file://' + process.cwd() + '/',
+    url: `file://${process.cwd()}/`,
     resources: 'usable',
     pretendToBeVisual: true,
   });
 
   globalThis.window = dom.window;
   globalThis.document = dom.window.document;
-  globalThis.XMLSerializer = dom.window.XMLSerializer;
   globalThis.self = dom.window.self;
-  if (!globalThis.navigator) {
-    globalThis.navigator = dom.window.navigator;
-  }
+  if (!globalThis.navigator) globalThis.navigator = dom.window.navigator;
 } else {
-  console.log('Unknown runtime!');
+  console.log('[jsdom-canvas-setup] Unknown runtime!');
 }

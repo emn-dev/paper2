@@ -52,7 +52,7 @@ export const DomEvent = /** @lends DomEvent */ {
       for (var type in events) {
         var func = events[type],
           parts = type.split(/[\s,]+/g);
-        for (var i = 0, l = parts.length; i < l; i++) el.removeEventListener(parts[i], func, false);
+        for (var i = 0, l = parts.length; i < l; i++) el.removeEventListener?.(parts[i], func, false);
       }
     }
   },

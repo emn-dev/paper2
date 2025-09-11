@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG Export (rendered on Nodejs)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="paper2-docs.css" />
+    <script src="./paper2-web-comps.js"></script>
+    <script src="./paper2-stackblitz.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  </head>
+  <body>
+    <paper2-nav></paper2-nav>
+    <!-- <paper2-stackblitz type="core"></paper2-stackblitz> -->
+    <header style="text-align: center">
+      <h1>SVG Export (rendered on Nodejs)</h1>
+      <p>NOTE: You must have http://localhost:3003 running.</p>
+      <pre>1) <code style="background-color: #ddd">cd docs</code>, 2) Run this cmd: <code style="background-color: #ddd">node ./nodejs-svgExport.js</code>, 3) Refresh page.</pre>
+      <p>
+        NOTE: http://localhost:3003 will automatically exit after 30 seconds.
+      </p>
+    </header>
+    <main>
+      <div style="width: 400px; margin: auto" id="mySvg1"></div>
+      <!-- <canvas id="myCanvas" resize></canvas> -->
+    </main>
+    <script src="./paper2-ga.js"></script>
+    <script id="mainPaper2Script1">
+      const ele = document.getElementById("mySvg1");
+
+      fetch("http://localhost:3003")
+        .then((a) => a.text())
+        .then((b) => {
+          ele.innerHTML = b;
+        });
+    </script>
+  </body>
+</html>

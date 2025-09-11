@@ -2,27 +2,24 @@
 import { JSDOM } from 'jsdom';
 
 if (globalThis.process?.release?.name) {
-  console.log('We are running in NodeJS');
+  console.log('[jsdom-canvas-setup] jsdom = true');
 
   globalThis.hasNodeCanvas = false;
 
   const dom = new JSDOM('<!DOCTYPE html>', {
     // Use the current working directory as the document's origin, so
     // requests to local files work correctly with CORS.
-    url: 'file://' + process.cwd() + '/',
+    url: `file://${process.cwd()}/`,
     resources: 'usable',
     pretendToBeVisual: true,
   });
 
   globalThis.window = dom.window;
   globalThis.document = dom.window.document;
-  globalThis.XMLSerializer = dom.window.XMLSerializer;
   globalThis.self = dom.window.self;
-  if (!globalThis.navigator) {
-    globalThis.navigator = dom.window.navigator;
-  }
+  if (!globalThis.navigator) globalThis.navigator = dom.window.navigator;
 } else {
-  console.log('Unknown runtime!');
+  console.log('[jsdom-canvas-setup] Unknown runtime!');
 }
 
 if (globalThis.window) {
@@ -104,7 +101,7 @@ if (globalThis.window) {
     //     return utils.tryWrapperForImpl(esValue[implSymbol].getContext(...args));
     //   }
   } else {
-    console.log('probably the real canvas, so no mocking');
+    console.log('[jsdom-canvas-setup] probably the real canvas, so no mocking');
     // This is probably the real canvas, so we do not need to do anything
     // The real 'getContext' should look something like this:
     //   function (contextType, contextAttributes) {
