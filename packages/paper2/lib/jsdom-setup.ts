@@ -2,7 +2,7 @@
 import { JSDOM } from 'jsdom';
 
 if (globalThis.process?.release?.name) {
-  console.log('[jsdom-canvas-setup] jsdom = true');
+  console.log('[jsdom-setup] jsdom = true');
 
   globalThis.hasNodeCanvas = false;
 
@@ -19,14 +19,14 @@ if (globalThis.process?.release?.name) {
   globalThis.self = dom.window.self;
   if (!globalThis.navigator) globalThis.navigator = dom.window.navigator;
 } else {
-  console.log('[jsdom-canvas-setup] Unknown runtime!');
+  console.log('[jsdom-setup] Unknown runtime!');
 }
 
 if (globalThis.window) {
   const canvasCxtFunctText = window.HTMLCanvasElement.prototype.getContext.toString();
 
   if (canvasCxtFunctText.includes(' throw ')) {
-    console.log('NOT real canvas');
+    console.log('[jsdom-setup] NOT real canvas');
     // This cannot be the real canvas, so let us mock out the 'getContext' funct
     // @ts-expect-error
     window.HTMLCanvasElement.prototype.getContext = () => {
@@ -101,7 +101,7 @@ if (globalThis.window) {
     //     return utils.tryWrapperForImpl(esValue[implSymbol].getContext(...args));
     //   }
   } else {
-    console.log('[jsdom-canvas-setup] probably the real canvas, so no mocking');
+    console.log('[jsdom-setup] assume node-canvas or real browser canvas');
     // This is probably the real canvas, so we do not need to do anything
     // The real 'getContext' should look something like this:
     //   function (contextType, contextAttributes) {
