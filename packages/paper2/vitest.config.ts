@@ -3,7 +3,7 @@ import path from 'path';
 import { configDefaults, defineConfig } from 'vitest/config';
 // import viteConfig from './vite.config';
 
-const isCiServer = process.env.GITHUB_REF;
+const isCiServer = !!process.env.GITHUB_REF;
 
 export default defineConfig({
   test: {
@@ -18,7 +18,7 @@ export default defineConfig({
     environment: 'jsdom',
   },
   define: {
-    'process.env.SHOW_JSDOM_LOG': isCiServer ? "'" : "'yes'",
+    'process.env.SHOW_JSDOM_LOG': isCiServer ? "''" : "'yes'",
   },
   resolve: {
     alias: {
