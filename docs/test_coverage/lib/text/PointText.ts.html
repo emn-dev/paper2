@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.37% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>32/53</span>
+                <span class='fraction'>53/53</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>8/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.37% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>32/53</span>
+                <span class='fraction'>53/53</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -255,8 +255,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,28 +277,28 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">13x</span>
@@ -403,29 +403,29 @@ export const PointText = TextItem.extend(
       this.translate(point.subtract(this._matrix.getTranslation()));
     },
 &nbsp;
-    _draw: <span class="fstat-no" title="function not covered" >function (ctx, param, viewMatrix) {</span>
-<span class="cstat-no" title="statement not covered" >      if (!this._content) return;</span>
-<span class="cstat-no" title="statement not covered" >      this._setStyles(ctx, param, viewMatrix);</span>
-<span class="cstat-no" title="statement not covered" >      var lines = this._lines,</span>
-<span class="cstat-no" title="statement not covered" >        style = this._style,</span>
-<span class="cstat-no" title="statement not covered" >        hasFill = style.hasFill(),</span>
-<span class="cstat-no" title="statement not covered" >        hasStroke = style.hasStroke(),</span>
-<span class="cstat-no" title="statement not covered" >        leading = style.getLeading(),</span>
-<span class="cstat-no" title="statement not covered" >        shadowColor = ctx.shadowColor;</span>
-<span class="cstat-no" title="statement not covered" >      ctx.font = style.getFontStyle();</span>
-<span class="cstat-no" title="statement not covered" >      ctx.textAlign = style.getJustification();</span>
-<span class="cstat-no" title="statement not covered" >      for (var i = 0, l = lines.length; i &lt; l; i++) {</span>
+    _draw: function (ctx, param, viewMatrix) {
+      if (!this._content) <span class="branch-0 cbranch-no" title="branch not covered" >return;</span>
+      this._setStyles(ctx, param, viewMatrix);
+      var lines = this._lines,
+        style = this._style,
+        hasFill = style.hasFill(),
+        hasStroke = style.hasStroke(),
+        leading = style.getLeading(),
+        shadowColor = ctx.shadowColor;
+      ctx.font = style.getFontStyle();
+      ctx.textAlign = style.getJustification();
+      for (var i = 0, l = lines.length; i &lt; l; i++) {
         // See Path._draw() for explanation about ctx.shadowColor
-<span class="cstat-no" title="statement not covered" >        ctx.shadowColor = shadowColor;</span>
-<span class="cstat-no" title="statement not covered" >        var line = lines[i];</span>
-<span class="cstat-no" title="statement not covered" >        if (hasFill) {</span>
-<span class="cstat-no" title="statement not covered" >          ctx.fillText(line, 0, 0);</span>
-<span class="cstat-no" title="statement not covered" >          ctx.shadowColor = 'rgba(0,0,0,0)';</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" >        if (hasStroke) ctx.strokeText(line, 0, 0);</span>
-<span class="cstat-no" title="statement not covered" >        ctx.translate(0, leading);</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    },</span>
+        ctx.shadowColor = shadowColor;
+        var line = lines[i];
+        if (hasFill) {
+          ctx.fillText(line, 0, 0);
+          ctx.shadowColor = 'rgba(0,0,0,0)';
+        }
+        if (hasStroke) <span class="branch-0 cbranch-no" title="branch not covered" >ctx.strokeText(line, 0, 0);</span>
+        ctx.translate(0, leading);
+      }
+    },
 &nbsp;
     _getBounds: function (matrix, options) {
       var style = this._style,
@@ -451,7 +451,7 @@ export const PointText = TextItem.extend(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-03T00:17:03.350Z
+                at 2025-09-11T13:58:27.729Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

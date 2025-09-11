@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/59</span>
+                <span class='fraction'>0/62</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/59</span>
+                <span class='fraction'>0/62</span>
             </div>
         
             
@@ -173,16 +173,32 @@
 <a name='L108'></a><a href='#L108'>108</a>
 <a name='L109'></a><a href='#L109'>109</a>
 <a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -286,26 +302,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable no-console */
 <span class="cstat-no" title="statement not covered" >import { JSDOM } from 'jsdom';</span>
 &nbsp;
+<span class="cstat-no" title="statement not covered" >const showLog = process.env.SHOW_JSDOM_LOG;</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >if (globalThis.process?.release?.name) {</span>
-<span class="cstat-no" title="statement not covered" >  console.log('We are running in NodeJS');</span>
-<span class="cstat-no" title="statement not covered" >  const dom = new JSDOM(`&lt;!DOCTYPE html&gt;`);</span>
+<span class="cstat-no" title="statement not covered" >  if (showLog) console.log('[jsdom-setup] jsdom = true');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  globalThis.hasNodeCanvas = false;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  const dom = new JSDOM('&lt;!DOCTYPE html&gt;', {</span>
+    // Use the current working directory as the document's origin, so
+    // requests to local files work correctly with CORS.
+<span class="cstat-no" title="statement not covered" >    url: `file://${process.cwd()}/`,</span>
+<span class="cstat-no" title="statement not covered" >    resources: 'usable',</span>
+<span class="cstat-no" title="statement not covered" >    pretendToBeVisual: true,</span>
+<span class="cstat-no" title="statement not covered" >  });</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  globalThis.window = dom.window;</span>
 <span class="cstat-no" title="statement not covered" >  globalThis.document = dom.window.document;</span>
-<span class="cstat-no" title="statement not covered" >  globalThis.XMLSerializer = dom.window.XMLSerializer;</span>
 <span class="cstat-no" title="statement not covered" >  globalThis.self = dom.window.self;</span>
-<span class="cstat-no" title="statement not covered" >  if (!globalThis.navigator) {</span>
-<span class="cstat-no" title="statement not covered" >    globalThis.navigator = dom.window.navigator;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  if (!globalThis.navigator) globalThis.navigator = dom.window.navigator;</span>
 <span class="cstat-no" title="statement not covered" >} else {</span>
-<span class="cstat-no" title="statement not covered" >  console.log('Unknown runtime!');</span>
+<span class="cstat-no" title="statement not covered" >  if (showLog) console.log('[jsdom-setup] Unknown runtime!');</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >if (globalThis.window) {</span>
 <span class="cstat-no" title="statement not covered" >  const canvasCxtFunctText = window.HTMLCanvasElement.prototype.getContext.toString();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  if (canvasCxtFunctText.includes(' throw ')) {</span>
-<span class="cstat-no" title="statement not covered" >    console.log('NOT real canvas');</span>
+<span class="cstat-no" title="statement not covered" >    if (showLog) console.log('[jsdom-setup] NOT real canvas');</span>
     // This cannot be the real canvas, so let us mock out the 'getContext' funct
     // @ts-expect-error
 <span class="cstat-no" title="statement not covered" >    window.HTMLCanvasElement.prototype.getContext = () =&gt; {</span>
@@ -380,7 +404,7 @@
     //     return utils.tryWrapperForImpl(esValue[implSymbol].getContext(...args));
     //   }
 <span class="cstat-no" title="statement not covered" >  } else {</span>
-<span class="cstat-no" title="statement not covered" >    console.log('probably the real canvas, so no mocking');</span>
+<span class="cstat-no" title="statement not covered" >    if (showLog) console.log('[jsdom-setup] assume node-canvas or real browser canvas');</span>
     // This is probably the real canvas, so we do not need to do anything
     // The real 'getContext' should look something like this:
     //   function (contextType, contextAttributes) {
@@ -400,7 +424,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-03T00:17:03.350Z
+                at 2025-09-11T13:58:27.729Z
             </div>
         <script src="../prettify.js"></script>
         <script>
