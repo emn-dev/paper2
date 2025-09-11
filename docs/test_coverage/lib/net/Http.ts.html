@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/28</span>
+                <span class='fraction'>24/28</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">50% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/28</span>
+                <span class='fraction'>24/28</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -129,31 +129,31 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*
  * Paper.js - The Swiss Army Knife of Vector Graphics Scripting.
@@ -173,33 +173,33 @@
 import { Base } from '~/straps';
 &nbsp;
 export const Http = {
-  request: <span class="fstat-no" title="function not covered" >function (options) {</span>
+  request: function (options) {
     // Code borrowed from Coffee Script and extended:
-<span class="cstat-no" title="statement not covered" >    var xhr = new globalThis.XMLHttpRequest();</span>
-<span class="cstat-no" title="statement not covered" >    xhr.open((options.method || 'get').toUpperCase(), options.url, Base.pick(options.async, true));</span>
-<span class="cstat-no" title="statement not covered" >    if (options.mimeType) xhr.overrideMimeType(options.mimeType);</span>
-<span class="cstat-no" title="statement not covered" >    xhr.onload = function () {</span>
-<span class="cstat-no" title="statement not covered" >      var status = xhr.status;</span>
-<span class="cstat-no" title="statement not covered" >      if (status === 0 || status === 200) {</span>
-<span class="cstat-no" title="statement not covered" >        if (options.onLoad) {</span>
-<span class="cstat-no" title="statement not covered" >          options.onLoad.call(xhr, xhr.responseText);</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" >      } else {</span>
+    var xhr = new globalThis.window.XMLHttpRequest();
+    xhr.open((options.method || 'get').toUpperCase(), options.url, Base.pick(options.async, true));
+    if (options.mimeType) <span class="branch-0 cbranch-no" title="branch not covered" >xhr.overrideMimeType(options.mimeType);</span>
+    xhr.onload = function () {
+      var status = xhr.status;
+      if (status === 0 || status === 200) {
+        if (options.onLoad) {
+          options.onLoad.call(xhr, xhr.responseText);
+        }
+<span class="branch-0 cbranch-no" title="branch not covered" >      } else {</span>
         // @ts-expect-error
 <span class="cstat-no" title="statement not covered" >        xhr.onerror();</span>
 <span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    };</span>
-<span class="cstat-no" title="statement not covered" >    xhr.onerror = function () {</span>
-<span class="cstat-no" title="statement not covered" >      var status = xhr.status,</span>
-<span class="cstat-no" title="statement not covered" >        message = 'Could not load "' + options.url + '" (Status: ' + status + ')';</span>
-<span class="cstat-no" title="statement not covered" >      if (options.onError) {</span>
-<span class="cstat-no" title="statement not covered" >        options.onError(message, status);</span>
-<span class="cstat-no" title="statement not covered" >      } else {</span>
+    };
+    xhr.onerror = function () {
+      var status = xhr.status,
+        message = 'Could not load "' + options.url + '" (Status: ' + status + ')';
+      if (options.onError) {
+        options.onError(message, status);
+<span class="branch-0 cbranch-no" title="branch not covered" >      } else {</span>
 <span class="cstat-no" title="statement not covered" >        throw new Error(message);</span>
 <span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    };</span>
-<span class="cstat-no" title="statement not covered" >    return xhr.send(null);</span>
-<span class="cstat-no" title="statement not covered" >  },</span>
+    };
+    return xhr.send(null);
+  },
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -208,7 +208,7 @@ export const Http = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-03T00:17:03.350Z
+                at 2025-09-11T13:58:27.729Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

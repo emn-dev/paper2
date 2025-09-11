@@ -2,8 +2,10 @@
 import { JSDOM } from 'jsdom';
 import { createCanvas, Image } from 'canvas';
 
+const showLog = process.env.SHOW_JSDOM_LOG;
+
 if (globalThis.process?.release?.name) {
-  console.log('[jsdom-canvas-setup] hasNodeCanvas = true');
+  if (showLog) console.log('[jsdom-canvas-setup] hasNodeCanvas = true');
 
   globalThis.hasNodeCanvas = true;
   globalThis.jsdomCreateCanvas = createCanvas;
@@ -22,5 +24,5 @@ if (globalThis.process?.release?.name) {
   globalThis.self = dom.window.self;
   if (!globalThis.navigator) globalThis.navigator = dom.window.navigator;
 } else {
-  console.log('[jsdom-canvas-setup] Unknown runtime!');
+  if (showLog) console.log('[jsdom-canvas-setup] Unknown runtime!');
 }

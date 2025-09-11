@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/16</span>
+                <span class='fraction'>17/20</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/16</span>
+                <span class='fraction'>17/20</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -83,7 +83,20 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -92,36 +105,47 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable no-console */
 import { JSDOM } from 'jsdom';
-import { Canvas } from 'canvas'; // You can use node-canvas for most complete server-side canvas
+import { createCanvas, Image } from 'canvas';
+&nbsp;
+const showLog = process.env.SHOW_JSDOM_LOG;
 &nbsp;
 if (globalThis.process?.release?.name) {
-  console.log('We are running in NodeJS');
-  const dom = new JSDOM(`&lt;!DOCTYPE html&gt;`);
+  if (showLog) console.log('[jsdom-canvas-setup] hasNodeCanvas = true');
+&nbsp;
+  globalThis.hasNodeCanvas = true;
+  globalThis.jsdomCreateCanvas = createCanvas;
+  globalThis.jsdomImage = Image;
+&nbsp;
+  const dom = new JSDOM('&lt;!DOCTYPE html&gt;', {
+    // Use the current working directory as the document's origin, so
+    // requests to local files work correctly with CORS.
+    url: `file://${process.cwd()}/`,
+    resources: 'usable',
+    pretendToBeVisual: true,
+  });
 &nbsp;
   globalThis.window = dom.window;
   globalThis.document = dom.window.document;
-  globalThis.XMLSerializer = dom.window.XMLSerializer;
   globalThis.self = dom.window.self;
-  if (!globalThis.navigator) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >    globalThis.navigator = dom.window.navigator;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-&nbsp;
-  globalThis.window.HTMLCanvasElement = Canvas as any; // You can use node-canvas for most complete server-side canvas
+  if (!globalThis.navigator) <span class="branch-0 cbranch-no" title="branch not covered" >globalThis.navigator = dom.window.navigator;</span>
 <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >} else {</span></span>
-<span class="cstat-no" title="statement not covered" >  console.log('Unknown runtime!');</span>
+<span class="cstat-no" title="statement not covered" >  if (showLog) console.log('[jsdom-canvas-setup] Unknown runtime!');</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
 
@@ -130,7 +154,7 @@ if (globalThis.process?.release?.name) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-03T00:17:03.350Z
+                at 2025-09-11T13:58:27.729Z
             </div>
         <script src="../prettify.js"></script>
         <script>

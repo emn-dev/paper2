@@ -3,6 +3,8 @@ import path from 'path';
 import { configDefaults, defineConfig } from 'vitest/config';
 // import viteConfig from './vite.config';
 
+const isCiServer = !!process.env.GITHUB_REF;
+
 export default defineConfig({
   test: {
     coverage: {
@@ -14,6 +16,9 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, 'e2e/*'],
     setupFiles: ['./tests/_setup.ts'],
     environment: 'jsdom',
+  },
+  define: {
+    'process.env.SHOW_JSDOM_LOG': isCiServer ? "''" : "'yes'",
   },
   resolve: {
     alias: {
